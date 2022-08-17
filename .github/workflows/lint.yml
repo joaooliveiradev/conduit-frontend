@@ -1,0 +1,28 @@
+name: Lint
+
+on: 
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Run Linters
+    runs-on: ubuntu-latest
+
+    steps:
+    
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+          with: 
+            node-version: 16
+
+      - name: Install Dependencies
+        echo: 'Running Install Dependencies'
+        run: yarn install
+
+      - name: Run Linter
+        echo: 'Running Linter tests'
+        run: yarn lint
