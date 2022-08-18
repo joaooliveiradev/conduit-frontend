@@ -1,11 +1,13 @@
 import { Title } from './index'
 
-import { storiesOf } from '@storybook/react'
+const stories = {
+  title: 'Components / Title',
+}
 
-storiesOf('Title', module)
-  .add('Red', () => {
-    return <Title color="red" />
-  })
-  .add('Blue', () => {
-    return <Title color="blue" />
-  })
+export const RedTitle = () => <Title color="red" />
+
+export const BlueTitle = () => <Title color="blue" />
+
+export const YellowTitle = () => <Title color="yellow" />
+
+export default stories
