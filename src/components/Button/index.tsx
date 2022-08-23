@@ -1,0 +1,65 @@
+import { Loading } from '@components/Loading'
+import { HTMLAttributes } from 'react'
+import styled, { css, DefaultTheme } from 'styled-components'
+
+export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+  children: string
+  size: 'large' | 'medium'
+  disabled?: boolean
+  isLoading?: boolean
+  block: boolean
+}
+
+const sizeModifiers = {
+  medium: (theme: DefaultTheme) => css`
+    height: ${theme.spacings.large};
+    font-size: ${theme.fonts.sizes.large};
+  `,
+  large: (theme: DefaultTheme) => css`
+    height: ${theme.spacings.xlarge};
+    font-size: ${theme.fonts.sizes.xlarge};
+  `,
+}
+
+const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
+  ${({ theme, size, disabled, block }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: ${block ? '100%' : 'auto'};
+    padding: 0 1rem;
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.black};
+    font-weight: bold;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    ${size && sizeModifiers[size](theme)};
+    ${disabled &&
+    css`
+      opacity: 0.3;
+      pointer-events: none;
+    `}
+    :hover {
+      background-color: ${theme.colors.lightBlack};
+    }
+    :focus {
+      border: 0.2rem solid ${theme.colors.grey};
+    }
+  `};
+`
+
+const Button = ({
+  children,
+  size,
+  disabled,
+  isLoading,
+  block,
+}: ButtonProps) => {
+  return (
+    <Wrapper size={size} disabled={disabled} block={block}>
+      {isLoading ? <Loading /> : children}
+    </Wrapper>
+  )
+}
+
+export default Button
