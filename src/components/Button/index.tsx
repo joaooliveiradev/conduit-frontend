@@ -26,6 +26,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 15rem;
     width: ${block ? '100%' : 'auto'};
     padding: 0 1rem;
     color: ${theme.colors.white};
