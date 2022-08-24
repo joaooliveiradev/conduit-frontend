@@ -26,13 +26,13 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 15rem;
+    min-width: 12.4rem;
     width: ${block ? '100%' : 'auto'};
-    padding: 0 1rem;
+    padding: 0 10px;
     color: ${theme.colors.white};
     background-color: ${theme.colors.black};
     font-weight: bold;
-    border-radius: 0.2rem;
+    border-radius: 2px;
     cursor: pointer;
     ${size && sizeModifiers[size](theme)};
     ${disabled &&

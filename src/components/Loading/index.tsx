@@ -4,8 +4,8 @@ const Spinner = styled.div`
   width: 2.2rem;
   height: 2.2rem;
   border-radius: 50%;
-  border: 0.2rem solid #595a5b;
-  border-top: 0.2rem solid #f3f6f9;
+  border: 2px solid #595a5b;
+  border-top: 2px solid #f3f6f9;
   animation: spin 2s linear infinite;
 
   @keyframes spin {
