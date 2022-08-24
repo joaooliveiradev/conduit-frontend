@@ -7,8 +7,8 @@
 </h1>
 
 ## 📝 About the project
-Conduit is the name of the project of the [Real World App](https://github.com/gothinkster/realworld).<br>
-The conduit project is an real world blog that will provide an excellent experience in building real world applications.<br>
+Conduit is a "Medium" clone based on [Real World App](https://github.com/gothinkster/realworld) spec.<br>
+The real world app is a spec that provides an excellent experience in building real world applications.<br>
 One of the reasons that Real World App repository is born is because most of to-do apps that developers do, they don't convey the knowledge required to build "real" web applications with it.
 
 ## 🎨 Layout
