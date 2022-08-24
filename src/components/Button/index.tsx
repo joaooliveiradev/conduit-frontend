@@ -43,7 +43,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
       background-color: ${theme.colors.lightBlack};
     }
     :focus {
-      border: 0.2rem solid ${theme.colors.grey};
+      box-shadow: 0px 0px 0 2px ${theme.colors.grey};
     }
   `};
 `
