@@ -55,9 +55,10 @@ const Button = ({
   disabled,
   isLoading,
   block,
+  ...rest
 }: ButtonProps) => {
   return (
-    <Wrapper size={size} disabled={disabled} block={block}>
+    <Wrapper size={size} disabled={disabled} block={block} {...rest}>
       {isLoading ? <Loading /> : children}
     </Wrapper>
   )
