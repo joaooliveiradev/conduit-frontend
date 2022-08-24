@@ -24,11 +24,13 @@ export default {
   },
   colors: {
     white: '#FAFAFA',
+    lighterGrey: '#E8E8E8',
     lightGrey: '#B1B1B1',
     grey: '#777777',
     darkGrey: '#4F4F4F',
     lightBlack: '#2C2C2C',
     black: '#1D1D1D',
     darkBlack: '#171717',
+    red: '#FF1E54',
   },
 } as const
