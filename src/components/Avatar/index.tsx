@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 export type AvatarProps = {
   name: string
-  size: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+  size: number
 }
 
 const Wrapper = styled.div<Omit<AvatarProps, 'name'>>`
@@ -21,7 +21,7 @@ const Wrapper = styled.div<Omit<AvatarProps, 'name'>>`
 
 const Avatar = ({ name, size }: AvatarProps) => {
   const arrOfLetters = name.split('')
-  const onlyLettersRegex = /^[A-Za-z]+$/
+  const onlyLettersRegex = /^[a-zA-ZÀ-ÿ]+$/
   const firstLetter = arrOfLetters.find((letter) =>
     letter.match(onlyLettersRegex)
   )

@@ -7,7 +7,7 @@ const stories: Meta = {
     size: {
       defaultValue: 1,
       control: {
-        type: 'inline-radio',
+        type: 'range',
       },
     },
     name: {
