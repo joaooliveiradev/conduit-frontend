@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">
+  <img src="./src/assets/brand.png" alt="Logo Conduit"/>
+  <br>
+  Conduit App
+  <h3 align="center"><a href="https://conduit-front.netlify.app/">Project Demo</a></h3>
+  <h3 align="center"><a href="https://conduit-storybook.netlify.app/">Storybook Demo</a></h3>
+</h1>
 
-## Getting Started
+## 📝 About the project
+Conduit is a "Medium" clone based on [Real World App](https://github.com/gothinkster/realworld) spec.<br>
+The real world app is a spec that provides an excellent experience in building real world applications.<br>
+One of the reasons that Real World App repository is born is because most of to-do apps that developers do, they don't convey the knowledge required to build "real" web applications with it.
 
-First, run the development server:
+## 🎨 Layout
+You can view the project layout via [this link.](https://www.figma.com/file/VloJgT0X4tC3qlnHJTMXsa/Conduit?node-id=655%3A29)<br>
+This design was develop by [Marcos Oliveira](https://github.com/vmarcosp) ❤️
+## 🚀 Technologies 
+- React
+- Typescript 
+- Styled Components
+- NextJS
+- Storybook
+<h1>💻 Getting Started</h1>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<h3>Requirements</h3>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://classic.yarnpkg.com/lang/en/)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+<h3>Installing and running the project</h3>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Clone the repository and access the folder.
+  ```bash
+  git clone https://github.com/joaooliveiradev/conduit-frontend
+  cd conduit-frontend
+  ```
+Install dependencies.
+  ```bash
+  yarn
+  ```
+To start the project, follow the steps below.
+  ```bash
+  yarn dev
+  ```
+Open [localhost:3000](http://localhost:3000) to view in browser.<br>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<h2>Storybook</h2>
 
-## Learn More
+To start Storybook, run the command below.
+  ```bash
+  yarn storybook
+  ```
+Open [localhost:6006](http://localhost:6006) to view Storybook in browser.
+## 🦸 Autor
+[João Oliveira](https://github.com/joaooliveiradev)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 📢 License
+MIT
