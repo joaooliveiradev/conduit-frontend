@@ -3,12 +3,6 @@ import Input, { InputProps } from './index'
 
 const stories: Meta = {
   component: Input,
-  argTypes: {
-    hasError: {
-      defaultValue: false,
-      type: 'boolean',
-    },
-  },
 }
 
 const Template: Story<InputProps> = (args) => (
@@ -17,17 +11,25 @@ const Template: Story<InputProps> = (args) => (
 
 export const Empty = Template.bind({})
 Empty.argTypes = {
-  value: {
-    defaultValue: '',
+  errorMessage: {
+    control: false,
   },
 }
 
 export const Filled = Template.bind({})
+Filled.args = {
+  value: 'Email',
+}
 Filled.argTypes = {
-  value: {
-    defaultValue: 'Email',
-    type: 'string',
+  errorMessage: {
+    control: false,
   },
+}
+
+export const Errored = Template.bind({})
+Errored.args = {
+  value: 'Some wrong value',
+  errorMessage: 'Some error message',
 }
 
 export default stories

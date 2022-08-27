@@ -3,22 +3,16 @@ import { Meta, Story } from '@storybook/react'
 
 const stories: Meta = {
   component: Button,
+  args: {
+    children: 'Sign in',
+    isLoading: false,
+    disabled: false,
+    block: true,
+    size: 'large',
+  },
   argTypes: {
-    children: {
-      defaultValue: 'Sign in',
-      type: 'string',
-    },
     size: {
-      defaultValue: 'large',
-    },
-    isLoading: {
-      defaultValue: false,
-    },
-    disabled: {
-      defaultValue: false,
-    },
-    block: {
-      defaultValue: true,
+      control: { type: 'inline-radio' },
     },
   },
 }
