@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <Button size="large" block>
         Sign in
       </Button>
-      <Input hasError placeholder="Email" />
+      <Input placeholder="Email" />
     </>
   )
 }

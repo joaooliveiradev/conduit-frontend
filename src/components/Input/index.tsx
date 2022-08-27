@@ -1,8 +1,9 @@
 import { InputHTMLAttributes } from 'react'
 import styled, { css } from 'styled-components'
+import { transparentize } from 'polished'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  hasError?: boolean
+  errorMessage?: string
 }
 
 const Wrapper = styled.div`
@@ -14,32 +15,32 @@ const Wrapper = styled.div`
 
 const ErrorMessage = styled.p`
   ${({ theme }) => css`
-    color: ${theme.colors.red};
-    font-size: ${theme.fonts.sizes.small};
-    font-weight: 600;
+    color: ${theme.colors.red[100]};
+    font-size: ${theme.fonts.sizes.medium};
+    font-weight: 500;
   `}
 `
 
 const InputWrapper = styled.input<InputProps>`
-  ${({ theme, hasError }) => css`
+  ${({ theme, errorMessage }) => css`
     height: ${theme.spacings.xlarge};
     border-radius: 4px;
-    background-color: ${theme.colors.lighterGrey};
+    background-color: ${transparentize(0.88, theme.colors.black[200])};
     padding-left: 16px;
     font-size: ${theme.fonts.sizes.xmedium};
     font-weight: 600;
-    color: ${hasError ? theme.colors.red : theme.colors.black};
+    color: ${errorMessage ? theme.colors.red[100] : theme.colors.black[200]};
     ::placeholder {
-      color: ${theme.colors.grey};
+      color: ${theme.colors.grey[100]};
     }
   `}
 `
 
-const Input = ({ hasError, ...rest }: InputProps) => {
+const Input = ({ errorMessage, ...rest }: InputProps) => {
   return (
     <Wrapper>
-      <InputWrapper hasError={hasError} {...rest} />
-      {hasError && <ErrorMessage>Some error message</ErrorMessage>}
+      <InputWrapper errorMessage={errorMessage} {...rest} />
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Wrapper>
   )
 }
