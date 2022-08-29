@@ -29,8 +29,8 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     min-width: 12.4rem;
     width: ${block ? '100%' : 'auto'};
     padding: 0 10px;
-    color: ${theme.colors.white};
-    background-color: ${theme.colors.black};
+    color: ${theme.colors.white[100]};
+    background-color: ${theme.colors.black[200]};
     font-weight: bold;
     border-radius: 2px;
     cursor: pointer;
@@ -41,10 +41,10 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
       pointer-events: none;
     `}
     :hover {
-      background-color: ${theme.colors.lightBlack};
+      background-color: ${theme.colors.black[300]};
     }
     :focus {
-      box-shadow: 0px 0px 0 2px ${theme.colors.grey};
+      box-shadow: 0px 0px 0 2px ${theme.colors.grey[200]};
     }
   `};
 `
