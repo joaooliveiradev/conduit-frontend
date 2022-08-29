@@ -1,5 +1,7 @@
 import Avatar from '@components/Avatar'
 import Button from '@components/Button'
+import ProfileName from '@components/ProfileName'
+import Input from '@components/Input'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
@@ -14,7 +16,9 @@ const Home: NextPage = () => {
       <Button size="large" block>
         Sign in
       </Button>
+      <Input placeholder="Email" />
       <Avatar size={1} name="A" />
+      <ProfileName size={22} name="Joao Oliveira" />
     </>
   )
 }
