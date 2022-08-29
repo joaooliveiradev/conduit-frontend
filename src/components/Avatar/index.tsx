@@ -9,13 +9,13 @@ const Wrapper = styled.div<Omit<AvatarProps, 'name'>>`
   ${({ size, theme }) => css`
     width: calc(${size} * 1.6rem);
     height: calc(${size} * 1.6rem);
-    background-color: ${theme.colors.darkBlack};
+    background-color: ${theme.colors.black[100]};
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     font-size: calc((${size} * 1.6rem) / 2);
-    color: ${theme.colors.white};
+    color: ${theme.colors.white[100]};
   `}
 `
 

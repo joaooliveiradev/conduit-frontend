@@ -23,12 +23,22 @@ export default {
     xhuge: '6.4rem',
   },
   colors: {
-    white: '#FAFAFA',
-    lightGrey: '#B1B1B1',
-    grey: '#777777',
-    darkGrey: '#4F4F4F',
-    lightBlack: '#2C2C2C',
-    black: '#1D1D1D',
-    darkBlack: '#171717',
+    black: {
+      100: '#171717',
+      200: '#1D1D1D',
+      300: '#2C2C2C',
+    },
+    grey: {
+      100: '#4F4F4F',
+      200: '#777777',
+      300: '#B1B1B1',
+      400: '#E8E8E8',
+    },
+    red: {
+      100: '#FF1E54',
+    },
+    white: {
+      100: '#FAFAFA',
+    },
   },
 } as const
