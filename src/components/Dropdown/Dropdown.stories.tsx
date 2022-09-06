@@ -12,7 +12,7 @@ type DropdownStoriesProp = Omit<DropdownProps, 'children'> & DropdownItemProps
 const stories: Meta<DropdownStoriesProp> = {
   component: Dropdown,
   argTypes: {
-    triggerElement: {
+    trigger: {
       table: {
         disable: true,
       },
@@ -27,20 +27,11 @@ const stories: Meta<DropdownStoriesProp> = {
 
 export default stories
 
-const Template: Story<DropdownItemProps> = (args) => {
-  const { href, label } = args
+export const Template: Story = () => {
   return (
-    <Dropdown triggerElement={<ProfileName size={4} name="João" />}>
-      <DropdownItem href={href} label={label} />
+    <Dropdown trigger={<ProfileName size={4} name="João" />}>
+      <DropdownItem href="/profile" label="Profiles" />
+      <DropdownItem href="/signout" label="Sign out" />
     </Dropdown>
   )
-}
-
-export const Empty = Template.bind({})
-Empty.args = {}
-
-export const WithItem = Template.bind({})
-WithItem.args = {
-  href: '/profile',
-  label: 'Profile',
 }

@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export interface DropdownProps extends Popover.PopoverContentProps {
   children: ReactNode
-  triggerElement: ReactNode
+  trigger: ReactNode
 }
 
 export type DropdownItemProps = {
@@ -18,9 +18,14 @@ const Trigger = styled(Popover.Trigger)`
   ${({ theme }) => css`
     appearance: none;
     all: unset;
-    padding: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 8px;
     :focus-visible {
       box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
+    }
+    :hover {
+      background-color: ${transparentize(0.88, theme.colors.black[200])};
     }
   `}
 `
@@ -69,12 +74,12 @@ const Anchor = styled.a`
   `}
 `
 
-const Dropdown = ({ children, triggerElement, ...rest }: DropdownProps) => {
+const Dropdown = ({ children, trigger }: DropdownProps) => {
   return (
     <Popover.Root>
-      <Trigger>{triggerElement}</Trigger>
+      <Trigger>{trigger}</Trigger>
       <Popover.Portal>
-        <Content {...rest} collisionPadding={16}>
+        <Content sideOffset={16} collisionPadding={16}>
           <List>{children}</List>
         </Content>
       </Popover.Portal>
@@ -83,13 +88,13 @@ const Dropdown = ({ children, triggerElement, ...rest }: DropdownProps) => {
 }
 
 const DropdownItem = ({ label, href }: DropdownItemProps) => {
-  return label && href ? (
+  return (
     <Item>
       <Link href={href} passHref>
         <Anchor>{label}</Anchor>
       </Link>
     </Item>
-  ) : null
+  )
 }
 
 export { Dropdown, DropdownItem }
