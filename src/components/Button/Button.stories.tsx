@@ -7,7 +7,7 @@ const stories: Meta = {
     children: 'Sign in',
     isLoading: false,
     disabled: false,
-    block: true,
+    block: false,
     size: 'large',
   },
   argTypes: {

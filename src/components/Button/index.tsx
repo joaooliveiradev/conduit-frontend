@@ -7,7 +7,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   size: 'large' | 'medium'
   disabled?: boolean
   isLoading?: boolean
-  block: boolean
+  block?: boolean
 }
 
 const sizeModifiers = {
@@ -54,7 +54,7 @@ const Button = ({
   size,
   disabled,
   isLoading,
-  block,
+  block = false,
   ...rest
 }: ButtonProps) => {
   return (
