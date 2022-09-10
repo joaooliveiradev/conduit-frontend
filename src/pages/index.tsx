@@ -2,6 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Dropdown, DropdownItem } from '@components/Dropdown'
 import ProfileName from '@components/ProfileName'
+import { Modal } from '@components/Modal'
+import Button from '@components/Button'
 
 const Home: NextPage = () => {
   return (
@@ -15,6 +17,7 @@ const Home: NextPage = () => {
         <DropdownItem label="Profile" href="/profile" />
         <DropdownItem label="Sign out" href="/signout" />
       </Dropdown>
+      <Modal trigger={<Button size='large'>Sign In</Button>} />
     </>
   )
 }
