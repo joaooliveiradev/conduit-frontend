@@ -66,7 +66,7 @@ const Anchor = styled.a`
     display: flex;
     justify-content: center;
     font-weight: 700;
-    padding: 4px 16px;
+    padding: 4px ${theme.spacings.small};
     border-radius: 6px;
     :focus-visible {
       box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};

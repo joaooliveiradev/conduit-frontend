@@ -2,14 +2,24 @@ import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import ProfileName from '@components/ProfileName'
 
+export type ArticleCardProps = {
+  title: string
+  description: string
+  date: string
+  readingTime: string
+  author: string
+}
+
 const Wrapper = styled.article`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
     background-color: ${transparentize(0.9, theme.colors.black[100])};
     border-radius: 2px;
-    padding: 32px;
-    row-gap: 16px;
+    padding: ${theme.spacings.large};
+    row-gap: ${theme.spacings.small};
+    transition: background-color 250ms ease-in;
+    padding: ${theme.spacings.large};
     :hover {
       background-color: ${transparentize(0.86, theme.colors.black[100])};
     }
@@ -35,9 +45,11 @@ const Footer = styled.footer`
 `
 
 const InfoWrapper = styled.div`
-  display: flex;
-  column-gap: 10px;
-  align-items: center;
+  ${({ theme }) => css`
+    display: flex;
+    column-gap: ${theme.spacings.xsmall};
+    align-items: center;
+  `}
 `
 
 const InfoText = styled.p`
@@ -55,24 +67,27 @@ const Divider = styled.span`
   `}
 `
 
-export const ArticleCard = () => {
+export const ArticleCard = ({
+  title,
+  description,
+  date,
+  readingTime,
+  author,
+}: ArticleCardProps) => {
   return (
     <Wrapper>
       <header>
-        <Title>Toward a Journalistic Ethic of Citation</Title>
+        <Title>{title}</Title>
       </header>
       <section>
-        <Text>
-          After The New York Times published its extensive report on the history
-          of Haiti’s impoverishment at the hands.
-        </Text>
+        <Text>{description}</Text>
       </section>
       <Footer>
-        <ProfileName name="Jeff Jarvis" size={2} />
+        <ProfileName name={author} size={2} />
         <InfoWrapper>
-          <InfoText>3min</InfoText>
+          <InfoText>{readingTime}</InfoText>
           <Divider>{`//`}</Divider>
-          <InfoText>May 26, 2022</InfoText>
+          <InfoText>{date}</InfoText>
         </InfoWrapper>
       </Footer>
     </Wrapper>
