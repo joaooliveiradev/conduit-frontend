@@ -1,12 +1,12 @@
 import { Meta, Story } from "@storybook/react";
-import { ErrorState } from "./index";
+import { ErrorState, ErrorStateProps } from "./index";
 
-const stories: Meta = {
+const stories: Meta<ErrorStateProps> = {
   component: ErrorState
 }
 
 export default stories
 
-const Template: Story = (args) => <ErrorState {...args} />
+const Template: Story<ErrorStateProps> = (args) => <ErrorState {...args} message="This user hasn't written any articles yet." />
 
 export const Default = Template.bind({})

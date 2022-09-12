@@ -2,6 +2,10 @@ import { ReactComponent as ErrorIcon } from '@assets/errorIcon.svg'
 import Button from '@components/Button'
 import styled, { css } from 'styled-components'
 
+export type ErrorStateProps = {
+  message: string
+}
+
 const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
@@ -36,13 +40,13 @@ const Message = styled.p`
   `}
 `
 
-export const ErrorState = () => {
+export const ErrorState = ({ message }: ErrorStateProps) => {
   return (
     <Wrapper>
       <ErrorIcon />
       <TextWrapper>
         <Title>Something went wrong.</Title>
-        <Message>This user hasn&apos;t written any articles yet.</Message>
+        <Message>{message}</Message>
       </TextWrapper>
       <Button size="large">Try again</Button>
     </Wrapper>
