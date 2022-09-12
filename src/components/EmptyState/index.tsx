@@ -1,6 +1,10 @@
 import { ReactComponent as EmptyIcon } from '@assets/emptyIcon.svg'
 import styled, { css } from 'styled-components'
 
+export type EmptyStateProps = {
+  message: string
+}
+
 const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
@@ -33,15 +37,13 @@ const Description = styled.p`
   `}
 `
 
-export const EmptyState = () => {
+export const EmptyState = ({ message }: EmptyStateProps) => {
   return (
     <Wrapper>
       <EmptyIcon />
       <TextWrapper>
         <Title>No articles are here... yet.</Title>
-        <Description>
-          This user hasn&apos;t written any articles yet.
-        </Description>
+        <Description>{message}</Description>
       </TextWrapper>
     </Wrapper>
   )
