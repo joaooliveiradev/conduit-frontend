@@ -6,6 +6,7 @@ import { ReactComponent as CloseIcon } from '@assets/close.svg'
 
 export type ModalProps = {
   trigger: ReactNode
+  children: ReactNode
 }
 
 const Overlay = styled(Dialog.Overlay)`
@@ -21,7 +22,6 @@ const Content = styled(Dialog.Content)`
     border-radius: 4px;
     max-width: 40rem;
     width: 100%;
-    height: 35rem;
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -51,7 +51,7 @@ const IconButton = styled.button`
   `}
 `
 
-export const Modal = ({ trigger }: ModalProps) => {
+export const Modal = ({ trigger, children }: ModalProps) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
@@ -65,6 +65,7 @@ export const Modal = ({ trigger }: ModalProps) => {
               </IconButton>
             </CloseWrapper>
           </Dialog.Close>
+          {children}
         </Content>
       </Dialog.Portal>
     </Dialog.Root>
