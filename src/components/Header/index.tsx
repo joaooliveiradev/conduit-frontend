@@ -5,24 +5,23 @@ import Image from 'next/image'
 import styled from 'styled-components'
 
 export type HeaderProps = {
-  userLogged: boolean
+  isUserLoggedIn: boolean
 }
 
 const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 5rem;
 `
 
-export const Header = ({ userLogged }: HeaderProps) => {
+export const Header = ({ isUserLoggedIn }: HeaderProps) => {
   return (
     <Wrapper>
       <Image src={logo} alt="Conduit Logo" />
-      {userLogged ? (
+      {isUserLoggedIn ? (
         <ProfileName size={2} name="Jeff Jarvis" />
       ) : (
-        <Button size="large">Sing in</Button>
+        <Button size="large">Sign in</Button>
       )}
     </Wrapper>
   )
