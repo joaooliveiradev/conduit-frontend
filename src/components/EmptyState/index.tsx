@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 
 export type EmptyStateProps = {
   message: string
+  title: string;
 }
 
 const Wrapper = styled.div`
@@ -37,12 +38,12 @@ const Description = styled.p`
   `}
 `
 
-export const EmptyState = ({ message }: EmptyStateProps) => {
+export const EmptyState = ({ message, title }: EmptyStateProps) => {
   return (
     <Wrapper>
       <EmptyIcon />
       <TextWrapper>
-        <Title>No articles are here... yet.</Title>
+        <Title>{title}</Title>
         <Description>{message}</Description>
       </TextWrapper>
     </Wrapper>

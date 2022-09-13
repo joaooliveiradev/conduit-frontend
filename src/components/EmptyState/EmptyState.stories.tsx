@@ -8,7 +8,11 @@ const stories: Meta<EmptyStateProps> = {
 export default stories
 
 const Template: Story<EmptyStateProps> = (args) => (
-  <EmptyState {...args} message="This user hasn't written any articles yet." />
+  <EmptyState {...args} />
 )
 
 export const Default = Template.bind({})
+Default.args = {
+  title: "No articles are here... yet.",
+  message: "This user hasn't written any articles yet."
+}
