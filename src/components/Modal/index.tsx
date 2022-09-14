@@ -14,6 +14,15 @@ const Overlay = styled(Dialog.Overlay)`
     position: fixed;
     inset: 0;
     background-color: ${transparentize(0.6, theme.colors.black[100])};
+    animation: overlayShow 150ms ease-in;
+    @keyframes overlayShow {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   `}
 `
 
@@ -30,6 +39,17 @@ const Content = styled(Dialog.Content)`
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: ${theme.colors.white[100]};
+    animation: contentShow 150ms ease;
+    @keyframes contentShow {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
   `}
 `
 
@@ -48,6 +68,17 @@ const IconButton = styled.button`
     background-color: ${transparentize(0.8, theme.colors.grey[300])};
     border-radius: 50%;
     cursor: pointer;
+  `}
+`
+
+export const Title = styled(Dialog.Title)`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.large};
+  `}
+`
+export const Description = styled(Dialog.Description)`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.medium};
   `}
 `
 

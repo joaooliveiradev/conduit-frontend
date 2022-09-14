@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { Modal, ModalProps } from './index'
+import { Modal, ModalProps, Title, Description } from './index'
 import Button from '@components/Button'
 
 const stories: Meta<ModalProps> = {
@@ -15,7 +15,10 @@ const stories: Meta<ModalProps> = {
 
 const Template: Story<ModalProps> = () => (
   <Modal trigger={<Button size="large">Sign in</Button>}>
-    <h1>Modal</h1>
+    <div>
+      <Title>Title</Title>
+      <Description>Description</Description>
+    </div>
   </Modal>
 )
 
