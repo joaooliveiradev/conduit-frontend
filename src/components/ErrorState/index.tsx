@@ -1,12 +1,17 @@
 import { ReactComponent as ErrorIcon } from '@assets/errorIcon.svg'
-import Button, { ButtonProps } from '@components/Button'
+import Button from '@components/Button'
 import styled, { css } from 'styled-components'
 
-export interface ErrorStateProps extends Pick<ButtonProps, 'disabled' | 'block'> {
-  message: string
-  title: string
+type ButtonProps = {
+  disabled: boolean
+  block: boolean
   buttonLabel: string
 }
+
+export type ErrorStateProps = {
+  message: string
+  title: string
+} & ButtonProps
 
 const Wrapper = styled.div`
   ${({ theme }) => css`
@@ -42,7 +47,13 @@ const Message = styled.p`
   `}
 `
 
-export const ErrorState = ({ message, title, buttonLabel, disabled, block  }: ErrorStateProps) => {
+export const ErrorState = ({
+  message,
+  title,
+  buttonLabel,
+  disabled,
+  block,
+}: ErrorStateProps) => {
   return (
     <Wrapper>
       <ErrorIcon />
@@ -50,7 +61,9 @@ export const ErrorState = ({ message, title, buttonLabel, disabled, block  }: Er
         <Title>{title}</Title>
         <Message>{message}</Message>
       </TextWrapper>
-      <Button size="large" disabled={disabled} block={block}>{buttonLabel}</Button>
+      <Button size="large" disabled={disabled} block={block}>
+        {buttonLabel}
+      </Button>
     </Wrapper>
   )
 }
