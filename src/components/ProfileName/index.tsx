@@ -13,7 +13,6 @@ const Wrapper = styled.div<Pick<ProfileNameProps, 'size'>>`
     display: grid;
     column-gap: calc((${size} * 6px) / 2);
     grid-template-columns: auto 1fr;
-
     ${Name} {
       font-size: calc((${size} * 1.6rem) / 2);
       font-weight: 700;

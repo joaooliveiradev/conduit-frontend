@@ -26,7 +26,7 @@ const InputWrapper = styled.input<InputProps>`
     height: ${theme.spacings.xlarge};
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
-    padding-left: 16px;
+    padding-left: ${theme.spacings.small};
     font-size: ${theme.fonts.sizes.xmedium};
     font-weight: 600;
     color: ${errorMessage ? theme.colors.red[100] : theme.colors.black[200]};
