@@ -10,6 +10,7 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    'storybook-addon-next',
   ],
   webpackFinal: async (config) => {
     config.resolve.plugins = [
