@@ -2,7 +2,7 @@ import { ReactComponent as EmptyIcon } from '@assets/emptyIcon.svg'
 import styled, { css } from 'styled-components'
 
 export type EmptyStateProps = {
-  message: string
+  message: string;
   title: string;
 }
 
