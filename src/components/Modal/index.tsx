@@ -76,6 +76,7 @@ export const Title = styled(Dialog.Title)`
     font-size: ${theme.fonts.sizes.large};
   `}
 `
+
 export const Description = styled(Dialog.Description)`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.medium};
