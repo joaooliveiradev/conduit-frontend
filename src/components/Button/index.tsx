@@ -34,6 +34,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     font-weight: bold;
     border-radius: 2px;
     cursor: pointer;
+    transition: background-color 250ms ease-in;
     ${size && sizeModifiers[size](theme)};
     ${disabled &&
     css`
