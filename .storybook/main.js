@@ -1,4 +1,4 @@
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 const config = {
   stories: [
@@ -10,7 +10,7 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    'storybook-addon-next'
+    'storybook-addon-next',
   ],
   webpackFinal: async (config) => {
     config.resolve.plugins = [
@@ -19,6 +19,17 @@ const config = {
         extensions: config.resolve.extensions,
       }),
     ]
+
+    const fileLoaderRule = config.module.rules.find(
+      (rule) => rule.test && rule.test.test('.svg')
+    )
+    fileLoaderRule.exclude = /\.svg$/
+
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack', 'url-loader'],
+    })
+
     return config
   },
   framework: '@storybook/react',

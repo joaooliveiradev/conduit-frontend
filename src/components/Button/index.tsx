@@ -1,7 +1,7 @@
 import { Loading } from '@components/Loading'
+import { forwardRef } from 'react'
 import { HTMLAttributes } from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
-
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   children: string
   size: 'large' | 'medium'
@@ -50,19 +50,20 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
   `};
 `
 
-const Button = ({
-  children,
-  size,
-  disabled,
-  isLoading,
-  block = false,
-  ...rest
-}: ButtonProps) => {
-  return (
-    <Wrapper size={size} disabled={disabled} block={block} {...rest}>
-      {isLoading ? <Loading /> : children}
-    </Wrapper>
-  )
-}
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ size, disabled, block, isLoading, children, ...rest }, ref) => {
+    return (
+      <Wrapper
+        size={size}
+        disabled={disabled}
+        block={block}
+        {...rest}
+        ref={ref}
+      >
+        {isLoading ? <Loading /> : children}
+      </Wrapper>
+    )
+  }
+)
 
 export default Button
