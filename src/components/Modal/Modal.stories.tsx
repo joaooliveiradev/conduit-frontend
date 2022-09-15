@@ -14,7 +14,7 @@ const stories: Meta<ModalProps> = {
 }
 
 const Template: Story<ModalProps> = () => (
-  <Modal trigger={<Button size="large">Sign in</Button>} />
+  <Modal trigger={<Button size="large">Sign in</Button>}>
     <div>
       <Title>Title</Title>
       <Description>Description</Description>
