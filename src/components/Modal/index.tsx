@@ -6,6 +6,7 @@ import { ReactComponent as CloseIcon } from '@assets/close.svg'
 
 export type ModalProps = {
   trigger: ReactNode
+  children: ReactNode
 }
 
 const Overlay = styled(Dialog.Overlay)`
@@ -13,6 +14,15 @@ const Overlay = styled(Dialog.Overlay)`
     position: fixed;
     inset: 0;
     background-color: ${transparentize(0.6, theme.colors.black[100])};
+    animation: overlayShow 150ms ease-in;
+    @keyframes overlayShow {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   `}
 `
 
@@ -21,7 +31,6 @@ const Content = styled(Dialog.Content)`
     border-radius: 4px;
     max-width: 40rem;
     width: 100%;
-    height: 35rem;
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -30,6 +39,17 @@ const Content = styled(Dialog.Content)`
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: ${theme.colors.white[100]};
+    animation: contentShow 150ms ease;
+    @keyframes contentShow {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
   `}
 `
 
@@ -51,7 +71,19 @@ const IconButton = styled.button`
   `}
 `
 
-export const Modal = ({ trigger }: ModalProps) => {
+export const Title = styled(Dialog.Title)`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.large};
+  `}
+`
+
+export const Description = styled(Dialog.Description)`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.medium};
+  `}
+`
+
+export const Modal = ({ trigger, children }: ModalProps) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
@@ -65,6 +97,7 @@ export const Modal = ({ trigger }: ModalProps) => {
               </IconButton>
             </CloseWrapper>
           </Dialog.Close>
+          {children}
         </Content>
       </Dialog.Portal>
     </Dialog.Root>

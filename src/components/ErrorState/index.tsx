@@ -2,9 +2,16 @@ import { ReactComponent as ErrorIcon } from '@assets/errorIcon.svg'
 import Button from '@components/Button'
 import styled, { css } from 'styled-components'
 
+type ButtonProps = {
+  disabled: boolean
+  block: boolean
+  buttonLabel: string
+}
+
 export type ErrorStateProps = {
   message: string
-}
+  title: string
+} & ButtonProps
 
 const Wrapper = styled.div`
   ${({ theme }) => css`
@@ -12,7 +19,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    row-gap: ${theme.spacings.large};
+    row-gap: ${theme.spacings.medium};
   `}
 `
 
@@ -40,15 +47,23 @@ const Message = styled.p`
   `}
 `
 
-export const ErrorState = ({ message }: ErrorStateProps) => {
+export const ErrorState = ({
+  message,
+  title,
+  buttonLabel,
+  disabled,
+  block,
+}: ErrorStateProps) => {
   return (
     <Wrapper>
       <ErrorIcon />
       <TextWrapper>
-        <Title>Something went wrong.</Title>
+        <Title>{title}</Title>
         <Message>{message}</Message>
       </TextWrapper>
-      <Button size="large">Try again</Button>
+      <Button size="large" disabled={disabled} block={block}>
+        {buttonLabel}
+      </Button>
     </Wrapper>
   )
 }
