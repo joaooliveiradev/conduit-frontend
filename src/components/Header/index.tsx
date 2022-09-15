@@ -1,3 +1,4 @@
+import { Dropdown, DropdownItem } from '@components/Dropdown'
 import logo from '@assets/logo.webp'
 import Button from '@components/Button'
 import ProfileName from '@components/ProfileName'
@@ -19,7 +20,10 @@ export const Header = ({ isUserLoggedIn }: HeaderProps) => {
     <Wrapper>
       <Image src={logo} alt="Conduit Logo" />
       {isUserLoggedIn ? (
-        <ProfileName size={2} name="Jeff Jarvis" />
+        <Dropdown trigger={<ProfileName size={2} name="Jeff Jarvis" />}>
+          <DropdownItem href="profile" label="Profile" />
+          <DropdownItem href="signout" label="Sign Out" />
+        </Dropdown>
       ) : (
         <Button size="large">Sign in</Button>
       )}

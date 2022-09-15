@@ -8,14 +8,14 @@ export type LayoutProps = {
 }
 
 const Wrapper = styled.div`
-  height: 100vh;
+  width: 100%;
+  max-width: 1440px;
+  height: calc(100vh - 40px);
+  padding: 40px;
   display: grid;
-  padding: 70px 120px;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-  @media (max-width: 1440px) {
-    padding: 70px 40px;
-  }
+  margin: 0 auto;
 `
 
 export const Layout = ({ children }: LayoutProps) => {
