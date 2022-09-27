@@ -1,9 +1,9 @@
 import { parseCookies } from 'nookies'
-export const fetcher = async (
-  url: RequestInfo,
-  data?: unknown,
-  customConfig?: RequestInit
-) => {
+type Error = {
+  status: number
+  message: string
+}
+export const fetcher = async (url: RequestInfo, customConfig?: RequestInit) => {
   try {
     const { 'conduit.token': accessToken } = parseCookies()
     const headers: HeadersInit = {
@@ -12,21 +12,21 @@ export const fetcher = async (
     }
     const config: RequestInit = {
       headers,
-      method: data ? 'POST' : 'GET',
+      method: 'GET',
       mode: 'cors',
-      body: JSON.stringify(data),
       ...customConfig,
     }
-    const response = await window.fetch(url, config)
+    const response = await fetch(url, config)
     if (!response.ok) {
-      const errorMessage = {
+      const errorMessage: Error = {
         status: response.status,
         message: response.statusText,
       }
       throw errorMessage
     }
     return response.json()
-  } catch (error: unknown) {
-    return error
+  } catch (err) {
+    const error = err as Error
+    return { status: error.status, message: error.message }
   }
 }
