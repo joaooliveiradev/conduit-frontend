@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <Wrapper>
-      <Header isUserLoggedIn />
+      <Header />
       <main>{children}</main>
       <Footer />
     </Wrapper>
