@@ -22,6 +22,11 @@ const stories: Meta<DropdownStoriesProp> = {
         disable: true,
       },
     },
+    handleClick: {
+      table: {
+        disable: true,
+      }
+    },
   },
 }
 
