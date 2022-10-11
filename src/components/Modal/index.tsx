@@ -5,9 +5,9 @@ import styled, { css } from 'styled-components'
 import { ReactComponent as CloseIcon } from '@assets/close.svg'
 
 export type ModalProps = {
-  trigger: ReactNode
+  trigger?: ReactNode
   children: ReactNode
-}
+} & Dialog.DialogProps
 
 const Overlay = styled(Dialog.Overlay)`
   ${({ theme }) => css`
@@ -83,10 +83,15 @@ export const Description = styled(Dialog.Description)`
   `}
 `
 
-export const Modal = ({ trigger, children }: ModalProps) => {
+export const Modal = ({
+  trigger,
+  children,
+  open,
+  onOpenChange,
+}: ModalProps) => {
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Portal>
         <Overlay />
         <Content>
