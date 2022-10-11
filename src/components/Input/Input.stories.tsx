@@ -3,6 +3,13 @@ import Input, { InputProps } from './index'
 
 const stories: Meta = {
   component: Input,
+  argTypes: {
+    touched: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template: Story<InputProps> = (args) => (

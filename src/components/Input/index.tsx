@@ -4,6 +4,7 @@ import { transparentize } from 'polished'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
+  touched?: boolean
 }
 
 const Wrapper = styled.div`
@@ -31,16 +32,16 @@ const InputWrapper = styled.input<InputProps>`
     font-weight: 600;
     color: ${errorMessage ? theme.colors.red[100] : theme.colors.black[200]};
     ::placeholder {
-      color: ${theme.colors.grey[100]};
+      color: ${theme.colors.grey[200]};
     }
   `}
 `
 
-const Input = ({ errorMessage, ...rest }: InputProps) => {
+const Input = ({ errorMessage, touched, ...rest }: InputProps) => {
   return (
     <Wrapper>
-      <InputWrapper errorMessage={errorMessage} {...rest} />
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      <InputWrapper {...rest} autoComplete="off" />
+      {errorMessage && touched && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Wrapper>
   )
 }
