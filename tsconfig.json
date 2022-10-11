@@ -21,8 +21,12 @@
     "noUnusedLocals": true,
     "paths": {
       "@components/*": ["components/*"],
-      "@assets/*": ["assets/*"]
-    },
+      "@assets/*": ["assets/*"],
+      "@utils/*": ["utils/*"],
+      "@schemas/*": ["schemas/*"],
+      "@hooks/*": ["hooks/*"],
+      "@context/*": ["context/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
