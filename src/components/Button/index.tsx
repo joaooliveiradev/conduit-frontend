@@ -1,8 +1,7 @@
 import { Loading } from '@components/Loading'
-import { forwardRef } from 'react'
-import { HTMLAttributes } from 'react'
+import { ButtonHTMLAttributes, forwardRef } from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
-export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: string
   size: 'large' | 'medium'
   disabled?: boolean
