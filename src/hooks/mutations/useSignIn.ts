@@ -29,9 +29,9 @@ export const useSignIn = (options: UseSignInOptions) =>
         body: JSON.stringify(data),
         method: 'POST',
       })
+
       if (!response.ok) {
-        const errorResponse = await response.json()
-        throw errorResponse
+        // const errorResponse = await response.json()
       }
       return response.json()
     },
