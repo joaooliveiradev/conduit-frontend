@@ -11,7 +11,7 @@ export interface DropdownProps extends Popover.PopoverContentProps {
 
 export type DropdownItemProps = {
   label: string
-  href: string
+  href?: string
   handleClick?: () => void
 }
 
@@ -75,6 +75,23 @@ const Anchor = styled.a`
   `}
 `
 
+const DropdownButton = styled.button`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.xlarge};
+    color: ${theme.colors.black[100]};
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    padding: 4px ${theme.spacings.small};
+    border-radius: 6px;
+    background-color: unset;
+    cursor: pointer;
+    :focus-visible {
+      box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
+    }
+  `}
+`
+
 const Dropdown = ({ children, trigger }: DropdownProps) => {
   return (
     <Popover.Root>
@@ -91,9 +108,13 @@ const Dropdown = ({ children, trigger }: DropdownProps) => {
 const DropdownItem = ({ label, href, handleClick }: DropdownItemProps) => {
   return (
     <Item>
-      <Link href={href} passHref>
-        <Anchor onClick={handleClick}>{label}</Anchor>
-      </Link>
+      {href ? (
+        <Link href={href} passHref>
+          <Anchor>{label}</Anchor>
+        </Link>
+      ) : (
+        <DropdownButton onClick={handleClick}>{label}</DropdownButton>
+      )}
     </Item>
   )
 }

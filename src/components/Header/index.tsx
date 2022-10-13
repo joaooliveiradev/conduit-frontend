@@ -23,6 +23,7 @@ export const Header = () => {
       const storageUsername = localStorage.getItem('username')
       const username = storageUsername ? storageUsername : ''
       setUsername(username)
+      setIsModalOpen(false)
     }
   }, [status])
   return (
@@ -31,7 +32,7 @@ export const Header = () => {
       {status == 'loggedIn' && (
         <Dropdown trigger={<ProfileName size={2} name={username} />}>
           <DropdownItem href="profile" label="Profile" />
-          <DropdownItem href="/" label="Sign Out" handleClick={signOut} />
+          <DropdownItem label="Sign Out" handleClick={signOut} />
         </Dropdown>
       )}
       {(status === 'idle' || status === 'loggedOut') && (
