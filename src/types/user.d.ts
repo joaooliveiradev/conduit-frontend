@@ -11,8 +11,14 @@ export type User = {
   }
 }
 
-export const userTypesCodec = t.type({
+export const UserTypeCodec = t.type({
   user: t.type({
-    email: withMessage(NonEmptyString, "It's not your fault, ")
+    email: withMessage(NonEmptyString, "E-mail response should be a string "),
+    token: withMessage(NonEmptyString, "Token response should be a string "),
+    username: withMessage(NonEmptyString, "Username response should be a string "),
+    bio: withMessage(NonEmptyString, "Bio response should be a string "),
+    image: withMessage(NonEmptyString, "Image response should be a string ")
   })
 })
+
+export type UserTwo = t.TypeOf<typeof UserTypeCodec>
