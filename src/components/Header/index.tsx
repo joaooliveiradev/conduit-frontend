@@ -26,6 +26,7 @@ export const Header = () => {
       setIsModalOpen(false)
     }
   }, [status])
+
   return (
     <Wrapper>
       <Image src={logo} alt="Conduit Logo" />

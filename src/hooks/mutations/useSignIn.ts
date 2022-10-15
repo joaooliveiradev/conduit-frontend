@@ -1,14 +1,18 @@
+import * as t from 'io-ts'
 import type { ErrorResponse } from 'types/queryMutationError'
 import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 import { baseURL } from '@utils/env-variables'
-import { User, UserTwo, UserTypeCodec } from 'types/user'
-import { Either, Right, Left, isRight, tryCatch} from 'fp-ts/Either'
-import { pipe } from 'fp-ts/lib/function'
-import { either } from 'io-ts-types'
+import { UserTypeCodec } from 'types/user'
+import { Either, Right, Left, right, left } from 'fp-ts/Either'
+// import { pipe } from 'fp-ts/lib/function'
+// import { either } from 'io-ts-types'
 
-//type SuccessResponse = User
-type SuccessResponse = UserTwo
+const SignInResponseCodec = t.type({
+  user: UserTypeCodec,
+})
 
+type SignInResponse = t.TypeOf<typeof SignInResponseCodec>
+t
 export type UseSignInInput = {
   user: {
     email: string
@@ -16,16 +20,14 @@ export type UseSignInInput = {
   }
 }
 
-type UseSignInOptions = UseMutationOptions<
-  Right<SuccessResponse>,
+export type UseSignInOptions = UseMutationOptions<
+  Right<SignInResponse>,
   Left<ErrorResponse>,
   UseSignInInput
 >
 
-const signIn = async (
-  data: UseSignInInput
-) => {
-  const url = `${baseURL}/users/login`
+async function post<Data>(path: string, data: Data) {
+  const url = `${baseURL}${path}`
   const options = {
     headers: {
       'Content-type': 'application/json;',
@@ -33,19 +35,32 @@ const signIn = async (
     body: JSON.stringify(data),
     method: 'POST',
   }
+
   const response = await fetch(url, options)
-  const json = await response.json()
-  const result = UserTypeCodec.decode(json)
-  if(isRight(result)){
-    return result.right.user
-  } else {
-    return result.left[0]
+  if (response.status >= 400 && response.status <= 599) {
+    throw Error()
+    // throw Error({ status: response.status, body: response.body })
   }
+
+  return response
 }
 
-export const useSignIn = (options: UseSignInOptions) =>
-  useMutation<Right<SuccessResponse>, Left<ErrorResponse>, UseSignInInput>(
-    ['sign-in'],
-    signIn,
-    options
-  )
+const signInMutation = async (
+  data: UseSignInInput
+): Promise<Either<t.ValidationError[], SignInResponse>> => {
+  const response = await post(`/users/login`, data)
+  const json = await response.json()
+  const validationResult = SignInResponseCodec.decode(json)
+
+  if (validationResult._tag == 'Right') {
+    return right(validationResult.right)
+  }
+
+  return left(validationResult.left)
+}
+
+export const useSignIn = () =>
+  useMutation(['sign-in'], signInMutation, {
+    onSuccess: (result) => {},
+    onError: (error) => {},
+  })

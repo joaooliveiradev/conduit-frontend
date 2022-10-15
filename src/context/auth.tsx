@@ -1,5 +1,5 @@
 import { useSignIn, UseSignInInput } from '@hooks/mutations/useSignIn'
-import { setCoookies, destroyCookies } from '@utils/cookies'
+import { destroyCookies } from '@utils/cookies'
 import {
   createContext,
   ReactNode,
@@ -7,7 +7,7 @@ import {
   useContext,
   useEffect,
 } from 'react'
-import { resolveErrors } from '@utils/resolveErrors'
+// import { resolveErrors } from '@utils/resolveErrors'
 import { parseCookies } from 'nookies'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
@@ -46,17 +46,21 @@ const AuthProvider = ({ children }: AuthContextProps) => {
 
   const {
     mutate: signIn,
+    status: signInStatus,
     isLoading,
     isError,
-    error: errorSignInMutation,
-  } = useSignIn({
-    onSuccess: (response) => {
-      const { token, username } = response.user
-      setCoookies(token)
-      setStatus('loggedIn')
-      localStorage.setItem('username', username)
-    },
-  })
+    error
+  } = useSignIn()
+  console.log(signInStatus)
+  console.log(error)
+// {
+//     onSuccess: (response) => {
+//       const { token, username } = response.user
+//       setCoookies(token)
+//       setStatus('loggedIn')
+//       localStorage.setItem('username', username)
+//     },
+//   }
 
   const signOut = () => {
     localStorage.removeItem('username')
@@ -64,7 +68,8 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     setStatus('loggedOut')
   }
 
-  const errorSignIn = resolveErrors(errorSignInMutation)
+  // const errorSignIn = resolveErrors(errorSignInMutation)
+  const errorSignIn = ''
 
   return (
     <AuthContext.Provider
