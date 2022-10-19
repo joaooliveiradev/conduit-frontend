@@ -1,5 +1,5 @@
-import { useSignIn, UseSignInInput } from '@hooks/mutations/useSignIn'
-import { destroyCookies } from '@utils/cookies'
+import { useMutation } from '@tanstack/react-query'
+import { destroyCookies, setCoookies } from '@utils/cookies'
 import {
   createContext,
   ReactNode,
@@ -7,17 +7,22 @@ import {
   useContext,
   useEffect,
 } from 'react'
-// import { resolveErrors } from '@utils/resolveErrors'
 import { parseCookies } from 'nookies'
+import { SignInInput } from 'types/user'
+import { Either, isRight } from 'fp-ts/Either'
+import { resolveErrors } from '@utils/resolveErrors'
+import type { ErrorResponse } from 'types/queryMutationError'
+import { signInMutation, type SignInResponse } from './signInMutation'
+import * as t from 'io-ts'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
 type ContextProps = {
   status: Status
-  signIn: (values: UseSignInInput) => void
+  signIn: (values: SignInInput) => void
   isLoading: boolean
   isError: boolean
-  errorSignIn: string
+  errorMsg: string
   signOut: () => void
 }
 
@@ -31,13 +36,14 @@ const defaultValueContext: ContextProps = {
   signIn: () => undefined,
   isLoading: false,
   isError: false,
-  errorSignIn: '',
+  errorMsg: '',
 }
 
 const AuthContext = createContext(defaultValueContext)
 
 const AuthProvider = ({ children }: AuthContextProps) => {
   const [status, setStatus] = useState<Status>('idle')
+  const [errorMsg, setErrorMsg] = useState<string>('')
 
   useEffect(() => {
     const { 'conduit.token': accessToken } = parseCookies()
@@ -46,30 +52,32 @@ const AuthProvider = ({ children }: AuthContextProps) => {
 
   const {
     mutate: signIn,
-    status: signInStatus,
     isLoading,
     isError,
-    error
-  } = useSignIn()
-  console.log(signInStatus)
-  console.log(error)
-// {
-//     onSuccess: (response) => {
-//       const { token, username } = response.user
-//       setCoookies(token)
-//       setStatus('loggedIn')
-//       localStorage.setItem('username', username)
-//     },
-//   }
+  } = useMutation<
+    Either<t.ValidationError[], SignInResponse>,
+    ErrorResponse,
+    SignInInput
+  >(['sign-in'], signInMutation, {
+    onSuccess: (response) => {
+      if (isRight(response)) {
+        const { token, username } = response.right.user
+        setCoookies(token)
+        setStatus('loggedIn')
+        localStorage.setItem('username', username)
+      } else {
+        setErrorMsg('Something went wrong, please try again!')
+      }
+    },
+    onError: (err) => setErrorMsg(resolveErrors(err)),
+  })
 
   const signOut = () => {
     localStorage.removeItem('username')
     destroyCookies()
     setStatus('loggedOut')
+    setErrorMsg('')
   }
-
-  // const errorSignIn = resolveErrors(errorSignInMutation)
-  const errorSignIn = ''
 
   return (
     <AuthContext.Provider
@@ -78,7 +86,7 @@ const AuthProvider = ({ children }: AuthContextProps) => {
         signIn,
         isLoading,
         isError,
-        errorSignIn,
+        errorMsg,
         signOut,
       }}
     >

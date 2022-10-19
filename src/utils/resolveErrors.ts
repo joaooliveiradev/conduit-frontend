@@ -1,4 +1,3 @@
-import { ErrorResponse } from 'types/queryMutationError'
+import type { ErrorResponse } from 'types/queryMutationError'
 
-export const resolveErrors = (error: ErrorResponse | null) =>
-  error ? error.errors.body.join(', ') : ''
+export const resolveErrors = (error: ErrorResponse ) => error.errors.body.join(', ')

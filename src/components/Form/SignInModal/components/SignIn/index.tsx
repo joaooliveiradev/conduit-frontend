@@ -21,7 +21,7 @@ export type SignInValues = {
 }
 
 const SignIn = ({ handleClick }: SignInProps) => {
-  const { signIn, isLoading, isError, errorSignIn } = useAuth()
+  const { signIn, isLoading, errorMsg } = useAuth()
 
   const initialValues: SignInValues = {
     email: '',
@@ -74,7 +74,7 @@ const SignIn = ({ handleClick }: SignInProps) => {
       >
         Sign in
       </Button>
-      {isError && <ErrorMessage errorMessage={errorSignIn} />}
+      {errorMsg && <ErrorMessage errorMessage={errorMsg} />}
       <Text>
         Don&apos;t have an account?{' '}
         <ChangeFormBtn onClick={() => handleClick(false)}>
