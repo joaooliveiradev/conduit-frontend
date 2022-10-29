@@ -10,10 +10,8 @@ import {
 import { parseCookies } from 'nookies'
 import { SignInInput } from 'types/user'
 import { Either, isRight } from 'fp-ts/Either'
-import { resolveErrors } from '@utils/resolveErrors'
-import type { ErrorResponse } from 'types/queryMutationError'
-import { signInMutation, type SignInResponse } from './signInMutation'
-import * as t from 'io-ts'
+import { signInMutation, type SignInResponseOutput } from './signInMutation'
+import { DefaultErrorType } from '@utils/errors'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
@@ -55,8 +53,8 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     isLoading,
     isError,
   } = useMutation<
-    Either<t.ValidationError[], SignInResponse>,
-    ErrorResponse,
+    Either<DefaultErrorType, SignInResponseOutput>,
+    DefaultErrorType,
     SignInInput
   >(['sign-in'], signInMutation, {
     onSuccess: (response) => {
@@ -66,10 +64,10 @@ const AuthProvider = ({ children }: AuthContextProps) => {
         setStatus('loggedIn')
         localStorage.setItem('username', username)
       } else {
-        setErrorMsg('Something went wrong, please try again!')
+        setErrorMsg(response.left.message)
       }
     },
-    onError: (err) => setErrorMsg(resolveErrors(err)),
+    onError: (error) => setErrorMsg(error.message),
   })
 
   const signOut = () => {
