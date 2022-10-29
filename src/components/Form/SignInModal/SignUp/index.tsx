@@ -1,6 +1,6 @@
 import Button from '@components/Button'
 import Input from '@components/Input'
-import { Wrapper, Title, Text, ChangeFormBtn } from '@components/Form/SignInModal/components/styles'
+import { Wrapper, Title, Text, ChangeFormBtn } from '@components/Form/SignInModal/styles'
 
 type SignUpProps = {
   handleClick: (state: boolean) => void

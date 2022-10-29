@@ -9,7 +9,7 @@ import {
   Title,
   Text,
   ChangeFormBtn,
-} from '@components/Form/SignInModal/components/styles'
+} from '@components/Form/SignInModal/styles'
 
 type SignInProps = {
   handleClick: (state: boolean) => void

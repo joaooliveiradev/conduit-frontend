@@ -1,5 +1,5 @@
-import SignUp from '@components/Form/SignInModal/components/SignUp'
-import SignIn from '@components/Form/SignInModal/components/SignIn'
+import SignUp from '@components/Form/SignInModal/SignUp'
+import SignIn from '@components/Form/SignInModal/SignIn'
 import { useState } from 'react'
 import { Modal } from '@components/Modal'
 
