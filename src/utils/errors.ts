@@ -4,7 +4,7 @@ export type DefaultErrorType = {
   status: number
 }
 
-type ErrorResponse = {
+type ErrorAPIResponse = {
   errors: {
     body: string[]
   }
@@ -42,7 +42,7 @@ export class CodecValidationError extends DefaultError {
   }
 }
 
-export const errorsToString = (error: ErrorResponse) =>
+export const errorsToString = (error: ErrorAPIResponse) =>
   error.errors.body.join(', ')
 
 export const handleFetcherErrors = async (
