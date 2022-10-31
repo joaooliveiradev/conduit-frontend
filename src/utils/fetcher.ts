@@ -27,7 +27,6 @@ export const fetcher = async <A>(
     const config: RequestInit = {
       headers,
       method: defaultMethod,
-      mode: 'cors',
       ...customConfig,
     }
 
