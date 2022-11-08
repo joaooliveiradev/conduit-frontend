@@ -2,14 +2,14 @@ import Input from '@components/Input'
 import Button from '@components/Button'
 import ErrorMessage from '@components/ErrorMessage'
 import { useFormik } from 'formik'
-import { signInSchema } from '@schemas/Signin'
 import { useAuth } from '@context/auth'
 import {
-  Wrapper,
   Title,
   Text,
   ChangeFormBtn,
+  Wrapper,
 } from '@components/Form/SignInModal/styles'
+import * as Yup from 'yup'
 
 type SignInProps = {
   handleClick: (state: boolean) => void
@@ -19,6 +19,11 @@ export type SignInValues = {
   email: string
   password: string
 }
+
+const signInSchema = Yup.object({
+  email: Yup.string().email('E-mail is not valid').required('Email field is required').lowercase(),
+  password: Yup.string().required('Password field is required').min(8, 'Minimum 8 characters required!').max(64, 'Maximum 64 characters required!')
+})
 
 const SignIn = ({ handleClick }: SignInProps) => {
   const { signIn, isLoading, errorMsg } = useAuth()
@@ -36,9 +41,7 @@ const SignIn = ({ handleClick }: SignInProps) => {
 
   const handleSubmit = (values: SignInValues) => {
     const newSignInValues = {
-      user: {
-        ...values,
-      },
+      user: values,
     }
     signIn(newSignInValues)
   }
@@ -48,14 +51,11 @@ const SignIn = ({ handleClick }: SignInProps) => {
       <Title>Sign in</Title>
       <Input
         type="text"
-        id="email"
         placeholder="Email"
         name="email"
         onChange={formik.handleChange}
         errorMessage={formik.errors.email}
         touched={formik.touched.email}
-        onBlur={formik.handleBlur}
-        autoFocus
       />
       <Input
         placeholder="Password"
@@ -64,20 +64,19 @@ const SignIn = ({ handleClick }: SignInProps) => {
         onChange={formik.handleChange}
         errorMessage={formik.errors.password}
         touched={formik.touched.password}
-        onBlur={formik.handleBlur}
       />
       <Button
         type="submit"
         size="large"
         isLoading={isLoading}
-        disabled={isLoading || !formik.isValid}
+        disabled={isLoading}
       >
         Sign in
       </Button>
       {errorMsg && <ErrorMessage errorMessage={errorMsg} />}
       <Text>
         Don&apos;t have an account?{' '}
-        <ChangeFormBtn onClick={() => handleClick(false)}>
+        <ChangeFormBtn type="button" onClick={() => handleClick(false)}>
           Sign up
         </ChangeFormBtn>{' '}
         now.

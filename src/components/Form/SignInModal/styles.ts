@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components'
 
+
 export const Wrapper = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 0px 16px;
+  padding: 16px 16px;
 `
 
 export const Title = styled.h1`

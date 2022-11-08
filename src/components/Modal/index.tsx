@@ -53,20 +53,15 @@ const Content = styled(Dialog.Content)`
   `}
 `
 
-const CloseWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`
-
 const IconButton = styled.button`
   ${({ theme }) => css`
-    all: unset;
+    position: absolute;
+    top: 16px;
+    right: 16px;
     padding: 6px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: ${transparentize(0.8, theme.colors.grey[300])};
-    border-radius: 50%;
+    border-radius: 9999px;
     cursor: pointer;
   `}
 `
@@ -96,11 +91,9 @@ export const Modal = ({
         <Overlay />
         <Content>
           <Dialog.Close asChild>
-            <CloseWrapper>
-              <IconButton aria-label="Close">
-                <CloseIcon />
-              </IconButton>
-            </CloseWrapper>
+            <IconButton aria-label="Close">
+              <CloseIcon />
+            </IconButton>
           </Dialog.Close>
           {children}
         </Content>

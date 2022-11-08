@@ -1,6 +1,11 @@
 import Button from '@components/Button'
 import Input from '@components/Input'
-import { Wrapper, Title, Text, ChangeFormBtn } from '@components/Form/SignInModal/styles'
+import {
+  Wrapper,
+  Title,
+  Text,
+  ChangeFormBtn,
+} from '@components/Form/SignInModal/styles'
 
 type SignUpProps = {
   handleClick: (state: boolean) => void
@@ -16,7 +21,9 @@ const SignUp = ({ handleClick }: SignUpProps) => {
       <Button size="large">Sign up</Button>
       <Text>
         Already have an account?{' '}
-        <ChangeFormBtn onClick={() => handleClick(true)}>Sign in</ChangeFormBtn>{' '}
+        <ChangeFormBtn type="button" onClick={() => handleClick(true)}>
+          Sign in
+        </ChangeFormBtn>{' '}
         now.
       </Text>
     </Wrapper>
