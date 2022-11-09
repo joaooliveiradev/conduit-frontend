@@ -1,32 +1,30 @@
 import { parseCookies } from 'nookies'
 import { baseURL } from './env-variables'
 import { Either, left, right } from 'fp-ts/Either'
-import {
-  DefaultErrorType,
-  handleFetcherErrors,
-  UnknownError,
-} from '@utils/errors'
+import { DecodeError, DefaultError, handleFetcherErrors, UnknownError } from '@utils/errors'
 import { validateCodec } from '@utils/validate-codec'
 import * as t from 'io-ts'
 
-export const fetcher = async <A>(
+export const fetcher = async <D, A>(
   path: string,
-  customConfig?: RequestInit,
-  codec?: t.Type<A, unknown, unknown>
-): Promise<Either<DefaultErrorType, A>> => {
+  codec?: t.Type<A, unknown, unknown>,
+  data?: D,
+  customConfig?: RequestInit
+): Promise<Either<DefaultError | DecodeError, A>> => {
   try {
     const url = `${baseURL}${path}`
     const { 'conduit.token': accessToken } = parseCookies()
-
     const headers: HeadersInit = {
       'Content-type': 'application/json; charset=UTF-8',
       Authorization: accessToken,
     }
-    const defaultMethod = 'POST'
+
+    const defaultMethod = 'GET'
 
     const config: RequestInit = {
       headers,
       method: defaultMethod,
+      body: data ? JSON.stringify(data) : null,
       ...customConfig,
     }
 

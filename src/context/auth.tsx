@@ -11,7 +11,10 @@ import { parseCookies } from 'nookies'
 import { SignInInput } from 'types/user'
 import { Either, isRight } from 'fp-ts/Either'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
-import { DefaultErrorType } from '@utils/errors'
+import {
+  DecodeError,
+  DefaultError,
+} from '@utils/errors'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
@@ -53,16 +56,15 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     isLoading,
     isError,
   } = useMutation<
-    Either<DefaultErrorType, SignInResponseOutput>,
-    DefaultErrorType,
+    Either<DefaultError | DecodeError, SignInResponseOutput>,
+    DefaultError,
     SignInInput
   >(['sign-in'], signInMutation, {
     onSuccess: (response) => {
       if (isRight(response)) {
-        const { token, username } = response.right.user
+        const { token } = response.right.user
         setCoookies(token)
         setStatus('loggedIn')
-        localStorage.setItem('username', username)
       } else {
         setErrorMsg(response.left.message)
       }
@@ -71,7 +73,6 @@ const AuthProvider = ({ children }: AuthContextProps) => {
   })
 
   const signOut = () => {
-    localStorage.removeItem('username')
     destroyCookies()
     setStatus('loggedOut')
     setErrorMsg('')

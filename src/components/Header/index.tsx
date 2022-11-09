@@ -5,8 +5,14 @@ import ProfileName from '@components/ProfileName'
 import Image from 'next/image'
 import styled from 'styled-components'
 import SignInModal from '@components/Form/SignInModal'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAuth } from '@context/auth'
+import { useMe, UseMeOutput } from '@hooks/queries/useMe'
+import { useQuery } from '@tanstack/react-query'
+import type { DefaultErrorProps } from '@utils/errors'
+import { Either, isRight } from 'fp-ts/Either'
+import { fromNullable, chain, some, match, none } from 'fp-ts/Option'
+import { pipe } from 'fp-ts/function'
 
 const Wrapper = styled.header`
   display: flex;
@@ -15,17 +21,22 @@ const Wrapper = styled.header`
 `
 
 export const Header = () => {
-  const [username, setUsername] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { status, signOut } = useAuth()
-  useEffect(() => {
-    if (status == 'loggedIn') {
-      const storageUsername = localStorage.getItem('username')
-      const username = storageUsername ? storageUsername : ''
-      setUsername(username)
-      setIsModalOpen(false)
-    }
-  }, [status])
+
+  const { data } = useQuery<
+    Either<DefaultErrorProps, UseMeOutput>,
+    DefaultErrorProps
+  >(['use-me'], useMe, {
+    enabled: status === 'loggedIn',
+  })
+
+  const username = pipe(
+      data,
+      fromNullable,
+      chain((data) => isRight(data) ? some(data.right) : none),
+      match(() => '', (right) => right.user.username)
+    )
 
   return (
     <Wrapper>
