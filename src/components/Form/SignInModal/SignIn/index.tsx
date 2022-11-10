@@ -1,6 +1,5 @@
-import Input from '@components/Input'
-import Button from '@components/Button'
-import ErrorMessage from '@components/ErrorMessage'
+import { Input } from '@components/Input'
+import { Button, ErrorMessage } from '@/components'
 import { useFormik } from 'formik'
 import { useAuth } from '@context/auth'
 import {
@@ -21,8 +20,14 @@ export type SignInValues = {
 }
 
 const signInSchema = Yup.object({
-  email: Yup.string().email('E-mail is not valid').required('Email field is required').lowercase(),
-  password: Yup.string().required('Password field is required').min(8, 'Minimum 8 characters required!').max(64, 'Maximum 64 characters required!')
+  email: Yup.string()
+    .email('E-mail is not valid')
+    .required('Email field is required')
+    .lowercase(),
+  password: Yup.string()
+    .required('Password field is required')
+    .min(8, 'Minimum 8 characters required!')
+    .max(64, 'Maximum 64 characters required!'),
 })
 
 const SignIn = ({ handleClick }: SignInProps) => {
@@ -85,4 +90,4 @@ const SignIn = ({ handleClick }: SignInProps) => {
   )
 }
 
-export default SignIn
+export { SignIn }

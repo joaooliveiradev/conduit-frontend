@@ -12,8 +12,6 @@ const Text = styled.p`
   `}
 `
 
-const ErrorMessage = ({ errorMessage }: ErrorMessageProps) => (
+export const ErrorMessage = ({ errorMessage }: ErrorMessageProps) => (
   <Text>{errorMessage}</Text>
 )
-
-export default ErrorMessage

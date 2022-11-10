@@ -1,17 +1,17 @@
-import Button from '@components/Button'
-import Input from '@components/Input'
+import { Button, Input } from '@/components'
 import {
   Wrapper,
   Title,
   Text,
   ChangeFormBtn,
-} from '@components/Form/SignInModal/styles'
+} from '@/components/Form/SignInModal/styles'
+
 
 type SignUpProps = {
   handleClick: (state: boolean) => void
 }
 
-const SignUp = ({ handleClick }: SignUpProps) => {
+export const SignUp = ({ handleClick }: SignUpProps) => {
   return (
     <Wrapper>
       <Title>Sign up</Title>
@@ -29,5 +29,3 @@ const SignUp = ({ handleClick }: SignUpProps) => {
     </Wrapper>
   )
 }
-
-export default SignUp

@@ -7,8 +7,8 @@ import { useState } from 'react'
 import { Layout } from '@components/Layout'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
-import GlobalStyles from 'styles/global'
-import theme from 'styles/theme'
+import GlobalStyles from '@/styles/global'
+import theme from '@/styles/theme'
 import { AuthProvider } from '@context/auth'
 
 function MyApp({ Component, pageProps }: AppProps) {

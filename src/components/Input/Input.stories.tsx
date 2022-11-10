@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import Input, { InputProps } from './index'
+import { InputProps, Input } from '@components/Input'
 
 const stories: Meta = {
   component: Input,
@@ -37,6 +37,7 @@ export const Errored = Template.bind({})
 Errored.args = {
   value: 'Some wrong value',
   errorMessage: 'Some error message',
+  touched: true,
 }
 
 export default stories

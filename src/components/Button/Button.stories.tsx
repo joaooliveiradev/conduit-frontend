@@ -1,4 +1,4 @@
-import Button, { ButtonProps } from './index'
+import { ButtonProps, Button } from '@/components/Button'
 import { Meta, Story } from '@storybook/react'
 
 const stories: Meta = {

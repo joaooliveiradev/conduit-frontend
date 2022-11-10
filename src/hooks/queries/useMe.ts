@@ -1,4 +1,4 @@
-import { UserTypeCodec } from 'types/user'
+import { UserTypeCodec } from '@/types/user'
 import { Either } from 'fp-ts/Either'
 import type { DefaultErrorProps } from '@utils/errors'
 import { fetcher } from '@utils/fetcher'

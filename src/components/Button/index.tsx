@@ -49,7 +49,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
   `};
 `
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ size, disabled, block, isLoading, children, ...rest }, ref) => {
     return (
       <Wrapper
@@ -64,5 +64,3 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     )
   }
 )
-
-export default Button

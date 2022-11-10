@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import Avatar, { AvatarProps } from './index'
+import { AvatarProps, Avatar } from '@components/Avatar'
 
 const stories: Meta = {
   component: Avatar,

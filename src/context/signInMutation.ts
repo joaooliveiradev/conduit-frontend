@@ -1,4 +1,4 @@
-import { SignInInput, UserTypeCodec } from 'types/user'
+import { SignInInput, UserTypeCodec } from '@/types/user'
 import { Either } from 'fp-ts/Either'
 import { fetcher } from '@utils/fetcher'
 import { DecodeError, DefaultError } from '@utils/errors'
