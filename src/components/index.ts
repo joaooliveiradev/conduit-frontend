@@ -1,6 +1,6 @@
 export * from '@components/ArticleCard'
 export * from '@components/Avatar'
-export * from '@components/Button/'
+export * from '@components/Button'
 export * from '@components/Dropdown'
 export * from '@components/EmptyState'
 export * from '@components/ErrorMessage'

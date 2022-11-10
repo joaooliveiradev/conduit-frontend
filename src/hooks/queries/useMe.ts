@@ -2,19 +2,31 @@ import { UserTypeCodec } from '@/types/user'
 import { Either } from 'fp-ts/Either'
 import type { DefaultErrorProps } from '@utils/errors'
 import { fetcher } from '@utils/fetcher'
+import { useQuery } from '@tanstack/react-query'
+import { useAuth } from '@context/auth'
 import * as t from 'io-ts'
 
 const UseMeResponseCodec = t.type({
-  user: UserTypeCodec
+  user: UserTypeCodec,
 })
 
 type UseMeResponse = t.TypeOf<typeof UseMeResponseCodec>
 
-export type UseMeOutput = t.OutputOf<typeof UseMeResponseCodec>
+type UseMeOutput = t.OutputOf<typeof UseMeResponseCodec>
 
-export const useMe = async (): Promise<Either<DefaultErrorProps, UseMeOutput>> => {
+const useMe = async () =>
+  await fetcher<undefined, UseMeResponse>('/user', UseMeResponseCodec)
 
-  const result = await fetcher<undefined, UseMeResponse>('/user', UseMeResponseCodec)
+const useMeQuery = () => {
+  const { status } = useAuth()
 
-  return result
+  return useQuery<Either<DefaultErrorProps, UseMeOutput>, DefaultErrorProps>(
+    ['use-me'],
+    useMe,
+    {
+      enabled: status === 'loggedIn',
+    }
+  )
 }
+
+export { useMeQuery as useMe }

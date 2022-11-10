@@ -1,13 +1,17 @@
-import { Button, ProfileName, SignInModal , Dropdown, DropdownItem } from '@/components'
+import {
+  Button,
+  ProfileName,
+  SignInModal,
+  Dropdown,
+  DropdownItem,
+} from '@/components'
 import logo from '@assets/logo.webp'
 import Image from 'next/image'
 import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '@context/auth'
-import { useMe, UseMeOutput } from '@hooks/queries/useMe'
-import { useQuery } from '@tanstack/react-query'
-import type { DefaultErrorProps } from '@utils/errors'
-import { Either, isRight } from 'fp-ts/Either'
+import { useMe } from '@hooks/queries'
+import { isRight } from 'fp-ts/Either'
 import { fromNullable, chain, some, match, none } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 
@@ -20,20 +24,17 @@ const Wrapper = styled.header`
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { status, signOut } = useAuth()
-
-  const { data } = useQuery<
-    Either<DefaultErrorProps, UseMeOutput>,
-    DefaultErrorProps
-  >(['use-me'], useMe, {
-    enabled: status === 'loggedIn',
-  })
+  const { data } = useMe()
 
   const username = pipe(
-      data,
-      fromNullable,
-      chain((data) => isRight(data) ? some(data.right) : none),
-      match(() => '', (right) => right.user.username)
+    data,
+    fromNullable,
+    chain((data) => (isRight(data) ? some(data.right) : none)),
+    match(
+      () => '',
+      (right) => right.user.username
     )
+  )
 
   return (
     <Wrapper>
