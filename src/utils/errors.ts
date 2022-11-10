@@ -1,4 +1,4 @@
-export type DefaultErrorType = {
+export type DefaultErrorProps = {
   name: string
   message: string
   status: number
@@ -14,7 +14,7 @@ export class DefaultError extends Error {
   name: string
   status: number
 
-  constructor({ name, status, message }: DefaultErrorType) {
+  constructor({ name, status, message }: DefaultErrorProps) {
     super(message)
     this.name = name
     this.status = status
@@ -30,15 +30,15 @@ export class UnknownError extends DefaultError {
     })
   }
 }
-
-export class CodecValidationError extends DefaultError {
-  constructor() {
+export class DecodeError extends DefaultError {
+  decodeErrors: string;
+  constructor(decodeErrors: string) {
     super({
-      message:
-        "There was an error on the server and the request could not be completed. Sorry. It's not your fault, please wait a few minutes before you try again.",
-      name: 'Codec Validation Error',
+      message: 'Something went wrong, please try again',
+      name: 'Decode Validation Error',
       status: 422,
     })
+    this.decodeErrors = decodeErrors
   }
 }
 
@@ -47,7 +47,7 @@ export const errorsToString = (error: ErrorAPIResponse) =>
 
 export const handleFetcherErrors = async (
   responseErr: Response
-): Promise<DefaultErrorType> => {
+)=> {
   const isGenericError = !responseErr.headers.get('content-type')
   if (isGenericError) throw new UnknownError()
 

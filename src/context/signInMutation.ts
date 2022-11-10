@@ -1,7 +1,7 @@
 import { SignInInput, UserTypeCodec } from '@/types/user'
 import { Either } from 'fp-ts/Either'
 import { fetcher } from '@utils/fetcher'
-import { DecodeError, DefaultError } from '@utils/errors'
+import { DefaultError } from '@utils/errors'
 import * as t from 'io-ts'
 
 const SignInResponseCodec = t.type({
@@ -15,7 +15,7 @@ export type SignInResponseOutput = t.OutputOf<typeof SignInResponseCodec>
 export const signInMutation = async (
   data: SignInInput
 ): Promise<
-  Either<DefaultError | DecodeError, SignInResponseOutput>> => {
+  Either<DefaultError, SignInResponseOutput>> => {
   const options: RequestInit = {
     method: 'POST',
   }

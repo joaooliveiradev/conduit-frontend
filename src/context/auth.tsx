@@ -8,13 +8,10 @@ import {
   useEffect,
 } from 'react'
 import { parseCookies } from 'nookies'
-import { SignInInput } from 'types/user'
+import { SignInInput } from '@/types/user'
 import { Either, isRight } from 'fp-ts/Either'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
-import {
-  DecodeError,
-  DefaultError,
-} from '@utils/errors'
+import { DefaultError } from '@utils/errors'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
@@ -56,7 +53,7 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     isLoading,
     isError,
   } = useMutation<
-    Either<DefaultError | DecodeError, SignInResponseOutput>,
+    Either<DefaultError, SignInResponseOutput>,
     DefaultError,
     SignInInput
   >(['sign-in'], signInMutation, {

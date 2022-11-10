@@ -15,5 +15,3 @@ export const UserTypeCodec = t.type({
   bio: withMessage(t.string, () => 'Bio response should be a string '),
   image: withMessage(t.string, () => 'Image response should be a string '),
 })
-
-export type User = t.TypeOf<typeof UserTypeCodec>
