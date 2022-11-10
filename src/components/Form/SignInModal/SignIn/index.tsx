@@ -9,6 +9,7 @@ import {
   Wrapper,
 } from '@components/Form/SignInModal/styles'
 import * as Yup from 'yup'
+import { isSome } from 'fp-ts/Option'
 
 type SignInProps = {
   handleClick: (state: boolean) => void
@@ -78,7 +79,7 @@ const SignIn = ({ handleClick }: SignInProps) => {
       >
         Sign in
       </Button>
-      {errorMsg && <ErrorMessage errorMessage={errorMsg} />}
+      {isSome(errorMsg) && <ErrorMessage errorMessage={errorMsg.value} />}
       <Text>
         Don&apos;t have an account?{' '}
         <ChangeFormBtn type="button" onClick={() => handleClick(false)}>

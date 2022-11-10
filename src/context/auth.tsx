@@ -12,6 +12,7 @@ import { SignInInput } from '@/types/user'
 import { Either, isRight } from 'fp-ts/Either'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
 import { DefaultError } from '@utils/errors'
+import { Option, none, some } from 'fp-ts/Option'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
@@ -20,7 +21,7 @@ type ContextProps = {
   signIn: (values: SignInInput) => void
   isLoading: boolean
   isError: boolean
-  errorMsg: string
+  errorMsg: Option<string>
   signOut: () => void
 }
 
@@ -34,14 +35,14 @@ const defaultValueContext: ContextProps = {
   signIn: () => undefined,
   isLoading: false,
   isError: false,
-  errorMsg: '',
+  errorMsg: none,
 }
 
 const AuthContext = createContext(defaultValueContext)
 
 const AuthProvider = ({ children }: AuthContextProps) => {
   const [status, setStatus] = useState<Status>('idle')
-  const [errorMsg, setErrorMsg] = useState<string>('')
+  const [errorMsg, setErrorMsg] = useState<Option<string>>(none)
 
   useEffect(() => {
     const { 'conduit.token': accessToken } = parseCookies()
@@ -63,16 +64,18 @@ const AuthProvider = ({ children }: AuthContextProps) => {
         setCoookies(token)
         setStatus('loggedIn')
       } else {
-        setErrorMsg(response.left.message)
+        setErrorMsg(some(response.left.message))
       }
     },
-    onError: (error) => setErrorMsg(error.message),
+    onError: (error) => {
+      setErrorMsg(some(error.message))
+    },
   })
 
   const signOut = () => {
     destroyCookies()
     setStatus('loggedOut')
-    setErrorMsg('')
+    setErrorMsg(none)
   }
 
   return (
