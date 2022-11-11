@@ -8,8 +8,10 @@ import {
   ChangeFormBtn,
   Wrapper,
 } from '@components/Form/SignInModal/styles'
+import { fromNullable, chain, some, none, isSome } from 'fp-ts/Option'
+import { pipe } from 'fp-ts/lib/function'
+import { isLeft } from 'fp-ts/Either'
 import * as Yup from 'yup'
-import { isSome } from 'fp-ts/Option'
 
 type SignInProps = {
   handleClick: (state: boolean) => void
@@ -32,7 +34,7 @@ const signInSchema = Yup.object({
 })
 
 const SignIn = ({ handleClick }: SignInProps) => {
-  const { signIn, isLoading, errorMsg } = useAuth()
+  const { signIn, isLoading, data, error } = useAuth()
 
   const initialValues: SignInValues = {
     email: '',
@@ -51,6 +53,17 @@ const SignIn = ({ handleClick }: SignInProps) => {
     }
     signIn(newSignInValues)
   }
+
+  const returnErrorMessage = () => {
+    if (error) return some(error.message)
+    return pipe(
+      data,
+      fromNullable,
+      chain((data) => (isLeft(data) ? some(data.left.message) : none))
+    )
+  }
+
+  const errorMessage = returnErrorMessage()
 
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
@@ -79,7 +92,9 @@ const SignIn = ({ handleClick }: SignInProps) => {
       >
         Sign in
       </Button>
-      {isSome(errorMsg) && <ErrorMessage errorMessage={errorMsg.value} />}
+      {isSome(errorMessage) && (
+        <ErrorMessage errorMessage={errorMessage.value} />
+      )}
       <Text>
         Don&apos;t have an account?{' '}
         <ChangeFormBtn type="button" onClick={() => handleClick(false)}>
