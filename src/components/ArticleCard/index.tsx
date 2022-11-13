@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ProfileName } from '@components/ProfileName'
+import { ProfileName } from '@/components'
 
 export type ArticleCardProps = {
   title: string

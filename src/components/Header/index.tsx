@@ -5,12 +5,12 @@ import {
   Dropdown,
   DropdownItem,
 } from '@/components'
-import logo from '@assets/logo.webp'
+import logo from '@/assets/logo.webp'
 import Image from 'next/image'
 import styled from 'styled-components'
 import { useState } from 'react'
-import { useAuth } from '@context/auth'
-import { useMe } from '@hooks/queries'
+import { useAuth } from '@/context'
+import { useMe } from '@/hooks/queries'
 import { isRight } from 'fp-ts/Either'
 import { fromNullable, chain, some, match, none } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'

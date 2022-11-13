@@ -1,7 +1,7 @@
 import { pipe } from 'fp-ts/lib/function'
 import * as t from 'io-ts'
 import { right, left, isRight, Either } from 'fp-ts/Either'
-import { DecodeError } from '@utils/errors'
+import { DecodeError } from '@/utils'
 import { PathReporter } from 'io-ts/PathReporter'
 
 const validationHandler = <A>(

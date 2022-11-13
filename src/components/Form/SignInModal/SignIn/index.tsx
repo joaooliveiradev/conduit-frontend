@@ -1,13 +1,12 @@
-import { Input } from '@components/Input'
-import { Button, ErrorMessage } from '@/components'
+import { Button, ErrorMessage, Input } from '@/components'
 import { useFormik } from 'formik'
-import { useAuth } from '@context/auth'
+import { useAuth } from '@/context'
 import {
   Title,
   Text,
   ChangeFormBtn,
   Wrapper,
-} from '@components/Form/SignInModal/styles'
+} from '@/components/Form/SignInModal/styles'
 import { fromNullable, chain, some, none, isSome } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
 import { isLeft } from 'fp-ts/Either'
@@ -75,6 +74,7 @@ const SignIn = ({ handleClick }: SignInProps) => {
         onChange={formik.handleChange}
         errorMessage={formik.errors.email}
         touched={formik.touched.email}
+        onBlur={formik.handleBlur}
       />
       <Input
         placeholder="Password"
@@ -83,6 +83,7 @@ const SignIn = ({ handleClick }: SignInProps) => {
         onChange={formik.handleChange}
         errorMessage={formik.errors.password}
         touched={formik.touched.password}
+        onBlur={formik.handleBlur}
       />
       <Button
         type="submit"

@@ -1,5 +1,5 @@
-import { ReactComponent as ErrorIcon } from '@assets/errorIcon.svg'
-import { Button } from '@components/Button'
+import { ReactComponent as ErrorIcon } from '@/assets/errorIcon.svg'
+import { Button } from '@/components'
 import styled, { css } from 'styled-components'
 
 type ButtonProps = {

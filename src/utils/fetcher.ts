@@ -1,8 +1,6 @@
 import { parseCookies } from 'nookies'
-import { baseURL } from './env-variables'
 import { Either, left, right } from 'fp-ts/Either'
-import { DefaultError, handleFetcherErrors, UnknownError } from '@utils/errors'
-import { validateCodec } from '@utils/validate-codec'
+import { DefaultError, handleFetcherErrors, UnknownError, baseURL, validateCodec } from '@/utils'
 import * as t from 'io-ts'
 
 export const fetcher = async <D, A>(

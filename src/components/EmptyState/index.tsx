@@ -1,4 +1,4 @@
-import { ReactComponent as EmptyIcon } from '@assets/emptyIcon.svg'
+import { ReactComponent as EmptyIcon } from '@/assets/emptyIcon.svg'
 import styled, { css } from 'styled-components'
 
 export type EmptyStateProps = {

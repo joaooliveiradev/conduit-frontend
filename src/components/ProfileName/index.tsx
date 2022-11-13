@@ -1,4 +1,4 @@
-import { Avatar } from '@components/Avatar'
+import { Avatar } from '@/components'
 import styled, { css } from 'styled-components'
 
 export type ProfileNameProps = {

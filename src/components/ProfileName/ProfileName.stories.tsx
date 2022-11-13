@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { ProfileNameProps, ProfileName } from '@components/ProfileName'
+import { ProfileNameProps, ProfileName } from '@/components'
 
 const stories: Meta = {
   component: ProfileName,

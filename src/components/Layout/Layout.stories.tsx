@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { Layout, LayoutProps } from '@components/Layout'
+import { Layout, LayoutProps } from '@/components'
 
 const stories: Meta<LayoutProps> = {
   component: Layout,

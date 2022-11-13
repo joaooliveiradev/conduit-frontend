@@ -1,9 +1,8 @@
 import { UserTypeCodec } from '@/types/user'
 import { Either } from 'fp-ts/Either'
-import type { DefaultErrorProps } from '@utils/errors'
-import { fetcher } from '@utils/fetcher'
+import { type DefaultErrorProps, fetcher } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
-import { useAuth } from '@context/auth'
+import { useAuth } from '@/context/auth'
 import * as t from 'io-ts'
 
 const UseMeResponseCodec = t.type({

@@ -2,7 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { transparentize } from 'polished'
 import { ReactNode } from 'react'
 import styled, { css } from 'styled-components'
-import { ReactComponent as CloseIcon } from '@assets/close.svg'
+import { ReactComponent as CloseIcon } from '@/assets/close.svg'
 
 export type ModalProps = {
   trigger?: ReactNode

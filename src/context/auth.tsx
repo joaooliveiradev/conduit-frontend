@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { destroyCookies, setCoookies } from '@utils/cookies'
+import { destroyCookies, setCoookies, DefaultError } from '@/utils'
 import {
   createContext,
   ReactNode,
@@ -11,7 +11,6 @@ import { parseCookies } from 'nookies'
 import { SignInInput } from '@/types/user'
 import { Either, isRight } from 'fp-ts/Either'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
-import { DefaultError } from '@utils/errors'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 

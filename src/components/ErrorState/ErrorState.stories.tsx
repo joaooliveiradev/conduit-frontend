@@ -1,5 +1,5 @@
 import { Meta, Story } from "@storybook/react";
-import { ErrorState, ErrorStateProps } from "@components/ErrorState";
+import { ErrorState, ErrorStateProps } from "@/components";
 
 const stories: Meta<ErrorStateProps> = {
   component: ErrorState

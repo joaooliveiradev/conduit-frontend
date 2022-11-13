@@ -1,4 +1,5 @@
-export default {
+
+export const theme = {
   fonts: {
     sizes: {
       xsmall: '1.2rem',
@@ -41,4 +42,4 @@ export default {
       100: '#FAFAFA',
     },
   },
-} as const
+}

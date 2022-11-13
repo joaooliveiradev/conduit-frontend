@@ -1,7 +1,6 @@
 import { SignInInput, UserTypeCodec } from '@/types/user'
 import { Either } from 'fp-ts/Either'
-import { fetcher } from '@utils/fetcher'
-import { DefaultError } from '@utils/errors'
+import { fetcher, DefaultError } from '@/utils'
 import * as t from 'io-ts'
 
 const SignInResponseCodec = t.type({

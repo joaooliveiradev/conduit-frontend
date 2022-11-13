@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { InputProps, Input } from '@components/Input'
+import { InputProps, Input } from '@/components'
 
 const stories: Meta = {
   component: Input,

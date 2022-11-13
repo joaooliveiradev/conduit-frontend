@@ -1,4 +1,4 @@
-import { Loading } from '@components/Loading'
+import { Loading } from '@/components'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
