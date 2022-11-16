@@ -8,10 +8,10 @@ import {
 
 
 type SignUpProps = {
-  handleClick: (state: boolean) => void
+  onSwitchFormClick: (state: boolean) => void
 }
 
-export const SignUp = ({ handleClick }: SignUpProps) => {
+export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
   return (
     <Wrapper>
       <Title>Sign up</Title>
@@ -21,7 +21,7 @@ export const SignUp = ({ handleClick }: SignUpProps) => {
       <Button size="large">Sign up</Button>
       <Text>
         Already have an account?{' '}
-        <ChangeFormBtn type="button" onClick={() => handleClick(true)}>
+        <ChangeFormBtn type="button" onClick={() => onSwitchFormClick(true)}>
           Sign in
         </ChangeFormBtn>{' '}
         now.

@@ -12,7 +12,7 @@ export interface DropdownProps extends Popover.PopoverContentProps {
 export type DropdownItemProps = {
   label: string
   href?: string
-  handleClick?: () => void
+  onEventClick?: () => void
 }
 
 const Trigger = styled(Popover.Trigger)`
@@ -105,7 +105,7 @@ const Dropdown = ({ children, trigger }: DropdownProps) => {
   )
 }
 
-const DropdownItem = ({ label, href, handleClick }: DropdownItemProps) => {
+const DropdownItem = ({ label, href, onEventClick }: DropdownItemProps) => {
   return (
     <Item>
       {href ? (
@@ -113,7 +113,7 @@ const DropdownItem = ({ label, href, handleClick }: DropdownItemProps) => {
           <Anchor>{label}</Anchor>
         </Link>
       ) : (
-        <DropdownButton onClick={handleClick}>{label}</DropdownButton>
+        <DropdownButton onClick={onEventClick}>{label}</DropdownButton>
       )}
     </Item>
   )

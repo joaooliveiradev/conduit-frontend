@@ -13,7 +13,7 @@ import { isLeft } from 'fp-ts/Either'
 import * as Yup from 'yup'
 
 type SignInProps = {
-  handleClick: (state: boolean) => void
+  onSwitchFormClick: (state: boolean) => void
 }
 
 export type SignInValues = {
@@ -32,7 +32,7 @@ const signInSchema = Yup.object({
     .max(64, 'Maximum 64 characters required!'),
 })
 
-const SignIn = ({ handleClick }: SignInProps) => {
+const SignIn = ({ onSwitchFormClick }: SignInProps) => {
   const { signIn, isLoading, data, error } = useAuth()
 
   const initialValues: SignInValues = {
@@ -98,7 +98,7 @@ const SignIn = ({ handleClick }: SignInProps) => {
       )}
       <Text>
         Don&apos;t have an account?{' '}
-        <ChangeFormBtn type="button" onClick={() => handleClick(false)}>
+        <ChangeFormBtn type="button" onClick={() => onSwitchFormClick(false)}>
           Sign up
         </ChangeFormBtn>{' '}
         now.

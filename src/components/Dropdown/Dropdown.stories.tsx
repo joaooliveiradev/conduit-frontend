@@ -16,7 +16,7 @@ const stories: Meta<DropdownStoriesProp> = {
         disable: true,
       },
     },
-    handleClick: {
+    onEventClick: {
       table: {
         disable: true,
       },

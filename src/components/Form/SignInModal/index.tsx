@@ -12,9 +12,9 @@ export const SignInModal = ({ open, onOpenChange }: SignInModalProps) => {
   return (
     <Modal open={open} onOpenChange={onOpenChange} >
       {showSignIn ? (
-        <SignIn handleClick={switchForm} />
+        <SignIn onSwitchFormClick={switchForm} />
       ) : (
-        <SignUp handleClick={switchForm} />
+        <SignUp onSwitchFormClick={switchForm} />
       )}
     </Modal>
   )

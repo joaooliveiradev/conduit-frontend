@@ -42,7 +42,7 @@ export const Header = () => {
       {status == 'loggedIn' && (
         <Dropdown trigger={<ProfileName size={2} name={username} />}>
           <DropdownItem href="profile" label="Profile" />
-          <DropdownItem label="Sign Out" handleClick={signOut} />
+          <DropdownItem label="Sign Out" onEventClick={signOut} />
         </Dropdown>
       )}
       {(status === 'idle' || status === 'loggedOut') && (
