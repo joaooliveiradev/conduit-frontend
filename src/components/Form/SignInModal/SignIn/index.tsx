@@ -7,10 +7,9 @@ import {
   ChangeFormBtn,
   Wrapper,
 } from '@/components/Form/SignInModal/styles'
-import { fromNullable, chain, some, none, isSome } from 'fp-ts/Option'
-import { pipe } from 'fp-ts/lib/function'
-import { isLeft } from 'fp-ts/Either'
+import { isSome, none, fromNullable, chain, getLeft } from 'fp-ts/Option'
 import * as Yup from 'yup'
+import { pipe } from 'fp-ts/lib/function'
 
 type SignInProps = {
   onSwitchFormClick: (state: boolean) => void
@@ -33,7 +32,7 @@ const signInSchema = Yup.object({
 })
 
 const SignIn = ({ onSwitchFormClick }: SignInProps) => {
-  const { signIn, isLoading, data, error } = useAuth()
+  const { signIn, isLoading, data, error: genericError } = useAuth()
 
   const initialValues: SignInValues = {
     email: '',
@@ -53,17 +52,19 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
     signIn(newSignInValues)
   }
 
-  const returnErrorMessage = () => {
-    if (error) return some(error.message)
-    return pipe(
-      data,
-      fromNullable,
-      chain((data) => (isLeft(data) ? some(data.left.message) : none))
-    )
+  const dataError = pipe(
+    data,
+    fromNullable,
+    chain((data) => isSome(data) ? getLeft(data.value) : none)
+  )
+
+  const handleError = () => {
+    if(isSome(genericError)) return genericError
+    else if (isSome(dataError)) return dataError
+    else return none
   }
 
-  const errorMessage = returnErrorMessage()
-
+  const errorObj  = handleError()
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
       <Title>Sign in</Title>
@@ -93,8 +94,8 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
       >
         Sign in
       </Button>
-      {isSome(errorMessage) && (
-        <ErrorMessage errorMessage={errorMessage.value} />
+      {isSome(errorObj) && (
+        <ErrorMessage errorMessage={errorObj.value.message} />
       )}
       <Text>
         Don&apos;t have an account?{' '}

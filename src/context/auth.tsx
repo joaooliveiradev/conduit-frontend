@@ -10,7 +10,9 @@ import {
 import { parseCookies } from 'nookies'
 import { SignInInput } from '@/types/user'
 import { Either, isRight } from 'fp-ts/Either'
+import { Option, none, fromNullable } from 'fp-ts/Option'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
+import { pipe } from 'fp-ts/lib/function'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
@@ -19,8 +21,8 @@ type ContextProps = {
   signIn: (values: SignInInput) => void
   isLoading: boolean
   signOut: () => void
-  data: Either<DefaultError, SignInResponseOutput> | undefined
-  error: DefaultError | null
+  data: Option<Either<DefaultError, SignInResponseOutput>>
+  error: Option<DefaultError>
 }
 
 type AuthContextProps = {
@@ -32,8 +34,8 @@ const defaultValueContext: ContextProps = {
   signOut: () => undefined,
   signIn: () => undefined,
   isLoading: false,
-  data: undefined,
-  error: null,
+  data: none,
+  error: none,
 }
 
 const AuthContext = createContext(defaultValueContext)
@@ -49,8 +51,8 @@ const AuthProvider = ({ children }: AuthContextProps) => {
   const {
     mutate: signIn,
     isLoading,
-    data,
-    error,
+    data: dataSignIn,
+    error: errorSignIn,
   } = useMutation<
     Either<DefaultError, SignInResponseOutput>,
     DefaultError,
@@ -64,6 +66,9 @@ const AuthProvider = ({ children }: AuthContextProps) => {
       }
     },
   })
+
+  const data = pipe(dataSignIn, fromNullable)
+  const error = pipe(errorSignIn, fromNullable)
 
   const signOut = () => {
     destroyCookies()
