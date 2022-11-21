@@ -13,19 +13,19 @@ type UseMeResponse = t.TypeOf<typeof UseMeResponseCodec>
 
 type UseMeOutput = t.OutputOf<typeof UseMeResponseCodec>
 
-const useMe = async () =>
+const getMe = async () =>
   await fetcher<undefined, UseMeResponse>('/user', UseMeResponseCodec)
 
-const useMeQuery = () => {
+const useMe = () => {
   const { status } = useAuth()
 
   return useQuery<Either<DefaultErrorProps, UseMeOutput>, DefaultErrorProps>(
     ['use-me'],
-    useMe,
+    getMe,
     {
       enabled: status === 'loggedIn',
     }
   )
 }
 
-export { useMeQuery as useMe }
+export { useMe }

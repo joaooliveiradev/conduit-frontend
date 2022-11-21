@@ -11,8 +11,7 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '@/context'
 import { useMe } from '@/hooks/queries'
-import { isRight } from 'fp-ts/Either'
-import { fromNullable, chain, some, match, none } from 'fp-ts/Option'
+import { fromNullable, chain, match, getRight } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 
 const Wrapper = styled.header`
@@ -29,11 +28,8 @@ export const Header = () => {
   const username = pipe(
     data,
     fromNullable,
-    chain((data) => (isRight(data) ? some(data.right) : none)),
-    match(
-      () => '',
-      (right) => right.user.username
-    )
+    chain(getRight),
+    match(() => '', (data) => data.user.username)
   )
 
   return (

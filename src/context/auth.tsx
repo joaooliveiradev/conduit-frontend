@@ -45,7 +45,7 @@ const AuthProvider = ({ children }: AuthContextProps) => {
 
   useEffect(() => {
     const { 'conduit.token': accessToken } = parseCookies()
-    if (accessToken) return setStatus('loggedIn')
+    if (accessToken) setStatus('loggedIn')
   }, [])
 
   const {
