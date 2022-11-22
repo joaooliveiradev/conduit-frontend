@@ -1,11 +1,5 @@
-import ProfileName from '@components/ProfileName'
+import { ProfileName, Dropdown, DropdownItem, DropdownProps, DropdownItemProps } from '@/components'
 import { Meta, Story } from '@storybook/react'
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownProps,
-  DropdownItemProps,
-} from './index'
 
 type DropdownStoriesProp = Omit<DropdownProps, 'children'> & DropdownItemProps
 
@@ -18,6 +12,11 @@ const stories: Meta<DropdownStoriesProp> = {
       },
     },
     asChild: {
+      table: {
+        disable: true,
+      },
+    },
+    onEventClick: {
       table: {
         disable: true,
       },

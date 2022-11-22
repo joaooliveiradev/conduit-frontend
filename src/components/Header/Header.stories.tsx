@@ -1,15 +1,13 @@
 import { Meta, Story } from "@storybook/react";
-import { Header, HeaderProps } from "./index";
+import { Header } from "@/components";
 
-const stories: Meta<HeaderProps> = {
+const stories: Meta = {
   component: Header,
 }
 
 export default stories
 
-const Template: Story<HeaderProps> = (args) => <Header {...args} />
+const Template: Story = (args) => <Header {...args} />
 
 export const Default = Template.bind({})
-Default.args = {
-  isUserLoggedIn: true
-}
+

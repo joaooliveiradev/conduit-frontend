@@ -9,20 +9,19 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "paths": {
-      "@components/*": ["components/*"],
-      "@assets/*": ["assets/*"]
-    },
+      "@/*": ["./src/*"],
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

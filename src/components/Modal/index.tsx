@@ -2,12 +2,12 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { transparentize } from 'polished'
 import { ReactNode } from 'react'
 import styled, { css } from 'styled-components'
-import { ReactComponent as CloseIcon } from '@assets/close.svg'
+import { ReactComponent as CloseIcon } from '@/assets/close.svg'
 
 export type ModalProps = {
-  trigger: ReactNode
+  trigger?: ReactNode
   children: ReactNode
-}
+} & Dialog.DialogProps
 
 const Overlay = styled(Dialog.Overlay)`
   ${({ theme }) => css`
@@ -53,20 +53,15 @@ const Content = styled(Dialog.Content)`
   `}
 `
 
-const CloseWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`
-
 const IconButton = styled.button`
   ${({ theme }) => css`
-    all: unset;
+    position: absolute;
+    top: 16px;
+    right: 16px;
     padding: 6px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: ${transparentize(0.8, theme.colors.grey[300])};
-    border-radius: 50%;
+    border-radius: 9999px;
     cursor: pointer;
   `}
 `
@@ -83,19 +78,22 @@ export const Description = styled(Dialog.Description)`
   `}
 `
 
-export const Modal = ({ trigger, children }: ModalProps) => {
+export const Modal = ({
+  trigger,
+  children,
+  open,
+  onOpenChange,
+}: ModalProps) => {
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Portal>
         <Overlay />
         <Content>
           <Dialog.Close asChild>
-            <CloseWrapper>
-              <IconButton aria-label="Close">
-                <CloseIcon />
-              </IconButton>
-            </CloseWrapper>
+            <IconButton aria-label="Close">
+              <CloseIcon />
+            </IconButton>
           </Dialog.Close>
           {children}
         </Content>

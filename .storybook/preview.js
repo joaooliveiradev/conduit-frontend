@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
-import theme from '../src/styles/theme'
-import GlobalStyles from '../src/styles/global'
+import { theme } from '../src/styles/theme'
+import { GlobalStyles } from '../src/styles/global'
 
-const withThemeProvider = (Story, context) => (
-  <ThemeProvider theme={theme}>
-    <GlobalStyles />
-    <Story {...context} />
-  </ThemeProvider>
-)
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
+const withThemeProvider = (Story, context) => {
+  const [queryClient] = useState(() => new QueryClient())
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Story {...context} />
+      </ThemeProvider>
+    </QueryClientProvider>
+  )
+}
 export const decorators = [withThemeProvider]
 
 export const parameters = {

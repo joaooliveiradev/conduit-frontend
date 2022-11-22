@@ -4,6 +4,7 @@ import { transparentize } from 'polished'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
+  touched?: boolean
 }
 
 const Wrapper = styled.div`
@@ -22,27 +23,32 @@ const ErrorMessage = styled.p`
 `
 
 const InputWrapper = styled.input<InputProps>`
-  ${({ theme, errorMessage }) => css`
+  ${({ theme, errorMessage, touched }) => css`
     height: ${theme.spacings.xlarge};
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
     padding-left: ${theme.spacings.small};
     font-size: ${theme.fonts.sizes.xmedium};
     font-weight: 600;
-    color: ${errorMessage ? theme.colors.red[100] : theme.colors.black[200]};
+    color: ${errorMessage && touched
+      ? theme.colors.red[100]
+      : theme.colors.black[200]};
     ::placeholder {
-      color: ${theme.colors.grey[100]};
+      color: ${theme.colors.grey[200]};
     }
   `}
 `
 
-const Input = ({ errorMessage, ...rest }: InputProps) => {
+export const Input = ({ errorMessage, touched, ...rest }: InputProps) => {
   return (
     <Wrapper>
-      <InputWrapper errorMessage={errorMessage} {...rest} />
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      <InputWrapper
+        errorMessage={errorMessage}
+        touched={touched}
+        {...rest}
+        autoComplete="off"
+      />
+      {errorMessage && touched && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Wrapper>
   )
 }
-
-export default Input

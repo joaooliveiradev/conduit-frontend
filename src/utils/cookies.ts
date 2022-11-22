@@ -1,5 +1,5 @@
 import { CookieSerializeOptions } from 'cookie'
-import { setCookie } from 'nookies'
+import { setCookie, destroyCookie } from 'nookies'
 
 export const setCoookies = (accessToken: string) => {
   const oneDay = 60 * 60 * 24;
@@ -11,3 +11,5 @@ export const setCoookies = (accessToken: string) => {
   }
   setCookie(null, 'conduit.token', accessToken, options)
 }
+
+export const destroyCookies = () => destroyCookie(null, 'conduit.token')

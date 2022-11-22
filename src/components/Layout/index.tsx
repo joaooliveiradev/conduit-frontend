@@ -1,5 +1,4 @@
-import { Footer } from '@components/Footer'
-import { Header } from '@components/Header'
+import { Header, Footer } from '@/components'
 import { ReactNode } from 'react'
 import styled from 'styled-components'
 
@@ -21,7 +20,7 @@ const Wrapper = styled.div`
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <Wrapper>
-      <Header isUserLoggedIn />
+      <Header />
       <main>{children}</main>
       <Footer />
     </Wrapper>

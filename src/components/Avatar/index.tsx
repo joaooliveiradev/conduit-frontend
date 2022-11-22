@@ -19,7 +19,7 @@ const Wrapper = styled.div<Omit<AvatarProps, 'name'>>`
   `}
 `
 
-const Avatar = ({ name, size }: AvatarProps) => {
+export const Avatar = ({ name, size }: AvatarProps) => {
   const arrOfLetters = name.split('')
   const onlyLettersRegex = /^[a-zA-ZÀ-ÿ]+$/
   const firstLetter = arrOfLetters.find((letter) =>
@@ -32,4 +32,3 @@ const Avatar = ({ name, size }: AvatarProps) => {
   )
 }
 
-export default Avatar

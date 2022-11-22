@@ -1,13 +1,18 @@
-import { Dropdown, DropdownItem } from '@components/Dropdown'
-import logo from '@assets/logo.webp'
-import Button from '@components/Button'
-import ProfileName from '@components/ProfileName'
+import {
+  Button,
+  ProfileName,
+  SignInModal,
+  Dropdown,
+  DropdownItem,
+} from '@/components'
+import logo from '@/assets/logo.webp'
 import Image from 'next/image'
 import styled from 'styled-components'
-
-export type HeaderProps = {
-  isUserLoggedIn: boolean
-}
+import { useState } from 'react'
+import { useAuth } from '@/context'
+import { useMe } from '@/hooks/queries'
+import { fromNullable, chain, match, getRight } from 'fp-ts/Option'
+import { pipe } from 'fp-ts/function'
 
 const Wrapper = styled.header`
   display: flex;
@@ -15,17 +20,37 @@ const Wrapper = styled.header`
   justify-content: space-between;
 `
 
-export const Header = ({ isUserLoggedIn }: HeaderProps) => {
+export const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const { status, signOut } = useAuth()
+  const { data } = useMe()
+
+  const username = pipe(
+    data,
+    fromNullable,
+    chain(getRight),
+    match(() => '', (data) => data.user.username)
+  )
+
   return (
     <Wrapper>
       <Image src={logo} alt="Conduit Logo" />
-      {isUserLoggedIn ? (
-        <Dropdown trigger={<ProfileName size={2} name="Jeff Jarvis" />}>
+      {status == 'loggedIn' && (
+        <Dropdown trigger={<ProfileName size={2} name={username} />}>
           <DropdownItem href="profile" label="Profile" />
-          <DropdownItem href="signout" label="Sign Out" />
+          <DropdownItem label="Sign Out" onEventClick={signOut} />
         </Dropdown>
-      ) : (
-        <Button size="large">Sign in</Button>
+      )}
+      {(status === 'idle' || status === 'loggedOut') && (
+        <>
+          <Button size="large" onClick={() => setIsModalOpen(true)}>
+            Sign in
+          </Button>
+          <SignInModal
+            open={isModalOpen}
+            onOpenChange={(open) => setIsModalOpen(open)}
+          />
+        </>
       )}
     </Wrapper>
   )
