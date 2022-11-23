@@ -6,10 +6,15 @@ import {
   ChangeFormBtn,
 } from '@/components/Form/SignInModal/styles'
 import { useAuth } from '@/context/auth'
+import { SignInInput } from '@/types/user'
+import { DefaultError } from '@/utils/errors'
 import { f } from '@/utils/expression'
+import { useMutation } from '@tanstack/react-query'
 import { useFormik } from 'formik'
+import { Either } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { chain, getLeft, isSome, none } from 'fp-ts/Option'
+import { chain, fromNullable, getLeft, isSome, none } from 'fp-ts/Option'
+import { signUpMutation, type SignUpResponseOutput } from '@/components/Form/SignInModal/SignUp/signUpMutation'
 import * as Yup from 'yup'
 
 type SignUpProps = {
@@ -35,7 +40,20 @@ const signUpSchema = Yup.object({
 })
 
 export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
-  const { signUp, isLoadingSignUp, errorSignUp, dataSignUp } = useAuth()
+  const { loginHandler } = useAuth()
+
+  const {
+    data,
+    mutate: signUp,
+    isLoading,
+    error: errorSignUp,
+  } = useMutation<
+    Either<DefaultError, SignUpResponseOutput>,
+    DefaultError,
+    SignInInput
+  >(['sign-up'], signUpMutation, {
+    onSuccess: (response) => loginHandler(response),
+  })
 
   const initialValues: SignUpValues = {
     username: '',
@@ -56,10 +74,11 @@ export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
     onSubmit: (values) => handleSubmit(values),
   })
 
-  const dataError = pipe(dataSignUp, chain(getLeft))
+  const dataError = pipe(data, fromNullable, chain(getLeft))
+  const error = pipe(errorSignUp, fromNullable)
 
   const maybeError = f(() => {
-    if (isSome(errorSignUp)) return errorSignUp
+    if (isSome(error)) return error
     else if (isSome(dataError)) return dataError
     else return none
   })
@@ -86,7 +105,7 @@ export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
         touched={formik.touched.email}
       />
       <Input
-        name='password'
+        name="password"
         placeholder="Password"
         type="password"
         onChange={formik.handleChange}
@@ -97,8 +116,8 @@ export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
       <Button
         type="submit"
         size="large"
-        disabled={isLoadingSignUp}
-        isLoading={isLoadingSignUp}
+        disabled={isLoading}
+        isLoading={isLoading}
       >
         Sign up
       </Button>

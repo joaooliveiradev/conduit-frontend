@@ -7,10 +7,15 @@ import {
   ChangeFormBtn,
   Wrapper,
 } from '@/components/Form/SignInModal/styles'
-import { isSome, none, chain, getLeft } from 'fp-ts/Option'
-import * as Yup from 'yup'
+import { isSome, none, chain, getLeft, fromNullable } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
 import { f } from '@/utils/expression'
+import { signInMutation, type SignInResponseOutput } from '@/components/Form/SignInModal/SignIn/signInMutation'
+import { useMutation } from '@tanstack/react-query'
+import { Either } from 'fp-ts/lib/Either'
+import { DefaultError } from '@/utils/errors'
+import { SignInInput } from '@/types/user'
+import * as Yup from 'yup'
 
 type SignInProps = {
   onSwitchFormClick: (state: boolean) => void
@@ -33,12 +38,20 @@ const signInSchema = Yup.object({
 })
 
 const SignIn = ({ onSwitchFormClick }: SignInProps) => {
+  const { loginHandler } = useAuth()
+
   const {
-    signIn,
-    isLoadingSignIn,
-    dataSignIn,
-    errorSignIn,
-  } = useAuth()
+    mutate: signIn,
+    isLoading,
+    data,
+    error: errorSignIn,
+  } = useMutation<
+    Either<DefaultError, SignInResponseOutput>,
+    DefaultError,
+    SignInInput
+  >(['sign-in'], signInMutation, {
+    onSuccess: (response) => loginHandler(response),
+  })
 
   const initialValues: SignInValues = {
     email: '',
@@ -58,10 +71,11 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
     signIn(newSignInValues)
   }
 
-  const dataError = pipe(dataSignIn, chain(getLeft))
+  const dataError = pipe(data, fromNullable, chain(getLeft))
+  const error = pipe(errorSignIn, fromNullable)
 
   const maybeError = f(() => {
-    if (isSome(errorSignIn)) return errorSignIn
+    if (isSome(error)) return error
     else if (isSome(dataError)) return dataError
     else return none
   })
@@ -90,8 +104,8 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
       <Button
         type="submit"
         size="large"
-        isLoading={isLoadingSignIn}
-        disabled={isLoadingSignIn}
+        isLoading={isLoading}
+        disabled={isLoading}
       >
         Sign in
       </Button>

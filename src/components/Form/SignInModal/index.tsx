@@ -10,7 +10,7 @@ export const SignInModal = ({ open, onOpenChange }: SignInModalProps) => {
   const [showSignIn, setShowSignIn] = useState<boolean>(true)
   const switchForm = (state: boolean) => setShowSignIn(state)
   return (
-    <Modal open={open} onOpenChange={onOpenChange} >
+    <Modal open={open} onOpenChange={onOpenChange}>
       {showSignIn ? (
         <SignIn onSwitchFormClick={switchForm} />
       ) : (
