@@ -11,7 +11,14 @@ import { parseCookies } from 'nookies'
 import { SignInInput } from '@/types/user'
 import { Either, isRight } from 'fp-ts/Either'
 import { Option, none, fromNullable } from 'fp-ts/Option'
-import { signInMutation, type SignInResponseOutput } from './signInMutation'
+import {
+  signInMutation,
+  type SignInResponseOutput,
+} from '@/context/signInMutation'
+import {
+  signUpMutation,
+  type SignUpResponseOutput,
+} from '@/context/signUpMutation'
 import { pipe } from 'fp-ts/lib/function'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
@@ -19,10 +26,14 @@ type Status = 'loggedOut' | 'loggedIn' | 'idle'
 type ContextProps = {
   status: Status
   signIn: (values: SignInInput) => void
-  isLoading: boolean
   signOut: () => void
-  data: Option<Either<DefaultError, SignInResponseOutput>>
-  error: Option<DefaultError>
+  signUp: (values: SignInInput) => void
+  isLoadingSignIn: boolean
+  isLoadingSignUp: boolean
+  dataSignIn: Option<Either<DefaultError, SignInResponseOutput>>
+  dataSignUp: Option<Either<DefaultError, SignUpResponseOutput>>
+  errorSignIn: Option<DefaultError>
+  errorSignUp: Option<DefaultError>
 }
 
 type AuthContextProps = {
@@ -33,9 +44,13 @@ const defaultValueContext: ContextProps = {
   status: 'idle',
   signOut: () => undefined,
   signIn: () => undefined,
-  isLoading: false,
-  data: none,
-  error: none,
+  signUp: () => undefined,
+  isLoadingSignIn: false,
+  isLoadingSignUp: false,
+  dataSignIn: none,
+  dataSignUp: none,
+  errorSignIn: none,
+  errorSignUp: none,
 }
 
 const AuthContext = createContext(defaultValueContext)
@@ -48,27 +63,46 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     if (accessToken) setStatus('loggedIn')
   }, [])
 
+  const authSuccessHandler = (
+    response: Either<DefaultError, SignInResponseOutput>
+  ) => {
+    if (isRight(response)) {
+      const { token } = response.right.user
+      setCoookies(token)
+      setStatus('loggedIn')
+    }
+  }
+
   const {
     mutate: signIn,
-    isLoading,
-    data: dataSignIn,
-    error: errorSignIn,
+    isLoading: isLoadingSignIn,
+    data: dataSignInMutation,
+    error: errorSignInMutation,
   } = useMutation<
     Either<DefaultError, SignInResponseOutput>,
     DefaultError,
     SignInInput
   >(['sign-in'], signInMutation, {
-    onSuccess: (response) => {
-      if (isRight(response)) {
-        const { token } = response.right.user
-        setCoookies(token)
-        setStatus('loggedIn')
-      }
-    },
+    onSuccess: (response) => authSuccessHandler(response),
   })
 
-  const data = pipe(dataSignIn, fromNullable)
-  const error = pipe(errorSignIn, fromNullable)
+  const {
+    data: dataSignUpMutation,
+    mutate: signUp,
+    isLoading: isLoadingSignUp,
+    error: errorSignUpMutation,
+  } = useMutation<
+    Either<DefaultError, SignUpResponseOutput>,
+    DefaultError,
+    SignInInput
+  >(['sign-up'], signUpMutation, {
+    onSuccess: (response) => authSuccessHandler(response),
+  })
+
+  const dataSignIn = pipe(dataSignInMutation, fromNullable)
+  const dataSignUp = pipe(dataSignUpMutation, fromNullable)
+  const errorSignIn = pipe(errorSignInMutation, fromNullable)
+  const errorSignUp = pipe(errorSignUpMutation, fromNullable)
 
   const signOut = () => {
     destroyCookies()
@@ -79,11 +113,15 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     <AuthContext.Provider
       value={{
         status,
+        isLoadingSignIn,
+        isLoadingSignUp,
         signIn,
-        isLoading,
+        signUp,
         signOut,
-        data,
-        error,
+        dataSignIn,
+        dataSignUp,
+        errorSignIn,
+        errorSignUp,
       }}
     >
       {children}

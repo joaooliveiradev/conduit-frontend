@@ -16,7 +16,7 @@ type SignInProps = {
   onSwitchFormClick: (state: boolean) => void
 }
 
-export type SignInValues = {
+type SignInValues = {
   email: string
   password: string
 }
@@ -33,7 +33,12 @@ const signInSchema = Yup.object({
 })
 
 const SignIn = ({ onSwitchFormClick }: SignInProps) => {
-  const { signIn, isLoading, data, error: authError } = useAuth()
+  const {
+    signIn,
+    isLoadingSignIn,
+    dataSignIn,
+    errorSignIn,
+  } = useAuth()
 
   const initialValues: SignInValues = {
     email: '',
@@ -53,13 +58,10 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
     signIn(newSignInValues)
   }
 
-  const dataError = pipe(
-    data,
-    chain(getLeft)
-  )
+  const dataError = pipe(dataSignIn, chain(getLeft))
 
-  const maybeError  = f(() => {
-    if(isSome(authError)) return authError
+  const maybeError = f(() => {
+    if (isSome(errorSignIn)) return errorSignIn
     else if (isSome(dataError)) return dataError
     else return none
   })
@@ -88,8 +90,8 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
       <Button
         type="submit"
         size="large"
-        isLoading={isLoading}
-        disabled={isLoading}
+        isLoading={isLoadingSignIn}
+        disabled={isLoadingSignIn}
       >
         Sign in
       </Button>
