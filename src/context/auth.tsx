@@ -15,13 +15,13 @@ type Status = 'loggedOut' | 'loggedIn' | 'idle'
 type ContextProps = {
   status: Status
   signOut: () => void
-  loginHandler: (response: Either<DefaultError, SignInResponseOutput>) => void
+  handleLogin: (response: Either<DefaultError, SignInResponseOutput>) => void
 }
 
 const defaultValueContext: ContextProps = {
   status: 'idle',
   signOut: () => undefined,
-  loginHandler: () => undefined,
+  handleLogin: () => undefined,
 }
 
 type AuthContextProps = {
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     <AuthContext.Provider
       value={{
         status,
-        loginHandler,
+        handleLogin: loginHandler,
         signOut,
       }}
     >

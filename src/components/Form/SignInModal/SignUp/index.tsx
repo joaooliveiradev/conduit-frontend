@@ -14,7 +14,7 @@ import { useFormik } from 'formik'
 import { Either } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { chain, fromNullable, getLeft, isSome, none } from 'fp-ts/Option'
-import { signUpMutation, type SignUpResponseOutput } from '@/components/Form/SignInModal/SignUp/signUpMutation'
+import { signUpMutation, type SignUpResponseOutput } from './signUpMutation'
 import * as Yup from 'yup'
 
 type SignUpProps = {
@@ -40,7 +40,7 @@ const signUpSchema = Yup.object({
 })
 
 export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
-  const { loginHandler } = useAuth()
+  const { handleLogin } = useAuth()
 
   const {
     data,
@@ -52,7 +52,7 @@ export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
     DefaultError,
     SignInInput
   >(['sign-up'], signUpMutation, {
-    onSuccess: (response) => loginHandler(response),
+    onSuccess: (response) => handleLogin(response),
   })
 
   const initialValues: SignUpValues = {
@@ -75,7 +75,7 @@ export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
   })
 
   const dataError = pipe(data, fromNullable, chain(getLeft))
-  const error = pipe(errorSignUp, fromNullable)
+  const error = fromNullable(errorSignUp)
 
   const maybeError = f(() => {
     if (isSome(error)) return error

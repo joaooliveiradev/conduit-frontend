@@ -10,11 +10,11 @@ import {
 import { isSome, none, chain, getLeft, fromNullable } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
 import { f } from '@/utils/expression'
-import { signInMutation, type SignInResponseOutput } from '@/components/Form/SignInModal/SignIn/signInMutation'
 import { useMutation } from '@tanstack/react-query'
 import { Either } from 'fp-ts/lib/Either'
 import { DefaultError } from '@/utils/errors'
 import { SignInInput } from '@/types/user'
+import { signInMutation, type SignInResponseOutput } from './signInMutation'
 import * as Yup from 'yup'
 
 type SignInProps = {
@@ -38,7 +38,7 @@ const signInSchema = Yup.object({
 })
 
 const SignIn = ({ onSwitchFormClick }: SignInProps) => {
-  const { loginHandler } = useAuth()
+  const { handleLogin } = useAuth()
 
   const {
     mutate: signIn,
@@ -50,7 +50,7 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
     DefaultError,
     SignInInput
   >(['sign-in'], signInMutation, {
-    onSuccess: (response) => loginHandler(response),
+    onSuccess: (response) => handleLogin(response),
   })
 
   const initialValues: SignInValues = {
@@ -72,7 +72,7 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
   }
 
   const dataError = pipe(data, fromNullable, chain(getLeft))
-  const error = pipe(errorSignIn, fromNullable)
+  const error = fromNullable(errorSignIn)
 
   const maybeError = f(() => {
     if (isSome(error)) return error
