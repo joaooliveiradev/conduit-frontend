@@ -37,6 +37,11 @@ const signInSchema = Yup.object({
     .max(64, 'Maximum 64 characters required!'),
 })
 
+const initialValues: SignInValues = {
+  email: '',
+  password: '',
+}
+
 const SignIn = ({ onSwitchFormClick }: SignInProps) => {
   const { handleLogin } = useAuth()
 
@@ -53,13 +58,8 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
     onSuccess: (response) => handleLogin(response),
   })
 
-  const initialValues: SignInValues = {
-    email: '',
-    password: '',
-  }
-
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues,
     validationSchema: signInSchema,
     onSubmit: (values: SignInValues) => handleSubmit(values),
   })
