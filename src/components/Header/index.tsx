@@ -41,7 +41,7 @@ export const Header = () => {
 
   return (
     <Wrapper>
-      <Image src={logo} alt="Conduit Logo" />
+      <Image src={logo} alt="Conduit Logo" width={172} height={42} />
       {status == 'loggedIn' && (
         <Dropdown trigger={<ProfileName size={2} name={username} />}>
           <DropdownItem href="profile" label="Profile" />

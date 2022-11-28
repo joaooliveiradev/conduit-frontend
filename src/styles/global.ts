@@ -23,6 +23,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     font-size: 62.5% ;
     font-family: 'DM Sans', sans-serif;
+    background-color: #FAFAFA;
     ul {
       list-style-type: none;
     }
