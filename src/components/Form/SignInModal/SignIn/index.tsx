@@ -7,16 +7,21 @@ import {
   ChangeFormBtn,
   Wrapper,
 } from '@/components/Form/SignInModal/styles'
-import { isSome, none, chain, getLeft } from 'fp-ts/Option'
-import * as Yup from 'yup'
+import { isSome, none, chain, getLeft, fromNullable } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/lib/function'
 import { f } from '@/utils/expression'
+import { useMutation } from '@tanstack/react-query'
+import { Either } from 'fp-ts/lib/Either'
+import { DefaultError } from '@/utils/errors'
+import { SignInInput } from '@/types/user'
+import { signInMutation, type SignInResponseOutput } from './signInMutation'
+import * as Yup from 'yup'
 
 type SignInProps = {
   onSwitchFormClick: (state: boolean) => void
 }
 
-export type SignInValues = {
+type SignInValues = {
   email: string
   password: string
 }
@@ -32,16 +37,29 @@ const signInSchema = Yup.object({
     .max(64, 'Maximum 64 characters required!'),
 })
 
-const SignIn = ({ onSwitchFormClick }: SignInProps) => {
-  const { signIn, isLoading, data, error: authError } = useAuth()
+const initialValues: SignInValues = {
+  email: '',
+  password: '',
+}
 
-  const initialValues: SignInValues = {
-    email: '',
-    password: '',
-  }
+const SignIn = ({ onSwitchFormClick }: SignInProps) => {
+  const { handleLogin } = useAuth()
+
+  const {
+    mutate: signIn,
+    isLoading,
+    data,
+    error: errorSignIn,
+  } = useMutation<
+    Either<DefaultError, SignInResponseOutput>,
+    DefaultError,
+    SignInInput
+  >(['sign-in'], signInMutation, {
+    onSuccess: (response) => handleLogin(response),
+  })
 
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues,
     validationSchema: signInSchema,
     onSubmit: (values: SignInValues) => handleSubmit(values),
   })
@@ -53,13 +71,11 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
     signIn(newSignInValues)
   }
 
-  const dataError = pipe(
-    data,
-    chain(getLeft)
-  )
+  const dataError = pipe(data, fromNullable, chain(getLeft))
+  const error = fromNullable(errorSignIn)
 
-  const maybeError  = f(() => {
-    if(isSome(authError)) return authError
+  const maybeError = f(() => {
+    if (isSome(error)) return error
     else if (isSome(dataError)) return dataError
     else return none
   })

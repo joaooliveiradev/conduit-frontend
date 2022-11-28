@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import { destroyCookies, setCoookies, DefaultError } from '@/utils'
 import {
   createContext,
@@ -8,34 +7,25 @@ import {
   useEffect,
 } from 'react'
 import { parseCookies } from 'nookies'
-import { SignInInput } from '@/types/user'
 import { Either, isRight } from 'fp-ts/Either'
-import { Option, none, fromNullable } from 'fp-ts/Option'
-import { signInMutation, type SignInResponseOutput } from './signInMutation'
-import { pipe } from 'fp-ts/lib/function'
+import { type SignInResponseOutput  } from '@/components/Form/SignInModal/SignIn/signInMutation'
 
 type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
 type ContextProps = {
   status: Status
-  signIn: (values: SignInInput) => void
-  isLoading: boolean
   signOut: () => void
-  data: Option<Either<DefaultError, SignInResponseOutput>>
-  error: Option<DefaultError>
-}
-
-type AuthContextProps = {
-  children: ReactNode
+  handleLogin: (response: Either<DefaultError, SignInResponseOutput>) => void
 }
 
 const defaultValueContext: ContextProps = {
   status: 'idle',
   signOut: () => undefined,
-  signIn: () => undefined,
-  isLoading: false,
-  data: none,
-  error: none,
+  handleLogin: () => undefined,
+}
+
+type AuthContextProps = {
+  children: ReactNode
 }
 
 const AuthContext = createContext(defaultValueContext)
@@ -48,27 +38,15 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     if (accessToken) setStatus('loggedIn')
   }, [])
 
-  const {
-    mutate: signIn,
-    isLoading,
-    data: dataSignIn,
-    error: errorSignIn,
-  } = useMutation<
-    Either<DefaultError, SignInResponseOutput>,
-    DefaultError,
-    SignInInput
-  >(['sign-in'], signInMutation, {
-    onSuccess: (response) => {
-      if (isRight(response)) {
-        const { token } = response.right.user
-        setCoookies(token)
-        setStatus('loggedIn')
-      }
-    },
-  })
-
-  const data = pipe(dataSignIn, fromNullable)
-  const error = pipe(errorSignIn, fromNullable)
+  const loginHandler = (
+    response: Either<DefaultError, SignInResponseOutput>
+  ) => {
+    if (isRight(response)) {
+      const { token } = response.right.user
+      setCoookies(token)
+      setStatus('loggedIn')
+    }
+  }
 
   const signOut = () => {
     destroyCookies()
@@ -79,11 +57,8 @@ const AuthProvider = ({ children }: AuthContextProps) => {
     <AuthContext.Provider
       value={{
         status,
-        signIn,
-        isLoading,
+        handleLogin: loginHandler,
         signOut,
-        data,
-        error,
       }}
     >
       {children}

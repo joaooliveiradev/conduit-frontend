@@ -8,7 +8,7 @@ import {
 import logo from '@/assets/logo.webp'
 import Image from 'next/image'
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '@/context'
 import { useMe } from '@/hooks/queries'
 import { fromNullable, chain, match, getRight } from 'fp-ts/Option'
@@ -25,11 +25,18 @@ export const Header = () => {
   const { status, signOut } = useAuth()
   const { data } = useMe()
 
+  useEffect(() => {
+    if (status === 'loggedIn') setIsModalOpen(false)
+  }, [status])
+
   const username = pipe(
     data,
     fromNullable,
     chain(getRight),
-    match(() => '', (data) => data.user.username)
+    match(
+      () => '',
+      (data) => data.user.username
+    )
   )
 
   return (
