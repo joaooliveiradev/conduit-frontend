@@ -46,7 +46,7 @@ const List = styled.ul`
     background-color: ${theme.colors.white[100]};
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 8px;
     word-break: break-word;
   `}
 `

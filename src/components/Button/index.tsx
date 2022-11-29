@@ -13,12 +13,12 @@ const sizeModifiers = {
   medium: (theme: DefaultTheme) => css`
     height: ${theme.spacings.large};
     font-size: ${theme.fonts.sizes.medium};
-    line-height: 21px;
+    line-height: 2.1rem;
   `,
   large: (theme: DefaultTheme) => css`
     height: ${theme.spacings.xlarge};
     font-size: ${theme.fonts.sizes.xmedium};
-    line-height: 23px;
+    line-height: 2.3rem;
   `,
 }
 
@@ -27,7 +27,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 13rem;
+    min-width: 130px;
     width: ${block ? '100%' : 'auto'};
     padding: 0 10px;
     color: ${theme.colors.white[100]};
