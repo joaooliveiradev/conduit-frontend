@@ -3,9 +3,11 @@ import { Button } from '@/components'
 import styled, { css } from 'styled-components'
 
 type ButtonProps = {
-  disabled: boolean
-  block: boolean
+  disabled?: boolean
+  block?: boolean
   buttonLabel: string
+  buttonOnClick?: () => void
+  buttonisLoading?: boolean
 }
 
 export type ErrorStateProps = {
@@ -53,6 +55,8 @@ export const ErrorState = ({
   buttonLabel,
   disabled,
   block,
+  buttonOnClick,
+  buttonisLoading,
 }: ErrorStateProps) => {
   return (
     <Wrapper>
@@ -61,7 +65,13 @@ export const ErrorState = ({
         <Title>{title}</Title>
         <Message>{message}</Message>
       </TextWrapper>
-      <Button size="large" disabled={disabled} block={block}>
+      <Button
+        size="large"
+        disabled={disabled}
+        block={block}
+        onClick={buttonOnClick}
+        isLoading={buttonisLoading}
+      >
         {buttonLabel}
       </Button>
     </Wrapper>
