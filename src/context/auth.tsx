@@ -10,7 +10,7 @@ import { parseCookies } from 'nookies'
 import { Either, isRight } from 'fp-ts/Either'
 import { type SignInResponseOutput  } from '@/components/Form/SignInModal/SignIn/signInMutation'
 
-type Status = 'loggedOut' | 'loggedIn' | 'idle'
+export type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
 type ContextProps = {
   status: Status
