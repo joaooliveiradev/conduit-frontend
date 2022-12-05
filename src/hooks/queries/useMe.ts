@@ -1,6 +1,6 @@
 import { UserTypeCodec } from '@/types/user'
 import { Either } from 'fp-ts/Either'
-import { type DefaultErrorProps, fetcher } from '@/utils'
+import { DefaultError, fetcher } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/context/auth'
 import * as t from 'io-ts'
@@ -19,7 +19,7 @@ const getMe = async () =>
 const useMe = () => {
   const { status } = useAuth()
 
-  return useQuery<Either<DefaultErrorProps, UseMeOutput>, DefaultErrorProps>(
+  return useQuery<Either<DefaultError, UseMeOutput>, DefaultError>(
     ['use-me'],
     getMe,
     {
