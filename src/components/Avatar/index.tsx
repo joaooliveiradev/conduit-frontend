@@ -7,8 +7,8 @@ export type AvatarProps = {
 
 const Wrapper = styled.div<Omit<AvatarProps, 'name'>>`
   ${({ size, theme }) => css`
-    width: calc(${size} * 1.6px);
-    height: calc(${size} * 1.6px);
+    width: calc(${size} * 16px);
+    height: calc(${size} * 16px);
     background-color: ${theme.colors.black[100]};
     display: flex;
     justify-content: center;
