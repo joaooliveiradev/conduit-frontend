@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { GetArticlesOutput } from '@/hooks/queries/useGetArticles'
 import { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
+import readingTime from 'reading-time'
 
 const Wrapper = styled.div`
   display: grid;
@@ -17,6 +18,11 @@ type ArticlesProps = {
 }
 
 export const Articles = ({ articles }: ArticlesProps) => {
+  const getReadingTime = (articleBody: string) => {
+    const stats = readingTime(articleBody)
+    const minute = stats.text.charAt(0)
+    return `${minute}min`
+  }
   return articles.value.articles.length === 0 ? (
     <EmptyState
       title="No articles are here... yet."
@@ -31,7 +37,7 @@ export const Articles = ({ articles }: ArticlesProps) => {
           description={article.description}
           title={article.title}
           date={article.updatedAt}
-          readingTime="3min"
+          readingTime={getReadingTime(article.body)}
         />
       ))}
     </Wrapper>
