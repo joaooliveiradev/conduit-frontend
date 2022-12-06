@@ -13,17 +13,8 @@ const stories: Meta = {
 
 export default stories
 
-const Box = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 20px;
-`
-
-const SomeContent = styled.div`
-  width: 100%;
-  height: 200px;
-  background-color: red;
+const Text = styled.h1`
+  font-size: 2.4rem;
 `
 
 export const Template: Story = () => (
@@ -33,17 +24,10 @@ export const Template: Story = () => (
       <TabsPane value="foryou">For You</TabsPane>
     </Pane>
     <TabContent value="global">
-      <Box>
-        <SomeContent />
-        <SomeContent />
-        <SomeContent />
-        <SomeContent />
-        <SomeContent />
-        <SomeContent />
-      </Box>
+      <Text>Global Content</Text>
     </TabContent>
     <TabContent value="foryou">
-      <SomeContent />
+      <Text>For you Content</Text>
     </TabContent>
   </Tabs>
 )
