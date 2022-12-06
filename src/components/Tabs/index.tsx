@@ -28,10 +28,19 @@ export const TabsPane = styled(TabsRadix.Trigger)`
       color: ${theme.colors.black[400]};
       box-shadow: 0px 1px ${theme.colors.black[400]};
     }
+    :focus-visible {
+      box-shadow: 0 0 0 2px ${theme.colors.black[400]};
+    }
     :hover {
       cursor: pointer;
     }
   `}
 `
 
-export const TabContent = styled(TabsRadix.Content)``
+export const TabContent = styled(TabsRadix.Content)`
+  ${({ theme }) => css`
+    :focus-visible {
+      box-shadow: 0 0 0 2px ${theme.colors.black[400]};
+    }
+  `}
+`
