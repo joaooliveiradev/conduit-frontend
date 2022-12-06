@@ -24,6 +24,7 @@ const ErrorMessage = styled.p`
 
 const InputWrapper = styled.input<InputProps>`
   ${({ theme, errorMessage, touched }) => css`
+    outline: 0;
     height: ${theme.spacings.xlarge};
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
