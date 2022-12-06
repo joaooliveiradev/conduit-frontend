@@ -19,7 +19,6 @@ const Wrapper = styled.article`
     padding: ${theme.spacings.large};
     row-gap: ${theme.spacings.small};
     transition: background-color 250ms ease-in;
-    padding: ${theme.spacings.large};
     :hover {
       background-color: ${transparentize(0.86, theme.colors.black[100])};
     }
@@ -36,6 +35,11 @@ const Text = styled.p`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xmedium};
     color: ${theme.colors.grey[200]};
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
   `}
 `
 
