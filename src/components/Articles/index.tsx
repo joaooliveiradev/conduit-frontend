@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import { GetArticlesOutput } from '@/hooks/queries/useGetArticles'
 import { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
-import readingTime from 'reading-time'
+//eslint-disable-next-line @typescript-eslint/no-var-requires
+const readingTime = require('reading-time/lib/reading-time');
 
 const Wrapper = styled.div`
   display: grid;
