@@ -29,7 +29,7 @@ const Overlay = styled(Dialog.Overlay)`
 const Content = styled(Dialog.Content)`
   ${({ theme }) => css`
     border-radius: 4px;
-    max-width: 40rem;
+    max-width: 400px;
     width: 100%;
     display: flex;
     flex-direction: column;

@@ -7,14 +7,16 @@ export type LayoutProps = {
 }
 
 const Wrapper = styled.div`
-  width: 100%;
   max-width: 1440px;
-  height: calc(100vh - 40px);
-  padding: 40px;
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
   margin: 0 auto;
+  padding: 72px 0px;
+  @media (max-width: 1440px){
+    padding: 72px 124px;
+  }
 `
 
 export const Layout = ({ children }: LayoutProps) => {

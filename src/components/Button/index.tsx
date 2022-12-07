@@ -12,11 +12,13 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const sizeModifiers = {
   medium: (theme: DefaultTheme) => css`
     height: ${theme.spacings.large};
-    font-size: ${theme.fonts.sizes.large};
+    font-size: ${theme.fonts.sizes.medium};
+    line-height: 2.1rem;
   `,
   large: (theme: DefaultTheme) => css`
     height: ${theme.spacings.xlarge};
-    font-size: ${theme.fonts.sizes.xlarge};
+    font-size: ${theme.fonts.sizes.xmedium};
+    line-height: 2.3rem;
   `,
 }
 
@@ -25,7 +27,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 12.4rem;
+    min-width: 130px;
     width: ${block ? '100%' : 'auto'};
     padding: 0 10px;
     color: ${theme.colors.white[100]};
@@ -33,6 +35,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     font-weight: bold;
     border-radius: 2px;
     cursor: pointer;
+    letter-spacing: -0.055em;
     transition: background-color 250ms ease-in;
     ${size && sizeModifiers[size](theme)};
     ${disabled &&

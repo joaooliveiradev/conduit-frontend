@@ -10,7 +10,7 @@ const Wrapper = styled.footer`
 
 const Line = styled.div`
   ${({ theme }) => css`
-    height: 0.1rem;
+    height: 1px;
     background-color: ${transparentize(0.8, theme.colors.grey[100])};
   `}
 `
@@ -22,7 +22,9 @@ const Content = styled.div`
 
 const Text = styled.p`
   ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.large};
+    font-size: ${theme.fonts.sizes.xmedium};
+    line-height: 2.344rem;
+    letter-spacing: -0.03em;
     color: ${transparentize(0.4, theme.colors.grey[100])};
   `}
 `
