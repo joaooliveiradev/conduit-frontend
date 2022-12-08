@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 export const Tabs = styled(TabsRadix.Root)`
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 57px;
 `
 
 export const Pane = styled(TabsRadix.List)`
