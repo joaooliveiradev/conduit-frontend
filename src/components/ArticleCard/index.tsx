@@ -25,15 +25,25 @@ const Wrapper = styled.article`
   `}
 `
 
+const MainContent = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`
+
 const Title = styled.h1`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xlarge};
+    line-height: 29px;
+    letter-spacing: -0.04em;
   `}
 `
 
 const Text = styled.p`
   ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xmedium};
+    font-size: ${theme.fonts.sizes.medium};
+    line-height: 21px;
+    letter-spacing: -0.01em;
     color: ${theme.colors.grey[200]};
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -80,12 +90,14 @@ export const ArticleCard = ({
 }: ArticleCardProps) => {
   return (
     <Wrapper>
-      <header>
-        <Title>{title}</Title>
-      </header>
-      <section>
-        <Text>{description}</Text>
-      </section>
+      <MainContent>
+        <header>
+          <Title>{title}</Title>
+        </header>
+        <section>
+          <Text>{description}</Text>
+        </section>
+      </MainContent>
       <Footer>
         <ProfileName name={author} size={2} />
         <InfoWrapper>
