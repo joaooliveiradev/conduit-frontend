@@ -2,8 +2,9 @@ import styled from 'styled-components'
 import { GetArticlesOutput } from '@/hooks/queries/useGetArticles'
 import { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
+import format from 'date-fns/format'
 //eslint-disable-next-line @typescript-eslint/no-var-requires
-const readingTime = require('reading-time/lib/reading-time');
+const readingTime = require('reading-time/lib/reading-time')
 
 const Wrapper = styled.div`
   display: grid;
@@ -24,6 +25,13 @@ export const Articles = ({ articles }: ArticlesProps) => {
     const minute = stats.text.charAt(0)
     return `${minute}min`
   }
+
+  const getDate = (articleDate: string) => {
+    const formatMethod = 'PP'
+    const date = format(new Date(articleDate), formatMethod)
+    return date
+  }
+
   return articles.value.articles.length === 0 ? (
     <EmptyState
       title="No articles are here... yet."
@@ -37,7 +45,7 @@ export const Articles = ({ articles }: ArticlesProps) => {
           author={article.author.username}
           description={article.description}
           title={article.title}
-          date={article.updatedAt}
+          date={getDate(article.updatedAt)}
           readingTime={getReadingTime(article.body)}
         />
       ))}
