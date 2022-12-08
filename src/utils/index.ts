@@ -1,5 +1,6 @@
 export * from '@/utils/cookies'
 export * from '@/utils/env-variables'
 export * from '@/utils/errors'
+export * from '@/utils/expression'
 export * from '@/utils/fetcher'
 export * from '@/utils/validate-codec'
