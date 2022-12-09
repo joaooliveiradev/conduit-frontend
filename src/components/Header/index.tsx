@@ -11,8 +11,8 @@ import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context'
 import { useMe } from '@/hooks/queries'
-import { fromNullable, chain, match, getRight } from 'fp-ts/Option'
-import { pipe } from 'fp-ts/function'
+import { getUsername } from '@/utils/user'
+import { isSome } from 'fp-ts/lib/Option'
 
 const Wrapper = styled.header`
   display: flex;
@@ -29,21 +29,13 @@ export const Header = () => {
     if (status === 'loggedIn') setIsModalOpen(false)
   }, [status])
 
-  const username = pipe(
-    data,
-    fromNullable,
-    chain(getRight),
-    match(
-      () => '',
-      (data) => data.user.username
-    )
-  )
+  const maybeUsername = getUsername(data)
 
   return (
     <Wrapper>
       <Image src={logo} alt="Conduit Logo" width={172} height={42} />
-      {status == 'loggedIn' && (
-        <Dropdown trigger={<ProfileName size={2} name={username} />}>
+      {status == 'loggedIn' && isSome(maybeUsername) && (
+        <Dropdown trigger={<ProfileName size={2} name={maybeUsername.value} />}>
           <DropdownItem href="profile" label="Profile" />
           <DropdownItem label="Sign Out" onEventClick={signOut} />
         </Dropdown>
