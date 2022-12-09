@@ -1,50 +1,90 @@
 import styled from 'styled-components'
 import { Hero } from './Hero'
 import { useAuth } from '@/context'
-import { ErrorState, Articles } from '@/components'
-import { useGetArticles } from '@/hooks/queries'
+import {
+  ErrorState,
+  Articles,
+  Tabs,
+  TabsPane,
+  Pane,
+  TabContent,
+} from '@/components'
+import { GetArticlesOutput, useGetArticles, useMe } from '@/hooks/queries'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
-import { fromEither, fromNullable, isSome, none } from 'fp-ts/Option'
-import { f } from '@/utils/expression'
+import { fromEither, fromNullable, isSome, none, Option } from 'fp-ts/Option'
+import { Either } from 'fp-ts/Either'
+import { f, DefaultError } from '@/utils'
+import { useGetUserArticles } from '@/hooks/queries/useGetUserArticle'
+import { InfiniteData } from '@tanstack/react-query'
+import { getUsername } from '@/utils/user'
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 130px 0px;
+  padding: 108px 0px;
 `
 
-const ContentWrapper = styled.div`
+const ContentSection = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 100px;
+  gap: 104px;
 `
 
 export const Home = () => {
   const { status } = useAuth()
-  const { data, fetchNextPage, isFetching, hasNextPage } = useGetArticles()
-  const { ref: observerRef, inView } = useInView({
-    skip: !hasNextPage,
+
+  const {
+    data: getArticlesData,
+    fetchNextPage: fextNextPageGetArticles,
+    isFetching: isFetchingGetArticles,
+    hasNextPage: hasNextPageGetArticles,
+  } = useGetArticles()
+
+  const { ref: observerRefGetArticles, inView: inViewGetArticles } = useInView({
+    skip: !hasNextPageGetArticles,
     threshold: 1,
   })
 
   useEffect(() => {
-    if (inView) {
-      fetchNextPage()
+    if (inViewGetArticles) {
+      fextNextPageGetArticles()
     }
-  }, [inView, fetchNextPage])
+  }, [inViewGetArticles, fextNextPageGetArticles])
 
-  const dataOption = fromNullable(data)
+  const getArticlesDataOption = fromNullable(getArticlesData)
+  const { data: useMeData } = useMe()
+  const maybeUsername = getUsername(useMeData)
 
-  const maybeArticles = f(() => {
+  const {
+    data: getUserArticlesData,
+    fetchNextPage: fextNextPageGetUserArticles,
+    isFetching: isFetchingGetUserArticles,
+    hasNextPage: hasNextPageGetUserArticles,
+  } = useGetUserArticles(isSome(maybeUsername) ? maybeUsername.value : '', {
+    enabled: isSome(maybeUsername),
+  })
+
+  const { ref: observerRefGetUserArticles, inView: inViewGetUserArticles } =
+    useInView({
+      skip: !hasNextPageGetUserArticles,
+      threshold: 1,
+    })
+
+  useEffect(() => {
+    if (inViewGetUserArticles) {
+      fextNextPageGetUserArticles()
+    }
+  }, [inViewGetUserArticles, fextNextPageGetUserArticles])
+
+  const getUserArticlesDataOption = fromNullable(getUserArticlesData)
+
+  const handleMaybeArticles = (
+    data: Option<InfiniteData<Either<DefaultError, GetArticlesOutput>>>
+  ) => {
     const pages = f(() => {
-      if (isSome(dataOption)) {
-        const pages = dataOption.value.pages
+      if (isSome(data)) {
+        const pages = data.value.pages
         return pages
       }
       return []
@@ -55,24 +95,71 @@ export const Home = () => {
     if (isSome(lastPage)) {
       return fromEither(lastPage.value)
     } else return none
-  })
+  }
 
+  const maybeGetArticles = handleMaybeArticles(getArticlesDataOption)
+
+  const maybeGetUserArticles = handleMaybeArticles(getUserArticlesDataOption)
   return (
     <Wrapper>
-      {isSome(maybeArticles) ? (
-        <ContentWrapper>
+      {status === 'loggedIn' ? (
+        <ContentSection>
           <Hero userStatus={status} />
-          <Articles articles={maybeArticles} />
-          <div ref={observerRef} />
-        </ContentWrapper>
+          <Tabs defaultValue="global">
+            <Pane>
+              <TabsPane value="global">Global</TabsPane>
+              <TabsPane value="foryou">For you</TabsPane>
+            </Pane>
+            <TabContent value="global">
+              {isSome(maybeGetArticles) ? (
+                <>
+                  <Articles articles={maybeGetArticles} />
+                  <div ref={observerRefGetArticles} />
+                </>
+              ) : (
+                <ErrorState
+                  title="Something went wrong."
+                  message="Something went wrong while trying to requesting the user informations."
+                  buttonLabel="Try again"
+                  buttonOnClick={() => fextNextPageGetArticles()}
+                  disabled={isFetchingGetArticles}
+                  buttonisLoading={isFetchingGetArticles}
+                />
+              )}
+            </TabContent>
+            <TabContent value="foryou">
+              {isSome(maybeGetUserArticles) ? (
+                <>
+                  <Articles articles={maybeGetUserArticles} />
+                  <div ref={observerRefGetUserArticles} />
+                </>
+              ) : (
+                <ErrorState
+                  title="Something went wrong."
+                  message="Something went wrong while trying to requesting the user informations."
+                  buttonLabel="Try again"
+                  buttonOnClick={() => fextNextPageGetArticles()}
+                  disabled={isFetchingGetUserArticles}
+                  buttonisLoading={isFetchingGetUserArticles}
+                />
+              )}
+            </TabContent>
+          </Tabs>
+        </ContentSection>
+      ) : isSome(maybeGetArticles) ? (
+        <ContentSection>
+          <Hero userStatus={status} />
+          <Articles articles={maybeGetArticles} />
+          <div ref={observerRefGetArticles} />
+        </ContentSection>
       ) : (
         <ErrorState
           title="Something went wrong."
           message="Something went wrong while trying to requesting the user informations."
           buttonLabel="Try again"
-          buttonOnClick={() => fetchNextPage()}
-          disabled={isFetching}
-          buttonisLoading={isFetching}
+          buttonOnClick={() => fextNextPageGetArticles()}
+          disabled={isFetchingGetArticles}
+          buttonisLoading={isFetchingGetArticles}
         />
       )}
     </Wrapper>
