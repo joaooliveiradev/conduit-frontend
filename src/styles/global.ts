@@ -20,9 +20,13 @@ export const GlobalStyles = createGlobalStyle`
   }
   html,
   body {
+    height: 100%;
     font-size: 62.5% ;
     font-family: 'DM Sans', sans-serif;
     background-color: #FAFAFA;
+    #__next {
+      height: 100%;
+    }
     ul {
       list-style-type: none;
     }
