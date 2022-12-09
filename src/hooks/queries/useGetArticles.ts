@@ -67,5 +67,6 @@ export const useGetArticles = (options?: UseGetArticlesOptions) =>
       staleTime: oneMinute,
       retry: 3,
       refetchOnWindowFocus: false,
+      refetchInterval: oneMinute,
     }
   )
