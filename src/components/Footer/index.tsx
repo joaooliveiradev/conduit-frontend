@@ -6,6 +6,7 @@ const Wrapper = styled.footer`
   flex-direction: column;
   font-weight: 500;
   row-gap: 20px;
+  padding-bottom: 72px;
 `
 
 const Line = styled.div`

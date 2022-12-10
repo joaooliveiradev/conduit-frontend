@@ -12,10 +12,9 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-  margin: 0 auto;
-  padding: 72px 0px;
+  margin: 0px auto;
   @media (max-width: 1440px){
-    padding: 72px 124px;
+    padding: 0px 124px;
   }
 `
 

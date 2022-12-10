@@ -19,16 +19,10 @@ import { useGetUserArticles } from '@/hooks/queries/useGetUserArticle'
 import { InfiniteData } from '@tanstack/react-query'
 import { getUsername } from '@/utils/user'
 
-const Wrapper = styled.section`
-  display: flex;
-  padding: 108px 0px;
-`
-
-const ContentSection = styled.div`
-  width: 100%;
+const ContentSection = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 104px;
+  margin: 133px 97px 140px 97px;
 `
 
 export const Home = () => {
@@ -100,68 +94,64 @@ export const Home = () => {
   const maybeGetArticles = handleMaybeArticles(getArticlesDataOption)
 
   const maybeGetUserArticles = handleMaybeArticles(getUserArticlesDataOption)
-  return (
-    <Wrapper>
-      {status === 'loggedIn' ? (
-        <ContentSection>
-          <Hero userStatus={status} />
-          <Tabs defaultValue="global">
-            <Pane>
-              <TabsPane value="global">Global</TabsPane>
-              <TabsPane value="foryou">For you</TabsPane>
-            </Pane>
-            <TabContent value="global">
-              {isSome(maybeGetArticles) ? (
-                <>
-                  <Articles articles={maybeGetArticles} />
-                  <div ref={observerRefGetArticles} />
-                </>
-              ) : (
-                <ErrorState
-                  title="Something went wrong."
-                  message="Something went wrong while trying to requesting the user informations."
-                  buttonLabel="Try again"
-                  buttonOnClick={() => fextNextPageGetArticles()}
-                  disabled={isFetchingGetArticles}
-                  buttonisLoading={isFetchingGetArticles}
-                />
-              )}
-            </TabContent>
-            <TabContent value="foryou">
-              {isSome(maybeGetUserArticles) ? (
-                <>
-                  <Articles articles={maybeGetUserArticles} />
-                  <div ref={observerRefGetUserArticles} />
-                </>
-              ) : (
-                <ErrorState
-                  title="Something went wrong."
-                  message="Something went wrong while trying to requesting the user informations."
-                  buttonLabel="Try again"
-                  buttonOnClick={() => fextNextPageGetArticles()}
-                  disabled={isFetchingGetUserArticles}
-                  buttonisLoading={isFetchingGetUserArticles}
-                />
-              )}
-            </TabContent>
-          </Tabs>
-        </ContentSection>
-      ) : isSome(maybeGetArticles) ? (
-        <ContentSection>
-          <Hero userStatus={status} />
-          <Articles articles={maybeGetArticles} />
-          <div ref={observerRefGetArticles} />
-        </ContentSection>
-      ) : (
-        <ErrorState
-          title="Something went wrong."
-          message="Something went wrong while trying to requesting the user informations."
-          buttonLabel="Try again"
-          buttonOnClick={() => fextNextPageGetArticles()}
-          disabled={isFetchingGetArticles}
-          buttonisLoading={isFetchingGetArticles}
-        />
-      )}
-    </Wrapper>
+  return status === 'loggedIn' ? (
+    <ContentSection>
+      <Hero userStatus={status} />
+      <Tabs defaultValue="global">
+        <Pane>
+          <TabsPane value="global">Global</TabsPane>
+          <TabsPane value="foryou">For you</TabsPane>
+        </Pane>
+        <TabContent value="global">
+          {isSome(maybeGetArticles) ? (
+            <>
+              <Articles articles={maybeGetArticles} />
+              <div ref={observerRefGetArticles} />
+            </>
+          ) : (
+            <ErrorState
+              title="Something went wrong."
+              message="Something went wrong while trying to requesting the user informations."
+              buttonLabel="Try again"
+              buttonOnClick={() => fextNextPageGetArticles()}
+              disabled={isFetchingGetArticles}
+              buttonisLoading={isFetchingGetArticles}
+            />
+          )}
+        </TabContent>
+        <TabContent value="foryou">
+          {isSome(maybeGetUserArticles) ? (
+            <>
+              <Articles articles={maybeGetUserArticles} />
+              <div ref={observerRefGetUserArticles} />
+            </>
+          ) : (
+            <ErrorState
+              title="Something went wrong."
+              message="Something went wrong while trying to requesting the user informations."
+              buttonLabel="Try again"
+              buttonOnClick={() => fextNextPageGetArticles()}
+              disabled={isFetchingGetUserArticles}
+              buttonisLoading={isFetchingGetUserArticles}
+            />
+          )}
+        </TabContent>
+      </Tabs>
+    </ContentSection>
+  ) : isSome(maybeGetArticles) ? (
+    <ContentSection>
+      <Hero userStatus={status} />
+      <Articles articles={maybeGetArticles} />
+      <div ref={observerRefGetArticles} />
+    </ContentSection>
+  ) : (
+    <ErrorState
+      title="Something went wrong."
+      message="Something went wrong while trying to requesting the user informations."
+      buttonLabel="Try again"
+      buttonOnClick={() => fextNextPageGetArticles()}
+      disabled={isFetchingGetArticles}
+      buttonisLoading={isFetchingGetArticles}
+    />
   )
 }
