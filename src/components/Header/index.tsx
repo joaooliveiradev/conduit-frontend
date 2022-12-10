@@ -49,6 +49,7 @@ export const Header = () => {
           <SignInModal
             open={isModalOpen}
             onOpenChange={(open) => setIsModalOpen(open)}
+            showSignInFirst
           />
         </>
       )}

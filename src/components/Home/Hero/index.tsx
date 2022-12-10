@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components'
 import { Button } from '@/components/Button'
 import { type Status } from '@/context'
+import { useState } from 'react'
+import { SignInModal } from '@/components'
 
 type HeroProps = {
   userStatus: Status
@@ -36,12 +38,26 @@ const Description = styled.p`
   `}
 `
 
-export const Hero = ({ userStatus }: HeroProps) => (
-  <Wrapper>
-    <Title>Stay curious.</Title>
-    <Description>
-      Discover stories, thinking, and expertise from writers on any topic.
-    </Description>
-    {userStatus === "loggedOut" || userStatus === "idle" && <Button size="large">Create account</Button>}
-  </Wrapper>
-)
+export const Hero = ({ userStatus }: HeroProps) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+
+  return (
+    <Wrapper>
+      <Title>Stay curious.</Title>
+      <Description>
+        Discover stories, thinking, and expertise from writers on any topic.
+      </Description>
+      {userStatus === 'loggedOut' ||
+        (userStatus === 'idle' && (
+          <>
+            <Button size="large" onClick={() => setIsModalOpen(true)}>Create account</Button>
+            <SignInModal
+              open={isModalOpen}
+              onOpenChange={(open) => setIsModalOpen(open)}
+              showSignInFirst={false}
+            />
+          </>
+        ))}
+    </Wrapper>
+  )
+}
