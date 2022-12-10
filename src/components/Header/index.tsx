@@ -18,6 +18,7 @@ const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 72px;
 `
 
 export const Header = () => {

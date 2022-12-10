@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   row-gap: 16px;
+  padding-bottom: 104px;
 `
 
 const Title = styled.h1`

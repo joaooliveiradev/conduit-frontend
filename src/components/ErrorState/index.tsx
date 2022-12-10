@@ -18,6 +18,7 @@ export type ErrorStateProps = {
 const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
