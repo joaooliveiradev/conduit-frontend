@@ -35,12 +35,18 @@ export const getUserArticles = async (author: string) =>
     GetUserArticleResponseCodec
   )
 
-export const  useGetUserArticles = (
+export const useGetUserArticles = (
   author: string,
   options: GetUserArticlesOptions
 ) =>
   useInfiniteQuery<Either<DefaultError, GetUserArticleOutput>, DefaultError>(
     [GET_USER_ARTICLES_KEY],
     async () => await getUserArticles(author),
-    { ...options, staleTime: oneMinute, retry: 3, refetchOnWindowFocus: false, refetchInterval: oneMinute }
+    {
+      ...options,
+      staleTime: oneMinute,
+      retry: 3,
+      refetchOnWindowFocus: false,
+      refetchInterval: oneMinute,
+    }
   )
