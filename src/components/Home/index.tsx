@@ -115,7 +115,7 @@ export const Home = () => {
               buttonLabel="Try again"
               onButtonClick={() => fextNextPageGetArticles()}
               disabled={isFetchingGetArticles}
-              buttonisLoading={isFetchingGetArticles}
+              isButtonLoading={isFetchingGetArticles}
             />
           )}
         </TabContent>
@@ -132,7 +132,7 @@ export const Home = () => {
               buttonLabel="Try again"
               onButtonClick={() => fextNextPageGetArticles()}
               disabled={isFetchingGetUserArticles}
-              buttonisLoading={isFetchingGetUserArticles}
+              isButtonLoading={isFetchingGetUserArticles}
             />
           )}
         </TabContent>
@@ -151,7 +151,7 @@ export const Home = () => {
       buttonLabel="Try again"
       onButtonClick={() => fextNextPageGetArticles()}
       disabled={isFetchingGetArticles}
-      buttonisLoading={isFetchingGetArticles}
+      isButtonLoading={isFetchingGetArticles}
     />
   )
 }
