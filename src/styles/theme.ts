@@ -1,6 +1,5 @@
-
 export const theme = {
-  fonts: {
+   fonts: {
     sizes: {
       xsmall: '1.2rem',
       small: '1.4rem',
@@ -28,14 +27,14 @@ export const theme = {
       100: '#171717',
       200: '#1D1D1D',
       300: '#2C2C2C',
-      400: '#000000'
+      400: '#000000',
     },
     grey: {
       100: '#4F4F4F',
       200: '#777777',
       300: '#B1B1B1',
       400: '#E8E8E8',
-      500: '#EEEEEE'
+      500: '#EEEEEE',
     },
     red: {
       100: '#FF1E54',
@@ -43,5 +42,8 @@ export const theme = {
     white: {
       100: '#FAFAFA',
     },
+  },
+  breakpoints: {
+    desktop: '1440px',
   },
 }
