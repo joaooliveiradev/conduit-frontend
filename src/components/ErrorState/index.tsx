@@ -6,7 +6,7 @@ type ButtonProps = {
   disabled?: boolean
   block?: boolean
   buttonLabel: string
-  buttonOnClick?: () => void
+  onButtonClick?: () => void
   buttonisLoading?: boolean
 }
 
@@ -56,7 +56,7 @@ export const ErrorState = ({
   buttonLabel,
   disabled,
   block,
-  buttonOnClick,
+  onButtonClick,
   buttonisLoading,
 }: ErrorStateProps) => {
   return (
@@ -70,7 +70,7 @@ export const ErrorState = ({
         size="large"
         disabled={disabled}
         block={block}
-        onClick={buttonOnClick}
+        onClick={onButtonClick}
         isLoading={buttonisLoading}
       >
         {buttonLabel}
