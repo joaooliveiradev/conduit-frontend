@@ -94,64 +94,69 @@ export const Home = () => {
   const maybeGetArticles = handleMaybeArticles(getArticlesDataOption)
 
   const maybeGetUserArticles = handleMaybeArticles(getUserArticlesDataOption)
-  return status === 'loggedIn' ? (
-    <ContentSection>
-      <Hero userStatus={status} />
-      <Tabs defaultValue="global">
-        <Pane>
-          <TabsPane value="global">Global</TabsPane>
-          <TabsPane value="foryou">For you</TabsPane>
-        </Pane>
-        <TabContent value="global">
-          {isSome(maybeGetArticles) ? (
-            <>
-              <Articles articles={maybeGetArticles} />
-              <div ref={observerRefGetArticles} />
-            </>
-          ) : (
-            <ErrorState
-              title="Something went wrong."
-              message="Something went wrong while trying to requesting the user informations."
-              buttonLabel="Try again"
-              onButtonClick={() => fextNextPageGetArticles()}
-              disabled={isFetchingGetArticles}
-              isButtonLoading={isFetchingGetArticles}
-            />
-          )}
-        </TabContent>
-        <TabContent value="foryou">
-          {isSome(maybeGetUserArticles) ? (
-            <>
-              <Articles articles={maybeGetUserArticles} />
-              <div ref={observerRefGetUserArticles} />
-            </>
-          ) : (
-            <ErrorState
-              title="Something went wrong."
-              message="Something went wrong while trying to requesting the user informations."
-              buttonLabel="Try again"
-              onButtonClick={() => fextNextPageGetArticles()}
-              disabled={isFetchingGetUserArticles}
-              isButtonLoading={isFetchingGetUserArticles}
-            />
-          )}
-        </TabContent>
-      </Tabs>
-    </ContentSection>
-  ) : isSome(maybeGetArticles) ? (
-    <ContentSection>
-      <Hero userStatus={status} />
-      <Articles articles={maybeGetArticles} />
-      <div ref={observerRefGetArticles} />
-    </ContentSection>
-  ) : (
-    <ErrorState
-      title="Something went wrong."
-      message="Something went wrong while trying to requesting the user informations."
-      buttonLabel="Try again"
-      onButtonClick={() => fextNextPageGetArticles()}
-      disabled={isFetchingGetArticles}
-      isButtonLoading={isFetchingGetArticles}
-    />
-  )
+
+  if (status === 'loggedIn') {
+    return (
+      <ContentSection>
+        <Hero userStatus={status} />
+        <Tabs defaultValue="global">
+          <Pane>
+            <TabsPane value="global">Global</TabsPane>
+            <TabsPane value="foryou">For you</TabsPane>
+          </Pane>
+          <TabContent value="global">
+            {isSome(maybeGetArticles) ? (
+              <>
+                <Articles articles={maybeGetArticles} />
+                <div ref={observerRefGetArticles} />
+              </>
+            ) : (
+              <ErrorState
+                title="Something went wrong."
+                message="Something went wrong while trying to requesting the user informations."
+                buttonLabel="Try again"
+                onButtonClick={() => fextNextPageGetArticles()}
+                disabled={isFetchingGetArticles}
+                isButtonLoading={isFetchingGetArticles}
+              />
+            )}
+          </TabContent>
+          <TabContent value="foryou">
+            {isSome(maybeGetUserArticles) ? (
+              <>
+                <Articles articles={maybeGetUserArticles} />
+                <div ref={observerRefGetUserArticles} />
+              </>
+            ) : (
+              <ErrorState
+                title="Something went wrong."
+                message="Something went wrong while trying to requesting the user informations."
+                buttonLabel="Try again"
+                onButtonClick={() => fextNextPageGetArticles()}
+                disabled={isFetchingGetUserArticles}
+                isButtonLoading={isFetchingGetUserArticles}
+              />
+            )}
+          </TabContent>
+        </Tabs>
+      </ContentSection>
+    )
+  } else {
+    return isSome(maybeGetArticles) ? (
+      <ContentSection>
+        <Hero userStatus={status} />
+        <Articles articles={maybeGetArticles} />
+        <div ref={observerRefGetArticles} />
+      </ContentSection>
+    ) : (
+      <ErrorState
+        title="Something went wrong."
+        message="Something went wrong while trying to requesting the user informations."
+        buttonLabel="Try again"
+        onButtonClick={() => fextNextPageGetArticles()}
+        disabled={isFetchingGetArticles}
+        isButtonLoading={isFetchingGetArticles}
+      />
+    )
+  }
 }
