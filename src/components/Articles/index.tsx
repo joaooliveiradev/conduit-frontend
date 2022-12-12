@@ -32,23 +32,27 @@ export const Articles = ({ articles }: ArticlesProps) => {
     return date
   }
 
-  return articles.value.articles.length === 0 ? (
-    <EmptyState
-      title="No articles are here... yet."
-      message="This user hasn't written any articles yet."
-    />
-  ) : (
-    <Wrapper>
-      {articles.value.articles.map((article, index) => (
-        <ArticleCard
-          key={index}
-          author={article.author.username}
-          description={article.description}
-          title={article.title}
-          date={getDate(article.updatedAt)}
-          readingTime={getReadingTime(article.body)}
-        />
-      ))}
-    </Wrapper>
-  )
+  if (articles.value.articles.length === 0) {
+    return (
+      <EmptyState
+        title="No articles are here... yet."
+        message="This user hasn't written any articles yet."
+      />
+    )
+  } else {
+    return (
+      <Wrapper>
+        {articles.value.articles.map((article, index) => (
+          <ArticleCard
+            key={index}
+            author={article.author.username}
+            description={article.description}
+            title={article.title}
+            date={getDate(article.updatedAt)}
+            readingTime={getReadingTime(article.body)}
+          />
+        ))}
+      </Wrapper>
+    )
+  }
 }
