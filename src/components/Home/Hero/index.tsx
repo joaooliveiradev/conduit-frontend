@@ -47,17 +47,18 @@ export const Hero = ({ userStatus }: HeroProps) => {
       <Description>
         Discover stories, thinking, and expertise from writers on any topic.
       </Description>
-      {userStatus === 'loggedOut' ||
-        (userStatus === 'idle' && (
-          <>
-            <Button size="large" onClick={() => setIsModalOpen(true)}>Create account</Button>
-            <SignInModal
-              open={isModalOpen}
-              onOpenChange={(open) => setIsModalOpen(open)}
-              showSignInFirst={false}
-            />
-          </>
-        ))}
+      {(userStatus === 'loggedOut' || userStatus === 'idle') && (
+        <>
+          <Button size="large" onClick={() => setIsModalOpen(true)}>
+            Create account
+          </Button>
+          <SignInModal
+            open={isModalOpen}
+            onOpenChange={(open) => setIsModalOpen(open)}
+            showSignInFirst={false}
+          />
+        </>
+      )}
     </Wrapper>
   )
 }
