@@ -17,5 +17,5 @@ Default.args = {
   disabled: false,
   block: false,
   buttonisLoading: false,
-  buttonOnClick: () => null
+  onButtonClick: () => null
 }

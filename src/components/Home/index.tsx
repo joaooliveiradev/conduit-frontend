@@ -113,7 +113,7 @@ export const Home = () => {
               title="Something went wrong."
               message="Something went wrong while trying to requesting the user informations."
               buttonLabel="Try again"
-              buttonOnClick={() => fextNextPageGetArticles()}
+              onButtonClick={() => fextNextPageGetArticles()}
               disabled={isFetchingGetArticles}
               buttonisLoading={isFetchingGetArticles}
             />
@@ -130,7 +130,7 @@ export const Home = () => {
               title="Something went wrong."
               message="Something went wrong while trying to requesting the user informations."
               buttonLabel="Try again"
-              buttonOnClick={() => fextNextPageGetArticles()}
+              onButtonClick={() => fextNextPageGetArticles()}
               disabled={isFetchingGetUserArticles}
               buttonisLoading={isFetchingGetUserArticles}
             />
@@ -149,7 +149,7 @@ export const Home = () => {
       title="Something went wrong."
       message="Something went wrong while trying to requesting the user informations."
       buttonLabel="Try again"
-      buttonOnClick={() => fextNextPageGetArticles()}
+      onButtonClick={() => fextNextPageGetArticles()}
       disabled={isFetchingGetArticles}
       buttonisLoading={isFetchingGetArticles}
     />
