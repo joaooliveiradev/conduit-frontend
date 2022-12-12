@@ -16,6 +16,6 @@ Default.args = {
   buttonLabel: 'Try again',
   disabled: false,
   block: false,
-  buttonisLoading: false,
+  isButtonLoading: false,
   onButtonClick: () => null
 }
