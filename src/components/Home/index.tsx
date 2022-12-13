@@ -9,7 +9,7 @@ import {
   Pane,
   TabContent,
 } from '@/components'
-import { GetArticlesOutput, useGetArticles, useMe } from '@/hooks/queries'
+import { GetArticlesOutput, useGetArticles } from '@/hooks/queries'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
 import { fromEither, fromNullable, isSome, none, Option } from 'fp-ts/Option'
@@ -17,7 +17,6 @@ import { Either } from 'fp-ts/Either'
 import { f, DefaultError } from '@/utils'
 import { useFeedArticles } from '@/hooks/queries/useFeedArticles'
 import { InfiniteData } from '@tanstack/react-query'
-import { getUsername } from '@/utils/user'
 
 const ContentSection = styled.section`
   ${({ theme }) => css`
@@ -49,16 +48,14 @@ export const Home = () => {
   }, [inViewGetArticles, fextNextPageGetArticles])
 
   const getArticlesDataOption = fromNullable(getArticlesData)
-  const { data: useMeData } = useMe()
-  const maybeUsername = getUsername(useMeData)
 
   const {
     data: feedArticlesData,
     fetchNextPage: fextNextPageFeedArticles,
     isFetching: isFetchingFeedArticles,
     hasNextPage: hasNextPageFeedArticles,
-  } = useFeedArticles(isSome(maybeUsername) ? maybeUsername.value : '', {
-    enabled: isSome(maybeUsername),
+  } = useFeedArticles({
+    enabled: status === 'loggedIn',
   })
 
   const { ref: observerRefFeedArticles, inView: inViewFeedArticles } =
