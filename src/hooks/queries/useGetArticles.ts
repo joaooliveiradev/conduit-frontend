@@ -36,7 +36,7 @@ type UseGetArticlesOptions = UseInfiniteQueryOptions<
 
 type ParamsProps = QueryFunctionContext<QueryKey, Option<number>>
 
-const totalArticlesNextFetch = (
+const calculateTotalArticles = (
   lastPage: Either<DefaultError, GetArticlesOutput>
 ) => {
   if (isRight(lastPage)) {
@@ -66,7 +66,7 @@ export const useGetArticles = (options?: UseGetArticlesOptions) =>
       getArticles(pageParam),
     {
       ...options,
-      getNextPageParam: (lastPage) => totalArticlesNextFetch(lastPage),
+      getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
       staleTime: oneMinute,
       retry: 3,
       refetchOnWindowFocus: false,
