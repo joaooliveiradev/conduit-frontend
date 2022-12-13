@@ -15,7 +15,7 @@ import { useEffect } from 'react'
 import { fromEither, fromNullable, isSome, none, Option } from 'fp-ts/Option'
 import { Either } from 'fp-ts/Either'
 import { f, DefaultError } from '@/utils'
-import { useGetUserArticles } from '@/hooks/queries/useGetUserArticle'
+import { useFeedArticles } from '@/hooks/queries/useFeedArticles'
 import { InfiniteData } from '@tanstack/react-query'
 import { getUsername } from '@/utils/user'
 
@@ -53,27 +53,27 @@ export const Home = () => {
   const maybeUsername = getUsername(useMeData)
 
   const {
-    data: getUserArticlesData,
-    fetchNextPage: fextNextPageGetUserArticles,
-    isFetching: isFetchingGetUserArticles,
-    hasNextPage: hasNextPageGetUserArticles,
-  } = useGetUserArticles(isSome(maybeUsername) ? maybeUsername.value : '', {
+    data: feedArticlesData,
+    fetchNextPage: fextNextPageFeedArticles,
+    isFetching: isFetchingFeedArticles,
+    hasNextPage: hasNextPageFeedArticles,
+  } = useFeedArticles(isSome(maybeUsername) ? maybeUsername.value : '', {
     enabled: isSome(maybeUsername),
   })
 
-  const { ref: observerRefGetUserArticles, inView: inViewGetUserArticles } =
+  const { ref: observerRefFeedArticles, inView: inViewFeedArticles } =
     useInView({
-      skip: !hasNextPageGetUserArticles,
+      skip: !hasNextPageFeedArticles,
       threshold: 1,
     })
 
   useEffect(() => {
-    if (inViewGetUserArticles) {
-      fextNextPageGetUserArticles()
+    if (inViewFeedArticles) {
+      fextNextPageFeedArticles()
     }
-  }, [inViewGetUserArticles, fextNextPageGetUserArticles])
+  }, [inViewFeedArticles, fextNextPageFeedArticles])
 
-  const getUserArticlesDataOption = fromNullable(getUserArticlesData)
+  const feedArticlesDataOption = fromNullable(feedArticlesData)
 
   const handleMaybeArticles = (
     data: Option<InfiniteData<Either<DefaultError, GetArticlesOutput>>>
@@ -95,7 +95,7 @@ export const Home = () => {
 
   const maybeGetArticles = handleMaybeArticles(getArticlesDataOption)
 
-  const maybeGetUserArticles = handleMaybeArticles(getUserArticlesDataOption)
+  const maybeFeedArticles = handleMaybeArticles(feedArticlesDataOption)
 
   if (status === 'loggedIn') {
     return (
@@ -124,10 +124,10 @@ export const Home = () => {
             )}
           </TabContent>
           <TabContent value="foryou">
-            {isSome(maybeGetUserArticles) ? (
+            {isSome(maybeFeedArticles) ? (
               <>
-                <Articles articles={maybeGetUserArticles} />
-                <div ref={observerRefGetUserArticles} />
+                <Articles articles={maybeFeedArticles} />
+                <div ref={observerRefFeedArticles} />
               </>
             ) : (
               <ErrorState
@@ -135,8 +135,8 @@ export const Home = () => {
                 message="Something went wrong while trying to requesting the user informations."
                 buttonLabel="Try again"
                 onButtonClick={() => fextNextPageGetArticles()}
-                disabled={isFetchingGetUserArticles}
-                isButtonLoading={isFetchingGetUserArticles}
+                disabled={isFetchingFeedArticles}
+                isButtonLoading={isFetchingFeedArticles}
               />
             )}
           </TabContent>
