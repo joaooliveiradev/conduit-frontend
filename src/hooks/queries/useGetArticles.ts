@@ -9,6 +9,7 @@ import {
 import { Either, isRight } from 'fp-ts/Either'
 import { withMessage } from 'io-ts-types'
 import * as t from 'io-ts'
+import { none, some, Option, isSome } from 'fp-ts/Option'
 
 const GetArticlesResponseCodec = t.type({
   articles: t.array(EventCodec),
@@ -33,7 +34,7 @@ type UseGetArticlesOptions = UseInfiniteQueryOptions<
   DefaultError
 >
 
-type ParamsProps = QueryFunctionContext<QueryKey, number | null>
+type ParamsProps = QueryFunctionContext<QueryKey, Option<number>>
 
 const totalArticlesNextFetch = (
   lastPage: Either<DefaultError, GetArticlesOutput>
@@ -41,14 +42,16 @@ const totalArticlesNextFetch = (
   if (isRight(lastPage)) {
     const totalLastFetch = lastPage.right.articles.length
     const totalArticles = lastPage.right.articlesCount
-    if (totalLastFetch === totalArticles) return null
-    else return totalLastFetch + defaultArticlesLimit
+    if (totalLastFetch === totalArticles) return some(totalArticles)
+    else return some(totalLastFetch + defaultArticlesLimit)
   }
-  return null
+  return none
 }
 
-export const getArticles = async (articlesLimit: number) => {
-  const url = `/articles?limit=${articlesLimit}`
+export const getArticles = async (articlesLimit: Option<number>) => {
+  const url = `/articles?limit=${
+    isSome(articlesLimit) ? articlesLimit.value : defaultArticlesLimit
+  }`
   const data = await fetcher<undefined, GetArticlesResponse>(
     url,
     GetArticlesResponseCodec
@@ -59,8 +62,8 @@ export const getArticles = async (articlesLimit: number) => {
 export const useGetArticles = (options?: UseGetArticlesOptions) =>
   useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>(
     [GET_ARTICLES_KEY],
-    ({ pageParam }: ParamsProps) =>
-      getArticles(pageParam ? pageParam : defaultArticlesLimit),
+    ({ pageParam = some(defaultArticlesLimit) }: ParamsProps) =>
+      getArticles(pageParam),
     {
       ...options,
       getNextPageParam: (lastPage) => totalArticlesNextFetch(lastPage),

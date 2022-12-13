@@ -7,6 +7,7 @@ import {
   getArticles,
   defaultArticlesLimit,
 } from '@/hooks/queries/useGetArticles'
+import { some } from 'fp-ts/Option'
 
 const HomePage: NextPage = () => {
   return (
@@ -25,7 +26,7 @@ export async function getServerSideProps() {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchInfiniteQuery([GET_ARTICLES_KEY], () =>
-    getArticles(defaultArticlesLimit)
+    getArticles(some(defaultArticlesLimit))
   )
 
   return {
