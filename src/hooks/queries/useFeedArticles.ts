@@ -1,12 +1,17 @@
 import { EventCodec } from '@/types/article'
 import { DefaultError, fetcher } from '@/utils'
 import {
+  QueryFunctionContext,
+  QueryKey,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
 import { withMessage } from 'io-ts-types'
 import { Either } from 'fp-ts/Either'
 import * as t from 'io-ts'
+import { calculateTotalArticles } from '@/utils/calculateTotalArticles'
+import { some, Option, isSome } from 'fp-ts/Option'
+import { defaultArticlesLimit } from './useGetArticles'
 
 const GetFeedArticlesResponseCodec = t.type({
   articles: t.array(EventCodec),
@@ -29,20 +34,27 @@ type GetFeedArticlesOptions = UseInfiniteQueryOptions<
   DefaultError
 >
 
-export const getFeedArticles = async () =>
-  await fetcher<undefined, GetFeedArticlesResponse>(
-    `/articles/feed`,
+type ParamsProps = QueryFunctionContext<QueryKey, Option<number>>
+
+export const getFeedArticles = async (articlesLimit: Option<number>) => {
+  const url = `/articles/feed?limit=${
+    isSome(articlesLimit) ? articlesLimit.value : defaultArticlesLimit
+  }`
+
+  return await fetcher<undefined, GetFeedArticlesResponse>(
+    url,
     GetFeedArticlesResponseCodec
   )
+}
 
-export const useFeedArticles = (
-  options: GetFeedArticlesOptions
-) =>
+export const useFeedArticles = (options: GetFeedArticlesOptions) =>
   useInfiniteQuery<Either<DefaultError, GetFeedArticlesOutput>, DefaultError>(
     [GET_FEED_ARTICLES_KEY],
-    async () => await getFeedArticles(),
+    async ({ pageParam = some(defaultArticlesLimit)}: ParamsProps) =>
+      await getFeedArticles(pageParam),
     {
       ...options,
+      getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
       staleTime: oneMinute,
       retry: 3,
       refetchOnWindowFocus: false,

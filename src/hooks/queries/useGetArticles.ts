@@ -6,10 +6,11 @@ import {
   QueryKey,
   UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
-import { Either, isRight } from 'fp-ts/Either'
+import { Either } from 'fp-ts/Either'
 import { withMessage } from 'io-ts-types'
 import * as t from 'io-ts'
-import { none, some, Option, isSome } from 'fp-ts/Option'
+import { some, Option, isSome } from 'fp-ts/Option'
+import { calculateTotalArticles } from '@/utils/calculateTotalArticles'
 
 const GetArticlesResponseCodec = t.type({
   articles: t.array(EventCodec),
@@ -35,18 +36,6 @@ type UseGetArticlesOptions = UseInfiniteQueryOptions<
 >
 
 type ParamsProps = QueryFunctionContext<QueryKey, Option<number>>
-
-const calculateTotalArticles = (
-  lastPage: Either<DefaultError, GetArticlesOutput>
-) => {
-  if (isRight(lastPage)) {
-    const totalLastFetch = lastPage.right.articles.length
-    const totalArticles = lastPage.right.articlesCount
-    if (totalLastFetch === totalArticles) return some(totalArticles)
-    else return some(totalLastFetch + defaultArticlesLimit)
-  }
-  return none
-}
 
 export const getArticles = async (articlesLimit: Option<number>) => {
   const url = `/articles?limit=${
