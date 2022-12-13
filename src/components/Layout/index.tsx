@@ -8,14 +8,14 @@ export type LayoutProps = {
 
 const Wrapper = styled.div`
   ${({ theme }) => css`
-    max-width: ${theme.breakpoints.desktop}
+    max-width: ${theme.breakpoints.desktop};
     height: 100%;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
     margin: 0px auto;
     @media (max-width: ${theme.breakpoints.desktop}) {
-      padding: 0px 124px;
+      padding: 0px ${theme.spacings.xxxxhuge};
     }
   `}
 `

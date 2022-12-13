@@ -13,14 +13,20 @@ export const theme = {
     },
   },
   spacings: {
-    xsmall: '8px',
-    small: '16px',
-    medium: '24px',
+    small: '8px',
+    xsmall: '12px',
+    xxsmall: '16px',
+    xxxsmall: '18px',
+    medium: '22px',
+    xmedium: '24px',
     large: '32px',
     xlarge: '42px',
     xxlarge: '48px',
     huge: '56px',
     xhuge: '64px',
+    xxhuge: '72px',
+    xxxhuge: '96px',
+    xxxxhuge: '128px',
   },
   colors: {
     black: {

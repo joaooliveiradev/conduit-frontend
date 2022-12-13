@@ -33,7 +33,7 @@ const Content = styled(Dialog.Content)`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: ${theme.spacings.xxsmall};
     position: fixed;
     top: 50%;
     left: 50%;
@@ -56,9 +56,9 @@ const Content = styled(Dialog.Content)`
 const IconButton = styled.button`
   ${({ theme }) => css`
     position: absolute;
-    top: 16px;
-    right: 16px;
-    padding: 6px;
+    top: ${theme.spacings.xxsmall};
+    right: ${theme.spacings.xxsmall};
+    padding: ${theme.spacings.small};;
     display: flex;
     background-color: ${transparentize(0.8, theme.colors.grey[300])};
     border-radius: 9999px;

@@ -8,10 +8,12 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  width: 100%;
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    row-gap: ${theme.spacings.xsmall};
+    width: 100%;
+  `}
 `
 
 const ErrorMessage = styled.p`
@@ -28,7 +30,7 @@ const InputWrapper = styled.input<InputProps>`
     height: ${theme.spacings.xlarge};
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
-    padding-left: ${theme.spacings.small};
+    padding-left: ${theme.spacings.xsmall};
     font-size: ${theme.fonts.sizes.xmedium};
     font-weight: 600;
     color: ${errorMessage && touched

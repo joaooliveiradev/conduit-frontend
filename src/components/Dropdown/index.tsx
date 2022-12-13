@@ -19,7 +19,7 @@ const Trigger = styled(Popover.Trigger)`
   ${({ theme }) => css`
     appearance: none;
     all: unset;
-    padding: 8px 16px;
+    padding: ${theme.spacings.small} ${theme.spacings.xxsmall};
     cursor: pointer;
     border-radius: 8px;
     :focus-visible {
@@ -35,7 +35,7 @@ const Content = styled(Popover.Content)`
   ${({ theme }) => css`
     border: 1px solid ${transparentize(0.88, theme.colors.black[200])};
     background-color: ${theme.colors.white[100]};
-    padding: 16px 18px;
+    padding: ${theme.spacings.xxsmall} ${theme.spacings.xxxsmall};
     border-radius: 8px;
     max-width: calc(100vw - 32px);
   `}
@@ -46,7 +46,7 @@ const List = styled.ul`
     background-color: ${theme.colors.white[100]};
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: ${theme.spacings.small};
     word-break: break-word;
   `}
 `
@@ -67,7 +67,7 @@ const Anchor = styled.a`
     display: flex;
     justify-content: center;
     font-weight: 700;
-    padding: 4px ${theme.spacings.small};
+    padding: 4px ${theme.spacings.xsmall};
     border-radius: 6px;
     :focus-visible {
       box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
@@ -82,7 +82,7 @@ const DropdownButton = styled.button`
     display: flex;
     justify-content: center;
     font-weight: 700;
-    padding: 4px ${theme.spacings.small};
+    padding: 4px ${theme.spacings.xsmall};
     border-radius: 6px;
     background-color: unset;
     cursor: pointer;

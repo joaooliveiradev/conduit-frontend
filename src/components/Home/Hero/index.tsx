@@ -9,12 +9,14 @@ type HeroProps = {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  row-gap: 16px;
-  padding-bottom: 104px;
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: ${theme.spacings.xxsmall};
+    padding-bottom: ${theme.spacings.xxxhuge};
+  `}
 `
 
 const Title = styled.h1`
