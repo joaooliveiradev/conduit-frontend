@@ -7,7 +7,7 @@ import {
 } from '@/components'
 import logo from '@/assets/logo.webp'
 import Image from 'next/image'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context'
 import { useMe } from '@/hooks/queries'
@@ -15,10 +15,12 @@ import { getUsername } from '@/utils/user'
 import { isSome } from 'fp-ts/lib/Option'
 
 const Wrapper = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 72px;
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: ${theme.spacings.xxhuge};
+  `}
 `
 
 export const Header = () => {

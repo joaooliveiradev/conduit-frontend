@@ -22,7 +22,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    row-gap: ${theme.spacings.medium};
+    row-gap: ${theme.spacings.xmedium};
   `}
 `
 

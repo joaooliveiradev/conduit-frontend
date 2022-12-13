@@ -2,11 +2,13 @@ import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 
 const Wrapper = styled.footer`
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-  row-gap: 20px;
-  padding-bottom: 72px;
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    row-gap: ${theme.spacings.medium};
+    padding-bottom: ${theme.spacings.xxhuge};
+  `}
 `
 
 const Line = styled.div`
@@ -43,7 +45,8 @@ export const Footer = () => {
       <Line />
       <Content>
         <Text>
-          Made with <TextBold>Typescript</TextBold> and <TextBold>Next.js</TextBold>.
+          Made with <TextBold>Typescript</TextBold> and{' '}
+          <TextBold>Next.js</TextBold>.
         </Text>
         <Text>&copy; Copyright Spacy - All rights reserved</Text>
       </Content>

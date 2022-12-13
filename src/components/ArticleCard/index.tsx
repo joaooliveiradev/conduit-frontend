@@ -17,7 +17,7 @@ const Wrapper = styled.article`
     background-color: ${transparentize(0.9, theme.colors.black[100])};
     border-radius: 2px;
     padding: ${theme.spacings.large};
-    row-gap: ${theme.spacings.small};
+    row-gap: ${theme.spacings.xsmall};
     transition: background-color 250ms ease-in;
     :hover {
       background-color: ${transparentize(0.86, theme.colors.black[100])};
@@ -26,9 +26,11 @@ const Wrapper = styled.article`
 `
 
 const MainContent = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacings.small};
+  `}
 `
 
 const Title = styled.h1`

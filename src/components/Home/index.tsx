@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Hero } from './Hero'
 import { useAuth } from '@/context'
 import {
@@ -20,9 +20,11 @@ import { InfiniteData } from '@tanstack/react-query'
 import { getUsername } from '@/utils/user'
 
 const ContentSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  margin: 133px 97px 140px 97px;
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    margin: ${theme.spacings.xxxxhuge} ${theme.spacings.xxxhuge};
+  `}
 `
 
 export const Home = () => {

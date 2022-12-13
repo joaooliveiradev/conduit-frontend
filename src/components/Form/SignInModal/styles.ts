@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components'
 
-
 export const Wrapper = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 16px 16px;
+  ${({ theme }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacings.medium};
+    padding: ${theme.spacings.xxsmall};
+  `}
 `
 
 export const Title = styled.h1`

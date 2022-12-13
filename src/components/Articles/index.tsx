@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { GetArticlesOutput } from '@/hooks/queries/useGetArticles'
 import { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
@@ -7,12 +7,14 @@ import format from 'date-fns/format'
 const readingTime = require('reading-time/lib/reading-time')
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  align-items: center;
-  justify-content: center;
-  gap: 32px 30px;
+  ${({ theme }) => css`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: ${theme.spacings.large};
+  `}
 `
 
 type ArticlesProps = {
