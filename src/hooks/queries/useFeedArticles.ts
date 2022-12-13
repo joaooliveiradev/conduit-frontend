@@ -29,19 +29,18 @@ type GetFeedArticlesOptions = UseInfiniteQueryOptions<
   DefaultError
 >
 
-export const getFeedArticles = async (author: string) =>
+export const getFeedArticles = async () =>
   await fetcher<undefined, GetFeedArticlesResponse>(
-    `/articles?author=${author}`,
+    `/articles/feed`,
     GetFeedArticlesResponseCodec
   )
 
 export const useFeedArticles = (
-  author: string,
   options: GetFeedArticlesOptions
 ) =>
   useInfiniteQuery<Either<DefaultError, GetFeedArticlesOutput>, DefaultError>(
     [GET_FEED_ARTICLES_KEY],
-    async () => await getFeedArticles(author),
+    async () => await getFeedArticles(),
     {
       ...options,
       staleTime: oneMinute,
