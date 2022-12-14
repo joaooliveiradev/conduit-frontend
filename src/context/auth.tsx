@@ -1,4 +1,4 @@
-import { destroyCookies, setCoookies, DefaultError } from '@/utils'
+import { destroyCookies, setCoookies, DefaultError } from '@/libs'
 import {
   createContext,
   ReactNode,

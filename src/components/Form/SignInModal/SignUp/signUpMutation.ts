@@ -1,5 +1,5 @@
 import { SignInInput, UserTypeCodec } from '@/types/user'
-import { fetcher } from '@/utils'
+import { fetcher } from '@/libs'
 import * as t from 'io-ts'
 
 const SignUpResponseCodec = t.type({

@@ -1,5 +1,5 @@
 import { EventCodec } from '@/types/article'
-import { DefaultError, fetcher } from '@/utils'
+import { DefaultError, fetcher } from '@/libs'
 import {
   QueryFunctionContext,
   QueryKey,
@@ -9,7 +9,7 @@ import {
 import { withMessage } from 'io-ts-types'
 import { Either } from 'fp-ts/Either'
 import * as t from 'io-ts'
-import { calculateTotalArticles } from '@/utils/calculateTotalArticles'
+import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 import { some, Option, isSome } from 'fp-ts/Option'
 import { defaultArticlesLimit } from './useGetArticles'
 
