@@ -1,5 +1,5 @@
 import { EventCodec } from '@/types/article'
-import { DefaultError, fetcher } from '@/utils'
+import { DefaultError, fetcher } from '@/libs'
 import {
   useInfiniteQuery,
   QueryFunctionContext,
@@ -10,7 +10,7 @@ import { Either } from 'fp-ts/Either'
 import { withMessage } from 'io-ts-types'
 import * as t from 'io-ts'
 import { some, Option, isSome } from 'fp-ts/Option'
-import { calculateTotalArticles } from '@/utils/calculateTotalArticles'
+import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 
 const GetArticlesResponseCodec = t.type({
   articles: t.array(EventCodec),
