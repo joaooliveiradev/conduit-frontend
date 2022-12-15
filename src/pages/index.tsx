@@ -4,11 +4,6 @@ import Head from 'next/head'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
-import {
-  GET_ARTICLES_KEY,
-  getArticles,
-  defaultArticlesLimit,
-} from '@/hooks/queries/useGetArticles'
 import { useAuth } from '@/context'
 import {
   ErrorState,
@@ -19,7 +14,13 @@ import {
   TabContent,
   Hero,
 } from '@/components'
-import { GetArticlesOutput, useGetArticles } from '@/hooks/queries'
+import {
+  defaultArticlesLimit,
+  getArticles,
+  GetArticlesOutput,
+  GET_ARTICLES_KEY,
+  useGetArticles,
+} from '@/hooks/queries'
 import {
   fromEither,
   fromNullable,
@@ -29,7 +30,7 @@ import {
   some,
 } from 'fp-ts/Option'
 import { Either } from 'fp-ts/Either'
-import { f, DefaultError } from '@/utils'
+import { f, DefaultError } from '@/libs'
 import { useFeedArticles } from '@/hooks/queries/useFeedArticles'
 import { InfiniteData } from '@tanstack/react-query'
 
