@@ -9,7 +9,7 @@ import {
 import { Either } from 'fp-ts/Either'
 import { withMessage } from 'io-ts-types'
 import * as t from 'io-ts'
-import { some, Option, isSome } from 'fp-ts/Option'
+import { some, Option, isSome, none } from 'fp-ts/Option'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 
 const GetArticlesResponseCodec = t.type({
@@ -35,7 +35,7 @@ type UseGetArticlesOptions = UseInfiniteQueryOptions<
   DefaultError
 >
 
-type ParamsProps = QueryFunctionContext<QueryKey, Option<number>>
+type ParamsProps = QueryFunctionContext<QueryKey, Option<number> | null>
 
 export const getArticles = async (articlesLimit: Option<number>) => {
   const url = `/articles?limit=${
@@ -51,8 +51,8 @@ export const getArticles = async (articlesLimit: Option<number>) => {
 export const useGetArticles = (options?: UseGetArticlesOptions) =>
   useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>(
     [GET_ARTICLES_KEY],
-    ({ pageParam = some(defaultArticlesLimit) }: ParamsProps) =>
-      getArticles(pageParam),
+    async ({ pageParam = some(defaultArticlesLimit) }: ParamsProps) =>
+      await getArticles(pageParam ? pageParam : none),
     {
       ...options,
       getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),

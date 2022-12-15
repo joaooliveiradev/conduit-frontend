@@ -9,7 +9,7 @@ export const calculateTotalArticles = (
   if (isRight(lastPage)) {
     const totalLastFetch = lastPage.right.articles.length
     const totalArticles = lastPage.right.articlesCount
-    if (totalLastFetch === totalArticles) return null;
+    if (totalLastFetch === totalArticles) return null
     else return some(totalLastFetch + defaultArticlesLimit)
   }
   return none
