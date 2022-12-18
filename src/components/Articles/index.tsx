@@ -10,7 +10,6 @@ const Wrapper = styled.div`
   ${({ theme }) => css`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
     align-items: center;
     justify-content: center;
     gap: ${theme.spacings.large};
