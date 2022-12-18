@@ -33,6 +33,7 @@ import { Either } from 'fp-ts/Either'
 import { f, DefaultError } from '@/libs'
 import { useFeedArticles } from '@/hooks/queries/useFeedArticles'
 import { InfiniteData } from '@tanstack/react-query'
+import * as superJSON from 'superjson'
 
 const ContentSection = styled.section`
   ${({ theme }) => css`
@@ -196,7 +197,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+      dehydratedState: superJSON.stringify(dehydrate(queryClient)),
     },
   }
 }
