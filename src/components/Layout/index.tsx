@@ -1,9 +1,9 @@
 import { Header, Footer } from '@/components'
-import { ReactNode } from 'react'
+import * as React from 'react'
 import styled, { css } from 'styled-components'
 
 export type LayoutProps = {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const Wrapper = styled.div`

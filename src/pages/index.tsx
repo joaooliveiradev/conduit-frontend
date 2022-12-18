@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import Head from 'next/head'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
-import { useEffect } from 'react'
+import * as React from 'react'
 import { useAuth } from '@/context'
 import {
   ErrorState,
@@ -58,7 +58,7 @@ const Home: NextPage = () => {
     threshold: 1,
   })
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (inViewGetArticles) {
       fextNextPageGetArticles()
     }
@@ -81,7 +81,7 @@ const Home: NextPage = () => {
       threshold: 1,
     })
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (inViewFeedArticles) {
       fextNextPageFeedArticles()
     }

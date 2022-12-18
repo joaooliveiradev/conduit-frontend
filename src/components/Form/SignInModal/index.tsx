@@ -1,5 +1,5 @@
 import { SignIn, SignUp, Modal } from '@/components'
-import { useState } from 'react'
+import * as React from 'react'
 
 type SignInModalProps = {
   open: boolean
@@ -8,7 +8,7 @@ type SignInModalProps = {
 }
 
 export const SignInModal = ({ open, onOpenChange, showSignInFirst = true }: SignInModalProps) => {
-  const [showSignIn, setShowSignIn] = useState<boolean>(showSignInFirst)
+  const [showSignIn, setShowSignIn] = React.useState<boolean>(showSignInFirst)
   const switchForm = (state: boolean) => setShowSignIn(state)
   return (
     <Modal open={open} onOpenChange={onOpenChange}>

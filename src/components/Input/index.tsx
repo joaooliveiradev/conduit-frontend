@@ -1,8 +1,8 @@
-import { InputHTMLAttributes } from 'react'
+import * as React from 'react'
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   touched?: boolean
 }

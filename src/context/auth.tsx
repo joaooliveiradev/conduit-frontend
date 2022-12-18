@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { parseCookies } from 'nookies'
 import { Either, isRight } from 'fp-ts/Either'
-import { type SignInResponseOutput  } from '@/components/Form/SignInModal/SignIn/signInMutation'
+import { type SignInResponseOutput } from '@/components/Form/SignInModal/SignIn/signInMutation'
 
 export type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
