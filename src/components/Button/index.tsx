@@ -1,7 +1,7 @@
 import { Loading } from '@/components'
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import * as React from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: string
   size: 'large' | 'medium'
   disabled?: boolean
@@ -52,7 +52,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
   `};
 `
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ size, disabled, block, isLoading, children, ...rest }, ref) => {
     return (
       <Wrapper

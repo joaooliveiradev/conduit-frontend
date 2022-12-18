@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { Button } from '@/components/Button'
 import { type Status } from '@/context'
-import { useState } from 'react'
+import * as React from 'react'
 import { SignInModal } from '@/components'
 
 type HeroProps = {
@@ -41,7 +41,7 @@ const Description = styled.p`
 `
 
 export const Hero = ({ userStatus }: HeroProps) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false)
 
   return (
     <Wrapper>

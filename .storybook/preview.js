@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import * as React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../src/styles/theme'
 import { GlobalStyles } from '../src/styles/global'
@@ -6,7 +6,7 @@ import { GlobalStyles } from '../src/styles/global'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
 const withThemeProvider = (Story, context) => {
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = React.useState(() => new QueryClient())
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>

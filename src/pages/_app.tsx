@@ -3,7 +3,7 @@ import {
   QueryClient,
   Hydrate,
 } from '@tanstack/react-query'
-import { useState } from 'react'
+import * as React from 'react'
 import { Layout } from '@/components'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
@@ -11,7 +11,7 @@ import { GlobalStyles, theme } from '@/styles'
 import { AuthProvider } from '@/context'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = React.useState(() => new QueryClient())
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
