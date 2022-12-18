@@ -7,7 +7,9 @@ import { ReactComponent as CloseIcon } from '@/assets/close.svg'
 export type ModalProps = {
   trigger?: ReactNode
   children: ReactNode
-} & Dialog.DialogProps
+  open?: boolean,
+  onOpenChange?: (open: boolean) => void
+}
 
 const Overlay = styled(Dialog.Overlay)`
   ${({ theme }) => css`
