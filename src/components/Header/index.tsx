@@ -1,18 +1,19 @@
 import {
   Button,
-  ProfileName,
   SignInModal,
   Dropdown,
   DropdownItem,
+  ProfileName,
 } from '@/components'
 import logo from '@/assets/logo.webp'
 import Image from 'next/image'
 import styled, { css } from 'styled-components'
-import { useEffect, useState } from 'react'
-import { useAuth } from '@/context'
-import { useMe } from '@/hooks/queries'
-import { getUsername } from '@/utils/user'
-import { isSome } from 'fp-ts/lib/Option'
+import { useAuth, useToast } from '@/context'
+import { useMe, UseMeOutput } from '@/hooks/queries'
+import { isSome, fromNullable, fromEither, none } from 'fp-ts/Option'
+import * as React from 'react'
+import { Either, isLeft, isRight } from 'fp-ts/Either'
+import { DefaultError, f } from '@/libs'
 
 const Wrapper = styled.header`
   ${({ theme }) => css`
@@ -24,37 +25,72 @@ const Wrapper = styled.header`
 `
 
 export const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const { status, signOut } = useAuth()
-  const { data } = useMe()
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false)
+  const { signOut, status } = useAuth()
+  const { setIsToastOpen } = useToast()
 
-  useEffect(() => {
-    if (status === 'loggedIn') setIsModalOpen(false)
+  React.useEffect(() => {
+    if (status === 'loggedIn') return setIsModalOpen(false)
   }, [status])
 
-  const maybeUsername = getUsername(data)
+  const handleLeftData = (data: Either<DefaultError, UseMeOutput>) => {
+    const dataOption = fromNullable(data)
+    const leftData = isSome(dataOption) && isLeft(dataOption.value)
+    if (leftData) {
+      signOut()
+      setIsToastOpen(true)
+    }
+  }
+
+  const handleError = (error: DefaultError) => {
+    signOut()
+
+    return new DefaultError({
+      message: error.message,
+      name: error.name,
+      status: error.status,
+    })
+  }
+
+  const { data } = useMe({
+    enabled: status === 'loggedIn',
+    onSuccess: (data) => handleLeftData(data),
+    onError: (error) => handleError(error),
+  })
+
+  const maybeData = f(() => {
+    const dataOption = fromNullable(data)
+    if (isSome(dataOption) && isRight(dataOption.value))
+      return fromEither(dataOption.value)
+    else return none
+  })
 
   return (
-    <Wrapper>
-      <Image src={logo} alt="Conduit Logo" width={172} height={42} />
-      {status == 'loggedIn' && isSome(maybeUsername) && (
-        <Dropdown trigger={<ProfileName size={2} name={maybeUsername.value} />}>
-          <DropdownItem href="profile" label="Profile" />
-          <DropdownItem label="Sign Out" onEventClick={signOut} />
-        </Dropdown>
-      )}
-      {(status === 'idle' || status === 'loggedOut') && (
-        <>
-          <Button size="large" onClick={() => setIsModalOpen(true)}>
-            Sign in
-          </Button>
-          <SignInModal
-            open={isModalOpen}
-            onOpenChange={(open) => setIsModalOpen(open)}
-            showSignInFirst
-          />
-        </>
-      )}
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Image src={logo} alt="Conduit Logo" width={172} height={42} />
+        {isSome(maybeData) ? (
+          <Dropdown
+            trigger={
+              <ProfileName size={2} name={maybeData.value.user.username} />
+            }
+          >
+            <DropdownItem href="profile" label="Profile" />
+            <DropdownItem label="Sign Out" onEventClick={signOut} />
+          </Dropdown>
+        ) : (
+          <>
+            <Button size="large" onClick={() => setIsModalOpen(true)}>
+              Sign in
+            </Button>
+            <SignInModal
+              open={isModalOpen}
+              onOpenChange={(open) => setIsModalOpen(open)}
+              showSignInFirst
+            />
+          </>
+        )}
+      </Wrapper>
+    </>
   )
 }
