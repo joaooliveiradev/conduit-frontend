@@ -9,6 +9,7 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '@/styles'
 import { AuthProvider } from '@/context'
+import { ToastProvider } from '@/context/toast'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
@@ -18,9 +19,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={theme}>
           <GlobalStyles />
           <AuthProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <ToastProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </ToastProvider>
           </AuthProvider>
         </ThemeProvider>
       </Hydrate>
