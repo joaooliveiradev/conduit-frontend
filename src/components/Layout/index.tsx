@@ -1,13 +1,16 @@
-import { Header, Footer } from '@/components'
+import { Header, Footer, type ToastProps } from '@/components'
 import styled, { css } from 'styled-components'
 import * as React from 'react'
 import { useToast } from '@/context/toast'
 
 import dynamic from 'next/dynamic'
 
-const Toast = dynamic(() => import('@/components/Toast'), {
-  ssr: false,
-})
+const Toast = dynamic<ToastProps>(
+  () => import('@/components/Toast').then((module) => module.Toast),
+  {
+    ssr: false,
+  }
+)
 
 export type LayoutProps = {
   children: React.ReactNode
