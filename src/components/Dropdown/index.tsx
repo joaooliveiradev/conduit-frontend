@@ -3,8 +3,9 @@ import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { ReactNode } from 'react'
 import Link from 'next/link'
+import * as React from 'react'
 
-export interface DropdownProps extends Popover.PopoverContentProps {
+export type DropdownProps = {
   children: ReactNode
   trigger: ReactNode
 }
@@ -92,7 +93,7 @@ const DropdownButton = styled.button`
   `}
 `
 
-const Dropdown = ({ children, trigger }: DropdownProps) => {
+export const Dropdown = ({ children, trigger }: DropdownProps) => {
   return (
     <Popover.Root>
       <Trigger>{trigger}</Trigger>
@@ -105,7 +106,11 @@ const Dropdown = ({ children, trigger }: DropdownProps) => {
   )
 }
 
-const DropdownItem = ({ label, href, onEventClick }: DropdownItemProps) => {
+export const DropdownItem = ({
+  label,
+  href,
+  onEventClick,
+}: DropdownItemProps) => {
   return (
     <Item>
       {href ? (
@@ -118,5 +123,3 @@ const DropdownItem = ({ label, href, onEventClick }: DropdownItemProps) => {
     </Item>
   )
 }
-
-export { Dropdown, DropdownItem }
