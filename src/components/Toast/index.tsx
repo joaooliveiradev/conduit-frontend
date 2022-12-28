@@ -2,7 +2,7 @@ import * as RadixToast from '@radix-ui/react-toast'
 import { transparentize } from 'polished'
 import styled, { css } from 'styled-components'
 
-type ToastProps = {
+export type ToastProps = {
   title: string
   description: string
   open: boolean
@@ -74,7 +74,7 @@ const Description = styled(RadixToast.Description)`
 
 const oneSecond = 1000
 
-const Toast = ({
+export const Toast = ({
   title,
   description,
   open,
@@ -89,4 +89,3 @@ const Toast = ({
   </RadixToast.Provider>
 )
 
-export default Toast
