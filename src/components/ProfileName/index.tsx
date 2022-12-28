@@ -21,7 +21,7 @@ const Wrapper = styled.div<Pick<ProfileNameProps, 'size'>>`
     }
   `}
 `
-const ProfileName = ({ size, name }: ProfileNameProps) => {
+export const ProfileName = ({ size, name }: ProfileNameProps) => {
   return (
     <Wrapper size={size}>
       <Avatar size={size} name={name} />
@@ -30,4 +30,3 @@ const ProfileName = ({ size, name }: ProfileNameProps) => {
   )
 }
 
-export { ProfileName }
