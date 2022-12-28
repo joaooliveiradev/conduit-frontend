@@ -1,6 +1,13 @@
 import { Header, Footer } from '@/components'
-import * as React from 'react'
 import styled, { css } from 'styled-components'
+import * as React from 'react'
+import { useToast } from '@/context/toast'
+
+import dynamic from 'next/dynamic'
+
+const Toast = dynamic(() => import('@/components/Toast'), {
+  ssr: false,
+})
 
 export type LayoutProps = {
   children: React.ReactNode
@@ -21,11 +28,20 @@ const Wrapper = styled.div`
 `
 
 export const Layout = ({ children }: LayoutProps) => {
+  const { isToastOpen, setIsToastOpen } = useToast()
   return (
-    <Wrapper>
-      <Header />
-      <main>{children}</main>
-      <Footer />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </Wrapper>
+      <Toast
+        title="Unknown Error"
+        description="You have been logged out due to some unknown error."
+        open={isToastOpen}
+        onOpenChange={setIsToastOpen}
+      />
+    </>
   )
 }
