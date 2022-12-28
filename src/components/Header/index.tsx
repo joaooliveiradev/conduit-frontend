@@ -1,9 +1,9 @@
 import {
   Button,
   SignInModal,
-  Dropdown,
-  DropdownItem,
-  ProfileName,
+  type DropdownProps,
+  type DropdownItemProps,
+  type ProfileNameProps,
 } from '@/components'
 import logo from '@/assets/logo.webp'
 import Image from 'next/image'
@@ -14,6 +14,23 @@ import { isSome, fromNullable, fromEither, none } from 'fp-ts/Option'
 import * as React from 'react'
 import { Either, isLeft, isRight } from 'fp-ts/Either'
 import { DefaultError, f } from '@/libs'
+import dynamic from 'next/dynamic'
+
+const Dropdown = dynamic<DropdownProps>(
+  () => import('@/components/Dropdown').then((module) => module.Dropdown),
+  { ssr: false }
+)
+const DropdownItem = dynamic<DropdownItemProps>(
+  () => import('@/components/Dropdown').then((module) => module.DropdownItem),
+  { ssr: false }
+)
+
+const ProfileName = dynamic<ProfileNameProps>(
+  () => import('@/components/ProfileName').then((module) => module.ProfileName),
+  {
+    ssr: false,
+  }
+)
 
 const Wrapper = styled.header`
   ${({ theme }) => css`
