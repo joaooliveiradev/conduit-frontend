@@ -10,12 +10,17 @@ import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '@/styles'
 import { AuthProvider } from '@/context'
 import { ToastProvider } from '@/context/toast'
+import * as superJSON from 'superjson'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
+  const hydratedState = pageProps.dehydratedState
+    ? superJSON.parse(pageProps.dehydratedState)
+    : null
+
   return (
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
+      <Hydrate state={hydratedState}>
         <ThemeProvider theme={theme}>
           <GlobalStyles />
           <AuthProvider>
