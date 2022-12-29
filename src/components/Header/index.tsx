@@ -86,7 +86,7 @@ export const Header = () => {
     <>
       <Wrapper>
         <Image src={logo} alt="Conduit Logo" width={172} height={42} />
-        {isSome(maybeData) ? (
+        {isSome(maybeData) && status === 'loggedIn' ? (
           <Dropdown
             trigger={
               <ProfileName size={2} name={maybeData.value.user.username} />
