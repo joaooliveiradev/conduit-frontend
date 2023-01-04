@@ -1,4 +1,4 @@
-import { EventCodec } from '@/types/article'
+import { ArticleCodec } from '@/types/article'
 import { DefaultError, fetcher } from '@/libs'
 import {
   useInfiniteQuery,
@@ -12,15 +12,15 @@ import * as t from 'io-ts'
 import { some, Option, isSome, none } from 'fp-ts/Option'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 
-const GetArticlesResponseCodec = t.type({
-  articles: t.array(EventCodec),
+export const GetArticlesResponseCodec = t.type({
+  articles: t.array(ArticleCodec),
   articlesCount: withMessage(
     t.number,
     () => 'articlesCount should be a number'
   ),
 })
 
-type GetArticlesResponse = t.TypeOf<typeof GetArticlesResponseCodec>
+export type GetArticlesResponse = t.TypeOf<typeof GetArticlesResponseCodec>
 
 export type GetArticlesOutput = t.OutputOf<typeof GetArticlesResponseCodec>
 
