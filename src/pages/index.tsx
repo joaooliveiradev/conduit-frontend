@@ -7,7 +7,7 @@ import * as React from 'react'
 import { useAuth } from '@/context'
 import {
   ErrorState,
-  Articles,
+  ArticlesGrid,
   Tabs,
   TabsPane,
   Pane,
@@ -131,7 +131,7 @@ const Home: NextPage = () => {
                 <TabContent value="global">
                   {isSome(maybeGetArticles) ? (
                     <>
-                      <Articles articles={maybeGetArticles} />
+                      <ArticlesGrid articles={maybeGetArticles} />
                       <div ref={observerRefGetArticles} />
                     </>
                   ) : (
@@ -148,7 +148,7 @@ const Home: NextPage = () => {
                 <TabContent value="foryou">
                   {isSome(maybeFeedArticles) ? (
                     <>
-                      <Articles articles={maybeFeedArticles} />
+                      <ArticlesGrid articles={maybeFeedArticles} />
                       <div ref={observerRefFeedArticles} />
                     </>
                   ) : (
@@ -169,7 +169,7 @@ const Home: NextPage = () => {
           return isSome(maybeGetArticles) ? (
             <ContentSection>
               <Hero userStatus={status} />
-              <Articles articles={maybeGetArticles} />
+              <ArticlesGrid articles={maybeGetArticles} />
               <div ref={observerRefGetArticles} />
             </ContentSection>
           ) : (

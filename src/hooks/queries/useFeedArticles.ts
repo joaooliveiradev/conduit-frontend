@@ -1,4 +1,4 @@
-import { EventCodec } from '@/types/article'
+import { ArticleCodec } from '@/types/article'
 import { DefaultError, fetcher } from '@/libs'
 import {
   QueryFunctionContext,
@@ -14,7 +14,7 @@ import { some, Option, isSome, none } from 'fp-ts/Option'
 import { defaultArticlesLimit } from './useGetArticles'
 
 const GetFeedArticlesResponseCodec = t.type({
-  articles: t.array(EventCodec),
+  articles: t.array(ArticleCodec),
   articlesCount: withMessage(
     t.number,
     () => 'articlesCount should be a number'

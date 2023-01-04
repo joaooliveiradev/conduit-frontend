@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { GetArticlesOutput } from '@/hooks/queries/useGetArticles'
+import { type GetArticlesOutput } from '@/hooks/queries/useGetArticles'
 import { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
 import format from 'date-fns/format'
@@ -20,7 +20,7 @@ type ArticlesProps = {
   articles: Some<GetArticlesOutput>
 }
 
-export const Articles = ({ articles }: ArticlesProps) => {
+export const ArticlesGrid = ({ articles }: ArticlesProps) => {
   const getReadingTime = (articleBody: string) => {
     const stats = readingTime(articleBody)
     const minute = stats.text.charAt(0)
