@@ -1,9 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage, NonEmptyString } from 'io-ts-types'
 
-//Omit Ts in IO-TS
-// declare function omit<O, K>
-
 const AuthorCodec = t.type({
   username: withMessage(
     NonEmptyString,
@@ -108,5 +105,3 @@ export const ArticleBySlugCodec = t.type({
     () => 'favoritesCount response should be an number'
   ),
 })
-
-// const xCodec = t.type(omit(ArticleCodec.props, 'authorId'))
