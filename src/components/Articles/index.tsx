@@ -20,7 +20,7 @@ type ArticlesProps = {
   articles: Some<GetArticlesOutput>
 }
 
-export const ArticlesGrid = ({ articles }: ArticlesProps) => {
+export const Articles = ({ articles }: ArticlesProps) => {
   const getReadingTime = (articleBody: string) => {
     const stats = readingTime(articleBody)
     const minute = stats.text.charAt(0)
