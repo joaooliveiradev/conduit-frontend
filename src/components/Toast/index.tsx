@@ -22,7 +22,7 @@ const Root = styled(RadixToast.Root)`
     animation: slideIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  [data-swipe='end'] {
+  &[data-swipe='end'] {
     animation: swipeOut 200ms ease-out;
   }
 
