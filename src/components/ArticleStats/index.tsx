@@ -1,7 +1,7 @@
 import { Divider } from '@/components'
 import styled, { css } from 'styled-components'
 
-type ArticleStatsProps = {
+export type ArticleStatsProps = {
   readingTime: string
   date: string
 }
