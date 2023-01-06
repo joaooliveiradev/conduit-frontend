@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ProfileName } from '@/components'
+import { ArticleStats, ProfileName } from '@/components'
 
 export type ArticleCardProps = {
   title: string
@@ -58,31 +58,8 @@ const Text = styled.p`
 const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `
-
-const InfoWrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    column-gap: ${theme.spacings.xsmall};
-    align-items: center;
-  `}
-`
-
-const InfoText = styled.p`
-  ${({ theme }) => css`
-    color: ${theme.colors.black[100]};
-    font-size: ${theme.fonts.sizes.medium};
-    font-weight: 600;
-  `}
-`
-
-const Divider = styled.span`
-  ${({ theme }) => css`
-    color: ${theme.colors.grey[300]};
-    font-size: ${theme.fonts.sizes.medium};
-  `}
-`
-
 export const ArticleCard = ({
   title,
   description,
@@ -102,11 +79,7 @@ export const ArticleCard = ({
       </MainContent>
       <Footer>
         <ProfileName name={author} size={2} />
-        <InfoWrapper>
-          <InfoText>{readingTime}</InfoText>
-          <Divider>{`//`}</Divider>
-          <InfoText>{date}</InfoText>
-        </InfoWrapper>
+        <ArticleStats date={date} readingTime={readingTime} />
       </Footer>
     </Wrapper>
   )
