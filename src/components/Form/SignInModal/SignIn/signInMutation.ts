@@ -13,8 +13,7 @@ export type SignInResponseOutput = t.OutputOf<typeof SignInResponseCodec>
 
 export const signInMutation = async (
   data: SignInInput
-): Promise<
-  Either<DefaultError, SignInResponseOutput>> => {
+): Promise<Either<DefaultError, SignInResponseOutput>> => {
   const options: RequestInit = {
     method: 'POST',
   }

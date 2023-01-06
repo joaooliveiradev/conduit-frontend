@@ -1,8 +1,10 @@
 import * as React from 'react'
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
+import { ErrorMessage } from '@/components/ErrorMessage'
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   touched?: boolean
 }
@@ -13,14 +15,6 @@ const Wrapper = styled.div`
     flex-direction: column;
     row-gap: ${theme.spacings.xsmall};
     width: 100%;
-  `}
-`
-
-const ErrorMessage = styled.p`
-  ${({ theme }) => css`
-    color: ${theme.colors.red[100]};
-    font-size: ${theme.fonts.sizes.medium};
-    font-weight: 500;
   `}
 `
 
@@ -51,7 +45,9 @@ export const Input = ({ errorMessage, touched, ...rest }: InputProps) => {
         {...rest}
         autoComplete="off"
       />
-      {errorMessage && touched && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {errorMessage && touched && (
+        <ErrorMessage message={errorMessage} fontWeight="bold" />
+      )}
     </Wrapper>
   )
 }
