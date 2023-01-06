@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   `}
 `
 
-type ArticlesProps = {
+export type ArticlesProps = {
   articles: Some<GetArticlesOutput>
 }
 
