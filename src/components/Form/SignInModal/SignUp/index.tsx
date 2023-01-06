@@ -122,7 +122,11 @@ export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
         Sign up
       </Button>
       {isSome(maybeError) && (
-        <ErrorMessage errorMessage={maybeError.value.message} />
+        <ErrorMessage
+          message={maybeError.value.message}
+          fontWeight="medium"
+          textAlign="center"
+        />
       )}
       <Text>
         Already have an account?{' '}

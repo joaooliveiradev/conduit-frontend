@@ -110,7 +110,7 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
         Sign in
       </Button>
       {isSome(maybeError) && (
-        <ErrorMessage errorMessage={maybeError.value.message} />
+        <ErrorMessage message={maybeError.value.message} fontWeight="medium" textAlign='center' />
       )}
       <Text>
         Don&apos;t have an account?{' '}
