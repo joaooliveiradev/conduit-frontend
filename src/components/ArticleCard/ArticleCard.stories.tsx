@@ -1,5 +1,5 @@
 import { Meta, Story } from "@storybook/react";
-import { ArticleCard, ArticleCardProps } from "@/components"
+import { ArticleCard, type ArticleCardProps } from "./index"
 
 const stories: Meta<ArticleCardProps> = {
   component: ArticleCard
