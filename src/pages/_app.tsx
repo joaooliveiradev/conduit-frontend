@@ -11,6 +11,32 @@ import { GlobalStyles, theme } from '@/styles'
 import { AuthProvider } from '@/context'
 import { ToastProvider } from '@/context/toast'
 import * as superJSON from 'superjson'
+import { type DefaultSeoProps, DefaultSeo } from 'next-seo'
+
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL
+
+const SEO: DefaultSeoProps = {
+  title: 'Conduit - A place to read and share your ideias.',
+  description:
+    "Conduit is a platform where readers and writers can discover, create and share ideas, topics they're passionate about.",
+  canonical: baseURL,
+  openGraph: {
+    type: 'website',
+    url: baseURL,
+    siteName: 'Conduit',
+    locale: 'en_US',
+    title: 'Conduit - A place to read and share your ideias.',
+    description:
+      "Conduit is a platform where readers and writers can discover, create and share ideas, topics they're passionate about.",
+    images: [
+      {
+        url: `${baseURL}/cover.png`,
+        alt: 'Og Conduit Image',
+        type: 'image/png',
+      },
+    ],
+  },
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
@@ -26,6 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <AuthProvider>
             <ToastProvider>
               <Layout>
+                <DefaultSeo {...SEO} />
                 <Component {...pageProps} />
               </Layout>
             </ToastProvider>
