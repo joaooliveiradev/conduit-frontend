@@ -9,7 +9,8 @@ export const theme = {
       xlarge: '2.2rem',
       xxlarge: '2.4rem',
       huge: '3.2rem',
-      xhuge: '4.2rem',
+      xhuge: '3.6rem',
+      xxhuge: '4.2rem',
     },
   },
   spacings: {
