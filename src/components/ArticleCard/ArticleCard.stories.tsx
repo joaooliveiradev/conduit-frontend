@@ -12,7 +12,7 @@ Default.args = {
   title: 'Toward a Journalistic Ethic of Citation',
   author: 'Jeff Jarvis',
   date: 'May 26, 2022',
-  readingTime: '3min',
+  readTime: '3min',
   description: 'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.'
 }
 

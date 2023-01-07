@@ -12,5 +12,5 @@ const Template: Story<ArticleStatsProps> = (args) => <ArticleStats {...args} />
 export const Default = Template.bind({})
 Default.args = {
   date: 'May 26, 2022',
-  readingTime: '3min',
+  readTime: '3min',
 }

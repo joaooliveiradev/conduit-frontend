@@ -2,9 +2,6 @@ import styled, { css } from 'styled-components'
 import { type GetArticlesOutput } from '@/hooks/queries/useGetArticles'
 import { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
-import format from 'date-fns/format'
-//eslint-disable-next-line @typescript-eslint/no-var-requires
-const readingTime = require('reading-time/lib/reading-time')
 
 const Wrapper = styled.div`
   ${({ theme }) => css`
@@ -21,18 +18,6 @@ export type ArticlesProps = {
 }
 
 export const Articles = ({ articles }: ArticlesProps) => {
-  const getReadingTime = (articleBody: string) => {
-    const stats = readingTime(articleBody)
-    const minute = stats.text.charAt(0)
-    return `${minute}min`
-  }
-
-  const getDate = (articleDate: string) => {
-    const formatMethod = 'PP'
-    const date = format(new Date(articleDate), formatMethod)
-    return date
-  }
-
   if (articles.value.articles.length === 0) {
     return (
       <EmptyState
@@ -49,8 +34,8 @@ export const Articles = ({ articles }: ArticlesProps) => {
             author={article.author.username}
             description={article.description}
             title={article.title}
-            date={getDate(article.updatedAt)}
-            readingTime={getReadingTime(article.body)}
+            date={article.updatedAt}
+            readTime={article.body}
           />
         ))}
       </Wrapper>

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xhuge};
+    font-size: ${theme.fonts.sizes.xxhuge};
     line-height: 55px;
     letter-spacing: -0.055em;
     color: ${theme.colors.black[100]};

@@ -6,7 +6,7 @@ export type ArticleCardProps = {
   title: string
   description: string
   date: string
-  readingTime: string
+  readTime: string
   author: string
 }
 
@@ -64,7 +64,7 @@ export const ArticleCard = ({
   title,
   description,
   date,
-  readingTime,
+  readTime,
   author,
 }: ArticleCardProps) => {
   return (
@@ -79,7 +79,7 @@ export const ArticleCard = ({
       </MainContent>
       <Footer>
         <ProfileName name={author} size={2} />
-        <ArticleStats date={date} readingTime={readingTime} />
+        <ArticleStats date={date} readTime={readTime} />
       </Footer>
     </Wrapper>
   )
