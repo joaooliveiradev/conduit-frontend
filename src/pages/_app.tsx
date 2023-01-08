@@ -37,10 +37,16 @@ const SEO: DefaultSeoProps = {
       },
     ],
   },
-  additionalMetaTags: [{
-    property: 'dc:creator',
-    content: 'João Oliveira'
-  }],
+  additionalMetaTags: [
+    {
+      property: 'dc:creator',
+      content: 'João Oliveira',
+    },
+    {
+      property: 'application-name',
+      content: 'Conduit',
+    },
+  ],
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
