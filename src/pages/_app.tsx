@@ -19,7 +19,6 @@ const SEO: DefaultSeoProps = {
   title: 'Conduit - A place to read and share your ideias.',
   description:
     "Conduit is a platform where readers and writers can discover, create and share ideas, topics they're passionate about.",
-  canonical: baseURL,
   openGraph: {
     type: 'website',
     url: baseURL,
