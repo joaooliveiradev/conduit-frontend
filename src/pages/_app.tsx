@@ -33,9 +33,15 @@ const SEO: DefaultSeoProps = {
         url: `${baseURL}/cover.png`,
         alt: 'Og Conduit Image',
         type: 'image/png',
+        width: 600,
+        height: 200,
       },
     ],
   },
+  additionalMetaTags: [{
+    property: 'dc:creator',
+    content: 'João Oliveira'
+  }],
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
