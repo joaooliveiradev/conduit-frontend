@@ -8,10 +8,12 @@ const GetArticleCodec = t.type({
   article: ArticleBySlugCodec,
 })
 
+type GetArticleOutput = t.OutputOf<typeof GetArticleCodec>
+
 type GetArticleResponse = t.TypeOf<typeof GetArticleCodec>
 
 type GetArticlesOptions = UseQueryOptions<
-  Either<DefaultError, GetArticleResponse>,
+  Either<DefaultError, GetArticleOutput>,
   DefaultError
 >
 
@@ -24,7 +26,7 @@ export const getArticle = async (slug: string) =>
   )
 
 export const useGetArticle = (slug: string, options?: GetArticlesOptions) =>
-  useQuery<Either<DefaultError, GetArticleResponse>, DefaultError>(
+  useQuery<Either<DefaultError, GetArticleOutput>, DefaultError>(
     [GET_ARTICLE_KEY],
     async () => await getArticle(slug),
     {
