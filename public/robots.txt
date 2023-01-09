@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://conduit-front.netlify.app/sitemap.xml
