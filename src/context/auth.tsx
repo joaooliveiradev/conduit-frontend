@@ -1,4 +1,4 @@
-import { destroyCookies, setCoookies, DefaultError } from '@/libs'
+import { DefaultError } from '@/libs'
 import {
   createContext,
   ReactNode,
@@ -6,9 +6,23 @@ import {
   useContext,
   useEffect,
 } from 'react'
-import { parseCookies } from 'nookies'
 import { Either, isRight } from 'fp-ts/Either'
 import { type SignInResponseOutput } from '@/components/Form/SignInModal/SignIn/signInMutation'
+import { CookieSerializeOptions } from 'cookie'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
+
+const setCoookies = (accessToken: string) => {
+  const oneHour = 60 * 60;
+  const options: CookieSerializeOptions = {
+    secure: true,
+    sameSite: 'strict',
+    path: '/',
+    maxAge: oneHour
+  }
+  setCookie(null, 'conduit.token', accessToken, options)
+}
+
+const destroyCookies = () => destroyCookie(null, 'conduit.token')
 
 export type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
