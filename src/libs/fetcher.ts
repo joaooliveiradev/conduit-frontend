@@ -8,7 +8,7 @@ import {
 } from '@/libs'
 import * as t from 'io-ts'
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export const fetcher = async <D, A>(
   path: string,
