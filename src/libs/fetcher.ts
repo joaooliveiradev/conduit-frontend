@@ -23,7 +23,7 @@ const validationHandler = <A>(
   }
 }
 
-export const validateCodec = <A>(
+const validateCodec = <A>(
   codec: t.Type<A, unknown, unknown>,
   data: A
 ): Either<DecodeError, A> => pipe(data, codec.decode, validationHandler<A>)
