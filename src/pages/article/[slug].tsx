@@ -1,3 +1,4 @@
+import React from 'react'
 import type { GetServerSidePropsContext, NextPage } from 'next'
 import styled, { css } from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
@@ -9,77 +10,14 @@ import {
 } from '@/hooks/queries/useGetArticle'
 import * as superJSON from 'superjson'
 import { isRight } from 'fp-ts/Either'
-import { ErrorState, ArticleHeader } from '@/components'
+import {
+  ErrorState,
+  ArticleHeader,
+  ArticleBody,
+  ArticleSeo,
+} from '@/components'
 import { fromNullable, isSome, none, some } from 'fp-ts/Option'
 import { f } from '@/libs'
-import { NextSeo, ArticleJsonLd } from 'next-seo'
-
-type PageSeoProps = {
-  title: string
-  description: string
-  author: string
-  slug: string
-  publishedTime: string
-  modifiedTime: string
-  tags?: ReadonlyArray<string>
-}
-
-const PageSeo = ({
-  title,
-  description,
-  slug,
-  author,
-  publishedTime,
-  modifiedTime,
-  tags,
-}: PageSeoProps) => {
-  const baseURL = process.env.NEXT_PUBLIC_BASE_URL
-  const url = `${baseURL}/articles/${slug}`
-  const coverImage = `${baseURL}/cover.png`
-
-  return (
-    <>
-      <NextSeo
-        title={title}
-        description={description}
-        openGraph={{
-          description: description,
-          title: title,
-          url: url,
-          type: 'article',
-          article: {
-            // TODO: authors here need to be changed to the profile route
-            authors: [author],
-            publishedTime: publishedTime,
-            modifiedTime: modifiedTime,
-            tags: tags,
-          },
-        }}
-        additionalMetaTags={[
-          {
-            property: 'dc:creator',
-            content: author,
-          },
-        ]}
-      />
-      <ArticleJsonLd
-        url={url}
-        authorName={author}
-        description={description}
-        title={title}
-        datePublished={publishedTime}
-        dateModified={modifiedTime}
-        images={[coverImage]}
-        publisherName={author}
-        isAccessibleForFree={true}
-      />
-    </>
-  )
-}
-
-interface GetServerSidePropsParams extends ParsedUrlQuery {
-  slug: string
-}
 
 type ArticleNextPageProps = {
   slug: string
@@ -93,6 +31,9 @@ const Wrapper = styled.article`
     padding: ${theme.spacings.xxxxhuge} ${theme.spacings.xxxhuge};
     row-gap: ${theme.spacings.xhuge};
     overflow-y: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   `}
 `
 
@@ -122,10 +63,6 @@ const Description = styled.h3`
   `}
 `
 
-const ArticleBody = styled.section`
-  word-break: break-all;
-`
-
 const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
   const { data, refetch, isFetching } = useGetArticle(slug)
 
@@ -136,7 +73,7 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
       if (isRight(dataOption.value)) {
         return (
           <>
-            <PageSeo
+            <ArticleSeo
               author={dataOption.value.right.article.author.username}
               description={dataOption.value.right.article.description}
               modifiedTime={dataOption.value.right.article.updatedAt}
@@ -157,7 +94,7 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
                   {dataOption.value.right.article.description}
                 </Description>
               </HeaderSection>
-              <ArticleBody>{dataOption.value.right.article.body}</ArticleBody>
+              <ArticleBody articleText={dataOption.value.right.article.body} />
             </Wrapper>
           </>
         )
@@ -186,6 +123,10 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
       )
     }
   })
+}
+
+interface GetServerSidePropsParams extends ParsedUrlQuery {
+  slug: string
 }
 
 export const getServerSideProps = async ({
