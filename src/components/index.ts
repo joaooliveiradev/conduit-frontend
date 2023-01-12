@@ -22,3 +22,6 @@ export * from '@/components/Toast'
 export * from '@/components/Divider'
 export * from '@/components/ArticleStats'
 export * from '@/components/ArticleHeader'
+export * from '@/components/ArticleBody'
+export * from '@/components/ArticleSeo'
+
