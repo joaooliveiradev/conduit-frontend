@@ -6,7 +6,7 @@ type ButtonProps = {
   disabled?: boolean
   block?: boolean
   buttonLabel: string
-  onButtonClick?: () => void
+  onButtonClick: () => void
   isButtonLoading?: boolean
 }
 
@@ -49,7 +49,7 @@ const Message = styled.p`
     font-weight: 500;
   `}
 `
-//fazer mudança aq p try again so aparecer bla
+
 export const ErrorState = ({
   message,
   title,
