@@ -3,9 +3,12 @@ import rehypeSanitize from 'rehype-sanitize'
 import nightOwl from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl'
 import dynamic from 'next/dynamic'
 import ReactMarkdown from 'react-markdown'
+import { type SyntaxHighlighterProps } from 'react-syntax-highlighter'
 
-const SyntaxHighlighter = dynamic(() =>
-  import('react-syntax-highlighter').then((module) => module.PrismAsyncLight)
+const SyntaxHighlighter = dynamic<SyntaxHighlighterProps>(
+  () =>
+    import('react-syntax-highlighter').then((module) => module.PrismAsyncLight),
+  { ssr: false }
 )
 
 export type ArticleBodyProps = {
