@@ -22,34 +22,58 @@ type CodeProps = {
 
 const Wrapper = styled.section`
   ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.medium};
+    font-size: ${theme.fonts.sizes.xmedium};
     word-break: break-all;
-    & > h1 {
-      font-size: ${theme.fonts.sizes.xhuge};
-    }
-    & > h2 {
-      font-size: ${theme.fonts.sizes.huge};
-    }
-    & > h3 {
-      font-size: ${theme.fonts.sizes.xxlarge};
-    }
-    & > h4 {
-      font-size: ${theme.fonts.sizes.xlarge};
-    }
-    & > h5 {
-      font-size: ${theme.fonts.sizes.large};
-    }
-    & > h6 {
-      font-size: ${theme.fonts.sizes.xmedium};
-    }
-    & > ul,
+    color: ${theme.colors.grey[200]};
+    ul,
     ol {
       list-style-position: inside;
       padding: 0px;
       margin: 1em;
     }
+
     p {
-      margin: 0;
+      margin-bottom: ${theme.spacings.xxsmall};
+      line-height: ${theme.spacings.xxmedium};
+    }
+
+    strong {
+      color: ${theme.colors.black[100]};
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: ${theme.colors.black[100]};
+      margin-bottom: ${theme.spacings.xmedium};
+    }
+
+    h1 {
+      font-size: ${theme.fonts.sizes.xhuge};
+    }
+
+    h2 {
+      font-size: ${theme.fonts.sizes.huge};
+    }
+
+    h3 {
+      font-size: ${theme.fonts.sizes.xxlarge};
+    }
+
+    h4 {
+      font-size: ${theme.fonts.sizes.xlarge};
+    }
+
+    h5 {
+      font-size: ${theme.fonts.sizes.large};
+    }
+
+    h6 {
+      font-size: ${theme.fonts.sizes.xmedium};
+      margin-bottom: ${theme.spacings.small};
     }
   `}
 `

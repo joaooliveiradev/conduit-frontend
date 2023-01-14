@@ -58,7 +58,7 @@ const Description = styled.h3`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xmedium};
     color: ${theme.colors.grey[200]};
-    line-height: 28px;
+    line-height: ${theme.spacings.xxmedium};
     font-weight: 400;
   `}
 `

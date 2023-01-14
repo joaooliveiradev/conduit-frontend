@@ -20,6 +20,7 @@ export const theme = {
     xxxsmall: '18px',
     medium: '22px',
     xmedium: '24px',
+    xxmedium: '28px',
     large: '32px',
     xlarge: '42px',
     xxlarge: '48px',
