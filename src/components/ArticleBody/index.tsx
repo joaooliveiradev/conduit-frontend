@@ -1,6 +1,12 @@
 import styled, { css } from 'styled-components'
 import rehypeSanitize from 'rehype-sanitize'
+import nightOwl from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl'
+import dynamic from 'next/dynamic'
 import ReactMarkdown from 'react-markdown'
+
+const SyntaxHighlighter = dynamic(() =>
+  import('react-syntax-highlighter').then((module) => module.PrismAsyncLight)
+)
 
 export type ArticleBodyProps = {
   articleText: string
@@ -8,7 +14,6 @@ export type ArticleBodyProps = {
 
 const Wrapper = styled.section`
   ${({ theme }) => css`
-    word-break: break-all;
     font-size: ${theme.fonts.sizes.medium};
     & > h1 {
       font-size: ${theme.fonts.sizes.xhuge};
@@ -28,9 +33,11 @@ const Wrapper = styled.section`
     & > h6 {
       font-size: ${theme.fonts.sizes.xmedium};
     }
-    & > ul {
+    & > ul,
+    ol {
       list-style-position: inside;
       padding: 0px;
+      margin: 1em;
     }
     p {
       margin: 0;
@@ -41,7 +48,20 @@ const Wrapper = styled.section`
 export const ArticleBody = ({ articleText }: ArticleBodyProps) => {
   return (
     <Wrapper>
-      <ReactMarkdown rehypePlugins={[rehypeSanitize]}>
+      <ReactMarkdown
+        rehypePlugins={[rehypeSanitize]}
+        components={{
+          code: ({ children }) => (
+            <SyntaxHighlighter
+              style={nightOwl}
+              language="javascript"
+              customStyle={{ borderRadius: '8px' }}
+            >
+              {children.join('')}
+            </SyntaxHighlighter>
+          ),
+        }}
+      >
         {articleText}
       </ReactMarkdown>
     </Wrapper>
