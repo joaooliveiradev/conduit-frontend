@@ -4,6 +4,7 @@ import nightOwl from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl'
 import dynamic from 'next/dynamic'
 import ReactMarkdown from 'react-markdown'
 import { type SyntaxHighlighterProps } from 'react-syntax-highlighter'
+import { type ReactNode } from 'react'
 
 const SyntaxHighlighter = dynamic<SyntaxHighlighterProps>(
   () =>
@@ -15,9 +16,14 @@ export type ArticleBodyProps = {
   articleText: string
 }
 
+type CodeProps = {
+  children: ReactNode & ReactNode[]
+} & Omit<SyntaxHighlighterProps, 'children'>
+
 const Wrapper = styled.section`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.medium};
+    word-break: break-all;
     & > h1 {
       font-size: ${theme.fonts.sizes.xhuge};
     }
@@ -48,21 +54,33 @@ const Wrapper = styled.section`
   `}
 `
 
+const CodeHighlighter = styled(SyntaxHighlighter)`
+  ${({ theme }) => css`
+    border-radius: ${theme.spacings.small};
+  `}
+`
+
+const Code = ({ children }: CodeProps) => {
+  const defaultLanguage = 'javascript'
+  return (
+    <CodeHighlighter
+      style={nightOwl}
+      language={defaultLanguage}
+      showLineNumbers
+      wrapLongLines
+    >
+      {String(children)}
+    </CodeHighlighter>
+  )
+}
+
 export const ArticleBody = ({ articleText }: ArticleBodyProps) => {
   return (
     <Wrapper>
       <ReactMarkdown
         rehypePlugins={[rehypeSanitize]}
         components={{
-          code: ({ children }) => (
-            <SyntaxHighlighter
-              style={nightOwl}
-              language="javascript"
-              customStyle={{ borderRadius: '8px' }}
-            >
-              {children.join('')}
-            </SyntaxHighlighter>
-          ),
+          code: ({ children }) => <Code>{children}</Code>,
         }}
       >
         {articleText}
