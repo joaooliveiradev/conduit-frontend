@@ -15,9 +15,17 @@ import {
   ArticleBody,
   ArticleSeo,
 } from '@/components'
-import { fromNullable, isSome, none, some, fromEither } from 'fp-ts/Option'
+import {
+  fromNullable,
+  isSome,
+  none,
+  some,
+  fromEither,
+  Option,
+} from 'fp-ts/Option'
 import { isRight } from 'fp-ts/Either'
 import { f } from '@/libs'
+import { pipe } from 'fp-ts/function'
 
 type ArticleNextPageProps = {
   slug: string
@@ -126,19 +134,20 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext<GetServerSidePropsParams>) => {
   const queryClient = new QueryClient()
 
-  const paramsOption = fromNullable(params)
+  const getSlug = (data: Option<GetServerSidePropsParams>) =>
+    isSome(data) ? some(data.value.slug) : none
 
-  const slug = isSome(paramsOption) ? some(paramsOption.value.slug) : none
+  const slugOption = pipe(params, fromNullable, getSlug)
 
-  if (isSome(slug)) {
+  if (isSome(slugOption)) {
     await queryClient.prefetchQuery(
       [GET_ARTICLE_KEY],
-      async () => await getArticle(slug.value)
+      async () => await getArticle(slugOption.value)
     )
     return {
       props: {
         dehydratedState: superJSON.stringify(dehydrate(queryClient)),
-        slug: slug.value,
+        slug: slugOption.value,
       },
     }
   } else {
