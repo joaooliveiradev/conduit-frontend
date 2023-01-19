@@ -9,14 +9,14 @@ import {
   useGetArticle,
 } from '@/hooks/queries/useGetArticle'
 import * as superJSON from 'superjson'
-import { isRight } from 'fp-ts/Either'
 import {
   ErrorState,
   ArticleHeader,
   ArticleBody,
   ArticleSeo,
 } from '@/components'
-import { fromNullable, isSome, none, some } from 'fp-ts/Option'
+import { fromNullable, isSome, none, some, fromEither } from 'fp-ts/Option'
+import { isRight } from 'fp-ts/Either'
 import { f } from '@/libs'
 
 type ArticleNextPageProps = {
@@ -66,50 +66,42 @@ const Description = styled.h3`
 const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
   const { data, refetch, isFetching } = useGetArticle(slug)
 
-  const dataOption = fromNullable(data)
+  const maybeArticle = f(() => {
+    const dataOption = fromNullable(data)
+    if (isSome(dataOption) && isRight(dataOption.value)) {
+      return fromEither(dataOption.value)
+    } else return none
+  })
 
   return f(() => {
-    if (isSome(dataOption)) {
-      if (isRight(dataOption.value)) {
-        return (
-          <>
-            <ArticleSeo
-              author={dataOption.value.right.article.author.username}
-              description={dataOption.value.right.article.description}
-              modifiedTime={dataOption.value.right.article.updatedAt}
-              publishedTime={dataOption.value.right.article.createdAt}
-              slug={dataOption.value.right.article.slug}
-              title={dataOption.value.right.article.title}
-              tags={dataOption.value.right.article.tagList}
-            />
-            <Wrapper>
-              <HeaderSection>
-                <ArticleHeader
-                  date={dataOption.value.right.article.createdAt}
-                  name={dataOption.value.right.article.author.username}
-                  readTime={dataOption.value.right.article.updatedAt}
-                />
-                <Title>{dataOption.value.right.article.title}</Title>
-                <Description>
-                  {dataOption.value.right.article.description}
-                </Description>
-              </HeaderSection>
-              <ArticleBody articleText={dataOption.value.right.article.body} />
-            </Wrapper>
-          </>
-        )
-      } else {
-        return (
-          <ErrorState
-            message="Something went wrong while trying to requesting the user informations."
-            title="Something went wrong"
-            buttonLabel="Try again"
-            onButtonClick={refetch}
-            isButtonLoading={isFetching}
-            disabled={isFetching}
+    if (isSome(maybeArticle)) {
+      return (
+        <>
+          <ArticleSeo
+            author={maybeArticle.value.article.author.username}
+            description={maybeArticle.value.article.description}
+            modifiedTime={maybeArticle.value.article.updatedAt}
+            publishedTime={maybeArticle.value.article.createdAt}
+            slug={maybeArticle.value.article.slug}
+            title={maybeArticle.value.article.title}
+            tags={maybeArticle.value.article.tagList}
           />
-        )
-      }
+          <Wrapper>
+            <HeaderSection>
+              <ArticleHeader
+                date={maybeArticle.value.article.createdAt}
+                name={maybeArticle.value.article.author.username}
+                readTime={maybeArticle.value.article.updatedAt}
+              />
+              <Title>{maybeArticle.value.article.title}</Title>
+              <Description>
+                {maybeArticle.value.article.description}
+              </Description>
+            </HeaderSection>
+            <ArticleBody articleText={maybeArticle.value.article.body} />
+          </Wrapper>
+        </>
+      )
     } else {
       return (
         <ErrorState
