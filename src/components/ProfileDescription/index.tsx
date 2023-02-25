@@ -20,6 +20,7 @@ const Description = styled.p`
   ${({ theme }) => css`
     color: ${theme.colors.grey[200]};
     font-size: ${theme.fonts.sizes.xmedium};
+    line-height: 28px;
     text-align: center;
   `}
 `
