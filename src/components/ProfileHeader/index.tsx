@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
-import { ProfileInformation, TextButton, Button } from '@/components'
+import { Button } from '@/components/Button'
+import { ProfileInformation, TextButton } from '@/components'
 
 export type ProfileHeaderProps = {
   name: string
