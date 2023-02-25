@@ -1,5 +1,5 @@
 export const theme = {
-   fonts: {
+  fonts: {
     sizes: {
       xsmall: '1.2rem',
       small: '1.4rem',
@@ -8,6 +8,7 @@ export const theme = {
       large: '2.0rem',
       xlarge: '2.2rem',
       xxlarge: '2.4rem',
+      xxxlarge: '2.8rem',
       huge: '3.2rem',
       xhuge: '3.6rem',
       xxhuge: '4.2rem',
