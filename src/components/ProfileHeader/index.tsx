@@ -29,14 +29,12 @@ const NewArticleBtn = styled(Button)`
   min-width: 100px;
 `
 
-export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => {
-  return (
-    <Wrapper>
-      <ProfileInformation name={name} description={description} />
-      <Actions>
-        <NewArticleBtn size="medium">New Article</NewArticleBtn>
-        <TextButton href="/update">Edit Profile</TextButton>
-      </Actions>
-    </Wrapper>
-  )
-}
+export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => (
+  <Wrapper>
+    <ProfileInformation name={name} description={description} />
+    <Actions>
+      <NewArticleBtn size="medium">New Article</NewArticleBtn>
+      <TextButton href="/update">Edit Profile</TextButton>
+    </Actions>
+  </Wrapper>
+)
