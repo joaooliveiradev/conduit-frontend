@@ -55,6 +55,7 @@ const List = styled.ul`
 const Item = styled.li`
   ${({ theme }) => css`
     border-radius: 6px;
+    list-style-type: none;
     :hover {
       background-color: ${transparentize(0.88, theme.colors.black[200])};
     }
