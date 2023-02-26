@@ -1,4 +1,4 @@
-import { SignInInput, UserTypeCodec } from '@/types/user'
+import { SignInInput, UserTypeCodec } from '@/types'
 import { fetcher } from '@/libs'
 import * as t from 'io-ts'
 

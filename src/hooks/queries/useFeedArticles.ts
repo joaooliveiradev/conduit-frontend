@@ -1,4 +1,4 @@
-import { ArticleCodec } from '@/types/article'
+import { ArticleCodec } from '@/types'
 import { DefaultError, fetcher } from '@/libs'
 import {
   QueryFunctionContext,
@@ -11,7 +11,7 @@ import { Either } from 'fp-ts/Either'
 import * as t from 'io-ts'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 import { some, Option, isSome, none } from 'fp-ts/Option'
-import { defaultArticlesLimit } from './useGetArticles'
+import { defaultArticlesLimit } from '@/hooks/queries'
 
 const GetFeedArticlesResponseCodec = t.type({
   articles: t.array(ArticleCodec),

@@ -19,6 +19,7 @@ import {
   GetArticlesOutput,
   GET_ARTICLES_KEY,
   useGetArticles,
+  useFeedArticles,
 } from '@/hooks/queries'
 import {
   fromEither,
@@ -30,7 +31,6 @@ import {
 } from 'fp-ts/Option'
 import { Either } from 'fp-ts/Either'
 import { f, DefaultError } from '@/libs'
-import { useFeedArticles } from '@/hooks/queries/useFeedArticles'
 import { InfiniteData } from '@tanstack/react-query'
 import * as superJSON from 'superjson'
 

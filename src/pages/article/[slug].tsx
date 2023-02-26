@@ -3,11 +3,7 @@ import type { GetServerSidePropsContext, NextPage } from 'next'
 import styled, { css } from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import {
-  getArticle,
-  GET_ARTICLE_KEY,
-  useGetArticle,
-} from '@/hooks/queries/useGetArticle'
+import { getArticle, GET_ARTICLE_KEY, useGetArticle } from '@/hooks/queries'
 import * as superJSON from 'superjson'
 import {
   ErrorState,

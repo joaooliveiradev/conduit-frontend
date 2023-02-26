@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { type GetArticlesOutput } from '@/hooks/queries/useGetArticles'
+import { type GetArticlesOutput } from '@/hooks/queries'
 import { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
 
