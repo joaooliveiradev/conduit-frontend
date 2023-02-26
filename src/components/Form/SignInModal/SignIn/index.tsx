@@ -13,7 +13,7 @@ import { f } from '@/libs/expression'
 import { useMutation } from '@tanstack/react-query'
 import { Either } from 'fp-ts/lib/Either'
 import { DefaultError } from '@/libs/errors'
-import { SignInInput } from '@/types/user'
+import { SignInInput } from '@/types'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
 import * as Yup from 'yup'
 

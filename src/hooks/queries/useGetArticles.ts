@@ -1,4 +1,4 @@
-import { ArticleCodec } from '@/types/article'
+import { ArticleCodec } from '@/types'
 import { DefaultError, fetcher } from '@/libs'
 import {
   useInfiniteQuery,

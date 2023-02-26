@@ -1,4 +1,4 @@
-import { UserTypeCodec } from '@/types/user'
+import { UserTypeCodec } from '@/types'
 import { Either } from 'fp-ts/Either'
 import { DefaultError, fetcher } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
@@ -17,12 +17,18 @@ type UseMeOptions = UseQueryOptions<
   DefaultError
 >
 
+const USE_ME_KEY = 'use-me'
+
 const getMe = async () =>
   await fetcher<undefined, UseMeResponse>('/user', UseMeResponseCodec)
 
 const useMe = (options?: UseMeOptions) =>
-  useQuery<Either<DefaultError, UseMeOutput>, DefaultError>(['use-me'], getMe, {
-    ...options,
-  })
+  useQuery<Either<DefaultError, UseMeOutput>, DefaultError>(
+    [USE_ME_KEY],
+    getMe,
+    {
+      ...options,
+    }
+  )
 
 export { useMe }

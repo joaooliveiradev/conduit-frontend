@@ -1,5 +1,5 @@
 import { DefaultError, fetcher } from '@/libs'
-import { ArticleBySlugCodec } from '@/types/article'
+import { ArticleBySlugCodec } from '@/types'
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { Either } from 'fp-ts/Either'
 import * as t from 'io-ts'
