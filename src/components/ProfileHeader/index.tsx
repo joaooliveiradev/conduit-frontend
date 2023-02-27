@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
-import { Button } from '@/components/Button'
+import { Button as DefaultButton } from '@/components/Button'
 import { ProfileInformation, TextButton } from '@/components'
+import Link from 'next/link'
 
 export type ProfileHeaderProps = {
   name: string
@@ -24,17 +25,22 @@ const Actions = styled.div`
     right: 0;
   `}
 `
-
-const NewArticleBtn = styled(Button)`
+const Button = styled(DefaultButton)`
   min-width: 100px;
 `
+
+const NewArticle = () => (
+  <Link href="/new-article">
+    <Button size="medium">Edit Profile</Button>
+  </Link>
+)
 
 export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => (
   <Wrapper>
     <ProfileInformation name={name} description={description} />
     <Actions>
-      <NewArticleBtn size="medium">New Article</NewArticleBtn>
-      <TextButton href="/update">Edit Profile</TextButton>
+      <NewArticle />
+      <TextButton href="medium">New Article</TextButton>
     </Actions>
   </Wrapper>
 )
