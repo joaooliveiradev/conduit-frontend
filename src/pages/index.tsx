@@ -129,7 +129,7 @@ const Home: NextPage = () => {
               ) : (
                 <ErrorState
                   title="Something went wrong."
-                  message="Something went wrong while trying to requesting the user informations."
+                  message="Something went wrong while trying to requesting the articles."
                   buttonLabel="Try again"
                   onButtonClick={() => fextNextPageGetArticles()}
                   disabled={isFetchingGetArticles}
@@ -146,7 +146,7 @@ const Home: NextPage = () => {
               ) : (
                 <ErrorState
                   title="Something went wrong."
-                  message="Something went wrong while trying to requesting the user informations."
+                  message="Something went wrong while trying to requesting the articles."
                   buttonLabel="Try again"
                   onButtonClick={() => fextNextPageGetArticles()}
                   disabled={isFetchingFeedArticles}
