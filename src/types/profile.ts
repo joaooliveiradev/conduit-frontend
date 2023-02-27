@@ -7,11 +7,11 @@ export const ProfileCodec = t.type({
     () => 'Username field should be a string and not empty'
   ),
   bio: withMessage(
-    NonEmptyString,
+    t.string,
     () => 'Bio field should be a string and not empty'
   ),
   image: withMessage(
-    NonEmptyString,
+    t.string,
     () => 'Image field should be a string and not empty'
   ),
   following: withMessage(
