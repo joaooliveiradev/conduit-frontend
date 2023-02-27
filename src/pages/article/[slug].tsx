@@ -109,7 +109,7 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
     } else {
       return (
         <ErrorState
-          message="Something went wrong while trying to requesting the user informations."
+          message="Something went wrong while trying to requesting the articles."
           title="Something went wrong"
           buttonLabel="Try again"
           onButtonClick={refetch}
