@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import styled, { css } from 'styled-components'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
-import * as React from 'react'
 import { useAuth } from '@/context'
 import {
   ErrorState,
@@ -14,24 +13,24 @@ import {
   Hero,
 } from '@/components'
 import {
-  defaultArticlesLimit,
   getArticles,
-  GetArticlesOutput,
+  type GetArticlesOutput,
   GET_ARTICLES_KEY,
   useGetArticles,
   useFeedArticles,
+  defaultFilters,
 } from '@/hooks/queries'
 import {
   fromEither,
   fromNullable,
   isSome,
   none,
-  Option,
-  some,
+  type Option,
 } from 'fp-ts/Option'
-import { Either } from 'fp-ts/Either'
+import { type Either } from 'fp-ts/Either'
 import { f, DefaultError } from '@/libs'
-import { InfiniteData } from '@tanstack/react-query'
+import { type InfiniteData } from '@tanstack/react-query'
+import React from 'react'
 import * as superJSON from 'superjson'
 
 const ContentSection = styled.section`
@@ -50,7 +49,7 @@ const Home: NextPage = () => {
     fetchNextPage: fextNextPageGetArticles,
     isFetching: isFetchingGetArticles,
     hasNextPage: hasNextPageGetArticles,
-  } = useGetArticles()
+  } = useGetArticles(defaultFilters)
 
   const { ref: observerRefGetArticles, inView: inViewGetArticles } = useInView({
     skip: !hasNextPageGetArticles,
@@ -70,7 +69,7 @@ const Home: NextPage = () => {
     fetchNextPage: fextNextPageFeedArticles,
     isFetching: isFetchingFeedArticles,
     hasNextPage: hasNextPageFeedArticles,
-  } = useFeedArticles({
+  } = useFeedArticles(defaultFilters, {
     enabled: status === 'loggedIn',
   })
 
@@ -182,7 +181,7 @@ export async function getServerSideProps() {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchInfiniteQuery([GET_ARTICLES_KEY], () =>
-    getArticles(some(defaultArticlesLimit))
+    getArticles(defaultFilters)
   )
 
   return {
