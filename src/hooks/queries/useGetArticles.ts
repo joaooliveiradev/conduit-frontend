@@ -9,8 +9,16 @@ import {
 import { Either } from 'fp-ts/Either'
 import { withMessage } from 'io-ts-types'
 import * as t from 'io-ts'
-import { some, Option, isSome, none } from 'fp-ts/Option'
+import { isSome, fromNullable } from 'fp-ts/Option'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
+
+export type QueryParamsProps = {
+  limit?: string
+  author?: string
+  favorited?: string
+  offset?: string
+  tag?: string
+}
 
 export const GetArticlesResponseCodec = t.type({
   articles: t.array(ArticleCodec),
@@ -26,7 +34,11 @@ export type GetArticlesOutput = t.OutputOf<typeof GetArticlesResponseCodec>
 
 export const GET_ARTICLES_KEY = 'get-articles'
 
-export const defaultArticlesLimit = 6
+export const defaultArticlesLimit = '6'
+
+export const defaultFilters: QueryParamsProps = {
+  limit: defaultArticlesLimit,
+}
 
 const oneMinute = 60 * 1000
 
@@ -35,12 +47,11 @@ type UseGetArticlesOptions = UseInfiniteQueryOptions<
   DefaultError
 >
 
-type ParamsProps = QueryFunctionContext<QueryKey, Option<number> | null>
+export const getArticles = async (filters: QueryParamsProps) => {
+  const query = new URLSearchParams(filters).toString()
 
-export const getArticles = async (articlesLimit: Option<number>) => {
-  const url = `/articles?limit=${
-    isSome(articlesLimit) ? articlesLimit.value : defaultArticlesLimit
-  }`
+  const url = `/articles?${query}`
+
   const data = await fetcher<undefined, GetArticlesResponse>(
     url,
     GetArticlesResponseCodec
@@ -48,16 +59,30 @@ export const getArticles = async (articlesLimit: Option<number>) => {
   return data
 }
 
-export const useGetArticles = (options?: UseGetArticlesOptions) =>
+type ParamsProps = QueryFunctionContext<QueryKey, string | null>
+
+export const useGetArticles = (
+  filters?: QueryParamsProps,
+  options?: UseGetArticlesOptions
+) =>
   useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>(
     [GET_ARTICLES_KEY],
-    async ({ pageParam = some(defaultArticlesLimit) }: ParamsProps) =>
-      await getArticles(pageParam ? pageParam : none),
+    async ({ pageParam = defaultArticlesLimit }: ParamsProps) => {
+      const pageParamOption = fromNullable(pageParam)
+      const filtersOption = fromNullable(filters)
+
+      const newFilters =
+        isSome(filtersOption) && isSome(pageParamOption)
+          ? { ...filtersOption.value, limit: pageParamOption.value }
+          : defaultFilters
+
+      return await getArticles(newFilters)
+    },
     {
       ...options,
       getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
       staleTime: oneMinute,
-      retry: 3,
+      retry: false,
       refetchOnWindowFocus: false,
       refetchInterval: oneMinute,
     }
