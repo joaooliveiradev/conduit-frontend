@@ -48,7 +48,7 @@ export const Footer = () => {
           Made with <TextBold>Typescript</TextBold> and{' '}
           <TextBold>Next.js</TextBold>.
         </Text>
-        <Text>&copy; Copyright Spacy - All rights reserved</Text>
+        <Text>&copy; Copyright Conduit - All rights reserved</Text>
       </Content>
     </Wrapper>
   )
