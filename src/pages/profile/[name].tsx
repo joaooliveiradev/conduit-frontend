@@ -1,22 +1,31 @@
 import styled, { css } from 'styled-components'
-import { ErrorState, ProfileHeader } from '@/components'
-import { dehydrate, QueryClient } from '@tanstack/react-query'
-import * as superJSON from 'superjson'
-import React from 'react'
-import { getProfile, GET_PROFILE_KEY, useProfile } from '@/hooks/queries'
+import { Articles, ErrorState, ProfileHeader } from '@/components'
+import { dehydrate, type InfiniteData, QueryClient } from '@tanstack/react-query'
+import {
+  defaultArticlesLimit,
+  type GetArticlesOutput,
+  getProfile,
+  GET_PROFILE_KEY,
+  type QueryParamsProps,
+  useGetArticles,
+  useProfile,
+} from '@/hooks/queries'
 import { GetServerSidePropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import {
   fromNullable,
   isSome,
   none,
-  Option,
+  type Option,
   some,
   fromEither,
 } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
-import { f } from '@/libs'
-import { isRight } from 'fp-ts/Either'
+import { DefaultError, f } from '@/libs'
+import { type Either, isRight } from 'fp-ts/Either'
+import { useInView } from 'react-intersection-observer'
+import React from 'react'
+import * as superJSON from 'superjson'
 
 const Wrapper = styled.section`
   width: 100%;
@@ -48,15 +57,65 @@ const Profile = ({ name }: ProfileParams) => {
       return fromEither(dataOption.value)
     } else return none
   })
-  //todo: put the articles
-  //see the error handling, what do when not find the user, etc
-  // put the right links on the button, new article, edit profile, etc
-  return isSome(maybeProfile) ? (
+
+  const username = f(() =>
+    isSome(maybeProfile) ? some(maybeProfile.value.profile.username) : none
+  )
+
+  const filter = f(() => {
+    if (isSome(username)) {
+      const filter: QueryParamsProps = {
+        author: username.value,
+        limit: defaultArticlesLimit,
+      }
+      return filter
+    } else return null
+  })
+
+  const {
+    data: articlesData,
+    fetchNextPage,
+    hasNextPage,
+  } = useGetArticles({ ...filter })
+
+  const { ref: refObserver, inView } = useInView({
+    skip: !hasNextPage,
+    threshold: 1,
+  })
+
+  React.useEffect(() => {
+    if (inView) fetchNextPage()
+  }, [fetchNextPage, inView])
+
+  const articlesDataOption = fromNullable(articlesData)
+
+  const handleMaybeArticles = (
+    data: Option<InfiniteData<Either<DefaultError, GetArticlesOutput>>>
+  ) => {
+    const pages = f(() => {
+      if (isSome(data)) {
+        const pages = data.value.pages
+        return pages
+      }
+      return []
+    })
+
+    const lastPage = fromNullable(pages[pages.length - 1])
+    if (isSome(lastPage)) {
+      return fromEither(lastPage.value)
+    } else return none
+  }
+
+  const maybeArticles = handleMaybeArticles(articlesDataOption)
+
+  return isSome(maybeProfile) && isSome(maybeArticles) ? (
     <Wrapper>
       <ProfileHeader
         name={maybeProfile.value.profile.username}
         description={maybeProfile.value.profile.bio}
       />
+      <Articles articles={maybeArticles} />
+      <div ref={refObserver} />
     </Wrapper>
   ) : (
     <ErrorState
