@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
-import { type GetArticlesOutput } from '@/hooks/queries'
-import { Some } from 'fp-ts/Option'
+import type { GetArticlesOutput } from '@/hooks/queries'
+import type { Some } from 'fp-ts/Option'
 import { ArticleCard, EmptyState } from '@/components'
 
 const Wrapper = styled.div`

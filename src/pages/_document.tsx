@@ -3,8 +3,8 @@ import Document, {
   Main,
   NextScript,
   Head,
-  DocumentContext,
-  DocumentInitialProps,
+  type DocumentContext,
+  type DocumentInitialProps,
 } from 'next/document'
 import React from 'react'
 

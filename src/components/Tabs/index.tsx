@@ -1,5 +1,5 @@
-import * as TabsRadix from '@radix-ui/react-tabs'
 import styled, { css } from 'styled-components'
+import * as TabsRadix from '@radix-ui/react-tabs'
 
 export const Tabs = styled(TabsRadix.Root)`
   ${({ theme }) => css`

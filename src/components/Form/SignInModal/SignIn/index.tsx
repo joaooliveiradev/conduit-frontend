@@ -8,12 +8,12 @@ import {
   Wrapper,
 } from '@/components/Form/SignInModal/styles'
 import { isSome, none, chain, getLeft, fromNullable } from 'fp-ts/Option'
-import { pipe } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/function'
 import { f } from '@/libs/expression'
 import { useMutation } from '@tanstack/react-query'
-import { Either } from 'fp-ts/lib/Either'
+import type { Either } from 'fp-ts/Either'
 import { DefaultError } from '@/libs/errors'
-import { SignInInput } from '@/types'
+import type { SignInInput } from '@/types'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
 import * as Yup from 'yup'
 
@@ -110,7 +110,11 @@ const SignIn = ({ onSwitchFormClick }: SignInProps) => {
         Sign in
       </Button>
       {isSome(maybeError) && (
-        <ErrorMessage message={maybeError.value.message} fontWeight="medium" textAlign='center' />
+        <ErrorMessage
+          message={maybeError.value.message}
+          fontWeight="medium"
+          textAlign="center"
+        />
       )}
       <Text>
         Don&apos;t have an account?{' '}

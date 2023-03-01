@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { Button as DefaultButton } from '@/components/Button'
-import { ProfileInformation, TextButton } from '@/components'
+import { ProfileInformation, TextButton } from '@/components/index'
 import Link from 'next/link'
 
 export type ProfileHeaderProps = {

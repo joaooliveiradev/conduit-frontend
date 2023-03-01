@@ -1,6 +1,6 @@
-import * as RadixToast from '@radix-ui/react-toast'
 import { transparentize } from 'polished'
 import styled, { css } from 'styled-components'
+import * as RadixToast from '@radix-ui/react-toast'
 
 export type ToastProps = {
   title: string

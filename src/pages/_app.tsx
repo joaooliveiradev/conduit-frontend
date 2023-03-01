@@ -8,10 +8,9 @@ import { Layout } from '@/components'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '@/styles'
-import { AuthProvider } from '@/context'
-import { ToastProvider } from '@/context/toast'
-import * as superJSON from 'superjson'
+import { AuthProvider, ToastProvider } from '@/context'
 import { type DefaultSeoProps, DefaultSeo } from 'next-seo'
+import * as superJSON from 'superjson'
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL
 

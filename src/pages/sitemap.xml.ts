@@ -1,11 +1,11 @@
 import {
-  GetArticlesOutput,
-  GetArticlesResponse,
+  type GetArticlesOutput,
+  type GetArticlesResponse,
   GetArticlesResponseCodec,
 } from '@/hooks/queries'
-import { Either, isRight } from 'fp-ts/Either'
+import { type Either, isRight } from 'fp-ts/Either'
 import { fetcher, DefaultError } from '@/libs'
-import { GetServerSideProps } from 'next'
+import { type GetServerSideProps } from 'next'
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL
 

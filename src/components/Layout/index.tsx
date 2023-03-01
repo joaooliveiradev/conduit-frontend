@@ -1,7 +1,7 @@
-import { Header, Footer, type ToastProps } from '@/components'
 import styled, { css } from 'styled-components'
-import * as React from 'react'
+import { Header, Footer, type ToastProps } from '@/components'
 import { useToast } from '@/context/toast'
+import * as React from 'react'
 
 import dynamic from 'next/dynamic'
 

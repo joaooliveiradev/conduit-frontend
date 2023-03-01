@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { getArticle, GET_ARTICLE_KEY, useGetArticle } from '@/hooks/queries'
-import * as superJSON from 'superjson'
 import {
   ErrorState,
   ArticleHeader,
@@ -17,11 +16,12 @@ import {
   none,
   some,
   fromEither,
-  Option,
+  type Option,
 } from 'fp-ts/Option'
 import { isRight } from 'fp-ts/Either'
 import { f } from '@/libs'
 import { pipe } from 'fp-ts/function'
+import * as superJSON from 'superjson'
 
 type ArticleNextPageProps = {
   slug: string

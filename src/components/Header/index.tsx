@@ -9,12 +9,12 @@ import logo from '@/assets/logo.webp'
 import Image from 'next/image'
 import styled, { css } from 'styled-components'
 import { useAuth, useToast } from '@/context'
-import { useMe, UseMeOutput } from '@/hooks/queries'
+import { useMe, type UseMeOutput } from '@/hooks/queries'
 import { isSome, fromNullable, fromEither, none } from 'fp-ts/Option'
-import * as React from 'react'
-import { Either, isLeft, isRight } from 'fp-ts/Either'
+import { type Either, isLeft, isRight } from 'fp-ts/Either'
 import { DefaultError, f } from '@/libs'
 import dynamic from 'next/dynamic'
+import * as React from 'react'
 
 const Dropdown = dynamic<DropdownProps>(
   () => import('@/components/Dropdown').then((module) => module.Dropdown),

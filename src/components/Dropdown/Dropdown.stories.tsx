@@ -2,10 +2,10 @@ import {
   ProfileName,
   Dropdown,
   DropdownItem,
-  DropdownProps,
-  DropdownItemProps,
+  type DropdownProps,
+  type DropdownItemProps,
 } from '@/components'
-import { Meta, Story } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
 
 type DropdownStoriesProp = Omit<DropdownProps, 'children'> & DropdownItemProps
 

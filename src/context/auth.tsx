@@ -1,23 +1,23 @@
 import { DefaultError } from '@/libs'
 import {
   createContext,
-  ReactNode,
+  type ReactNode,
   useState,
   useContext,
   useEffect,
 } from 'react'
-import { Either, isRight } from 'fp-ts/Either'
+import { type Either, isRight } from 'fp-ts/Either'
 import { type SignInResponseOutput } from '@/components/Form/SignInModal/SignIn/signInMutation'
 import { CookieSerializeOptions } from 'cookie'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 const setCoookies = (accessToken: string) => {
-  const oneHour = 60 * 60;
+  const oneHour = 60 * 60
   const options: CookieSerializeOptions = {
     secure: true,
     sameSite: 'strict',
     path: '/',
-    maxAge: oneHour
+    maxAge: oneHour,
   }
   setCookie(null, 'conduit.token', accessToken, options)
 }

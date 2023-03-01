@@ -1,5 +1,5 @@
-import { ButtonProps, Button } from '@/components'
-import { Meta, Story } from '@storybook/react'
+import { type ButtonProps, Button } from '@/components'
+import type { Meta, Story } from '@storybook/react'
 
 const stories: Meta = {
   component: Button,

@@ -3,7 +3,7 @@ import {
   type GetArticlesOutput,
   defaultArticlesLimit,
 } from '@/hooks/queries'
-import { Either, isRight } from 'fp-ts/Either'
+import { type Either, isRight } from 'fp-ts/Either'
 import { DefaultError } from './errors'
 
 export const calculateTotalArticles = (
