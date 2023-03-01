@@ -1,5 +1,5 @@
 import { parseCookies } from 'nookies'
-import { Either, left, right, isRight } from 'fp-ts/Either'
+import { type Either, left, right, isRight } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
 import { PathReporter } from 'io-ts/PathReporter'
 import {

@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
 import { InputProps, Input } from '@/components'
 
 const stories: Meta = {
@@ -6,10 +6,10 @@ const stories: Meta = {
   argTypes: {
     touched: {
       table: {
-        disable: true
-      }
-    }
-  }
+        disable: true,
+      },
+    },
+  },
 }
 
 const Template: Story<InputProps> = (args) => (

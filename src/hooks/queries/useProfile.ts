@@ -1,8 +1,8 @@
-import * as t from 'io-ts'
 import { ProfileCodec } from '@/types/profile'
 import { DefaultError, fetcher } from '@/libs'
 import { useQuery } from '@tanstack/react-query'
-import { Either } from 'fp-ts/Either'
+import { type Either } from 'fp-ts/Either'
+import * as t from 'io-ts'
 
 const UseProfileResponseCodec = t.type({
   profile: ProfileCodec,

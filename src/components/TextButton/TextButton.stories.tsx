@@ -1,5 +1,5 @@
-import { Meta, Story } from '@storybook/react'
-import { TextButton, TextButtonProps } from './index'
+import type { Meta, Story } from '@storybook/react'
+import { TextButton, type TextButtonProps } from './index'
 
 const stories: Meta<TextButtonProps> = {
   component: TextButton,

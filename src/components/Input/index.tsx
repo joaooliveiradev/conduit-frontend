@@ -1,7 +1,7 @@
-import * as React from 'react'
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { ErrorMessage } from '@/components/ErrorMessage'
+import * as React from 'react'
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

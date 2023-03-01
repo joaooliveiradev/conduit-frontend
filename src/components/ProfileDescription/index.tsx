@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { ProfileAuthor } from '@/components/ProfileAuthor'
+import { ProfileAuthor } from '@/components/'
 
 export type ProfileDescriptionProps = {
   name: string

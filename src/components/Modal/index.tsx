@@ -1,13 +1,13 @@
-import * as Dialog from '@radix-ui/react-dialog'
-import { transparentize } from 'polished'
-import { ReactNode } from 'react'
-import styled, { css } from 'styled-components'
 import { ReactComponent as CloseIcon } from '@/assets/close.svg'
+import { transparentize } from 'polished'
+import { type ReactNode } from 'react'
+import styled, { css } from 'styled-components'
+import * as Dialog from '@radix-ui/react-dialog'
 
 export type ModalProps = {
   trigger?: ReactNode
   children: ReactNode
-  open?: boolean,
+  open?: boolean
   onOpenChange?: (open: boolean) => void
 }
 
@@ -60,7 +60,7 @@ const IconButton = styled.button`
     position: absolute;
     top: ${theme.spacings.xxsmall};
     right: ${theme.spacings.xxsmall};
-    padding: ${theme.spacings.small};;
+    padding: ${theme.spacings.small};
     display: flex;
     background-color: ${transparentize(0.8, theme.colors.grey[300])};
     border-radius: 9999px;
