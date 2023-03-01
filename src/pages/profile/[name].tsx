@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components'
 import { Articles, ErrorState, ProfileHeader } from '@/components'
-import { dehydrate, type InfiniteData, QueryClient } from '@tanstack/react-query'
+import {
+  dehydrate,
+  type InfiniteData,
+  QueryClient,
+} from '@tanstack/react-query'
 import {
   defaultArticlesLimit,
   type GetArticlesOutput,
@@ -28,20 +32,21 @@ import React from 'react'
 import * as superJSON from 'superjson'
 
 const Wrapper = styled.section`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 111.66px;
-  &::before {
-    ${({ theme }) => css`
+  ${({ theme }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 111.66px;
+    gap: ${theme.spacings.xhuge};
+    &::before {
       content: '';
       position: absolute;
       border: 1px solid ${theme.colors.grey[300]};
       width: 100%;
       transform: translateY(50px);
       left: 0;
-    `}
-  }
+    }
+  `}
 `
 
 interface ProfileParams extends ParsedUrlQuery {
