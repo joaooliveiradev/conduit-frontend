@@ -40,7 +40,7 @@ export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => (
     <ProfileInformation name={name} description={description} />
     <Actions>
       <NewArticle />
-      <TextButton href="medium">New Article</TextButton>
+      <TextButton href="/new-article">New Article</TextButton>
     </Actions>
   </Wrapper>
 )
