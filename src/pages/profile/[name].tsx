@@ -54,7 +54,7 @@ interface ProfileParams extends ParsedUrlQuery {
 }
 
 const Profile = ({ name }: ProfileParams) => {
-  const { data } = useProfile(name)
+  const { data, refetch, isLoading } = useProfile(name)
 
   const maybeProfile = f(() => {
     const dataOption = fromNullable(data)
@@ -81,6 +81,7 @@ const Profile = ({ name }: ProfileParams) => {
     data: articlesData,
     fetchNextPage,
     hasNextPage,
+    isFetchingNextPage,
   } = useGetArticles({ ...filter })
 
   const { ref: refObserver, inView } = useInView({
@@ -113,13 +114,24 @@ const Profile = ({ name }: ProfileParams) => {
 
   const maybeArticles = handleMaybeArticles(articlesDataOption)
 
-  return isSome(maybeProfile) && isSome(maybeArticles) ? (
+  return isSome(maybeProfile) ? (
     <Wrapper>
       <ProfileHeader
         name={maybeProfile.value.profile.username}
         description={maybeProfile.value.profile.bio}
       />
-      <Articles articles={maybeArticles} />
+      {isSome(maybeArticles) ? (
+        <Articles articles={maybeArticles} />
+      ) : (
+        <ErrorState
+          message="Something went wrong while trying to requesting the articles."
+          title="Something went wrong"
+          buttonLabel="Try again"
+          disabled={isFetchingNextPage}
+          isButtonLoading={isFetchingNextPage}
+          onButtonClick={() => fetchNextPage()}
+        />
+      )}
       <div ref={refObserver} />
     </Wrapper>
   ) : (
@@ -127,7 +139,9 @@ const Profile = ({ name }: ProfileParams) => {
       message="Something went wrong while trying to requesting the user informations."
       title="Something went wrong"
       buttonLabel="Try again"
-      onButtonClick={() => console.log('tento dnv')}
+      onButtonClick={() => refetch()}
+      disabled={isLoading}
+      isButtonLoading={isLoading}
     />
   )
 }
