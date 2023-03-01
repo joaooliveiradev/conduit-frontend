@@ -1,21 +1,17 @@
 import { ArticleCodec } from '@/types'
 import { DefaultError, fetcher } from '@/libs'
 import {
-  QueryFunctionContext,
-  QueryKey,
+  type QueryFunctionContext,
+  type QueryKey,
+  type UseInfiniteQueryOptions,
   useInfiniteQuery,
-  UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
 import { withMessage } from 'io-ts-types'
-import { Either } from 'fp-ts/Either'
-import * as t from 'io-ts'
+import { type Either } from 'fp-ts/Either'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 import { fromNullable, isSome } from 'fp-ts/Option'
-import {
-  defaultArticlesLimit,
-  defaultFilters,
-  QueryParamsProps,
-} from '@/hooks/queries'
+import { defaultFilters, type QueryFiltersProps } from '@/hooks/queries'
+import * as t from 'io-ts'
 
 const GetFeedArticlesResponseCodec = t.type({
   articles: t.array(ArticleCodec),
@@ -38,9 +34,7 @@ type GetFeedArticlesOptions = UseInfiniteQueryOptions<
   DefaultError
 >
 
-type ParamsProps = QueryFunctionContext<QueryKey, string | null>
-
-export const getFeedArticles = async (filters: QueryParamsProps) => {
+export const getFeedArticles = async (filters: QueryFiltersProps) => {
   const query = new URLSearchParams(filters).toString()
 
   const url = `/articles/feed?${query}`
@@ -51,22 +45,24 @@ export const getFeedArticles = async (filters: QueryParamsProps) => {
   )
 }
 
+type PageParamProps = QueryFunctionContext<QueryKey, QueryFiltersProps | null>
+
 export const useFeedArticles = (
-  filters?: QueryParamsProps,
+  filters?: QueryFiltersProps,
   options?: GetFeedArticlesOptions
 ) =>
   useInfiniteQuery<Either<DefaultError, GetFeedArticlesOutput>, DefaultError>(
     [GET_FEED_ARTICLES_KEY],
-    async ({ pageParam = defaultArticlesLimit }: ParamsProps) => {
+    async ({ pageParam = defaultFilters }: PageParamProps) => {
       const pageParamOption = fromNullable(pageParam)
       const filtersOption = fromNullable(filters)
 
-      const newFilters =
+      const queryFilters =
         isSome(filtersOption) && isSome(pageParamOption)
-          ? { ...filtersOption.value, limit: pageParamOption.value }
+          ? { ...filtersOption.value, ...pageParamOption.value }
           : defaultFilters
 
-      return await getFeedArticles(newFilters)
+      return await getFeedArticles(queryFilters)
     },
     {
       ...options,

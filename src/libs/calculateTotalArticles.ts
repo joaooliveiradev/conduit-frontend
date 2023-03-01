@@ -1,4 +1,8 @@
-import { defaultArticlesLimit, type GetArticlesOutput } from '@/hooks/queries'
+import {
+  type QueryFiltersProps,
+  type GetArticlesOutput,
+  defaultArticlesLimit,
+} from '@/hooks/queries'
 import { Either, isRight } from 'fp-ts/Either'
 import { DefaultError } from './errors'
 
@@ -10,7 +14,13 @@ export const calculateTotalArticles = (
     const totalArticles = lastPage.right.articlesCount
     if (totalLastFetch === totalArticles) return null
     else {
-      return totalLastFetch + Number(defaultArticlesLimit)
+      const limit = totalLastFetch + defaultArticlesLimit
+
+      const filters: QueryFiltersProps = {
+        limit: limit.toString(),
+      }
+
+      return filters
     }
   } else return null
 }

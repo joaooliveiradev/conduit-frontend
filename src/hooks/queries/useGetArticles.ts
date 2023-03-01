@@ -2,17 +2,17 @@ import { ArticleCodec } from '@/types'
 import { DefaultError, fetcher } from '@/libs'
 import {
   useInfiniteQuery,
-  QueryFunctionContext,
-  QueryKey,
-  UseInfiniteQueryOptions,
+  type QueryFunctionContext,
+  type QueryKey,
+  type UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
-import { Either } from 'fp-ts/Either'
+import { type Either } from 'fp-ts/Either'
 import { withMessage } from 'io-ts-types'
-import * as t from 'io-ts'
 import { isSome, fromNullable } from 'fp-ts/Option'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
+import * as t from 'io-ts'
 
-export type QueryParamsProps = {
+export type QueryFiltersProps = {
   limit?: string
   author?: string
   favorited?: string
@@ -34,10 +34,10 @@ export type GetArticlesOutput = t.OutputOf<typeof GetArticlesResponseCodec>
 
 export const GET_ARTICLES_KEY = 'get-articles'
 
-export const defaultArticlesLimit = '6'
+export const defaultArticlesLimit = 6
 
-export const defaultFilters: QueryParamsProps = {
-  limit: defaultArticlesLimit,
+export const defaultFilters = {
+  limit: defaultArticlesLimit.toString(),
 }
 
 const oneMinute = 60 * 1000
@@ -47,7 +47,7 @@ type UseGetArticlesOptions = UseInfiniteQueryOptions<
   DefaultError
 >
 
-export const getArticles = async (filters: QueryParamsProps) => {
+export const getArticles = async (filters: QueryFiltersProps) => {
   const query = new URLSearchParams(filters).toString()
 
   const url = `/articles?${query}`
@@ -59,24 +59,24 @@ export const getArticles = async (filters: QueryParamsProps) => {
   return data
 }
 
-type ParamsProps = QueryFunctionContext<QueryKey, string | null>
+type PageParamProps = QueryFunctionContext<QueryKey, QueryFiltersProps | null>
 
 export const useGetArticles = (
-  filters?: QueryParamsProps,
+  filters?: QueryFiltersProps,
   options?: UseGetArticlesOptions
 ) =>
   useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>(
     [GET_ARTICLES_KEY],
-    async ({ pageParam = defaultArticlesLimit }: ParamsProps) => {
+    async ({ pageParam = defaultFilters }: PageParamProps) => {
       const pageParamOption = fromNullable(pageParam)
       const filtersOption = fromNullable(filters)
 
-      const newFilters =
+      const queryFilters =
         isSome(filtersOption) && isSome(pageParamOption)
-          ? { ...filtersOption.value, limit: pageParamOption.value }
+          ? { ...filtersOption.value, ...pageParamOption.value }
           : defaultFilters
 
-      return await getArticles(newFilters)
+      return await getArticles(queryFilters)
     },
     {
       ...options,

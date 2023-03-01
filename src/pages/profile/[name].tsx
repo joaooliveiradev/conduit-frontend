@@ -6,16 +6,16 @@ import {
   QueryClient,
 } from '@tanstack/react-query'
 import {
-  defaultArticlesLimit,
+  defaultFilters,
   type GetArticlesOutput,
   getProfile,
   GET_PROFILE_KEY,
-  type QueryParamsProps,
+  type QueryFiltersProps,
   useGetArticles,
   useProfile,
 } from '@/hooks/queries'
-import { GetServerSidePropsContext } from 'next'
-import { ParsedUrlQuery } from 'querystring'
+import { type GetServerSidePropsContext } from 'next'
+import { type ParsedUrlQuery } from 'querystring'
 import {
   fromNullable,
   isSome,
@@ -67,14 +67,14 @@ const Profile = ({ name }: ProfileParams) => {
     isSome(maybeProfile) ? some(maybeProfile.value.profile.username) : none
   )
 
-  const filter = f(() => {
+  const filters = f(() => {
     if (isSome(username)) {
-      const filter: QueryParamsProps = {
+      const filter: QueryFiltersProps = {
+        ...defaultFilters,
         author: username.value,
-        limit: defaultArticlesLimit,
       }
       return filter
-    } else return null
+    } else return undefined
   })
 
   const {
@@ -82,7 +82,7 @@ const Profile = ({ name }: ProfileParams) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetArticles({ ...filter })
+  } = useGetArticles({ ...filters })
 
   const { ref: refObserver, inView } = useInView({
     skip: !hasNextPage,
