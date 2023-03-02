@@ -8,6 +8,7 @@ export type ArticleCardProps = {
   date: string
   readTime: string
   author: string
+  slug: string
 }
 
 const Wrapper = styled.article`
@@ -17,8 +18,9 @@ const Wrapper = styled.article`
     background-color: ${transparentize(0.9, theme.colors.black[100])};
     border-radius: 2px;
     padding: ${theme.spacings.large};
-    row-gap: ${theme.spacings.xsmall};
+    row-gap: ${theme.spacings.xxsmall};
     transition: background-color 250ms ease-in;
+    user-select: none;
     :hover {
       background-color: ${transparentize(0.86, theme.colors.black[100])};
     }
@@ -60,25 +62,35 @@ const Footer = styled.footer`
   justify-content: space-between;
   align-items: center;
 `
+
+const Anchor = styled.a`
+  cursor: pointer;
+`
+
 export const ArticleCard = ({
   title,
   description,
   date,
   readTime,
   author,
+  slug,
 }: ArticleCardProps) => {
   return (
     <Wrapper>
-      <MainContent>
-        <header>
-          <Title>{title}</Title>
-        </header>
-        <section>
-          <Text>{description}</Text>
-        </section>
-      </MainContent>
+      <Anchor href={`article/${slug}`}>
+        <MainContent>
+          <header>
+            <Title>{title}</Title>
+          </header>
+          <section>
+            <Text>{description}</Text>
+          </section>
+        </MainContent>
+      </Anchor>
       <Footer>
-        <ProfileName name={author} size={2} />
+        <Anchor href={`profile/${author}`}>
+          <ProfileName name={author} size={2} />
+        </Anchor>
         <ArticleStats date={date} readTime={readTime} />
       </Footer>
     </Wrapper>
