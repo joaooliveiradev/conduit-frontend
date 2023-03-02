@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
 import styled from 'styled-components'
-import { TabContent, Pane, Tabs, TabsPane } from './index'
+import { TabContent, Pane, Tabs, TabsPane } from './Tabs'
 
 const stories: Meta = {
   component: Tabs,

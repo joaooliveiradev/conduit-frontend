@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import styled from 'styled-components'
-import { ArticleBody, type ArticleBodyProps } from './index'
+import { ArticleBody, type ArticleBodyProps } from './ArticleBody'
 
 const Wrapper = styled.div`
   padding: 32px 64px;

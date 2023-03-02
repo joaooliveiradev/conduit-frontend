@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react'
-import { ArticleHeader, type ArticleHeaderProps } from './index'
+import { ArticleHeader, type ArticleHeaderProps } from './ArticleHeader'
 
 const stories: Meta<ArticleHeaderProps> = {
   component: ArticleHeader,

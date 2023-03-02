@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react'
-import { ProfileInformation, type ProfileInformationProps } from './index'
+import { ProfileInformation, type ProfileInformationProps } from './ProfileInformation'
 
 const stories: Meta<ProfileInformationProps> = {
   component: ProfileInformation,

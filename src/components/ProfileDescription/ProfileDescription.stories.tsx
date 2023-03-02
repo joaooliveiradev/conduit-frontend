@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react'
-import { ProfileDescription, type ProfileDescriptionProps } from './index'
+import { ProfileDescription, type ProfileDescriptionProps } from './ProfileDescription'
 
 const stories: Meta<ProfileDescriptionProps> = {
   component: ProfileDescription,
