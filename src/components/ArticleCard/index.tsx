@@ -77,7 +77,7 @@ export const ArticleCard = ({
 }: ArticleCardProps) => {
   return (
     <Wrapper>
-      <Anchor href={`article/${slug}`}>
+      <Anchor href={`/article/${slug}`}>
         <MainContent>
           <header>
             <Title>{title}</Title>
@@ -88,7 +88,7 @@ export const ArticleCard = ({
         </MainContent>
       </Anchor>
       <Footer>
-        <Anchor href={`profile/${author}`}>
+        <Anchor href={`/profile/${author}`}>
           <ProfileName name={author} size={2} />
         </Anchor>
         <ArticleStats date={date} readTime={readTime} />
