@@ -32,7 +32,7 @@ const Button = styled(DefaultButton)`
 
 const NewArticle = () => (
   <Link href="/new-article">
-    <Button size="medium">Edit Profile</Button>
+    <Button size="medium">New Article</Button>
   </Link>
 )
 
@@ -41,7 +41,8 @@ export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => (
     <ProfileInformation name={name} description={description} />
     <Actions>
       <NewArticle />
-      <TextButton href="/new-article">New Article</TextButton>
+      {/* TODO: Modal */}
+      <TextButton href="/edit-profile">Edit profile</TextButton>
     </Actions>
   </Wrapper>
 )
