@@ -14,6 +14,7 @@ const Wrapper = styled.header`
   justify-content: center;
   width: 100%;
   position: relative;
+  user-select: none;
 `
 
 const Actions = styled.div`

@@ -1,7 +1,9 @@
 import { Loading } from '@/components'
 import * as React from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: string
   size: 'large' | 'medium'
   disabled?: boolean
@@ -37,6 +39,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     cursor: pointer;
     letter-spacing: -0.055em;
     transition: background-color 250ms ease-in;
+    outline: none;
     ${size && sizeModifiers[size](theme)};
     ${disabled &&
     css`
@@ -48,6 +51,9 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     }
     :focus {
       box-shadow: 0px 0px 0 2px ${theme.colors.grey[200]};
+    }
+    :focus-visible {
+      box-shadow: 0px 0px 0 2px ${theme.colors.grey[100]};
     }
   `};
 `
