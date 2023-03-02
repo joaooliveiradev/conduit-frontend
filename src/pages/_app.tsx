@@ -3,13 +3,13 @@ import {
   QueryClient,
   Hydrate,
 } from '@tanstack/react-query'
-import * as React from 'react'
 import { Layout } from '@/components'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '@/styles'
 import { AuthProvider, ToastProvider } from '@/context'
 import { type DefaultSeoProps, DefaultSeo } from 'next-seo'
+import React from 'react'
 import * as superJSON from 'superjson'
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL

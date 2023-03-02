@@ -1,5 +1,5 @@
 import { Loading } from '@/components'
-import * as React from 'react'
+import React from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
 
 export interface ButtonProps

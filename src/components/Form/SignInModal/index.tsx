@@ -1,5 +1,5 @@
 import { SignIn, SignUp, Modal } from '@/components'
-import * as React from 'react'
+import React from 'react'
 
 type SignInModalProps = {
   open: boolean
