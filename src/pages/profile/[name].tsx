@@ -29,6 +29,7 @@ import { DefaultError, f } from '@/libs'
 import { type Either, isRight } from 'fp-ts/Either'
 import { useInView } from 'react-intersection-observer'
 import React from 'react'
+import { transparentize } from 'polished'
 import * as superJSON from 'superjson'
 
 const Wrapper = styled.section`
@@ -40,8 +41,9 @@ const Wrapper = styled.section`
     gap: ${theme.spacings.xhuge};
     &::before {
       content: '';
+      height: 1px;
       position: absolute;
-      border: 1px solid ${theme.colors.grey[300]};
+      background-color: ${transparentize(0.7, theme.colors.grey[300])};
       width: 100%;
       transform: translateY(50px);
       left: 0;
