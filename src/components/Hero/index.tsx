@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { type Status } from '@/context'
 import { SignInModal, Button } from '@/components'
-import * as React from 'react'
+import React from 'react'
 
 type HeroProps = {
   userStatus: Status

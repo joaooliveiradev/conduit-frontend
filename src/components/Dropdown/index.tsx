@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { ReactNode } from 'react'
 import Link from 'next/link'
-import * as React from 'react'
+import React from 'react'
 
 export type DropdownProps = {
   children: ReactNode
