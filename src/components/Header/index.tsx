@@ -14,7 +14,8 @@ import { isSome, fromNullable, fromEither, none } from 'fp-ts/Option'
 import { type Either, isLeft, isRight } from 'fp-ts/Either'
 import { DefaultError, f } from '@/libs'
 import dynamic from 'next/dynamic'
-import * as React from 'react'
+import React from 'react'
+import Link from 'next/link'
 
 const Dropdown = dynamic<DropdownProps>(
   () => import('@/components/Dropdown').then((module) => module.Dropdown),
@@ -39,6 +40,10 @@ const Wrapper = styled.header`
     justify-content: space-between;
     padding-top: ${theme.spacings.xxhuge};
   `}
+`
+
+const Anchor = styled.a`
+  cursor: pointer;
 `
 
 export const Header = () => {
@@ -83,31 +88,33 @@ export const Header = () => {
   })
 
   return (
-    <>
-      <Wrapper>
-        <Image src={logo} alt="Conduit Logo" width={172} height={42} />
-        {isSome(maybeData) && status === 'loggedIn' ? (
-          <Dropdown
-            trigger={
-              <ProfileName size={2} name={maybeData.value.user.username} />
-            }
-          >
-            <DropdownItem href="profile" label="Profile" />
-            <DropdownItem label="Sign Out" onEventClick={signOut} />
-          </Dropdown>
-        ) : (
-          <>
-            <Button size="large" onClick={() => setIsModalOpen(true)}>
-              Sign in
-            </Button>
-            <SignInModal
-              open={isModalOpen}
-              onOpenChange={(open) => setIsModalOpen(open)}
-              showSignInFirst
-            />
-          </>
-        )}
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Link href="/">
+        <Anchor>
+          <Image src={logo} alt="Conduit Logo" width={172} height={42} />
+        </Anchor>
+      </Link>
+      {isSome(maybeData) && status === 'loggedIn' ? (
+        <Dropdown
+          trigger={
+            <ProfileName size={2} name={maybeData.value.user.username} />
+          }
+        >
+          <DropdownItem href="profile" label="Profile" />
+          <DropdownItem label="Sign Out" onEventClick={signOut} />
+        </Dropdown>
+      ) : (
+        <>
+          <Button size="large" onClick={() => setIsModalOpen(true)}>
+            Sign in
+          </Button>
+          <SignInModal
+            open={isModalOpen}
+            onOpenChange={(open) => setIsModalOpen(open)}
+            showSignInFirst
+          />
+        </>
+      )}
+    </Wrapper>
   )
 }
