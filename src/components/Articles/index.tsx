@@ -36,6 +36,7 @@ export const Articles = ({ articles }: ArticlesProps) => {
             title={article.title}
             date={article.updatedAt}
             readTime={article.body}
+            slug={article.slug}
           />
         ))}
       </Wrapper>
