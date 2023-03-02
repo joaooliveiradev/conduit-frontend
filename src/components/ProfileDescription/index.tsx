@@ -31,6 +31,6 @@ export const ProfileDescription = ({
 }: ProfileDescriptionProps) => (
   <Wrapper>
     <ProfileAuthor author={name} />
-    <Description>{description}</Description>
+    {description && <Description>{description}</Description>}
   </Wrapper>
 )
