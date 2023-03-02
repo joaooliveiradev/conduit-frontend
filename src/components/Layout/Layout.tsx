@@ -6,7 +6,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 
 const Toast = dynamic<ToastProps>(
-  () => import('@/components/Toast').then((module) => module.Toast),
+  () => import('@/components/Toast/Toast').then((module) => module.Toast),
   {
     ssr: false,
   }

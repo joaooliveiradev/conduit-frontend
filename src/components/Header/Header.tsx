@@ -18,16 +18,16 @@ import React from 'react'
 import Link from 'next/link'
 
 const Dropdown = dynamic<DropdownProps>(
-  () => import('@/components/Dropdown').then((module) => module.Dropdown),
+  () => import('@/components/Dropdown/Dropdown').then((module) => module.Dropdown),
   { ssr: false }
 )
 const DropdownItem = dynamic<DropdownItemProps>(
-  () => import('@/components/Dropdown').then((module) => module.DropdownItem),
+  () => import('@/components/Dropdown/Dropdown').then((module) => module.DropdownItem),
   { ssr: false }
 )
 
 const ProfileName = dynamic<ProfileNameProps>(
-  () => import('@/components/ProfileName').then((module) => module.ProfileName),
+  () => import('@/components/ProfileName/ProfileName').then((module) => module.ProfileName),
   {
     ssr: false,
   }

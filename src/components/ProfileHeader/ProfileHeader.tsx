@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { Button as DefaultButton } from '@/components/Button'
+import { Button as DefaultButton } from '@/components/Button/Button'
 import { ProfileInformation, TextButton } from '@/components/index'
 import Link from 'next/link'
 

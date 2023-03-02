@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react'
-import { ArticleStats, type ArticleStatsProps } from './index'
+import { ArticleStats, type ArticleStatsProps } from './ArticleStats'
 
 const stories: Meta<ArticleStatsProps> = {
   component: ArticleStats,

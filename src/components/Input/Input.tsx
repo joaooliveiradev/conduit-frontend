@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ErrorMessage } from '@/components/ErrorMessage'
+import { ErrorMessage } from '@/components/'
 import React from 'react'
 
 export interface InputProps

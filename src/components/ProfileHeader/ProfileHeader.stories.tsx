@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react'
-import { ProfileHeader, type ProfileHeaderProps } from './index'
+import { ProfileHeader, type ProfileHeaderProps } from './ProfileHeader'
 
 const stories: Meta<ProfileHeaderProps> = {
   component: ProfileHeader,
