@@ -13,6 +13,8 @@ import {
   type QueryFiltersProps,
   useGetArticles,
   useProfile,
+  GET_ARTICLES_KEY,
+  getArticles,
 } from '@/hooks/queries'
 import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
@@ -115,6 +117,7 @@ const Profile = ({ name }: ProfileParams) => {
   }
 
   const maybeArticles = handleMaybeArticles(articlesDataOption)
+  console.log({ maybeArticles })
 
   return isSome(maybeProfile) ? (
     <Wrapper>
@@ -163,6 +166,17 @@ export const getServerSideProps = async ({
       [GET_PROFILE_KEY],
       async () => await getProfile(userOption.value)
     )
+
+    const filters: QueryFiltersProps = {
+      ...defaultFilters,
+      author: userOption.value,
+    }
+
+    await queryClient.prefetchInfiniteQuery(
+      [GET_ARTICLES_KEY],
+      async () => await getArticles(filters)
+    )
+
     return {
       props: {
         dehydratedState: superJSON.stringify(dehydrate(queryClient)),
