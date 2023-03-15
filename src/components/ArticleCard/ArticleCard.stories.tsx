@@ -1,11 +1,17 @@
 import { Meta, Story } from '@storybook/react'
-import { ProfileName, ArticleStats, ArticleCard, type ArticleCardProps } from '@/components/'
+import {
+  ProfileName,
+  ArticleStats,
+  ArticleCard,
+  type ArticleCardProps,
+} from '@/components/'
 
 const stories: Meta<ArticleCardProps> = {
-  component: ArticleCard
+  component: ArticleCard,
 }
 
 const mock = {
+  slug: 'toward-a-journalistic-ethic-of-citation',
   title: 'Toward a Journalistic Ethic of Citation',
   author: 'Jeff Jarvis',
   date: 'May 26, 2022',
@@ -16,7 +22,7 @@ const mock = {
 
 export const Default: Story<ArticleCardProps> = () => (
   <ArticleCard>
-    <ArticleCard.Anchor href={`/article/${mock.author}`}>
+    <ArticleCard.Anchor href={`/article/${mock.slug}`}>
       <ArticleCard.Main>
         <header>
           <ArticleCard.Title>{mock.title}</ArticleCard.Title>

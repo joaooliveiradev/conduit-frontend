@@ -14,6 +14,7 @@ const stories: Meta<ArticleGridProps> = {
 export default stories
 
 const mock = {
+  slug: 'toward-a-journalistic-ethic-of-citation',
   title: 'Toward a Journalistic Ethic of Citation',
   author: 'Jeff Jarvis',
   date: 'May 26, 2022',
@@ -25,7 +26,7 @@ const mock = {
 export const Default: Story<ArticleGridProps> = () => (
   <ArticleGrid>
     <ArticleCard>
-      <ArticleCard.Anchor href={`/article/${mock.author}`}>
+      <ArticleCard.Anchor href={`/article/${mock.slug}`}>
         <ArticleCard.Main>
           <header>
             <ArticleCard.Title>{mock.title}</ArticleCard.Title>
