@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
 import styled from 'styled-components'
 import { ArticleBody, type ArticleBodyProps } from './ArticleBody'
 
