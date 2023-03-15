@@ -5,12 +5,15 @@ import { useInView } from 'react-intersection-observer'
 import { useAuth } from '@/context'
 import {
   ErrorState,
-  Articles,
   Tabs,
   TabsPane,
   Pane,
   TabContent,
   Hero,
+  ArticleGrid,
+  ArticleCard,
+  ProfileName,
+  ArticleStats,
 } from '@/components'
 import {
   getArticles,
@@ -122,7 +125,40 @@ const Home: NextPage = () => {
             <TabContent value="global">
               {isSome(maybeGetArticles) ? (
                 <>
-                  <Articles articles={maybeGetArticles} />
+                  <ArticleGrid>
+                    {maybeGetArticles.value.articles.map((article) => (
+                      <ArticleCard key={article.slug}>
+                        <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                          <ArticleCard.Main>
+                            <header>
+                              <ArticleCard.Title>
+                                {article.title}
+                              </ArticleCard.Title>
+                            </header>
+                            <section>
+                              <ArticleCard.Text>
+                                {article.description}
+                              </ArticleCard.Text>
+                            </section>
+                          </ArticleCard.Main>
+                        </ArticleCard.Anchor>
+                        <ArticleCard.Footer>
+                          <ArticleCard.Anchor
+                            href={`/profile/${article.author.username}`}
+                          >
+                            <ProfileName
+                              name={article.author.username}
+                              size={2}
+                            />
+                          </ArticleCard.Anchor>
+                          <ArticleStats
+                            date={article.updatedAt}
+                            readTime={article.body}
+                          />
+                        </ArticleCard.Footer>
+                      </ArticleCard>
+                    ))}
+                  </ArticleGrid>
                   <div ref={observerRefGetArticles} />
                 </>
               ) : (
@@ -139,7 +175,40 @@ const Home: NextPage = () => {
             <TabContent value="foryou">
               {isSome(maybeFeedArticles) ? (
                 <>
-                  <Articles articles={maybeFeedArticles} />
+                  <ArticleGrid>
+                    {maybeFeedArticles.value.articles.map((article) => (
+                      <ArticleCard key={article.slug}>
+                        <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                          <ArticleCard.Main>
+                            <header>
+                              <ArticleCard.Title>
+                                {article.title}
+                              </ArticleCard.Title>
+                            </header>
+                            <section>
+                              <ArticleCard.Text>
+                                {article.description}
+                              </ArticleCard.Text>
+                            </section>
+                          </ArticleCard.Main>
+                        </ArticleCard.Anchor>
+                        <ArticleCard.Footer>
+                          <ArticleCard.Anchor
+                            href={`/profile/${article.author.username}`}
+                          >
+                            <ProfileName
+                              name={article.author.username}
+                              size={2}
+                            />
+                          </ArticleCard.Anchor>
+                          <ArticleStats
+                            date={article.updatedAt}
+                            readTime={article.body}
+                          />
+                        </ArticleCard.Footer>
+                      </ArticleCard>
+                    ))}
+                  </ArticleGrid>
                   <div ref={observerRefFeedArticles} />
                 </>
               ) : (
@@ -160,7 +229,31 @@ const Home: NextPage = () => {
       return isSome(maybeGetArticles) ? (
         <ContentSection>
           <Hero userStatus={status} />
-          <Articles articles={maybeGetArticles} />
+          <ArticleGrid>
+            {maybeGetArticles.value.articles.map((article) => (
+              <ArticleCard key={article.slug}>
+                <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                  <ArticleCard.Main>
+                    <header>
+                      <ArticleCard.Title>{article.title}</ArticleCard.Title>
+                    </header>
+                    <section>
+                      <ArticleCard.Text>{article.description}</ArticleCard.Text>
+                    </section>
+                  </ArticleCard.Main>
+                </ArticleCard.Anchor>
+                <ArticleCard.Footer>
+                  <ArticleCard.Anchor href={`/profile/${article.author.username}`}>
+                    <ProfileName name={article.author.username} size={2} />
+                  </ArticleCard.Anchor>
+                  <ArticleStats
+                    date={article.updatedAt}
+                    readTime={article.body}
+                  />
+                </ArticleCard.Footer>
+              </ArticleCard>
+            ))}
+          </ArticleGrid>
           <div ref={observerRefGetArticles} />
         </ContentSection>
       ) : (

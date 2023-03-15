@@ -1,5 +1,13 @@
 import styled, { css } from 'styled-components'
-import { Articles, ErrorState, ProfileHeader } from '@/components'
+import {
+  ArticleCard,
+  ArticleGrid,
+  ArticleStats,
+  EmptyState,
+  ErrorState,
+  ProfileHeader,
+  ProfileName,
+} from '@/components'
 import {
   dehydrate,
   type InfiniteData,
@@ -117,7 +125,6 @@ const Profile = ({ name }: ProfileParams) => {
   }
 
   const maybeArticles = handleMaybeArticles(articlesDataOption)
-  console.log({ maybeArticles })
 
   return isSome(maybeProfile) ? (
     <Wrapper>
@@ -126,7 +133,40 @@ const Profile = ({ name }: ProfileParams) => {
         description={maybeProfile.value.profile.bio}
       />
       {isSome(maybeArticles) ? (
-        <Articles articles={maybeArticles} />
+        maybeArticles.value.articles.length === 0 ? (
+          <EmptyState
+            title="No articles are here... yet."
+            message="This user hasn't written any articles yet."
+          />
+        ) : (
+          <ArticleGrid>
+            {maybeArticles.value.articles.map((article) => (
+              <ArticleCard key={article.slug}>
+                <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                  <ArticleCard.Main>
+                    <header>
+                      <ArticleCard.Title>{article.title}</ArticleCard.Title>
+                    </header>
+                    <section>
+                      <ArticleCard.Text>{article.description}</ArticleCard.Text>
+                    </section>
+                  </ArticleCard.Main>
+                </ArticleCard.Anchor>
+                <ArticleCard.Footer>
+                  <ArticleCard.Anchor
+                    href={`/profile/${article.author.username}`}
+                  >
+                    <ProfileName name={article.author.username} size={2} />
+                  </ArticleCard.Anchor>
+                  <ArticleStats
+                    date={article.updatedAt}
+                    readTime={article.body}
+                  />
+                </ArticleCard.Footer>
+              </ArticleCard>
+            ))}
+          </ArticleGrid>
+        )
       ) : (
         <ErrorState
           message="Something went wrong while trying to requesting the articles."
@@ -134,7 +174,7 @@ const Profile = ({ name }: ProfileParams) => {
           buttonLabel="Try again"
           disabled={isFetchingNextPage}
           isButtonLoading={isFetchingNextPage}
-          onButtonClick={() => fetchNextPage()}
+          onButtonClick={fetchNextPage}
         />
       )}
       <div ref={refObserver} />
@@ -144,7 +184,7 @@ const Profile = ({ name }: ProfileParams) => {
       message="Something went wrong while trying to requesting the user informations."
       title="Something went wrong"
       buttonLabel="Try again"
-      onButtonClick={() => refetch()}
+      onButtonClick={refetch}
       disabled={isLoading}
       isButtonLoading={isLoading}
     />
