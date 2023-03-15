@@ -1,17 +1,11 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ArticleStats, ProfileName } from '@/components'
 
 export type ArticleCardProps = {
-  title: string
-  description: string
-  date: string
-  readTime: string
-  author: string
-  slug: string
+  children: React.ReactNode
 }
 
-const Wrapper = styled.article`
+export const Wrapper = styled.article`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
@@ -27,7 +21,11 @@ const Wrapper = styled.article`
   `}
 `
 
-const MainContent = styled.section`
+export const ArticleCard = ({ children }: ArticleCardProps) => (
+  <Wrapper>{children}</Wrapper>
+)
+
+ArticleCard.Main = styled.section`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
@@ -35,7 +33,7 @@ const MainContent = styled.section`
   `}
 `
 
-const Title = styled.h1`
+ArticleCard.Title = styled.h1`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xlarge};
     line-height: 29px;
@@ -43,7 +41,7 @@ const Title = styled.h1`
   `}
 `
 
-const Text = styled.p`
+ArticleCard.Text = styled.p`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.medium};
     line-height: 21px;
@@ -57,42 +55,12 @@ const Text = styled.p`
   `}
 `
 
-const Footer = styled.footer`
+ArticleCard.Footer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
 
-const Anchor = styled.a`
+ArticleCard.Anchor = styled.a`
   cursor: pointer;
 `
-
-export const ArticleCard = ({
-  title,
-  description,
-  date,
-  readTime,
-  author,
-  slug,
-}: ArticleCardProps) => {
-  return (
-    <Wrapper>
-      <Anchor href={`/article/${slug}`}>
-        <MainContent>
-          <header>
-            <Title>{title}</Title>
-          </header>
-          <section>
-            <Text>{description}</Text>
-          </section>
-        </MainContent>
-      </Anchor>
-      <Footer>
-        <Anchor href={`/profile/${author}`}>
-          <ProfileName name={author} size={2} />
-        </Anchor>
-        <ArticleStats date={date} readTime={readTime} />
-      </Footer>
-    </Wrapper>
-  )
-}
