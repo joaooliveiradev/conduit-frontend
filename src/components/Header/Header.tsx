@@ -108,7 +108,7 @@ export const Header = () => {
           }
         >
           <DropdownItem
-            href={`profile/${maybeData.value.user.username}`}
+            href={`/profile/${maybeData.value.user.username}`}
             label="Profile"
           />
           <DropdownItem label="Sign Out" onEventClick={signOut} />
