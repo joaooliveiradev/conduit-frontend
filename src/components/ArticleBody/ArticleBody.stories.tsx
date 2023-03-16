@@ -5,6 +5,7 @@ import { ArticleBody, type ArticleBodyProps } from './ArticleBody'
 const Wrapper = styled.div`
   padding: 32px 64px;
 `
+
 const stories: Meta<ArticleBodyProps> = {
   component: ArticleBody,
 }
