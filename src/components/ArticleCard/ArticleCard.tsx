@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
+import { Anchor } from '@/components/Anchor/Anchor'
 
 export type ArticleCardProps = {
   children: React.ReactNode
@@ -61,6 +62,4 @@ ArticleCard.Footer = styled.footer`
   align-items: center;
 `
 
-ArticleCard.Anchor = styled.a`
-  cursor: pointer;
-`
+ArticleCard.Anchor = Anchor

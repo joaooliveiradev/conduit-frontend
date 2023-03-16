@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ProfileName, ArticleStats, Divider } from '@/components/'
+import { ProfileName, ArticleStats, Divider, Anchor } from '@/components'
 
 export type ArticleHeaderProps = {
   name: string
@@ -13,13 +13,11 @@ const Wrapper = styled.header`
   align-items: center;
 `
 
-export const ArticleHeader = ({
-  name,
-  readTime,
-  date,
-}: ArticleHeaderProps) => (
+export const ArticleHeader = ({ name, readTime, date }: ArticleHeaderProps) => (
   <Wrapper>
-    <ProfileName name={name} size={2} />
+    <Anchor href={`/profile/${name}`}>
+      <ProfileName name={name} size={2} />
+    </Anchor>
     <Divider />
     <ArticleStats date={date} readTime={readTime} />
   </Wrapper>
