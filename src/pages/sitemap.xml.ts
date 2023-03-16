@@ -6,8 +6,7 @@ import {
 import { type Either, isRight } from 'fp-ts/Either'
 import { fetcher, DefaultError } from '@/libs'
 import { type GetServerSideProps } from 'next'
-
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL
+import { baseWebUrl } from '@/types'
 
 export const generateSiteMap = (
   articles: Either<DefaultError, GetArticlesOutput>
@@ -16,7 +15,7 @@ export const generateSiteMap = (
     return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
-       <loc>${baseURL}/</loc>
+       <loc>${baseWebUrl}/</loc>
        <changefreq>daily</changefreq>
        <priority>0.9</priority>
      </url>
@@ -24,7 +23,7 @@ export const generateSiteMap = (
        .map((article) => {
          return `
        <url>
-           <loc>${baseURL}/article/${article.slug}</loc>
+           <loc>${baseWebUrl}/article/${article.slug}</loc>
            <priority>1</priority>
            <changefreq>daily</changefreq>
        </url>
