@@ -14,6 +14,7 @@ import {
   ArticleCard,
   ProfileName,
   ArticleStats,
+  EmptyState,
 } from '@/components'
 import {
   getArticles,
@@ -124,49 +125,56 @@ const Home: NextPage = () => {
             </Pane>
             <TabContent value="global">
               {isSome(maybeGetArticles) ? (
-                <>
-                  <ArticleGrid>
-                    {maybeGetArticles.value.articles.map((article) => (
-                      <ArticleCard key={article.slug}>
-                        <ArticleCard.Anchor href={`/article/${article.slug}`}>
-                          <ArticleCard.Main>
-                            <header>
-                              <ArticleCard.Title>
-                                {article.title}
-                              </ArticleCard.Title>
-                            </header>
-                            <section>
-                              <ArticleCard.Text>
-                                {article.description}
-                              </ArticleCard.Text>
-                            </section>
-                          </ArticleCard.Main>
-                        </ArticleCard.Anchor>
-                        <ArticleCard.Footer>
-                          <ArticleCard.Anchor
-                            href={`/profile/${article.author.username}`}
-                          >
-                            <ProfileName
-                              name={article.author.username}
-                              size={2}
-                            />
+                maybeGetArticles.value.articlesCount === 0 ? (
+                  <EmptyState
+                    title="No articles are here... yet."
+                    message="We don't have any articles yet, but you can be the first! Access your profile and click in New Article."
+                  />
+                ) : (
+                  <>
+                    <ArticleGrid>
+                      {maybeGetArticles.value.articles.map((article) => (
+                        <ArticleCard key={article.slug}>
+                          <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                            <ArticleCard.Main>
+                              <header>
+                                <ArticleCard.Title>
+                                  {article.title}
+                                </ArticleCard.Title>
+                              </header>
+                              <section>
+                                <ArticleCard.Text>
+                                  {article.description}
+                                </ArticleCard.Text>
+                              </section>
+                            </ArticleCard.Main>
                           </ArticleCard.Anchor>
-                          <ArticleStats
-                            date={article.updatedAt}
-                            readTime={article.body}
-                          />
-                        </ArticleCard.Footer>
-                      </ArticleCard>
-                    ))}
-                  </ArticleGrid>
-                  <div ref={observerRefGetArticles} />
-                </>
+                          <ArticleCard.Footer>
+                            <ArticleCard.Anchor
+                              href={`/profile/${article.author.username}`}
+                            >
+                              <ProfileName
+                                name={article.author.username}
+                                size={2}
+                              />
+                            </ArticleCard.Anchor>
+                            <ArticleStats
+                              date={article.updatedAt}
+                              readTime={article.body}
+                            />
+                          </ArticleCard.Footer>
+                        </ArticleCard>
+                      ))}
+                    </ArticleGrid>
+                    <div ref={observerRefGetArticles} />
+                  </>
+                )
               ) : (
                 <ErrorState
                   title="Something went wrong."
                   message="Something went wrong while trying to requesting the articles."
                   buttonLabel="Try again"
-                  onButtonClick={() => fextNextPageGetArticles()}
+                  onButtonClick={fextNextPageGetArticles}
                   disabled={isFetchingGetArticles}
                   isButtonLoading={isFetchingGetArticles}
                 />
@@ -174,49 +182,56 @@ const Home: NextPage = () => {
             </TabContent>
             <TabContent value="foryou">
               {isSome(maybeFeedArticles) ? (
-                <>
-                  <ArticleGrid>
-                    {maybeFeedArticles.value.articles.map((article) => (
-                      <ArticleCard key={article.slug}>
-                        <ArticleCard.Anchor href={`/article/${article.slug}`}>
-                          <ArticleCard.Main>
-                            <header>
-                              <ArticleCard.Title>
-                                {article.title}
-                              </ArticleCard.Title>
-                            </header>
-                            <section>
-                              <ArticleCard.Text>
-                                {article.description}
-                              </ArticleCard.Text>
-                            </section>
-                          </ArticleCard.Main>
-                        </ArticleCard.Anchor>
-                        <ArticleCard.Footer>
-                          <ArticleCard.Anchor
-                            href={`/profile/${article.author.username}`}
-                          >
-                            <ProfileName
-                              name={article.author.username}
-                              size={2}
-                            />
+                maybeFeedArticles.value.articlesCount === 0 ? (
+                  <EmptyState
+                    title="No articles are here... yet."
+                    message="You need to follow some user to receive their articles."
+                  />
+                ) : (
+                  <>
+                    <ArticleGrid>
+                      {maybeFeedArticles.value.articles.map((article) => (
+                        <ArticleCard key={article.slug}>
+                          <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                            <ArticleCard.Main>
+                              <header>
+                                <ArticleCard.Title>
+                                  {article.title}
+                                </ArticleCard.Title>
+                              </header>
+                              <section>
+                                <ArticleCard.Text>
+                                  {article.description}
+                                </ArticleCard.Text>
+                              </section>
+                            </ArticleCard.Main>
                           </ArticleCard.Anchor>
-                          <ArticleStats
-                            date={article.updatedAt}
-                            readTime={article.body}
-                          />
-                        </ArticleCard.Footer>
-                      </ArticleCard>
-                    ))}
-                  </ArticleGrid>
-                  <div ref={observerRefFeedArticles} />
-                </>
+                          <ArticleCard.Footer>
+                            <ArticleCard.Anchor
+                              href={`/profile/${article.author.username}`}
+                            >
+                              <ProfileName
+                                name={article.author.username}
+                                size={2}
+                              />
+                            </ArticleCard.Anchor>
+                            <ArticleStats
+                              date={article.updatedAt}
+                              readTime={article.body}
+                            />
+                          </ArticleCard.Footer>
+                        </ArticleCard>
+                      ))}
+                    </ArticleGrid>
+                    <div ref={observerRefFeedArticles} />
+                  </>
+                )
               ) : (
                 <ErrorState
                   title="Something went wrong."
                   message="Something went wrong while trying to requesting the articles."
                   buttonLabel="Try again"
-                  onButtonClick={() => fextNextPageGetArticles()}
+                  onButtonClick={fextNextPageGetArticles}
                   disabled={isFetchingFeedArticles}
                   isButtonLoading={isFetchingFeedArticles}
                 />
@@ -229,39 +244,52 @@ const Home: NextPage = () => {
       return isSome(maybeGetArticles) ? (
         <ContentSection>
           <Hero userStatus={status} />
-          <ArticleGrid>
-            {maybeGetArticles.value.articles.map((article) => (
-              <ArticleCard key={article.slug}>
-                <ArticleCard.Anchor href={`/article/${article.slug}`}>
-                  <ArticleCard.Main>
-                    <header>
-                      <ArticleCard.Title>{article.title}</ArticleCard.Title>
-                    </header>
-                    <section>
-                      <ArticleCard.Text>{article.description}</ArticleCard.Text>
-                    </section>
-                  </ArticleCard.Main>
-                </ArticleCard.Anchor>
-                <ArticleCard.Footer>
-                  <ArticleCard.Anchor href={`/profile/${article.author.username}`}>
-                    <ProfileName name={article.author.username} size={2} />
-                  </ArticleCard.Anchor>
-                  <ArticleStats
-                    date={article.updatedAt}
-                    readTime={article.body}
-                  />
-                </ArticleCard.Footer>
-              </ArticleCard>
-            ))}
-          </ArticleGrid>
-          <div ref={observerRefGetArticles} />
+          {maybeGetArticles.value.articlesCount === 0 ? (
+            <EmptyState
+              title="No articles are here... yet."
+              message="We don't have any articles yet, but you can be the first! Create an account and write one!"
+            />
+          ) : (
+            <>
+              <ArticleGrid>
+                {maybeGetArticles.value.articles.map((article) => (
+                  <ArticleCard key={article.slug}>
+                    <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                      <ArticleCard.Main>
+                        <header>
+                          <ArticleCard.Title>{article.title}</ArticleCard.Title>
+                        </header>
+                        <section>
+                          <ArticleCard.Text>
+                            {article.description}
+                          </ArticleCard.Text>
+                        </section>
+                      </ArticleCard.Main>
+                    </ArticleCard.Anchor>
+                    <ArticleCard.Footer>
+                      <ArticleCard.Anchor
+                        href={`/profile/${article.author.username}`}
+                      >
+                        <ProfileName name={article.author.username} size={2} />
+                      </ArticleCard.Anchor>
+                      <ArticleStats
+                        date={article.updatedAt}
+                        readTime={article.body}
+                      />
+                    </ArticleCard.Footer>
+                  </ArticleCard>
+                ))}
+              </ArticleGrid>
+              <div ref={observerRefGetArticles} />
+            </>
+          )}
         </ContentSection>
       ) : (
         <ErrorState
           title="Something went wrong."
-          message="Something went wrong while trying to requesting the user informations."
+          message="Something went wrong while trying to requesting the articles."
           buttonLabel="Try again"
-          onButtonClick={() => fextNextPageGetArticles()}
+          onButtonClick={fextNextPageGetArticles}
           disabled={isFetchingGetArticles}
           isButtonLoading={isFetchingGetArticles}
         />
