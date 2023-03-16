@@ -11,8 +11,7 @@ import { AuthProvider, ToastProvider } from '@/context'
 import { type DefaultSeoProps, DefaultSeo } from 'next-seo'
 import React from 'react'
 import * as superJSON from 'superjson'
-
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL
+import { baseWebUrl } from '@/types'
 
 const SEO: DefaultSeoProps = {
   title: 'Conduit - A place to read and share your ideias.',
@@ -20,7 +19,7 @@ const SEO: DefaultSeoProps = {
     "Conduit is a platform where readers and writers can discover, create and share ideas, topics they're passionate about.",
   openGraph: {
     type: 'website',
-    url: baseURL,
+    url: baseWebUrl,
     siteName: 'Conduit',
     locale: 'en_US',
     title: 'Conduit - A place to read and share your ideias.',
@@ -28,7 +27,7 @@ const SEO: DefaultSeoProps = {
       "Conduit is a platform where readers and writers can discover, create and share ideas, topics they're passionate about.",
     images: [
       {
-        url: `${baseURL}/cover.png`,
+        url: `${baseWebUrl}/cover.png`,
         alt: 'Og Conduit Image',
         type: 'image/png',
         width: 600,

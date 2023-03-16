@@ -9,8 +9,7 @@ import {
   DecodeError,
 } from '@/libs'
 import * as t from 'io-ts'
-
-const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
+import { baseApiUrl } from '@/types'
 
 const validationHandler = <A>(
   dataValidation: t.Validation<A>
@@ -35,7 +34,7 @@ export const fetcher = async <D, A>(
   customConfig?: RequestInit
 ): Promise<Either<DefaultError, A>> => {
   try {
-    const url = `${baseURL}${path}`
+    const url = `${baseApiUrl}${path}`
     const { 'conduit.token': accessToken } = parseCookies()
     const headers: HeadersInit = {
       'Content-type': 'application/json; charset=UTF-8',

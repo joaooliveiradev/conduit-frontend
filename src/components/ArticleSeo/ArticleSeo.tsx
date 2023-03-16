@@ -1,3 +1,4 @@
+import { baseWebUrl } from '@/types'
 import { NextSeo, ArticleJsonLd } from 'next-seo'
 
 type PageSeoProps = {
@@ -20,7 +21,7 @@ export const ArticleSeo = ({
   modifiedTime,
   tags,
 }: PageSeoProps) => {
-  const baseURL = process.env.NEXT_PUBLIC_BASE_URL
+  const baseURL = baseWebUrl
   const url = `${baseURL}/articles/${slug}`
   const coverImage = `${baseURL}/cover.png`
 
