@@ -18,16 +18,23 @@ import React from 'react'
 import Link from 'next/link'
 
 const Dropdown = dynamic<DropdownProps>(
-  () => import('@/components/Dropdown/Dropdown').then((module) => module.Dropdown),
+  () =>
+    import('@/components/Dropdown/Dropdown').then((module) => module.Dropdown),
   { ssr: false }
 )
 const DropdownItem = dynamic<DropdownItemProps>(
-  () => import('@/components/Dropdown/Dropdown').then((module) => module.DropdownItem),
+  () =>
+    import('@/components/Dropdown/Dropdown').then(
+      (module) => module.DropdownItem
+    ),
   { ssr: false }
 )
 
 const ProfileName = dynamic<ProfileNameProps>(
-  () => import('@/components/ProfileName/ProfileName').then((module) => module.ProfileName),
+  () =>
+    import('@/components/ProfileName/ProfileName').then(
+      (module) => module.ProfileName
+    ),
   {
     ssr: false,
   }
@@ -100,7 +107,10 @@ export const Header = () => {
             <ProfileName size={2} name={maybeData.value.user.username} />
           }
         >
-          <DropdownItem href="profile" label="Profile" />
+          <DropdownItem
+            href={`profile/${maybeData.value.user.username}`}
+            label="Profile"
+          />
           <DropdownItem label="Sign Out" onEventClick={signOut} />
         </Dropdown>
       ) : (
