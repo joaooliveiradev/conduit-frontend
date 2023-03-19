@@ -34,6 +34,8 @@ export type GetArticlesOutput = t.OutputOf<typeof GetArticlesResponseCodec>
 
 export const GET_ARTICLES_KEY = 'get-articles'
 
+export const GET_ARTICLES_PROFILE_KEY = 'get-articles-profile'
+
 export const defaultArticlesLimit = 6
 
 export const defaultFilters = {
@@ -62,12 +64,11 @@ export const getArticles = async (filters: QueryFiltersProps) => {
 type PageParamProps = QueryFunctionContext<QueryKey, QueryFiltersProps | null>
 
 export const useGetArticles = (
-  filters?: QueryFiltersProps,
-  options?: UseGetArticlesOptions
+  options: UseGetArticlesOptions,
+  filters?: QueryFiltersProps
 ) =>
-  useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>(
-    [GET_ARTICLES_KEY],
-    async ({ pageParam = defaultFilters }: PageParamProps) => {
+  useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>({
+    queryFn: async ({ pageParam = defaultFilters }: PageParamProps) => {
       const pageParamOption = fromNullable(pageParam)
       const filtersOption = fromNullable(filters)
 
@@ -78,12 +79,10 @@ export const useGetArticles = (
 
       return await getArticles(queryFilters)
     },
-    {
-      ...options,
-      getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
-      staleTime: oneMinute,
-      retry: false,
-      refetchOnWindowFocus: false,
-      refetchInterval: oneMinute,
-    }
-  )
+    getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
+    staleTime: oneMinute,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: oneMinute,
+    ...options,
+  })
