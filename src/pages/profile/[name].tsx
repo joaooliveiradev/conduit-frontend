@@ -27,8 +27,8 @@ import {
   useGetArticles,
   useProfile,
   getArticles,
-} from '@/hooks'
-import { dehydrate, InfiniteData, QueryClient } from '@tanstack/react-query'
+  GET_ARTICLES_PROFILE_KEY,
+} from '@/hooks/queries'
 import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
 import { fromNullable, isSome, chain, getRight, map, match } from 'fp-ts/Option'
