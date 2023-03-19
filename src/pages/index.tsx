@@ -53,7 +53,7 @@ const Home: NextPage = () => {
     fetchNextPage: fextNextPageGetArticles,
     isFetching: isFetchingGetArticles,
     hasNextPage: hasNextPageGetArticles,
-  } = useGetArticles(defaultFilters)
+  } = useGetArticles({ queryKey: [GET_ARTICLES_KEY] }, defaultFilters)
 
   const { ref: observerRefGetArticles, inView: inViewGetArticles } = useInView({
     skip: !hasNextPageGetArticles,

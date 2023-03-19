@@ -21,8 +21,8 @@ import {
   type QueryFiltersProps,
   useGetArticles,
   useProfile,
-  GET_ARTICLES_KEY,
   getArticles,
+  GET_ARTICLES_PROFILE_KEY,
 } from '@/hooks/queries'
 import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
@@ -94,7 +94,7 @@ const Profile = ({ name }: ProfileParams) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetArticles({ ...filters })
+  } = useGetArticles({ queryKey: [GET_ARTICLES_PROFILE_KEY] }, filters)
 
   const { ref: refObserver, inView } = useInView({
     skip: !hasNextPage,
@@ -213,7 +213,7 @@ export const getServerSideProps = async ({
     }
 
     await queryClient.prefetchInfiniteQuery(
-      [GET_ARTICLES_KEY],
+      [GET_ARTICLES_PROFILE_KEY],
       async () => await getArticles(filters)
     )
 
