@@ -31,7 +31,7 @@ const Button = styled(DefaultButton)`
 `
 
 const NewArticle = () => (
-  <Link href="/new-article">
+  <Link href="/editor">
     <Button size="medium">New Article</Button>
   </Link>
 )
