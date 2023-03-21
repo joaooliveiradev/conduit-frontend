@@ -1,10 +1,4 @@
 import { Button, ErrorMessage, Input } from '@/components'
-import {
-  Wrapper,
-  Title,
-  Text,
-  ChangeFormBtn,
-} from '@/components/Form/SignInModal/styles'
 import { useAuth } from '@/context/auth'
 import type { SignInInput } from '@/types'
 import { DefaultError } from '@/libs/errors'
@@ -16,6 +10,42 @@ import { pipe } from 'fp-ts/function'
 import { chain, fromNullable, getLeft, isSome, none } from 'fp-ts/Option'
 import { signUpMutation, type SignUpResponseOutput } from './signUpMutation'
 import * as Yup from 'yup'
+import styled, { css } from 'styled-components'
+
+const Wrapper = styled.form`
+  ${({ theme }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacings.medium};
+    padding: ${theme.spacings.xxsmall};
+  `}
+`
+
+const Title = styled.h1`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.xxlarge};
+  `}
+`
+
+const Text = styled.p`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.xmedium};
+    text-align: center;
+    color: ${theme.colors.grey[200]};
+  `}
+`
+
+const ChangeFormBtn = styled.button`
+  ${({ theme }) => css`
+    background-color: unset;
+    font-size: ${theme.fonts.sizes.xmedium};
+    color: ${theme.colors.black[100]};
+    cursor: pointer;
+    border-bottom: 2px solid ${theme.colors.black[100]};
+    font-weight: 600;
+  `}
+`
 
 type SignUpProps = {
   onSwitchFormClick: (state: boolean) => void

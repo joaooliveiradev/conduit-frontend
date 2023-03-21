@@ -68,7 +68,6 @@ export const NewArticle = () => {
     const newCreateArticleValues: NewArticleRequest = {
       article: values,
     }
-    console.log('handle')
     createArticle(newCreateArticleValues)
   }
 

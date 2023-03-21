@@ -1,12 +1,6 @@
 import { Button, ErrorMessage, Input } from '@/components'
 import { useFormik } from 'formik'
 import { useAuth } from '@/context'
-import {
-  Title,
-  Text,
-  ChangeFormBtn,
-  Wrapper,
-} from '@/components/Form/SignInModal/styles'
 import { isSome, none, chain, getLeft, fromNullable } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import { f } from '@/libs/expression'
@@ -15,7 +9,43 @@ import type { Either } from 'fp-ts/Either'
 import { DefaultError } from '@/libs/errors'
 import type { SignInInput } from '@/types'
 import { signInMutation, type SignInResponseOutput } from './signInMutation'
+import styled, { css } from 'styled-components'
 import * as Yup from 'yup'
+
+const Wrapper = styled.form`
+  ${({ theme }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacings.medium};
+    padding: ${theme.spacings.xxsmall};
+  `}
+`
+
+const Title = styled.h1`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.xxlarge};
+  `}
+`
+
+const Text = styled.p`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.xmedium};
+    text-align: center;
+    color: ${theme.colors.grey[200]};
+  `}
+`
+
+const ChangeFormBtn = styled.button`
+  ${({ theme }) => css`
+    background-color: unset;
+    font-size: ${theme.fonts.sizes.xmedium};
+    color: ${theme.colors.black[100]};
+    cursor: pointer;
+    border-bottom: 2px solid ${theme.colors.black[100]};
+    font-weight: 600;
+  `}
+`
 
 type SignInProps = {
   onSwitchFormClick: (state: boolean) => void
