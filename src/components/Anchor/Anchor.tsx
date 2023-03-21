@@ -11,8 +11,8 @@ const Link = styled.a`
   user-select: none;
 `
 
-export const Anchor = ({ href, children }: AnchorProps) => (
+export const Anchor = ({ href, children, ...rest }: AnchorProps) => (
   <NextLink href={href} passHref>
-    <Link>{children}</Link>
+    <Link {...rest}>{children}</Link>
   </NextLink>
 )

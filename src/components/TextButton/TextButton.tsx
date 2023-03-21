@@ -1,13 +1,14 @@
 import styled, { css } from 'styled-components'
+import { Anchor as DefaultAnchor } from '@/components/Anchor/Anchor'
 
 export type TextButtonProps = {
   href: string
   children: React.ReactNode
 }
 
-const Link = styled.a`
+const Anchor = styled(DefaultAnchor)`
   ${({ theme }) => css`
-    color: ${theme.colors.black[400]};
+    color: ${theme.colors.black[100]};
     font-size: ${theme.fonts.sizes.medium};
     font-weight: 700;
     border-bottom: 2px solid ${theme.colors.black[100]};
@@ -17,9 +18,12 @@ const Link = styled.a`
     &:focus-visible {
       border: none;
     }
+    &:hover {
+      color: ${theme.colors.black[400]};
+    }
   `}
 `
 
 export const TextButton = ({ href, children }: TextButtonProps) => (
-  <Link href={href}>{children}</Link>
+  <Anchor href={href}>{children}</Anchor>
 )
