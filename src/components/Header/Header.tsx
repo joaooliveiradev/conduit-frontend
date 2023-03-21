@@ -1,6 +1,7 @@
 import {
   Button,
   SignInModal,
+  Anchor,
   type DropdownProps,
   type DropdownItemProps,
   type ProfileNameProps,
@@ -15,7 +16,6 @@ import { type Either, isLeft, isRight } from 'fp-ts/Either'
 import { DefaultError, f } from '@/libs'
 import dynamic from 'next/dynamic'
 import React from 'react'
-import Link from 'next/link'
 
 const Dropdown = dynamic<DropdownProps>(
   () =>
@@ -47,10 +47,6 @@ const Wrapper = styled.header`
     justify-content: space-between;
     padding-top: ${theme.spacings.xxhuge};
   `}
-`
-
-const Anchor = styled.a`
-  cursor: pointer;
 `
 
 export const Header = () => {
@@ -96,11 +92,9 @@ export const Header = () => {
 
   return (
     <Wrapper>
-      <Link href="/">
-        <Anchor>
-          <Image src={logo} alt="Conduit Logo" width={172} height={42} />
-        </Anchor>
-      </Link>
+      <Anchor href="/">
+        <Image src={logo} alt="Conduit Logo" width={172} height={42} />
+      </Anchor>
       {isSome(maybeData) && status === 'loggedIn' ? (
         <Dropdown
           trigger={

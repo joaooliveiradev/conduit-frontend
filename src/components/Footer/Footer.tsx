@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
+import { TextButton } from '@/components'
 
 const Wrapper = styled.footer`
   ${({ theme }) => css`
@@ -32,21 +33,17 @@ const Text = styled.p`
   `}
 `
 
-const TextBold = styled.b`
-  ${({ theme }) => css`
-    color: ${theme.colors.black[100]};
-    border-bottom: 2px solid ${theme.colors.black[100]};
-  `}
-`
-
 export const Footer = () => {
   return (
     <Wrapper>
       <Line />
       <Content>
         <Text>
-          Made with <TextBold>Typescript</TextBold> and{' '}
-          <TextBold>Next.js</TextBold>.
+          Made with{' '}
+          <TextButton href="https://www.typescriptlang.org/">
+            Typescript
+          </TextButton>{' '}
+          and <TextButton href="https://nextjs.org/">Next.js</TextButton>.
         </Text>
         <Text>&copy; Copyright Conduit - All rights reserved</Text>
       </Content>

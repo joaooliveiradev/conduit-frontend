@@ -1,13 +1,11 @@
-import * as Popover from '@radix-ui/react-popover'
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ReactNode } from 'react'
-import Link from 'next/link'
-import React from 'react'
+import { Anchor as DefaultAnchor } from '@/components/Anchor/Anchor'
+import * as Popover from '@radix-ui/react-popover'
 
 export type DropdownProps = {
-  children: ReactNode
-  trigger: ReactNode
+  children: React.ReactNode
+  trigger: React.ReactNode
 }
 
 export type DropdownItemProps = {
@@ -62,7 +60,7 @@ const Item = styled.li`
   `}
 `
 
-const Anchor = styled.a`
+const Anchor = styled(DefaultAnchor)`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xlarge};
     color: ${theme.colors.black[100]};
@@ -115,9 +113,7 @@ export const DropdownItem = ({
   return (
     <Item>
       {href ? (
-        <Link href={href} passHref>
-          <Anchor>{label}</Anchor>
-        </Link>
+        <Anchor href={href}>{label}</Anchor>
       ) : (
         <DropdownButton onClick={onEventClick}>{label}</DropdownButton>
       )}
