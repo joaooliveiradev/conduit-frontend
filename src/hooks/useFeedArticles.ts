@@ -10,7 +10,7 @@ import { withMessage } from 'io-ts-types'
 import { type Either } from 'fp-ts/Either'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 import { fromNullable, isSome } from 'fp-ts/Option'
-import { defaultFilters, type QueryFiltersProps } from '@/hooks/queries'
+import { defaultFilters, type QueryFiltersProps } from '@/hooks'
 import * as t from 'io-ts'
 
 const GetFeedArticlesResponseCodec = t.type({

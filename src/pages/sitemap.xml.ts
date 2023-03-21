@@ -2,7 +2,7 @@ import {
   type GetArticlesOutput,
   type GetArticlesResponse,
   GetArticlesResponseCodec,
-} from '@/hooks/queries'
+} from '@/hooks'
 import { type Either, isRight } from 'fp-ts/Either'
 import { fetcher, DefaultError } from '@/libs'
 import { type GetServerSideProps } from 'next'
