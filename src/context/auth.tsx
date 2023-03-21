@@ -7,7 +7,7 @@ import {
   useEffect,
 } from 'react'
 import { type Either, isRight } from 'fp-ts/Either'
-import { type SignInResponseOutput } from '@/components/Form/SignInModal/SignIn/signInMutation'
+import { type SignInResponseOutput } from '@/components/SignIn/signInMutation'
 import { CookieSerializeOptions } from 'cookie'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
