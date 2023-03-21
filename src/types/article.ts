@@ -105,22 +105,3 @@ export const ArticleBySlugCodec = t.type({
     () => 'favoritesCount response should be an number'
   ),
 })
-
-export const newArticleCodec = t.type({
-  title: withMessage(
-    NonEmptyString,
-    () => 'title response should be a string and should be not empty'
-  ),
-  description: withMessage(
-    NonEmptyString,
-    () => 'description response should be a string and should be not empty'
-  ),
-  body: withMessage(
-    NonEmptyString,
-    () => 'body response should be a string and should be not empty'
-  ),
-  tagList: withMessage(
-    t.array(t.string),
-    () => 'tagList response should be an array of strings or an emtpy array'
-  ),
-})
