@@ -3,7 +3,7 @@ import { f } from '@/libs'
 import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
 import { chain, fromNullable, getLeft, isSome, none } from 'fp-ts/Option'
-import { useSignUp } from './useSignUp'
+import { type SignUpRequest, useSignUp } from './useSignUp'
 import styled, { css } from 'styled-components'
 import * as Yup from 'yup'
 
@@ -46,7 +46,7 @@ type SignUpProps = {
   onSwitchFormClick: (state: boolean) => void
 }
 
-type SignUpValues = {
+type SignUpFieldValues = {
   username: string
   email: string
   password: string
@@ -64,17 +64,17 @@ const signUpSchema = Yup.object({
     .max(64, 'Maximum 64 characters required!'),
 })
 
-const initialValues: SignUpValues = {
+const initialValues: SignUpFieldValues = {
   username: '',
   email: '',
   password: '',
 }
 
 export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
-  const { data, mutate: signUp, isLoading, error: errorSignUp } = useSignUp()
+  const { mutate: signUp, data, isLoading, error: errorSignUp } = useSignUp()
 
-  const handleSubmit = (values: SignUpValues) => {
-    const newSignUpValues = {
+  const handleSubmit = (values: SignUpFieldValues) => {
+    const newSignUpValues: SignUpRequest = {
       user: values,
     }
     signUp(newSignUpValues)

@@ -5,7 +5,7 @@ import { type Either } from 'fp-ts/Either'
 import { useAuth } from '@/context'
 import * as t from 'io-ts'
 
-type SignUpRequest = {
+export type SignUpRequest = {
   user: {
     email: string
     password: string

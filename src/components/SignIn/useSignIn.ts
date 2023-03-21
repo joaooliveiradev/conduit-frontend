@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useAuth } from '@/context'
 import * as t from 'io-ts'
 
-type SignInRequest = {
+export type SignInRequest = {
   user: {
     email: string
     password: string
