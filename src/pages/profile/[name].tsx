@@ -23,7 +23,7 @@ import {
   useProfile,
   GET_ARTICLES_KEY,
   getArticles,
-} from '@/hooks/queries'
+} from '@/hooks'
 import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
 import {

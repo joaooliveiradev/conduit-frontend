@@ -2,7 +2,7 @@ import {
   type QueryFiltersProps,
   type GetArticlesOutput,
   defaultArticlesLimit,
-} from '@/hooks/queries'
+} from '@/hooks'
 import { type Either, isRight } from 'fp-ts/Either'
 import { DefaultError } from './errors'
 
