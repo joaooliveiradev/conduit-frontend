@@ -23,7 +23,7 @@ import {
   useGetArticles,
   useFeedArticles,
   defaultFilters,
-} from '@/hooks/queries'
+} from '@/hooks'
 import {
   fromEither,
   fromNullable,
