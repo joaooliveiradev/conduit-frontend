@@ -1,13 +1,9 @@
 import { Button, ErrorMessage, Input } from '@/components'
-import { useAuth } from '@/context/auth'
-import type { SignInInput } from '@/types'
-import { f, DefaultError } from '@/libs'
-import { useMutation } from '@tanstack/react-query'
+import { f } from '@/libs'
 import { useFormik } from 'formik'
-import type { Either } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
 import { chain, fromNullable, getLeft, isSome, none } from 'fp-ts/Option'
-import { signUpMutation, type SignUpResponseOutput } from './signUpMutation'
+import { useSignUp } from './useSignUp'
 import styled, { css } from 'styled-components'
 import * as Yup from 'yup'
 
@@ -75,20 +71,7 @@ const initialValues: SignUpValues = {
 }
 
 export const SignUp = ({ onSwitchFormClick }: SignUpProps) => {
-  const { handleLogin } = useAuth()
-
-  const {
-    data,
-    mutate: signUp,
-    isLoading,
-    error: errorSignUp,
-  } = useMutation<
-    Either<DefaultError, SignUpResponseOutput>,
-    DefaultError,
-    SignInInput
-  >(['sign-up'], signUpMutation, {
-    onSuccess: (response) => handleLogin(response),
-  })
+  const { data, mutate: signUp, isLoading, error: errorSignUp } = useSignUp()
 
   const handleSubmit = (values: SignUpValues) => {
     const newSignUpValues = {
