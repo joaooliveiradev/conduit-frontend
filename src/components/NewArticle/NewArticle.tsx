@@ -1,13 +1,7 @@
 import { Button, Input } from '@/components'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
-import { useMutation } from '@tanstack/react-query'
-import {
-  newArticleMutation,
-  type NewArticleResponseOutput,
-} from './newArticleMutation'
-import { type Either } from 'fp-ts/Either'
-import { DefaultError } from '@/libs'
+import { useNewArticle } from './useNewArticle'
 import styled, { css } from 'styled-components'
 
 const Wrapper = styled.form`
@@ -58,11 +52,7 @@ const newArticleSchema = object({
 })
 
 export const NewArticle = () => {
-  const { mutate: createArticle } = useMutation<
-    Either<DefaultError, NewArticleResponseOutput>,
-    DefaultError,
-    NewArticleRequest
-  >(['new-article'], newArticleMutation)
+  const { mutate: createArticle } = useNewArticle()
 
   const handleSubmit = (values: NewArticleFieldValues) => {
     const newCreateArticleValues: NewArticleRequest = {
