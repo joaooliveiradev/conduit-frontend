@@ -31,6 +31,7 @@ export const TabsPane = styled(TabsRadix.Trigger)`
       box-shadow: 0px 1px ${theme.colors.black[400]};
     }
     :focus-visible {
+      outline: 1px solid transparent;
       box-shadow: 0 0 0 2px ${theme.colors.black[400]};
     }
     :hover {
@@ -42,6 +43,7 @@ export const TabsPane = styled(TabsRadix.Trigger)`
 export const TabContent = styled(TabsRadix.Content)`
   ${({ theme }) => css`
     :focus-visible {
+      outline: 1px solid transparent;
       box-shadow: 0 0 0 2px ${theme.colors.black[400]};
     }
   `}
