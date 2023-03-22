@@ -39,7 +39,6 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     cursor: pointer;
     letter-spacing: -0.055em;
     transition: background-color 250ms ease-in;
-    outline: none;
     ${size && sizeModifiers[size](theme)};
     ${disabled &&
     css`
@@ -50,10 +49,8 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
       background-color: ${theme.colors.black[300]};
     }
     :focus {
-      box-shadow: 0px 0px 0 2px ${theme.colors.grey[200]};
-    }
-    :focus-visible {
-      box-shadow: 0px 0px 0 2px ${theme.colors.grey[100]};
+      outline: 1px solid transparent;
+      box-shadow: 0 0 0 2px ${theme.colors.grey[200]};
     }
   `};
 `
@@ -65,8 +62,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         size={size}
         disabled={disabled}
         block={block}
-        {...rest}
         ref={ref}
+        {...rest}
       >
         {isLoading ? <Loading /> : children}
       </Wrapper>
