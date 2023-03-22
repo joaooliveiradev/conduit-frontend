@@ -20,16 +20,20 @@ const Wrapper = styled.div`
 
 const InputWrapper = styled.input<InputProps>`
   ${({ theme, errorMessage, touched }) => css`
-    outline: 0;
     height: ${theme.spacings.xlarge};
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
-    padding-left: ${theme.spacings.xsmall};
+    padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
     font-size: ${theme.fonts.sizes.xmedium};
     font-weight: 600;
+    outline: 1px solid transparent;
     color: ${errorMessage && touched
       ? theme.colors.red[100]
       : theme.colors.black[200]};
+    :focus-visible {
+      outline: 1px solid transparent;
+      box-shadow: 0px 0px 0 2px ${theme.colors.black[200]};
+    }
     ::placeholder {
       color: ${theme.colors.grey[200]};
     }
@@ -42,8 +46,8 @@ export const Input = ({ errorMessage, touched, ...rest }: InputProps) => {
       <InputWrapper
         errorMessage={errorMessage}
         touched={touched}
-        {...rest}
         autoComplete="off"
+        {...rest}
       />
       {errorMessage && touched && (
         <ErrorMessage message={errorMessage} fontWeight="bold" />

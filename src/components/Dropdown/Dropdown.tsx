@@ -22,6 +22,7 @@ const Trigger = styled(Popover.Trigger)`
     cursor: pointer;
     border-radius: 8px;
     :focus-visible {
+      outline: 1px solid transparent;
       box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
     }
     :hover {
@@ -70,6 +71,7 @@ const Anchor = styled(DefaultAnchor)`
     padding: 4px ${theme.spacings.xsmall};
     border-radius: 6px;
     :focus-visible {
+      outline: 1px solid transparent;
       box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
     }
   `}
@@ -87,6 +89,7 @@ const DropdownButton = styled.button`
     background-color: unset;
     cursor: pointer;
     :focus-visible {
+      outline: 1px solid transparent;
       box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
     }
   `}
