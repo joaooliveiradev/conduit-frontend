@@ -1,8 +1,9 @@
 import { DefaultError, fetcher } from '@/libs'
 import { type NewArticleRequest } from './NewArticle'
-import * as t from 'io-ts'
 import { ArticleCodec } from '@/types'
 import { type Either } from 'fp-ts/Either'
+import { useMutation } from '@tanstack/react-query'
+import * as t from 'io-ts'
 
 const newArticleResponseCodec = t.type({
   article: ArticleCodec,
@@ -14,7 +15,7 @@ export type NewArticleResponseOutput = t.OutputOf<
   typeof newArticleResponseCodec
 >
 
-export const newArticleMutation = async (
+export const postArticle = async (
   data: NewArticleRequest
 ): Promise<Either<DefaultError, NewArticleResponseOutput>> => {
   const options: RequestInit = {
@@ -30,3 +31,12 @@ export const newArticleMutation = async (
 
   return result
 }
+
+const NEW_ARTICLE_KEY = 'new-article'
+
+export const useNewArticle = () =>
+  useMutation<
+    Either<DefaultError, NewArticleResponseOutput>,
+    DefaultError,
+    NewArticleRequest
+  >([NEW_ARTICLE_KEY], postArticle)
