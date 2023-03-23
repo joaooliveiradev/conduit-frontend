@@ -15,11 +15,11 @@ const Anchor = styled(DefaultAnchor)`
     line-height: 21px;
     letter-spacing: -0.02em;
     padding: 0 2px;
-    &:focus-visible {
-      border: none;
-    }
     &:hover {
       color: ${theme.colors.black[400]};
+    }
+    &:focus-visible {
+      border: none;
     }
   `}
 `
