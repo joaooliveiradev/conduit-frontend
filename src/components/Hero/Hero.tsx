@@ -3,7 +3,7 @@ import { type Status } from '@/context'
 import { SignInModal, Button } from '@/components'
 import React from 'react'
 
-type HeroProps = {
+export type HeroProps = {
   userStatus: Status
 }
 
