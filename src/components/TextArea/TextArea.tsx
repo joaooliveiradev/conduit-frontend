@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { ErrorMessage } from '@/components'
 
 export interface TextAreaProps
-  extends React.HTMLAttributes<HTMLTextAreaElement> {
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   touched?: boolean
   errorMessage?: string
 }
@@ -26,12 +26,12 @@ const TextAreaWrapper = styled.textarea<TextAreaProps>`
     resize: none;
     min-height: 230px;
     color: ${theme.colors.black[200]};
-    ::placeholder {
+    &::placeholder {
       color: ${theme.colors.grey[200]};
     }
-    :focus-visible {
+    &:focus-visible {
       outline: 1px solid transparent;
-      box-shadow: 0 0 0 2px ${theme.colors.grey[200]};
+      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
     }
   `}
 `

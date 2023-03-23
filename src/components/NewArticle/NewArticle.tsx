@@ -1,4 +1,4 @@
-import { Button, Input } from '@/components'
+import { Button, Input, TextArea } from '@/components'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
@@ -51,6 +51,10 @@ const newArticleSchema = object({
   body: string().required(),
 })
 
+// colocar esse component em pixel perfect, seguir o figma
+// ver se cabe fazer stories dos component que a gente desmembro
+// story do hero
+
 export const NewArticle = () => {
   const { mutate: createArticle } = useNewArticle()
 
@@ -89,8 +93,7 @@ export const NewArticle = () => {
           touched={formik.touched.description}
           onBlur={formik.handleBlur}
         />
-        <Input
-          type="textarea"
+        <TextArea
           placeholder="Write your article (in markdown)"
           name="body"
           onChange={formik.handleChange}
