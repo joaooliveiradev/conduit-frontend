@@ -13,7 +13,7 @@ export const Pane = styled(TabsRadix.List)`
   ${({ theme }) => css`
     display: flex;
     gap: ${theme.spacings.large};
-    box-shadow: 0px 1px ${theme.colors.grey[500]};
+    box-shadow: 0 1px ${theme.colors.grey[500]};
   `}
 `
 
@@ -28,13 +28,13 @@ export const TabsPane = styled(TabsRadix.Trigger)`
     padding: ${theme.spacings.xsmall} ${theme.spacings.medium};
     &[data-state='active'] {
       color: ${theme.colors.black[400]};
-      box-shadow: 0px 1px ${theme.colors.black[400]};
+      box-shadow: 0 1px ${theme.colors.black[400]};
     }
-    :focus-visible {
+    &:focus-visible {
       outline: 1px solid transparent;
-      box-shadow: 0 0 0 2px ${theme.colors.black[400]};
+      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
     }
-    :hover {
+    &:hover {
       cursor: pointer;
     }
   `}
@@ -42,9 +42,9 @@ export const TabsPane = styled(TabsRadix.Trigger)`
 
 export const TabContent = styled(TabsRadix.Content)`
   ${({ theme }) => css`
-    :focus-visible {
+    &:focus-visible {
       outline: 1px solid transparent;
-      box-shadow: 0 0 0 2px ${theme.colors.black[400]};
+      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
     }
   `}
 `

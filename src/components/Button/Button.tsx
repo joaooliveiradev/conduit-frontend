@@ -45,10 +45,10 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
       opacity: 0.3;
       pointer-events: none;
     `}
-    :hover {
+    &:hover {
       background-color: ${theme.colors.black[300]};
     }
-    :focus {
+    &:focus {
       outline: 1px solid transparent;
       box-shadow: 0 0 0 2px ${theme.colors.grey[200]};
     }

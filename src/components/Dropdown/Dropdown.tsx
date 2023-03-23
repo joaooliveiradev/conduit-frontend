@@ -18,14 +18,14 @@ const Trigger = styled(Popover.Trigger)`
   ${({ theme }) => css`
     appearance: none;
     all: unset;
-    padding: ${theme.spacings.small} ${theme.spacings.xxsmall};
     cursor: pointer;
     border-radius: 8px;
-    :focus-visible {
+    padding: ${theme.spacings.small} ${theme.spacings.xxsmall};
+    &:focus-visible {
       outline: 1px solid transparent;
-      box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
+      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
     }
-    :hover {
+    &:hover {
       background-color: ${transparentize(0.88, theme.colors.black[200])};
     }
   `}
@@ -55,7 +55,7 @@ const Item = styled.li`
   ${({ theme }) => css`
     border-radius: 6px;
     list-style-type: none;
-    :hover {
+    &:hover {
       background-color: ${transparentize(0.88, theme.colors.black[200])};
     }
   `}
@@ -70,9 +70,9 @@ const Anchor = styled(DefaultAnchor)`
     font-weight: 700;
     padding: 4px ${theme.spacings.xsmall};
     border-radius: 6px;
-    :focus-visible {
+    &:focus-visible {
       outline: 1px solid transparent;
-      box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
+      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
     }
   `}
 `
@@ -88,9 +88,9 @@ const DropdownButton = styled.button`
     border-radius: 6px;
     background-color: unset;
     cursor: pointer;
-    :focus-visible {
+    &:focus-visible {
       outline: 1px solid transparent;
-      box-shadow: 0 0 0 2px ${transparentize(0.6, theme.colors.black[200])};
+      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
     }
   `}
 `
