@@ -1,4 +1,3 @@
-import { Loading } from '@/components'
 import React from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
 
@@ -55,6 +54,24 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
   `};
 `
 
+const Loading = styled.div`
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #595a5b;
+  border-top: 2px solid #f3f6f9;
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`
+
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ size, disabled, block, isLoading, children, ...rest }, ref) => {
     return (
@@ -65,7 +82,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...rest}
       >
-        {isLoading ? <Loading /> : children}
+        {isLoading ? <Loading role="status" aria-label="Loading" /> : children}
       </Wrapper>
     )
   }
