@@ -35,7 +35,7 @@ const Wrapper = styled.article`
     padding: ${theme.spacings.xxxxhuge} ${theme.spacings.xxxhuge};
     row-gap: ${theme.spacings.xhuge};
     overflow-y: scroll;
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
       display: none;
     }
   `}

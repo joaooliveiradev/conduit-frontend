@@ -39,6 +39,9 @@ const ChangeFormBtn = styled.button`
     cursor: pointer;
     border-bottom: 2px solid ${theme.colors.black[100]};
     font-weight: 600;
+    &:focus-visible {
+      border: none;
+    }
   `}
 `
 

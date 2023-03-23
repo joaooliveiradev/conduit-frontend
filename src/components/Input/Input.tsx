@@ -26,15 +26,14 @@ const InputWrapper = styled.input<InputProps>`
     padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
     font-size: ${theme.fonts.sizes.xmedium};
     font-weight: 600;
-    outline: 1px solid transparent;
     color: ${errorMessage && touched
       ? theme.colors.red[100]
       : theme.colors.black[200]};
-    :focus-visible {
-      outline: 1px solid transparent;
-      box-shadow: 0px 0px 0 2px ${theme.colors.black[200]};
+    outline: 1px solid transparent;
+    &:focus-visible {
+      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
     }
-    ::placeholder {
+    &::placeholder {
       color: ${theme.colors.grey[200]};
     }
   `}
