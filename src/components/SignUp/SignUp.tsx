@@ -42,7 +42,7 @@ const ChangeFormBtn = styled.button`
   `}
 `
 
-type SignUpProps = {
+export type SignUpProps = {
   onSwitchFormClick: (state: boolean) => void
 }
 
