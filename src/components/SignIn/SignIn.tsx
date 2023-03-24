@@ -45,15 +45,6 @@ const ChangeFormBtn = styled.button`
   `}
 `
 
-type SignInProps = {
-  onSwitchFormClick: (state: boolean) => void
-}
-
-type SignInFieldValues = {
-  email: string
-  password: string
-}
-
 const signInSchema = Yup.object({
   email: Yup.string()
     .email('E-mail is not valid')
@@ -65,9 +56,18 @@ const signInSchema = Yup.object({
     .max(64, 'Maximum 64 characters required!'),
 })
 
+type SignInFieldValues = {
+  email: string
+  password: string
+}
+
 const initialValues: SignInFieldValues = {
   email: '',
   password: '',
+}
+
+export type SignInProps = {
+  onSwitchFormClick: (state: boolean) => void
 }
 
 const SignIn = ({ onSwitchFormClick }: SignInProps) => {
