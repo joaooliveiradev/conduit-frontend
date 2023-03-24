@@ -1,7 +1,7 @@
 import { SignIn, SignUp, Modal } from '@/components'
 import React from 'react'
 
-type SignInModalProps = {
+export type SignInModalProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
   showSignInFirst: boolean
