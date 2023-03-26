@@ -9,7 +9,7 @@ import {
 import { type Either, isRight } from 'fp-ts/Either'
 import { type SignInResponseOutput } from '@/components/SignIn/useSignIn'
 import { CookieSerializeOptions } from 'cookie'
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import { setCookie, destroyCookie, parseCookies } from 'nookies'
 
 const setCoookies = (accessToken: string) => {
   const oneHour = 60 * 60
@@ -22,7 +22,7 @@ const setCoookies = (accessToken: string) => {
   setCookie(null, 'conduit.token', accessToken, options)
 }
 
-const destroyCookies = () => destroyCookie(null, 'conduit.token')
+const destroyCookies = () => destroyCookie(null, 'conduit.token', { path: '/' })
 
 export type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
