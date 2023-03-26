@@ -65,11 +65,14 @@ export const useFeedArticles = (
       return await getFeedArticles(queryFilters)
     },
     {
-      ...options,
       getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
-      staleTime: oneMinute,
       retry: 3,
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      staleTime: oneMinute,
+      cacheTime: oneMinute,
       refetchInterval: oneMinute,
+      ...options,
     }
   )
