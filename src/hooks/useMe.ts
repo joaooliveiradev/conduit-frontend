@@ -18,17 +18,21 @@ type UseMeOptions = UseQueryOptions<
 >
 
 const USE_ME_KEY = 'use-me'
+const oneHour = 1000 * 60 * 60
 
 const getMe = async () =>
   await fetcher<undefined, UseMeResponse>('/user', UseMeResponseCodec)
 
-const useMe = (options?: UseMeOptions) =>
+export const useMe = (options?: UseMeOptions) =>
   useQuery<Either<DefaultError, UseMeOutput>, DefaultError>(
     [USE_ME_KEY],
     getMe,
     {
+      retry: false,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+      staleTime: oneHour,
+      cacheTime: oneHour,
       ...options,
     }
   )
-
-export { useMe }
