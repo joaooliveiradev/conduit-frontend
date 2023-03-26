@@ -79,11 +79,14 @@ export const useGetArticles = (
       return await getArticles(queryFilters)
     },
     {
-      ...options,
       getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
-      staleTime: oneMinute,
-      retry: false,
+      retry: 3,
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      staleTime: oneMinute,
+      cacheTime: oneMinute,
       refetchInterval: oneMinute,
+      ...options,
     }
   )

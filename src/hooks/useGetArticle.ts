@@ -30,10 +30,10 @@ export const useGetArticle = (slug: string, options?: GetArticlesOptions) =>
     [GET_ARTICLE_KEY],
     async () => await getArticle(slug),
     {
-      ...options,
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
+      ...options,
     }
   )
