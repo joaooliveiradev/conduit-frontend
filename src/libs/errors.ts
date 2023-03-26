@@ -30,8 +30,9 @@ export class UnknownError extends DefaultError {
     })
   }
 }
+
 export class DecodeError extends DefaultError {
-  decodeErrors: string;
+  decodeErrors: string
   constructor(decodeErrors: string) {
     super({
       message: 'Something went wrong, please try again',
@@ -42,20 +43,24 @@ export class DecodeError extends DefaultError {
   }
 }
 
+export class AuthError extends DefaultError {
+  constructor() {
+    super({
+      message: 'Unauthorized',
+      name: 'Auth Error Validation',
+      status: 401,
+    })
+  }
+}
+
 export const errorsToString = (error: ErrorAPIResponse) =>
   error.errors.body.join(', ')
 
-export const handleFetcherErrors = async (
-  responseErr: Response
-)=> {
-  const isGenericError = !responseErr.headers.get('content-type')
-  if (isGenericError) throw new UnknownError()
-
-  const apiError = await responseErr.json()
-
-  return new DefaultError({
-    message: errorsToString(apiError),
-    name: responseErr.statusText,
-    status: responseErr.status,
-  })
+export const handleFetcherErrors = async (responseErr: Response) => {
+  if (responseErr.status === 401) {
+    throw new AuthError()
+  } else if (responseErr.status === 422) {
+    const apiError = await responseErr.json()
+    return new DecodeError(errorsToString(apiError))
+  } else throw new UnknownError()
 }
