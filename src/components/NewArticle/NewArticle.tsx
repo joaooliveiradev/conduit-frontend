@@ -29,6 +29,11 @@ const FieldWrapper = styled.div`
   `}
 `
 
+const PublishBtn = styled(Button)`
+  max-width: 148px;
+  align-self: flex-end;
+`
+
 type NewArticleFieldValues = {
   title: string
   description: string
@@ -50,10 +55,6 @@ const newArticleSchema = object({
   description: string().required().max(64, 'Maximum 64 characters required!'),
   body: string().required(),
 })
-
-// colocar esse component em pixel perfect, seguir o figma
-// ver se cabe fazer stories dos component que a gente desmembro
-// story do hero
 
 export const NewArticle = () => {
   const { mutate: createArticle } = useNewArticle()
@@ -102,9 +103,9 @@ export const NewArticle = () => {
           touched={formik.touched.body}
         />
       </FieldWrapper>
-      <Button type="submit" size="large">
+      <PublishBtn type="submit" size="large">
         Publish Article
-      </Button>
+      </PublishBtn>
     </Wrapper>
   )
 }
