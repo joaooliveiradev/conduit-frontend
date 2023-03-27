@@ -1,11 +1,13 @@
 import type { Meta, Story } from '@storybook/react'
+import { useState } from 'react'
+import { Button } from '../Button/Button'
 import { Toast, type ToastProps } from './Toast'
 
 const stories: Meta<ToastProps> = {
   component: Toast,
   argTypes: {
     open: {
-      defaultValue: true,
+      control: false,
     },
     description: {
       defaultValue: 'Toast Description',
@@ -16,4 +18,14 @@ const stories: Meta<ToastProps> = {
 
 export default stories
 
-export const Default: Story<ToastProps> = (args) => <Toast {...args} />
+export const Default: Story<ToastProps> = (args) => {
+  const [open, setOnOpenChange] = useState(true)
+  return (
+    <>
+      <Toast {...args} open={open} onOpenChange={setOnOpenChange} />
+      <Button size="large" onClick={() => setOnOpenChange(true)}>
+        Reset
+      </Button>
+    </>
+  )
+}
