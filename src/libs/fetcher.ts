@@ -1,15 +1,16 @@
-import { parseCookies } from 'nookies'
-import { type Either, left, right, isRight } from 'fp-ts/Either'
-import { pipe } from 'fp-ts/function'
-import { PathReporter } from 'io-ts/PathReporter'
 import {
   DefaultError,
   handleFetcherErrors,
   UnknownError,
   DecodeError,
+  AuthError
 } from '@/libs'
-import * as t from 'io-ts'
+import { parseCookies } from 'nookies'
+import { type Either, left, right, isRight } from 'fp-ts/Either'
+import { pipe } from 'fp-ts/function'
+import { PathReporter } from 'io-ts/PathReporter'
 import { baseApiUrl } from '@/types'
+import * as t from 'io-ts'
 
 const validationHandler = <A>(
   dataValidation: t.Validation<A>
@@ -61,7 +62,8 @@ export const fetcher = async <D, A>(
 
     const responseError = await handleFetcherErrors(response)
     return left(responseError)
-  } catch (error: unknown) {
+  } catch (error) {
+    if (error instanceof AuthError) throw new AuthError()
     throw new UnknownError()
   }
 }
