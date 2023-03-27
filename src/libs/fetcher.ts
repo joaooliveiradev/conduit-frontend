@@ -3,7 +3,7 @@ import {
   handleFetcherErrors,
   UnknownError,
   DecodeError,
-  AuthError
+  AuthError,
 } from '@/libs'
 import { parseCookies } from 'nookies'
 import { type Either, left, right, isRight } from 'fp-ts/Either'
