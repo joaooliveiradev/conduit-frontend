@@ -35,7 +35,8 @@ export class DecodeError extends DefaultError {
   decodeErrors: string
   constructor(decodeErrors: string) {
     super({
-      message: 'Something went wrong, please try again',
+      message:
+        'Decode Validation failed due a mismatch between the api response and the codec from request.',
       name: 'Decode Validation Error',
       status: 422,
     })
@@ -46,8 +47,8 @@ export class DecodeError extends DefaultError {
 export class AuthError extends DefaultError {
   constructor() {
     super({
-      message: 'Unauthorized',
-      name: 'Auth Error Validation',
+      message: 'Authorization failed due to an invalid or expired token.',
+      name: 'Authotization Validation Error',
       status: 401,
     })
   }
@@ -57,9 +58,8 @@ export const errorsToString = (error: ErrorAPIResponse) =>
   error.errors.body.join(', ')
 
 export const handleFetcherErrors = async (responseErr: Response) => {
-  if (responseErr.status === 401) {
-    throw new AuthError()
-  } else if (responseErr.status === 422) {
+  if (responseErr.status === 401) throw new AuthError()
+  else if (responseErr.status === 422) {
     const apiError = await responseErr.json()
     return new DecodeError(errorsToString(apiError))
   } else throw new UnknownError()
