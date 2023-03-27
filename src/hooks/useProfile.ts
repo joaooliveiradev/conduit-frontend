@@ -25,7 +25,7 @@ type UseProfileOptions = UseQueryOptions<
   DefaultError
 >
 
-export const useProfile = (user: string, options: UseProfileOptions) =>
+export const useProfile = (user: string, options?: UseProfileOptions) =>
   useQuery<Either<DefaultError, UseProfileOutput>, DefaultError>(
     [GET_PROFILE_KEY],
     async () => await getProfile(user),
