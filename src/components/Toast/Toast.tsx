@@ -6,7 +6,8 @@ export type ToastProps = {
   description: string
   open: boolean
   onOpenChange: (open: boolean) => void
-}
+  label?: string
+} & RadixToast.ToastProps
 
 const Root = styled(RadixToast.Root)`
   ${({ theme }) => css`
@@ -74,7 +75,6 @@ const Viewport = styled(RadixToast.Viewport)`
   position: fixed;
   right: 220px;
   top: 160px;
-  z-index: 21312312321;
 `
 
 const Title = styled(RadixToast.Title)`
@@ -93,16 +93,22 @@ const Description = styled(RadixToast.Description)`
   `}
 `
 
-const threeSeconds = 3000
-
 export const Toast = ({
   title,
   description,
   open,
   onOpenChange,
+  duration,
+  type,
+  label,
 }: ToastProps) => (
-  <RadixToast.Provider>
-    <Root open={open} onOpenChange={onOpenChange} duration={threeSeconds}>
+  <RadixToast.Provider label={label}>
+    <Root
+      open={open}
+      onOpenChange={onOpenChange}
+      duration={duration}
+      type={type}
+    >
       <Title>{title}</Title>
       <Description>{description}</Description>
     </Root>

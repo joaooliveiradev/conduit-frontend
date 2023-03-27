@@ -39,8 +39,10 @@ const Wrapper = styled.div`
   `}
 `
 
+const threeSeconds = 3000
+
 export const Layout = ({ children, hydratedState }: LayoutProps) => {
-  const [isToastOpen, setIsToastOpen] = useState<boolean>(true)
+  const [isToastOpen, setIsToastOpen] = useState<boolean>(false)
   const { signOut } = useAuth()
 
   const handleQueryErrors = (error: unknown) => {
@@ -62,16 +64,19 @@ export const Layout = ({ children, hydratedState }: LayoutProps) => {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={hydratedState}>
         <Wrapper>
+          <Toast
+            label="Notification Error"
+            title="Session Expired!"
+            description="We're sorry, but your session has expired or your token is invalid. Please sign in again to continue."
+            open={isToastOpen}
+            onOpenChange={setIsToastOpen}
+            duration={threeSeconds}
+            type="foreground"
+          />
           <Header />
           <main>{children}</main>
           <Footer />
         </Wrapper>
-        <Toast
-          title="Session Expired!"
-          description="We're sorry, but your session has expired. Please sign in again to continue."
-          open={isToastOpen}
-          onOpenChange={setIsToastOpen}
-        />
       </Hydrate>
     </QueryClientProvider>
   )

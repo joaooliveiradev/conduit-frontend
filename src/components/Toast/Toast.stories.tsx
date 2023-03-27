@@ -13,6 +13,16 @@ const stories: Meta<ToastProps> = {
       defaultValue: 'Toast Description',
     },
     title: { defaultValue: 'Toast Title' },
+    label: {
+      table: {
+        disable: true,
+      },
+    },
+    asChild: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
