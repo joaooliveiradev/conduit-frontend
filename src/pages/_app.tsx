@@ -1,17 +1,11 @@
-import {
-  QueryClientProvider,
-  QueryClient,
-  Hydrate,
-} from '@tanstack/react-query'
 import { Layout } from '@/components'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '@/styles'
-import { AuthProvider, ToastProvider } from '@/context'
+import { AuthProvider } from '@/context'
 import { type DefaultSeoProps, DefaultSeo } from 'next-seo'
-import React from 'react'
-import * as superJSON from 'superjson'
 import { baseWebUrl } from '@/types'
+import * as superJSON from 'superjson'
 
 const SEO: DefaultSeoProps = {
   title: 'Conduit - A place to read and share your ideias.',
@@ -48,27 +42,20 @@ const SEO: DefaultSeoProps = {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = React.useState(() => new QueryClient())
   const hydratedState = pageProps.dehydratedState
     ? superJSON.parse(pageProps.dehydratedState)
     : null
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={hydratedState}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <AuthProvider>
-            <ToastProvider>
-              <Layout>
-                <DefaultSeo {...SEO} />
-                <Component {...pageProps} />
-              </Layout>
-            </ToastProvider>
-          </AuthProvider>
-        </ThemeProvider>
-      </Hydrate>
-    </QueryClientProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Layout hydratedState={hydratedState}>
+          <DefaultSeo {...SEO} />
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }
 
