@@ -1,8 +1,16 @@
 import styled, { css } from 'styled-components'
 import { Header, Footer, type ToastProps } from '@/components'
-import { useToast } from '@/context/toast'
-import React from 'react'
-
+import { type ReactNode } from 'react'
+import {
+  Hydrate,
+  QueryCache,
+  QueryClient,
+  type QueryClientConfig,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { useAuth } from '@/context'
+import { AuthError } from '@/libs'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 
 const Toast = dynamic<ToastProps>(
@@ -13,7 +21,8 @@ const Toast = dynamic<ToastProps>(
 )
 
 export type LayoutProps = {
-  children: React.ReactNode
+  children: ReactNode
+  hydratedState: unknown
 }
 
 const Wrapper = styled.div`
@@ -30,21 +39,40 @@ const Wrapper = styled.div`
   `}
 `
 
-export const Layout = ({ children }: LayoutProps) => {
-  const { isToastOpen, setIsToastOpen } = useToast()
+export const Layout = ({ children, hydratedState }: LayoutProps) => {
+  const [isToastOpen, setIsToastOpen] = useState<boolean>(true)
+  const { signOut } = useAuth()
+
+  const handleQueryErrors = (error: unknown) => {
+    if (error instanceof AuthError) {
+      signOut()
+      setIsToastOpen(true)
+    }
+  }
+
+  const queryClientConfig: QueryClientConfig = {
+    queryCache: new QueryCache({
+      onError: (errors) => handleQueryErrors(errors),
+    }),
+  }
+
+  const [queryClient] = useState(() => new QueryClient(queryClientConfig))
+
   return (
-    <>
-      <Wrapper>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </Wrapper>
-      <Toast
-        title="Unknown Error"
-        description="You have been logged out due to some unknown error."
-        open={isToastOpen}
-        onOpenChange={setIsToastOpen}
-      />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={hydratedState}>
+        <Wrapper>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </Wrapper>
+        <Toast
+          title="Session Expired!"
+          description="We're sorry, but your session has expired. Please sign in again to continue."
+          open={isToastOpen}
+          onOpenChange={setIsToastOpen}
+        />
+      </Hydrate>
+    </QueryClientProvider>
   )
 }
