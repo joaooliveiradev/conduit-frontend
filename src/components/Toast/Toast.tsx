@@ -1,4 +1,3 @@
-import { transparentize } from 'polished'
 import styled, { css } from 'styled-components'
 import * as RadixToast from '@radix-ui/react-toast'
 
@@ -16,14 +15,38 @@ const Root = styled(RadixToast.Root)`
     padding: ${theme.spacings.xxsmall};
     gap: ${theme.spacings.small};
     align-items: center;
+    background-color: ${theme.colors.grey[300]};
+    border-radius: ${theme.spacings.small};
   `}
 
   &[data-state="open"] {
-    animation: slideIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &[data-state='closed'] {
+    animation: hide 100ms ease-in;
   }
 
   &[data-swipe='end'] {
-    animation: swipeOut 200ms ease-out;
+    animation: swipeOut 150ms ease-out;
+  }
+
+  &[data-swipe='cancel'] {
+    transform: translateX(0);
+    transition: transform 200ms ease-out;
+  }
+
+  &[data-swipe='move'] {
+    transform: translateX(var(--radix-toast-swipe-move-x));
+  }
+
+  @keyframes hide {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
 
   @keyframes slideIn {
@@ -37,7 +60,7 @@ const Root = styled(RadixToast.Root)`
 
   @keyframes swipeOut {
     from {
-      transform: translateX(0);
+      transform: translateX(var(--radix-toast-swipe-end-x));
     }
     to {
       transform: translateX(calc(100% + 8px));
@@ -46,14 +69,12 @@ const Root = styled(RadixToast.Root)`
 `
 
 const Viewport = styled(RadixToast.Viewport)`
-  ${({ theme }) => css`
-    width: 308px;
-    background-color: ${transparentize(0.9, theme.colors.black[100])};
-    border-radius: 6px;
-    position: fixed;
-    right: 240px;
-    bottom: 142px;
-  `}
+  width: 308px;
+  border-radius: 6px;
+  position: fixed;
+  right: 220px;
+  top: 160px;
+  z-index: 21312312321;
 `
 
 const Title = styled(RadixToast.Title)`
@@ -72,7 +93,7 @@ const Description = styled(RadixToast.Description)`
   `}
 `
 
-const oneSecond = 1000
+const threeSeconds = 3000
 
 export const Toast = ({
   title,
@@ -80,12 +101,11 @@ export const Toast = ({
   open,
   onOpenChange,
 }: ToastProps) => (
-  <RadixToast.Provider duration={oneSecond}>
-    <Root open={open} onOpenChange={onOpenChange} duration={oneSecond}>
+  <RadixToast.Provider>
+    <Root open={open} onOpenChange={onOpenChange} duration={threeSeconds}>
       <Title>{title}</Title>
       <Description>{description}</Description>
     </Root>
     <Viewport />
   </RadixToast.Provider>
 )
-
