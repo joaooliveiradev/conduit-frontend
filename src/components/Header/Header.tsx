@@ -9,19 +9,20 @@ import {
 import logo from '@/assets/logo.webp'
 import Image from 'next/image'
 import styled, { css } from 'styled-components'
-import { useAuth, useToast } from '@/context'
-import { useMe, type UseMeOutput } from '@/hooks'
-import { isSome, fromNullable, fromEither, none } from 'fp-ts/Option'
-import { type Either, isLeft, isRight } from 'fp-ts/Either'
-import { DefaultError, f } from '@/libs'
+import { useAuth } from '@/context'
+import { fromEither, fromNullable, isSome, none } from 'fp-ts/Option'
 import dynamic from 'next/dynamic'
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { useMe } from '@/hooks'
+import { f } from '@/libs'
+import { isRight } from 'fp-ts/Either'
 
 const Dropdown = dynamic<DropdownProps>(
   () =>
     import('@/components/Dropdown/Dropdown').then((module) => module.Dropdown),
   { ssr: false }
 )
+
 const DropdownItem = dynamic<DropdownItemProps>(
   () =>
     import('@/components/Dropdown/Dropdown').then(
@@ -50,37 +51,15 @@ const Wrapper = styled.header`
 `
 
 export const Header = () => {
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { signOut, status } = useAuth()
-  const { setIsToastOpen } = useToast()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (status === 'loggedIn') return setIsModalOpen(false)
   }, [status])
 
-  const handleLeftData = (data: Either<DefaultError, UseMeOutput>) => {
-    const dataOption = fromNullable(data)
-    const leftData = isSome(dataOption) && isLeft(dataOption.value)
-    if (leftData) {
-      signOut()
-      setIsToastOpen(true)
-    }
-  }
-
-  const handleError = (error: DefaultError) => {
-    signOut()
-
-    return new DefaultError({
-      message: error.message,
-      name: error.name,
-      status: error.status,
-    })
-  }
-
   const { data } = useMe({
     enabled: status === 'loggedIn',
-    onSuccess: (data) => handleLeftData(data),
-    onError: (error) => handleError(error),
   })
 
   const maybeData = f(() => {
