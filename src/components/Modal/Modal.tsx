@@ -92,12 +92,12 @@ export const Modal = ({
       <Dialog.Portal>
         <Overlay />
         <Content>
+          {children}
           <Dialog.Close asChild>
             <IconButton aria-label="Close">
               <CloseIcon />
             </IconButton>
           </Dialog.Close>
-          {children}
         </Content>
       </Dialog.Portal>
     </Dialog.Root>
