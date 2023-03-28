@@ -1,5 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
 import { Layout, LayoutProps } from '@/components'
+import styled from 'styled-components'
 
 const stories: Meta<LayoutProps> = {
   component: Layout,
@@ -9,14 +10,30 @@ const stories: Meta<LayoutProps> = {
         disable: true,
       },
     },
+    hydratedState: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
+const MockComponent = styled.div`
+  width: 100%;
+  height: 70vh;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const Template: Story<LayoutProps> = (args) => <Layout {...args} />
 
-export const Default = Template.bind({})
-Default.args = {
-  children: <h1>Default</h1>,
+export const Empty = Template.bind({})
+
+export const WithContent = Template.bind({})
+WithContent.args = {
+  children: <MockComponent>Content</MockComponent>,
 }
 
 export default stories
