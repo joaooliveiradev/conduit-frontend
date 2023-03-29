@@ -10,6 +10,11 @@ type ErrorAPIResponse = {
   }
 }
 
+enum HttpStatus {
+  Unauthorized = 401,
+  UnprocessableEntity = 422,
+}
+
 export class DefaultError extends Error {
   name: string
   status: number
@@ -24,8 +29,8 @@ export class DefaultError extends Error {
 export class UnknownError extends DefaultError {
   constructor() {
     super({
-      message: 'Something went wrong, please try again',
-      name: 'Unknown Error',
+      message: 'Something unexpected happened. Please try again later.',
+      name: 'UnknownError',
       status: 500,
     })
   }
@@ -36,19 +41,29 @@ export class DecodeError extends DefaultError {
   constructor(decodeErrors: string) {
     super({
       message:
-        'Decode Validation failed due a mismatch between the api response and the codec from request.',
-      name: 'Decode Validation Error',
+        "Something wen't wrong with our servers, and we're working to fix it. Please try again later.",
+      name: 'DecodeError',
       status: 422,
     })
     this.decodeErrors = decodeErrors
   }
 }
 
-export class AuthError extends DefaultError {
+export class AuthenticationError extends DefaultError {
+  constructor(errorMessage: string) {
+    super({
+      name: 'AuthenticationError',
+      status: 422,
+      message: errorMessage,
+    })
+  }
+}
+
+export class AuthorizationError extends DefaultError {
   constructor() {
     super({
       message: 'Authorization failed due to an invalid or expired token.',
-      name: 'Authotization Validation Error',
+      name: 'AuthorizationError',
       status: 401,
     })
   }
@@ -58,9 +73,12 @@ export const errorsToString = (error: ErrorAPIResponse) =>
   error.errors.body.join(', ')
 
 export const handleFetcherErrors = async (responseErr: Response) => {
-  if (responseErr.status === 401) throw new AuthError()
-  else if (responseErr.status === 422) {
-    const apiError = await responseErr.json()
-    return new DecodeError(errorsToString(apiError))
-  } else throw new UnknownError()
+  if (responseErr.status === HttpStatus.Unauthorized) {
+    throw new AuthorizationError()
+  } else if (responseErr.status === HttpStatus.UnprocessableEntity) {
+    const errors = await responseErr.json()
+    return new AuthenticationError(errorsToString(errors))
+  } else {
+    throw new UnknownError()
+  }
 }

@@ -9,7 +9,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { useAuth } from '@/context'
-import { AuthError } from '@/libs'
+import { AuthorizationError } from '@/libs'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 
@@ -46,7 +46,7 @@ export const Layout = ({ children, hydratedState }: LayoutProps) => {
   const { signOut } = useAuth()
 
   const handleQueryErrors = (error: unknown) => {
-    if (error instanceof AuthError) {
+    if (error instanceof AuthorizationError) {
       signOut()
       setIsToastOpen(true)
     }
