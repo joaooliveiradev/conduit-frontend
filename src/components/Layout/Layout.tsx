@@ -27,16 +27,19 @@ export type LayoutProps = {
 
 const Wrapper = styled.div`
   ${({ theme }) => css`
+    width: 100%;
     max-width: ${theme.breakpoints.desktop};
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
     margin: 0px auto;
     @media (max-width: ${theme.breakpoints.desktop}) {
       padding: 0px ${theme.spacings.xxxxhuge};
     }
   `}
+`
+
+const Main = styled.main`
+  height: 100%;
 `
 
 const threeSeconds = 3000
@@ -74,7 +77,7 @@ export const Layout = ({ children, hydratedState }: LayoutProps) => {
             type="foreground"
           />
           <Header />
-          <main>{children}</main>
+          <Main>{children}</Main>
           <Footer />
         </Wrapper>
       </Hydrate>
