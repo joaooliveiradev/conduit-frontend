@@ -20,13 +20,9 @@ export const GlobalStyles = createGlobalStyle`
   }
   html,
   body {
-    height: 100%;
     font-size: 62.5% ;
     font-family: 'DM Sans', sans-serif;
     background-color: #FAFAFA;
-    #__next {
-      height: 100%;
-    }
     a {
       text-decoration: none;
       color: inherit;
@@ -34,5 +30,9 @@ export const GlobalStyles = createGlobalStyle`
         color: inherit;
       }
     }
+  }
+  #__next, #root {
+    min-height: 100vh;
+    display: flex;
   }
 `

@@ -20,8 +20,8 @@ const stories: Meta<LayoutProps> = {
 
 const MockComponent = styled.div`
   width: 100%;
-  height: 70vh;
-  font-size: 18px;
+  height: 100%;
+  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
