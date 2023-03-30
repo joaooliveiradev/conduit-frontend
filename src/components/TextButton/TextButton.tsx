@@ -24,6 +24,8 @@ const Anchor = styled(DefaultAnchor)`
   `}
 `
 
-export const TextButton = ({ href, children }: TextButtonProps) => (
-  <Anchor href={href}>{children}</Anchor>
+export const TextButton = ({ href, children, ...rest }: TextButtonProps) => (
+  <Anchor href={href} {...rest}>
+    {children}
+  </Anchor>
 )
