@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { TextButton } from '@/components'
+import { TextButton as TextButtonDefault } from '@/components/TextButton/TextButton'
 
 const Wrapper = styled.footer`
   ${({ theme }) => css`
@@ -30,6 +30,13 @@ const Text = styled.p`
     line-height: 2.344rem;
     letter-spacing: -0.03em;
     color: ${transparentize(0.4, theme.colors.grey[100])};
+  `}
+`
+
+const TextButton = styled(TextButtonDefault)`
+  ${({ theme }) => css`
+    font-size: ${theme.fonts.sizes.xmedium};
+    line-height: 23.44px;
   `}
 `
 
