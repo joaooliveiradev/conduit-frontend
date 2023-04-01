@@ -17,22 +17,25 @@ type UseMeOptions = UseQueryOptions<
   DefaultError
 >
 
-const USE_ME_KEY = 'use-me'
 const oneHour = 1000 * 60 * 60
 
 const getMe = async () =>
   await fetcher<undefined, UseMeResponse>('/user', UseMeResponseCodec)
 
-export const useMe = (options?: UseMeOptions) =>
-  useQuery<Either<DefaultError, UseMeOutput>, DefaultError>(
-    [USE_ME_KEY],
-    getMe,
-    {
-      retry: false,
-      refetchOnReconnect: false,
-      refetchOnMount: false,
-      staleTime: oneHour,
-      cacheTime: oneHour,
-      ...options,
-    }
-  )
+const USE_ME_KEY = 'use-me'
+
+export const getUseMeKey = (accessToken: string) =>
+  accessToken ? [USE_ME_KEY, accessToken] : [USE_ME_KEY]
+
+export const useMe = (options: UseMeOptions) => {
+  return useQuery<Either<DefaultError, UseMeOutput>, DefaultError>({
+    queryFn: getMe,
+    retry: false,
+    refetchOnReconnect: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: oneHour,
+    cacheTime: oneHour,
+    ...options,
+  })
+}
