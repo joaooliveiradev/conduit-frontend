@@ -7,11 +7,13 @@ import {
   useEffect,
 } from 'react'
 import { type Either, isRight } from 'fp-ts/Either'
-import { type SignInResponseOutput } from '@/components/SignIn/useSignIn'
+import { type SignInResponseOutput } from '@/components/SignInModal/useSignIn'
 import { CookieSerializeOptions } from 'cookie'
 import { setCookie, destroyCookie, parseCookies } from 'nookies'
 
-const setCoookies = (accessToken: string) => {
+const useCookies = () => {
+  const { 'conduit.token': accessToken } = parseCookies()
+  const context = null
   const oneHour = 60 * 60
   const options: CookieSerializeOptions = {
     secure: true,
@@ -19,10 +21,18 @@ const setCoookies = (accessToken: string) => {
     path: '/',
     maxAge: oneHour,
   }
-  setCookie(null, 'conduit.token', accessToken, options)
-}
 
-const destroyCookies = () => destroyCookie(null, 'conduit.token', { path: '/' })
+  const destroyCookies = () => destroyCookie(context, 'conduit.token', options)
+
+  const setCoookies = (accessToken: string) =>
+    setCookie(context, 'conduit.token', accessToken, options)
+
+  return {
+    accessToken,
+    setCoookies,
+    destroyCookies,
+  }
+}
 
 export type Status = 'loggedOut' | 'loggedIn' | 'idle'
 
@@ -46,11 +56,11 @@ const AuthContext = createContext(defaultValueContext)
 
 const AuthProvider = ({ children }: AuthContextProps) => {
   const [status, setStatus] = useState<Status>('idle')
+  const { setCoookies, destroyCookies, accessToken } = useCookies()
 
   useEffect(() => {
-    const { 'conduit.token': accessToken } = parseCookies()
     if (accessToken) setStatus('loggedIn')
-  }, [])
+  }, [accessToken])
 
   const loginHandler = (
     response: Either<DefaultError, SignInResponseOutput>
@@ -85,4 +95,4 @@ const useAuth = () => {
   return context
 }
 
-export { AuthProvider, useAuth }
+export { AuthProvider, useAuth, useCookies }

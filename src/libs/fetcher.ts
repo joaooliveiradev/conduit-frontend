@@ -33,12 +33,11 @@ export const fetcher = async <D, A>(
   codec?: t.Type<A, unknown, unknown>,
   data?: D,
   customConfig?: RequestInit
-): Promise<
-  Either<DefaultError, A>
-> => {
+): Promise<Either<DefaultError, A>> => {
   try {
     const url = `${baseApiUrl}${path}`
     const { 'conduit.token': accessToken } = parseCookies()
+
     const headers: HeadersInit = {
       'Content-type': 'application/json; charset=UTF-8',
       Authorization: accessToken,
