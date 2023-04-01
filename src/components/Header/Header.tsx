@@ -6,16 +6,16 @@ import {
   type DropdownItemProps,
   type ProfileNameProps,
 } from '@/components'
-import logo from '@/assets/logo.webp'
-import Image from 'next/image'
 import styled, { css } from 'styled-components'
-import { useAuth } from '@/context'
+import { useAuth, useCookies } from '@/context'
 import { fromEither, fromNullable, isSome, none } from 'fp-ts/Option'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
-import { useMe } from '@/hooks'
+import { getUseMeKey, useMe } from '@/hooks'
 import { f } from '@/libs'
 import { isRight } from 'fp-ts/Either'
+import logo from '@/assets/logo.webp'
+import Image from 'next/image'
 
 const Dropdown = dynamic<DropdownProps>(
   () =>
@@ -53,6 +53,7 @@ const Wrapper = styled.header`
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { signOut, status } = useAuth()
+  const { accessToken } = useCookies()
 
   useEffect(() => {
     if (status === 'loggedIn') return setIsModalOpen(false)
@@ -60,6 +61,7 @@ export const Header = () => {
 
   const { data } = useMe({
     enabled: status === 'loggedIn',
+    queryKey: getUseMeKey(accessToken),
   })
 
   const maybeData = f(() => {
