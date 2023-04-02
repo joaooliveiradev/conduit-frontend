@@ -7,6 +7,7 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   touched?: boolean
+  inputRef?: (node: HTMLInputElement | null) => void
 }
 
 const Wrapper = styled.div`
@@ -39,13 +40,19 @@ const InputWrapper = styled.input<InputProps>`
   `}
 `
 
-export const Input = ({ errorMessage, touched, ...rest }: InputProps) => {
+export const Input = ({
+  errorMessage,
+  touched,
+  inputRef,
+  ...rest
+}: InputProps) => {
   return (
     <Wrapper>
       <InputWrapper
         errorMessage={errorMessage}
         touched={touched}
         autoComplete="off"
+        ref={inputRef}
         {...rest}
       />
       {errorMessage && touched && (
