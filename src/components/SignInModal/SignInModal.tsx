@@ -1,4 +1,14 @@
 import {
+  type SignInRequest,
+  useSignIn,
+  type SignInResponseOutput,
+} from './useSignIn'
+import {
+  type SignUpResponseOutput,
+  useSignUp,
+  type SignUpRequest,
+} from './useSignUp'
+import {
   chain,
   fromNullable,
   getLeft,
@@ -7,21 +17,11 @@ import {
   none,
   type Some,
 } from 'fp-ts/Option'
-import {
-  type SignInRequest,
-  useSignIn,
-  SignInResponseOutput,
-} from './useSignIn'
-import {
-  SignUpResponseOutput,
-  useSignUp,
-  type SignUpRequest,
-} from './useSignUp'
 import { Modal, Input, Button, ErrorMessage } from '@/components'
 import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
 import { DefaultError } from '@/libs'
-import React, { useEffect, useRef } from 'react'
+import { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { Either } from 'fp-ts/Either'
 import * as Yup from 'yup'
@@ -120,15 +120,17 @@ type GetMaybeErrorProps = <D>(
   genericError: DefaultError | null
 ) => None | Some<DefaultError>
 
+const signInRef = (node: HTMLInputElement | null) =>
+  node ? node.focus() : null
+const signUpRef = (node: HTMLInputElement | null) =>
+  node ? node.focus() : null
+
 export const SignInModal = ({
   open,
   onOpenChange,
   showSignInFirst = true,
 }: SignInModalProps) => {
-  const [showSignIn, setShowSignIn] = React.useState<boolean>(showSignInFirst)
-
-  const signInFirstInputRef = useRef<HTMLInputElement>(null)
-  const signUpFirstInputRef = useRef<HTMLInputElement>(null)
+  const [showSignIn, setShowSignIn] = useState<boolean>(showSignInFirst)
 
   const {
     mutate: signIn,
@@ -172,7 +174,6 @@ export const SignInModal = ({
     initialValues: initialSignUpValues,
     validationSchema: signUpSchema,
     onSubmit: (values: SignUpFieldValues) => {
-      console.log({ values })
       const newSignUpValues: SignUpRequest = {
         user: values,
       }
@@ -191,14 +192,6 @@ export const SignInModal = ({
     setShowSignIn(!showSignIn)
   }
 
-  useEffect(() => {
-    if (showSignIn) {
-      signInFirstInputRef.current ? signInFirstInputRef.current.focus() : null
-    } else {
-      signUpFirstInputRef.current ? signUpFirstInputRef.current.focus() : null
-    }
-  }, [showSignIn])
-
   return (
     <Modal open={open} onOpenChange={onOpenChange}>
       {showSignIn ? (
@@ -208,7 +201,7 @@ export const SignInModal = ({
             type="text"
             placeholder="Email"
             name="email"
-            inputRef={signInFirstInputRef}
+            inputRef={signInRef}
             value={signInFormik.values.email}
             errorMessage={signInFormik.errors.email}
             touched={signInFormik.touched.password}
@@ -255,7 +248,7 @@ export const SignInModal = ({
             type="text"
             name="username"
             placeholder="Username"
-            inputRef={signUpFirstInputRef}
+            inputRef={signUpRef}
             value={signUpFormik.values.username}
             errorMessage={signUpFormik.errors.username}
             touched={signUpFormik.touched.username}
