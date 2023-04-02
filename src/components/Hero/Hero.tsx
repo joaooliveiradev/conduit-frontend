@@ -14,7 +14,6 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     row-gap: ${theme.spacings.xxsmall};
-    padding-bottom: ${theme.spacings.xxxhuge};
   `}
 `
 

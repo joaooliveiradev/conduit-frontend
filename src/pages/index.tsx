@@ -42,6 +42,7 @@ const ContentSection = styled.section`
     display: flex;
     flex-direction: column;
     margin: ${theme.spacings.xxxxhuge} ${theme.spacings.xxxhuge};
+    row-gap: ${theme.spacings.xxxhuge};
   `}
 `
 
