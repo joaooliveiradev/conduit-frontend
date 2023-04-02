@@ -31,7 +31,7 @@ export const GlobalStyles = createGlobalStyle`
       }
     }
   }
-  #__next, #root {
+  #__next {
     min-height: 100vh;
     display: flex;
   }
