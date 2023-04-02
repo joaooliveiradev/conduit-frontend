@@ -6,7 +6,6 @@ import {
   ProfileName,
   type ArticleGridProps,
 } from '@/components'
-import styled from 'styled-components'
 
 const stories: Meta<ArticleGridProps> = {
   component: ArticleGrid,
@@ -62,36 +61,27 @@ const articles = [
   },
 ]
 
-const MockComponent = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 export const Default: Story<ArticleGridProps> = () => (
-  <MockComponent>
-    <ArticleGrid>
-      {articles.map((article) => (
-        <ArticleCard key={article.slug}>
-          <ArticleCard.Anchor href={`/article/${article.slug}`}>
-            <ArticleCard.Main>
-              <header>
-                <ArticleCard.Title>{article.title}</ArticleCard.Title>
-              </header>
-              <section>
-                <ArticleCard.Text>{article.description}</ArticleCard.Text>
-              </section>
-            </ArticleCard.Main>
+  <ArticleGrid>
+    {articles.map((article) => (
+      <ArticleCard key={article.slug}>
+        <ArticleCard.Anchor href={`/article/${article.slug}`}>
+          <ArticleCard.Main>
+            <header>
+              <ArticleCard.Title>{article.title}</ArticleCard.Title>
+            </header>
+            <section>
+              <ArticleCard.Text>{article.description}</ArticleCard.Text>
+            </section>
+          </ArticleCard.Main>
+        </ArticleCard.Anchor>
+        <ArticleCard.Footer>
+          <ArticleCard.Anchor href={`/profile/${article.author}`}>
+            <ProfileName name={article.author} size={2} />
           </ArticleCard.Anchor>
-          <ArticleCard.Footer>
-            <ArticleCard.Anchor href={`/profile/${article.author}`}>
-              <ProfileName name={article.author} size={2} />
-            </ArticleCard.Anchor>
-            <ArticleStats date={article.date} readTime={article.readTime} />
-          </ArticleCard.Footer>
-        </ArticleCard>
-      ))}
-    </ArticleGrid>
-  </MockComponent>
+          <ArticleStats date={article.date} readTime={article.readTime} />
+        </ArticleCard.Footer>
+      </ArticleCard>
+    ))}
+  </ArticleGrid>
 )
