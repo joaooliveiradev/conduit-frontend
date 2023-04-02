@@ -40,7 +40,11 @@ const Wrapper = styled.div`
 `
 
 const Main = styled.main`
-  height: 100%;
+  ${({ theme }) => css`
+    width: 100%;
+    height: 100%;
+    padding: ${theme.spacings.xxxxhuge} ${theme.spacings.xxxhuge};
+  `}
 `
 
 const threeSeconds = 3000
