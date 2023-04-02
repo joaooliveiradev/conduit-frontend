@@ -8,7 +8,6 @@ const Wrapper = styled.footer`
     flex-direction: column;
     font-weight: 500;
     row-gap: ${theme.spacings.medium};
-    padding-bottom: ${theme.spacings.xxhuge};
   `}
 `
 
