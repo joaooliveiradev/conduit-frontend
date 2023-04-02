@@ -8,8 +8,6 @@ export type ArticleCardProps = {
 
 export const Wrapper = styled.article`
   ${({ theme }) => css`
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     background-color: ${transparentize(0.9, theme.colors.black[100])};
