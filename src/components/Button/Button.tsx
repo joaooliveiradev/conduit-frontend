@@ -30,7 +30,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     justify-content: center;
     min-width: 130px;
     width: ${block ? '100%' : 'auto'};
-    padding: 0 ${theme.spacings.xsmall};
+    padding: 0 ${theme.spacings.xxmedium};
     color: ${theme.colors.white[100]};
     background-color: ${theme.colors.black[200]};
     font-weight: bold;

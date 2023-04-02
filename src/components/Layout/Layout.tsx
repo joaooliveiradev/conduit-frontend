@@ -32,8 +32,9 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     margin: 0px auto;
+    padding: ${theme.spacings.xxhuge} 0px;
     @media (max-width: ${theme.breakpoints.desktop}) {
-      padding: 0px ${theme.spacings.xxxxhuge};
+      padding: ${theme.spacings.xxhuge} ${theme.spacings.xxxxhuge};
     }
   `}
 `

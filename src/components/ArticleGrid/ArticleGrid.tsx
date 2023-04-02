@@ -6,8 +6,9 @@ export type ArticleGridProps = {
 
 const Wrapper = styled.div`
   ${({ theme }) => css`
+    --cardMaxWidth: 480px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, var(--cardMaxWidth));
     align-items: center;
     justify-content: center;
     gap: ${theme.spacings.large};

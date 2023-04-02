@@ -6,7 +6,6 @@ import {
   type DropdownItemProps,
   type ProfileNameProps,
 } from '@/components'
-import styled, { css } from 'styled-components'
 import { useAuth, useCookies } from '@/context'
 import { fromEither, fromNullable, isSome, none } from 'fp-ts/Option'
 import dynamic from 'next/dynamic'
@@ -14,6 +13,7 @@ import { useState, useEffect } from 'react'
 import { getUseMeKey, useMe } from '@/hooks'
 import { f } from '@/libs'
 import { isRight } from 'fp-ts/Either'
+import styled from 'styled-components'
 import logo from '@/assets/logo.webp'
 import Image from 'next/image'
 
@@ -42,12 +42,9 @@ const ProfileName = dynamic<ProfileNameProps>(
 )
 
 const Wrapper = styled.header`
-  ${({ theme }) => css`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: ${theme.spacings.xxhuge};
-  `}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 export const Header = () => {
