@@ -1,18 +1,34 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "@tanstack/query"],
+  "parserOptions": { "project": ["./tsconfig.json"] },
+  "plugins": [
+    "@typescript-eslint",
+    "@tanstack/query",
+    "jsx-a11y",
+    "styled-components-a11y"
+  ],
   "extends": [
-    "eslint:recommended",
+    "next",
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:@tanstack/eslint-plugin-query/recommended"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:styled-components-a11y/recommended"
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "react/display-name": "off",
     "@tanstack/query/exhaustive-deps": "error",
-    "@tanstack/query/prefer-query-object-syntax": "off"
+    "@tanstack/query/prefer-query-object-syntax": "off",
+    "react/display-name": "off",
+    "styled-components-a11y/html-has-lang": "off",
+    "styled-components-a11y/iframe-has-title": "off"
+  },
+  "settings": {
+    "Input": "input",
+    "Button": "button",
+    "Anchor": "a"
   }
 }
