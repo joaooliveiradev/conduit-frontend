@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components'
+import { transparentize } from 'polished'
+import { ReactComponent as CloseIcon } from '@/assets/close.svg'
 import * as RadixToast from '@radix-ui/react-toast'
 
 export type ToastProps = {
@@ -13,10 +15,10 @@ const Root = styled(RadixToast.Root)`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
-    padding: ${theme.spacings.xxsmall};
+    padding: ${theme.spacings.xmedium} ${theme.spacings.xxsmall};
     gap: ${theme.spacings.small};
     align-items: center;
-    background-color: ${theme.colors.grey[300]};
+    background-color: ${theme.colors.grey[500]};
     border-radius: ${theme.spacings.small};
   `}
 
@@ -93,6 +95,19 @@ const Description = styled(RadixToast.Description)`
   `}
 `
 
+const Close = styled(RadixToast.Close)`
+  ${({ theme }) => css`
+    position: absolute;
+    top: ${theme.spacings.xsmall};
+    right: ${theme.spacings.xsmall};
+    padding: 6px;
+    display: flex;
+    background-color: ${transparentize(0.8, theme.colors.grey[300])};
+    border-radius: 9999px;
+    cursor: pointer;
+  `}
+`
+
 export const Toast = ({
   title,
   description,
@@ -103,14 +118,12 @@ export const Toast = ({
   label,
 }: ToastProps) => (
   <RadixToast.Provider label={label}>
-    <Root
-      open={open}
-      onOpenChange={onOpenChange}
-      duration={duration}
-      type={type}
-    >
+    <Root open={open} onOpenChange={onOpenChange} duration={duration} type={type}>
       <Title>{title}</Title>
       <Description>{description}</Description>
+      <Close aria-label="Close">
+        <CloseIcon />
+      </Close>
     </Root>
     <Viewport />
   </RadixToast.Provider>
