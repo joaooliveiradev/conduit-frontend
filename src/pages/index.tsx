@@ -84,9 +84,8 @@ const Home: NextPage = () => {
     })
 
   React.useEffect(() => {
-    if (inViewFeedArticles && hasNextPageFeedArticles) {
+    if (inViewFeedArticles && hasNextPageFeedArticles)
       fetchNextPageFeedArticles()
-    }
   }, [inViewFeedArticles, fetchNextPageFeedArticles, hasNextPageFeedArticles])
 
   const feedArticlesDataOption = fromNullable(feedArticlesData)
