@@ -50,7 +50,7 @@ const Home: NextPage = () => {
 
   const {
     data: getArticlesData,
-    fetchNextPage: fextNextPageGetArticles,
+    fetchNextPage: fetchNextPageGetArticles,
     isFetching: isFetchingGetArticles,
     hasNextPage: hasNextPageGetArticles,
   } = useGetArticles({ queryKey: [GET_ARTICLES_KEY] }, defaultFilters)
@@ -61,16 +61,16 @@ const Home: NextPage = () => {
   })
 
   React.useEffect(() => {
-    if (inViewGetArticles) {
-      fextNextPageGetArticles()
+    if (inViewGetArticles && hasNextPageGetArticles) {
+      fetchNextPageGetArticles()
     }
-  }, [inViewGetArticles, fextNextPageGetArticles])
+  }, [inViewGetArticles, fetchNextPageGetArticles, hasNextPageGetArticles])
 
   const getArticlesDataOption = fromNullable(getArticlesData)
 
   const {
     data: feedArticlesData,
-    fetchNextPage: fextNextPageFeedArticles,
+    fetchNextPage: fetchNextPageFeedArticles,
     isFetching: isFetchingFeedArticles,
     hasNextPage: hasNextPageFeedArticles,
   } = useFeedArticles(defaultFilters, {
@@ -84,10 +84,10 @@ const Home: NextPage = () => {
     })
 
   React.useEffect(() => {
-    if (inViewFeedArticles) {
-      fextNextPageFeedArticles()
+    if (inViewFeedArticles && hasNextPageFeedArticles) {
+      fetchNextPageFeedArticles()
     }
-  }, [inViewFeedArticles, fextNextPageFeedArticles])
+  }, [inViewFeedArticles, fetchNextPageFeedArticles, hasNextPageFeedArticles])
 
   const feedArticlesDataOption = fromNullable(feedArticlesData)
 
@@ -174,7 +174,7 @@ const Home: NextPage = () => {
                   title="Something went wrong."
                   message="Something went wrong while trying to requesting the articles."
                   buttonLabel="Try again"
-                  onButtonClick={fextNextPageGetArticles}
+                  onButtonClick={fetchNextPageGetArticles}
                   disabled={isFetchingGetArticles}
                   isButtonLoading={isFetchingGetArticles}
                 />
@@ -231,7 +231,7 @@ const Home: NextPage = () => {
                   title="Something went wrong."
                   message="Something went wrong while trying to requesting the articles."
                   buttonLabel="Try again"
-                  onButtonClick={fextNextPageGetArticles}
+                  onButtonClick={fetchNextPageFeedArticles}
                   disabled={isFetchingFeedArticles}
                   isButtonLoading={isFetchingFeedArticles}
                 />
@@ -289,7 +289,7 @@ const Home: NextPage = () => {
           title="Something went wrong."
           message="Something went wrong while trying to requesting the articles."
           buttonLabel="Try again"
-          onButtonClick={fextNextPageGetArticles}
+          onButtonClick={fetchNextPageGetArticles}
           disabled={isFetchingGetArticles}
           isButtonLoading={isFetchingGetArticles}
         />
