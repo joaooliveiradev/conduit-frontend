@@ -4,7 +4,7 @@ export type ArticleGridProps = {
   children: React.ReactNode
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   ${({ theme }) => css`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -15,5 +15,5 @@ const Wrapper = styled.div`
 `
 
 export const ArticleGrid = ({ children }: ArticleGridProps) => (
-  <Wrapper>{children}</Wrapper>
+  <Wrapper role="feed" aria-labelledby="accessible-list-articles">{children}</Wrapper>
 )
