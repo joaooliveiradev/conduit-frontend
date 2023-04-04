@@ -101,8 +101,8 @@ const Profile = ({ name }: ProfileParams) => {
   })
 
   React.useEffect(() => {
-    if (inView) fetchNextPage()
-  }, [fetchNextPage, inView])
+    if (inView && hasNextPage) fetchNextPage()
+  }, [fetchNextPage, inView, hasNextPage])
 
   const articlesDataOption = fromNullable(articlesData)
 
@@ -138,33 +138,38 @@ const Profile = ({ name }: ProfileParams) => {
             message="This user hasn't written any articles yet."
           />
         ) : (
-          <ArticleGrid>
-            {maybeArticles.value.articles.map((article) => (
-              <ArticleCard key={article.slug}>
-                <ArticleCard.Anchor href={`/article/${article.slug}`}>
-                  <ArticleCard.Main>
-                    <header>
-                      <ArticleCard.Title>{article.title}</ArticleCard.Title>
-                    </header>
-                    <section>
-                      <ArticleCard.Text>{article.description}</ArticleCard.Text>
-                    </section>
-                  </ArticleCard.Main>
-                </ArticleCard.Anchor>
-                <ArticleCard.Footer>
-                  <ArticleCard.Anchor
-                    href={`/profile/${article.author.username}`}
-                  >
-                    <ProfileName name={article.author.username} size={2} />
+          <>
+            <ArticleGrid>
+              {maybeArticles.value.articles.map((article) => (
+                <ArticleCard key={article.slug}>
+                  <ArticleCard.Anchor href={`/article/${article.slug}`}>
+                    <ArticleCard.Main>
+                      <header>
+                        <ArticleCard.Title>{article.title}</ArticleCard.Title>
+                      </header>
+                      <section>
+                        <ArticleCard.Text>
+                          {article.description}
+                        </ArticleCard.Text>
+                      </section>
+                    </ArticleCard.Main>
                   </ArticleCard.Anchor>
-                  <ArticleStats
-                    date={article.updatedAt}
-                    readTime={article.body}
-                  />
-                </ArticleCard.Footer>
-              </ArticleCard>
-            ))}
-          </ArticleGrid>
+                  <ArticleCard.Footer>
+                    <ArticleCard.Anchor
+                      href={`/profile/${article.author.username}`}
+                    >
+                      <ProfileName name={article.author.username} size={2} />
+                    </ArticleCard.Anchor>
+                    <ArticleStats
+                      date={article.updatedAt}
+                      readTime={article.body}
+                    />
+                  </ArticleCard.Footer>
+                </ArticleCard>
+              ))}
+            </ArticleGrid>
+            <div ref={refObserver} />
+          </>
         )
       ) : (
         <ErrorState
@@ -176,7 +181,6 @@ const Profile = ({ name }: ProfileParams) => {
           onButtonClick={fetchNextPage}
         />
       )}
-      <div ref={refObserver} />
     </Wrapper>
   ) : (
     <ErrorState
