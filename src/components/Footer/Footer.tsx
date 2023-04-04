@@ -39,6 +39,14 @@ const TextButton = styled(TextButtonDefault)`
   `}
 `
 
+const resetFocusToBody = () => {
+  const bodyElement = document.body
+  const noFocusOnUsingKeyboard = '-1'
+  bodyElement.setAttribute('tabindex', noFocusOnUsingKeyboard)
+  bodyElement.focus()
+  bodyElement.removeAttribute('tabindex')
+}
+
 export const Footer = () => {
   return (
     <Wrapper>
@@ -49,7 +57,14 @@ export const Footer = () => {
           <TextButton href="https://www.typescriptlang.org/">
             Typescript
           </TextButton>{' '}
-          and <TextButton href="https://nextjs.org/">Next.js</TextButton>.
+          and{' '}
+          <TextButton
+            href="https://nextjs.org/"
+            onKeyDown={() => resetFocusToBody()}
+          >
+            Next.js
+          </TextButton>
+          .
         </Text>
         <Text>&copy; Copyright Conduit - All rights reserved</Text>
       </Content>
