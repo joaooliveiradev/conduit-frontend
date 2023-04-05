@@ -30,7 +30,7 @@ const validateCodec = <A>(
 
 export const fetcher = async <D, A>(
   path: string,
-  codec?: t.Type<A, unknown, unknown>,
+  codec: t.Type<A, unknown, unknown>,
   data?: D,
   customConfig?: RequestInit
 ): Promise<Either<DefaultError, A>> => {
@@ -56,8 +56,6 @@ export const fetcher = async <D, A>(
 
     if (response.ok) {
       const result = await response.json()
-      if (!codec) return right(result)
-
       return validateCodec<A>(codec, result)
     }
 
