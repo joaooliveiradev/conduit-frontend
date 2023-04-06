@@ -1,6 +1,6 @@
 import { UserTypeCodec } from '@/types'
 import { type Either } from 'fp-ts/Either'
-import { fetcher, DefaultError } from '@/libs'
+import { fetcher, AuthenticationError, UnknownError } from '@/libs'
 import { useMutation } from '@tanstack/react-query'
 import { useAuth } from '@/context'
 import * as t from 'io-ts'
@@ -20,9 +20,7 @@ type SignInResponseCodecType = t.TypeOf<typeof SignInResponseCodec>
 
 export type SignInResponseOutput = t.OutputOf<typeof SignInResponseCodec>
 
-export const signInMutation = async (
-  data: SignInRequest
-): Promise<Either<DefaultError, SignInResponseOutput>> => {
+export const signInMutation = async (data: SignInRequest) => {
   const options: RequestInit = {
     method: 'POST',
   }
@@ -42,8 +40,8 @@ const USE_SIGN_IN_KEY = 'sign-in'
 export const useSignIn = () => {
   const { handleLogin } = useAuth()
   return useMutation<
-    Either<DefaultError, SignInResponseOutput>,
-    DefaultError,
+    Either<AuthenticationError, SignInResponseOutput>,
+    UnknownError,
     SignInRequest
   >([USE_SIGN_IN_KEY], signInMutation, {
     onSuccess: (response) => handleLogin(response),
