@@ -1,4 +1,4 @@
-import { DefaultError, fetcher } from '@/libs'
+import { DecodeError, fetcher, UnknownError } from '@/libs'
 import { ArticleBySlugCodec } from '@/types'
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { Either } from 'fp-ts/Either'
@@ -13,8 +13,8 @@ type GetArticleOutput = t.OutputOf<typeof GetArticleCodec>
 type GetArticleResponse = t.TypeOf<typeof GetArticleCodec>
 
 type GetArticlesOptions = UseQueryOptions<
-  Either<DefaultError, GetArticleOutput>,
-  DefaultError
+  Either<DecodeError, GetArticleOutput>,
+  UnknownError
 >
 
 export const GET_ARTICLE_KEY = 'get-article-by-slug'
@@ -26,7 +26,7 @@ export const getArticle = async (slug: string) =>
   )
 
 export const useGetArticle = (slug: string, options?: GetArticlesOptions) =>
-  useQuery<Either<DefaultError, GetArticleOutput>, DefaultError>(
+  useQuery<Either<DecodeError, GetArticleOutput>, UnknownError>(
     [GET_ARTICLE_KEY],
     async () => await getArticle(slug),
     {
