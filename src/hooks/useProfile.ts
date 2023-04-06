@@ -1,5 +1,5 @@
 import { ProfileCodec } from '@/types/profile'
-import { DefaultError, fetcher } from '@/libs'
+import { DecodeError, fetcher, UnknownError } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { type Either } from 'fp-ts/Either'
 import * as t from 'io-ts'
@@ -21,12 +21,12 @@ export const getProfile = async (user: string) =>
   )
 
 type UseProfileOptions = UseQueryOptions<
-  Either<DefaultError, UseProfileOutput>,
-  DefaultError
+  Either<DecodeError, UseProfileOutput>,
+  UnknownError
 >
 
 export const useProfile = (user: string, options?: UseProfileOptions) =>
-  useQuery<Either<DefaultError, UseProfileOutput>, DefaultError>(
+  useQuery<Either<DecodeError, UseProfileOutput>, UnknownError>(
     [GET_PROFILE_KEY],
     async () => await getProfile(user),
     {
