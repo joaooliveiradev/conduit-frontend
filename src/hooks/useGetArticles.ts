@@ -1,5 +1,5 @@
 import { ArticleCodec } from '@/types'
-import { DefaultError, fetcher } from '@/libs'
+import { DecodeError, fetcher, UnknownError } from '@/libs'
 import {
   useInfiniteQuery,
   type QueryFunctionContext,
@@ -45,8 +45,8 @@ export const defaultFilters = {
 const oneMinute = 60 * 1000
 
 type UseGetArticlesOptions = UseInfiniteQueryOptions<
-  Either<DefaultError, GetArticlesOutput>,
-  DefaultError
+  Either<DecodeError, GetArticlesOutput>,
+  UnknownError
 >
 
 export const getArticles = async (filters: QueryFiltersProps) => {
@@ -67,8 +67,9 @@ export const useGetArticles = (
   options: UseGetArticlesOptions,
   filters?: QueryFiltersProps
 ) =>
-  useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>({
-    queryFn: async ({ pageParam = defaultFilters }: PageParamProps) => {
+  useInfiniteQuery<Either<DecodeError, GetArticlesOutput>, UnknownError>(
+    [GET_ARTICLES_KEY],
+    async ({ pageParam = defaultFilters }: PageParamProps) => {
       const pageParamOption = fromNullable(pageParam)
       const filtersOption = fromNullable(filters)
 
@@ -79,13 +80,15 @@ export const useGetArticles = (
 
       return await getArticles(queryFilters)
     },
-    getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
-    retry: 3,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    staleTime: oneMinute,
-    cacheTime: oneMinute,
-    refetchInterval: oneMinute,
-    ...options,
-  })
+    {
+      getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
+      retry: 3,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      staleTime: oneMinute,
+      cacheTime: oneMinute,
+      refetchInterval: oneMinute,
+      ...options,
+    }
+  )
