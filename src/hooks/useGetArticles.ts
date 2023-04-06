@@ -1,5 +1,5 @@
 import { ArticleCodec } from '@/types'
-import { DefaultError, fetcher } from '@/libs'
+import { DecodeError, fetcher, UnknownError } from '@/libs'
 import {
   useInfiniteQuery,
   type QueryFunctionContext,
@@ -43,8 +43,8 @@ export const defaultFilters = {
 const oneMinute = 60 * 1000
 
 type UseGetArticlesOptions = UseInfiniteQueryOptions<
-  Either<DefaultError, GetArticlesOutput>,
-  DefaultError
+  Either<DecodeError, GetArticlesOutput>,
+  UnknownError
 >
 
 export const getArticles = async (filters: QueryFiltersProps) => {
@@ -65,7 +65,7 @@ export const useGetArticles = (
   filters?: QueryFiltersProps,
   options?: UseGetArticlesOptions
 ) =>
-  useInfiniteQuery<Either<DefaultError, GetArticlesOutput>, DefaultError>(
+  useInfiniteQuery<Either<DecodeError, GetArticlesOutput>, UnknownError>(
     [GET_ARTICLES_KEY],
     async ({ pageParam = defaultFilters }: PageParamProps) => {
       const pageParamOption = fromNullable(pageParam)
