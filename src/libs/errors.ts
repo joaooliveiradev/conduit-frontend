@@ -2,6 +2,7 @@ export type DefaultErrorProps = {
   name: string
   message: string
   status: number
+  decodeErrors?: string
 }
 
 type ErrorAPIResponse = {
@@ -18,11 +19,12 @@ enum HttpStatus {
 export class DefaultError extends Error {
   name: string
   status: number
-
-  constructor({ name, status, message }: DefaultErrorProps) {
+  decodeErrors?: string
+  constructor({ name, status, message, decodeErrors }: DefaultErrorProps) {
     super(message)
     this.name = name
     this.status = status
+    this.decodeErrors = decodeErrors
   }
 }
 
@@ -37,15 +39,14 @@ export class UnknownError extends DefaultError {
 }
 
 export class DecodeError extends DefaultError {
-  decodeErrors: string
   constructor(decodeErrors: string) {
     super({
       message:
         "Something wen't wrong with our servers, and we're working to fix it. Please try again later.",
       name: 'DecodeError',
       status: 422,
+      decodeErrors,
     })
-    this.decodeErrors = decodeErrors
   }
 }
 

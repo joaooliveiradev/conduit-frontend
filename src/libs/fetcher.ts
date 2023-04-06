@@ -1,9 +1,9 @@
 import {
-  DefaultError,
   handleFetcherErrors,
   UnknownError,
   DecodeError,
   AuthorizationError,
+  AuthenticationError,
 } from '@/libs'
 import { parseCookies } from 'nookies'
 import { type Either, left, right, isRight } from 'fp-ts/Either'
@@ -28,12 +28,14 @@ const validateCodec = <A>(
   data: A
 ): Either<DecodeError, A> => pipe(data, codec.decode, validationHandler<A>)
 
+type FetcherLeftErrors = AuthenticationError | DecodeError
+
 export const fetcher = async <D, A>(
   path: string,
   codec: t.Type<A, unknown, unknown>,
   data?: D,
   customConfig?: RequestInit
-): Promise<Either<DefaultError, A>> => {
+): Promise<Either<FetcherLeftErrors, A>> => {
   try {
     const url = `${baseApiUrl}${path}`
     const { 'conduit.token': accessToken } = parseCookies()
@@ -61,8 +63,8 @@ export const fetcher = async <D, A>(
 
     const responseError = await handleFetcherErrors(response)
     return left(responseError)
-  } catch (error) {
+  } catch (error: unknown) {
     if (error instanceof AuthorizationError) throw new AuthorizationError()
-    throw new UnknownError()
+    else throw new UnknownError()
   }
 }
