@@ -35,7 +35,7 @@ import {
   fromEither,
 } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
-import { DefaultError, f } from '@/libs'
+import { DecodeError, f } from '@/libs'
 import { type Either, isRight } from 'fp-ts/Either'
 import { useInView } from 'react-intersection-observer'
 import React from 'react'
@@ -108,7 +108,7 @@ const Profile = ({ name }: ProfileParams) => {
   const articlesDataOption = fromNullable(articlesData)
 
   const handleMaybeArticles = (
-    data: Option<InfiniteData<Either<DefaultError, GetArticlesOutput>>>
+    data: Option<InfiniteData<Either<DecodeError, GetArticlesOutput>>>
   ) => {
     const pages = f(() => {
       if (isSome(data)) {

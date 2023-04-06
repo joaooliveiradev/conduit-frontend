@@ -4,10 +4,10 @@ import {
   defaultArticlesLimit,
 } from '@/hooks'
 import { type Either, isRight } from 'fp-ts/Either'
-import { DefaultError } from './errors'
+import { DecodeError } from './errors'
 
 export const calculateTotalArticles = (
-  lastPage: Either<DefaultError, GetArticlesOutput>
+  lastPage: Either<DecodeError, GetArticlesOutput>
 ) => {
   if (isRight(lastPage)) {
     const totalLastFetch = lastPage.right.articles.length

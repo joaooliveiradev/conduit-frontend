@@ -4,12 +4,12 @@ import {
   GetArticlesResponseCodec,
 } from '@/hooks'
 import { type Either, isRight } from 'fp-ts/Either'
-import { fetcher, DefaultError } from '@/libs'
+import { fetcher, DecodeError } from '@/libs'
 import { type GetServerSideProps } from 'next'
 import { baseWebUrl } from '@/types'
 
 export const generateSiteMap = (
-  articles: Either<DefaultError, GetArticlesOutput>
+  articles: Either<DecodeError, GetArticlesOutput>
 ) => {
   if (isRight(articles)) {
     return `<?xml version="1.0" encoding="UTF-8"?>
@@ -38,7 +38,7 @@ export const generateSiteMap = (
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const articles: Either<DefaultError, GetArticlesOutput> = await fetcher<
+  const articles: Either<DecodeError, GetArticlesOutput> = await fetcher<
     undefined,
     GetArticlesResponse
   >('/articles', GetArticlesResponseCodec)

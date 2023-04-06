@@ -1,4 +1,3 @@
-import { DefaultError } from '@/libs'
 import {
   createContext,
   type ReactNode,
@@ -6,6 +5,7 @@ import {
   useContext,
   useEffect,
 } from 'react'
+import { AuthenticationError } from '@/libs'
 import { type Either, isRight } from 'fp-ts/Either'
 import { type SignInResponseOutput } from '@/components/SignInModal/useSignIn'
 import { CookieSerializeOptions } from 'cookie'
@@ -39,7 +39,9 @@ export type Status = 'loggedOut' | 'loggedIn' | 'idle'
 type ContextProps = {
   status: Status
   signOut: () => void
-  handleLogin: (response: Either<DefaultError, SignInResponseOutput>) => void
+  handleLogin: (
+    response: Either<AuthenticationError, SignInResponseOutput>
+  ) => void
 }
 
 const defaultValueContext: ContextProps = {
@@ -63,7 +65,7 @@ const AuthProvider = ({ children }: AuthContextProps) => {
   }, [accessToken])
 
   const loginHandler = (
-    response: Either<DefaultError, SignInResponseOutput>
+    response: Either<AuthenticationError, SignInResponseOutput>
   ) => {
     if (isRight(response)) {
       const { token } = response.right.user
