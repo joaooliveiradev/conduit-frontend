@@ -1,4 +1,4 @@
-import { DefaultError, fetcher } from '@/libs'
+import { AuthorizationError, DecodeError, fetcher, UnknownError } from '@/libs'
 import { type NewArticleRequest } from './NewArticle'
 import { ArticleCodec } from '@/types'
 import { type Either } from 'fp-ts/Either'
@@ -15,9 +15,7 @@ export type NewArticleResponseOutput = t.OutputOf<
   typeof newArticleResponseCodec
 >
 
-export const postArticle = async (
-  data: NewArticleRequest
-): Promise<Either<DefaultError, NewArticleResponseOutput>> => {
+export const postArticle = async (data: NewArticleRequest) => {
   const options: RequestInit = {
     method: 'POST',
   }
@@ -36,7 +34,7 @@ const NEW_ARTICLE_KEY = 'new-article'
 
 export const useNewArticle = () =>
   useMutation<
-    Either<DefaultError, NewArticleResponseOutput>,
-    DefaultError,
+    Either<DecodeError, NewArticleResponseOutput>,
+    AuthorizationError | UnknownError,
     NewArticleRequest
   >([NEW_ARTICLE_KEY], postArticle)
