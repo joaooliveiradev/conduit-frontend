@@ -1,5 +1,5 @@
 import { ArticleCodec } from '@/types'
-import { DefaultError, fetcher } from '@/libs'
+import { AuthorizationError, DecodeError, fetcher, UnknownError } from '@/libs'
 import {
   type QueryFunctionContext,
   type QueryKey,
@@ -30,8 +30,8 @@ const oneMinute = 60 * 1000
 export const GET_FEED_ARTICLES_KEY = 'get-feed-articles'
 
 type GetFeedArticlesOptions = UseInfiniteQueryOptions<
-  Either<DefaultError, GetFeedArticlesOutput>,
-  DefaultError
+  Either<DecodeError, GetFeedArticlesOutput>,
+  UnknownError | AuthorizationError
 >
 
 export const getFeedArticles = async (filters: QueryFiltersProps) => {
@@ -51,7 +51,10 @@ export const useFeedArticles = (
   filters?: QueryFiltersProps,
   options?: GetFeedArticlesOptions
 ) =>
-  useInfiniteQuery<Either<DefaultError, GetFeedArticlesOutput>, DefaultError>(
+  useInfiniteQuery<
+    Either<DecodeError, GetFeedArticlesOutput>,
+    UnknownError | AuthorizationError
+  >(
     [GET_FEED_ARTICLES_KEY],
     async ({ pageParam = defaultFilters }: PageParamProps) => {
       const pageParamOption = fromNullable(pageParam)
