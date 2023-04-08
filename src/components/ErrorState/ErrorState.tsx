@@ -1,4 +1,4 @@
-import { ReactComponent as ErrorIcon } from '@/assets/errorIcon.svg'
+import { ErrorIcon } from '@/assets'
 import { Button } from '@/components'
 import styled, { css } from 'styled-components'
 
