@@ -1,9 +1,10 @@
-import { ReactComponent as EmptyIcon } from '@/assets/emptyIcon.svg'
+// import { ReactComponent as EmptyIcon } from '@/assets/emptyIcon.svg'
+import { EmptyIcon } from '@/assets'
 import styled, { css } from 'styled-components'
 
 export type EmptyStateProps = {
-  message: string;
-  title: string;
+  message: string
+  title: string
 }
 
 const Wrapper = styled.div`
