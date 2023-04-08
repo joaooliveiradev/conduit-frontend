@@ -1,4 +1,3 @@
-// import { ReactComponent as EmptyIcon } from '@/assets/emptyIcon.svg'
 import { EmptyIcon } from '@/assets'
 import styled, { css } from 'styled-components'
 
