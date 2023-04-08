@@ -1,4 +1,4 @@
-import { ReactComponent as CloseIcon } from '@/assets/close.svg'
+import { CloseIcon } from '@/assets'
 import { transparentize } from 'polished'
 import { type ReactNode } from 'react'
 import styled, { css } from 'styled-components'
@@ -94,7 +94,7 @@ export const Modal = ({
         <Content>
           {children}
           <Dialog.Close asChild>
-            <IconButton aria-label="Close">
+            <IconButton>
               <CloseIcon />
             </IconButton>
           </Dialog.Close>
