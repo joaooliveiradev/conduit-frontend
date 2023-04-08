@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ReactComponent as CloseIcon } from '@/assets/close.svg'
+import { CloseIcon } from '@/assets'
 import * as RadixToast from '@radix-ui/react-toast'
 
 export type ToastProps = {
@@ -118,10 +118,15 @@ export const Toast = ({
   label,
 }: ToastProps) => (
   <RadixToast.Provider label={label}>
-    <Root open={open} onOpenChange={onOpenChange} duration={duration} type={type}>
+    <Root
+      open={open}
+      onOpenChange={onOpenChange}
+      duration={duration}
+      type={type}
+    >
       <Title>{title}</Title>
       <Description>{description}</Description>
-      <Close aria-label="Close">
+      <Close>
         <CloseIcon />
       </Close>
     </Root>
