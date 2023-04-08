@@ -55,7 +55,7 @@ const Content = styled(Dialog.Content)`
   `}
 `
 
-const IconButton = styled.button`
+const CloseButton = styled(Dialog.Close)`
   ${({ theme }) => css`
     position: absolute;
     top: ${theme.spacings.xxsmall};
@@ -93,11 +93,9 @@ export const Modal = ({
         <Overlay />
         <Content>
           {children}
-          <Dialog.Close asChild>
-            <IconButton>
-              <CloseIcon />
-            </IconButton>
-          </Dialog.Close>
+          <CloseButton>
+            <CloseIcon />
+          </CloseButton>
         </Content>
       </Dialog.Portal>
     </Dialog.Root>
