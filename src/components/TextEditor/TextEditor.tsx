@@ -4,13 +4,13 @@ import {
   TabsPane,
   TabContent,
   Pane as PaneDefault,
+  TextAreaProps,
 } from '@/components/'
+import { FullScreenIcon } from '@/assets/'
 import styled, { css } from 'styled-components'
-import { ChangeEvent, useState } from 'react'
-import { ReactComponent as FullScreenIcon } from '@/assets/fullscreen.svg'
+import { useState } from 'react'
 import { ArticleBody } from '@/components/ArticleBody/ArticleBody'
 import { FocusScope } from '@radix-ui/react-focus-scope'
-import * as AccessibleIcon from '@radix-ui/react-accessible-icon'
 
 type TextEditorWrapperProps = {
   fullScreen: boolean
@@ -37,7 +37,6 @@ const Tabs = styled(TabsDefault)`
 const Pane = styled(PaneDefault)`
   ${({ theme }) => css`
     gap: ${theme.spacings.xxsmall};
-    align-items: center;
   `}
 `
 
@@ -74,14 +73,14 @@ const EmptyPreview = () => {
   )
 }
 
-export const TextEditor = () => {
-  const [text, setText] = useState<string>('')
+type TextEditorProps = {
+  value: string
+} & TextAreaProps
+
+export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
 
-  const writeText = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setText(e.target.value)
-
-  const switchFullScreen = () =>
+  const switchToFullScreen = () =>
     setFullScreen((prevFullScreen) => !prevFullScreen)
 
   return (
@@ -93,28 +92,26 @@ export const TextEditor = () => {
             <TabsPane value="preview">Preview</TabsPane>
             <TabsPaneFullScreen
               value="previewFullScreen"
-              onClick={switchFullScreen}
+              onClick={switchToFullScreen}
             >
-              <AccessibleIcon.Root label="fullscreen">
-                <FullScreenIcon />
-              </AccessibleIcon.Root>
+              <FullScreenIcon />
             </TabsPaneFullScreen>
           </Pane>
           <TabContent value="write">
-            <TextArea onChange={writeText} value={text} />
+            <TextArea {...rest} />
           </TabContent>
           <TabContent value="preview">
-            {text.length === 0 ? (
+            {value.length === 0 ? (
               <EmptyPreview />
             ) : (
-              <Preview articleText={text} />
+              <Preview articleText={value} />
             )}
           </TabContent>
           <TabContent value="previewFullScreen">
-            {text.length === 0 ? (
+            {value.length === 0 ? (
               <EmptyPreview />
             ) : (
-              <Preview articleText={text} />
+              <Preview articleText={value} />
             )}
           </TabContent>
         </Tabs>
