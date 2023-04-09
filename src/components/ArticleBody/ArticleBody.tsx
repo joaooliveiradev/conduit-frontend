@@ -98,9 +98,9 @@ const Code = ({ children }: CodeProps) => {
   )
 }
 
-export const ArticleBody = ({ articleText }: ArticleBodyProps) => {
+export const ArticleBody = ({ articleText, ...rest }: ArticleBodyProps) => {
   return (
-    <Wrapper>
+    <Wrapper {...rest}>
       <ReactMarkdown
         rehypePlugins={[rehypeSanitize]}
         components={{
