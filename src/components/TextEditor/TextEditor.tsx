@@ -89,6 +89,7 @@ export const TextEditor = ({
   name,
   onBlur,
   errorMessage,
+  touched,
 }: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
 
@@ -108,12 +109,13 @@ export const TextEditor = ({
               <FullScreenIcon />
             </FullScreenBtn>
           </Pane>
-          <TabContent value="write">
+          <TabContent value="write" asChild>
             <TextArea
               name={name}
               value={textAreaValue}
               onChange={onChange}
               onBlur={onBlur}
+              touched={touched}
               errorMessage={errorMessage}
             />
           </TabContent>
