@@ -1,4 +1,4 @@
-import { Button, Input, TextArea } from '@/components'
+import { Button, Input, TextEditor } from '@/components'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
@@ -30,7 +30,6 @@ const FieldWrapper = styled.div`
 `
 
 const PublishBtn = styled(Button)`
-  max-width: 148px;
   align-self: flex-end;
 `
 
@@ -51,9 +50,13 @@ const initialValues: NewArticleFieldValues = {
 }
 
 const newArticleSchema = object({
-  title: string().required().max(32, 'Maximum 32 characters required!'),
-  description: string().required().max(64, 'Maximum 64 characters required!'),
-  body: string().required(),
+  title: string()
+    .required('Title is a required field and cannot be empty')
+    .max(32, 'Maximum 32 characters required!'),
+  description: string()
+    .required('Description is a required field and cannot be empty')
+    .max(64, 'Maximum 64 characters required!'),
+  body: string().required('Body is a required field and cannot be empty!'),
 })
 
 export const NewArticle = () => {
@@ -69,9 +72,10 @@ export const NewArticle = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: newArticleSchema,
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: (values) => handleSubmit(values),
   })
-
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
       <Title>New Article</Title>
@@ -94,11 +98,11 @@ export const NewArticle = () => {
           touched={formik.touched.description}
           onBlur={formik.handleBlur}
         />
-        <TextArea
-          placeholder="Write your article (in markdown)"
+        <TextEditor
           name="body"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
+          value={formik.values.body}
           errorMessage={formik.errors.body}
           touched={formik.touched.body}
         />
