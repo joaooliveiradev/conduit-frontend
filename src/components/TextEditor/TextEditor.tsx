@@ -7,10 +7,10 @@ import {
   TextAreaProps,
 } from '@/components/'
 import { FullScreenIcon } from '@/assets/'
-import styled, { css } from 'styled-components'
 import { useState } from 'react'
-import { ArticleBody } from '@/components/ArticleBody/ArticleBody'
+import { ArticleBody as DefaultArticleBody } from '@/components/ArticleBody/ArticleBody'
 import { FocusScope } from '@radix-ui/react-focus-scope'
+import styled, { css } from 'styled-components'
 
 type TextEditorWrapperProps = {
   fullScreen: boolean
@@ -24,7 +24,7 @@ const Wrapper = styled.div<TextEditorWrapperProps>`
       position: fixed;
       inset: 0;
       margin: ${theme.spacings.xxlarge};
-      transition: all 200ms ease;
+      transition: all 150ms ease;
     `}
 `
 
@@ -40,14 +40,14 @@ const Pane = styled(PaneDefault)`
   `}
 `
 
-const TabsPaneFullScreen = styled(TabsPane)`
+const FullScreenBtn = styled(TabsPane)`
   display: flex;
   margin-left: auto;
 `
 
-const Preview = styled(ArticleBody)`
+const ArticleBody = styled(DefaultArticleBody)`
   ${({ theme }) => css`
-    padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
+    padding: ${theme.spacings.xsmall};
   `}
 `
 
@@ -65,11 +65,17 @@ const EmptyPreviewText = styled.h1`
   `}
 `
 
-const EmptyPreview = () => {
-  return (
+type PreviewProps = {
+  textAreaValue: string
+}
+
+const Preview = ({ textAreaValue }: PreviewProps) => {
+  return textAreaValue.length === 0 ? (
     <EmptyPreviewWrapper>
       <EmptyPreviewText>Nothing to preview.</EmptyPreviewText>
     </EmptyPreviewWrapper>
+  ) : (
+    <ArticleBody articleText={textAreaValue} />
   )
 }
 
@@ -77,42 +83,45 @@ type TextEditorProps = {
   value: string
 } & TextAreaProps
 
-export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
+export const TextEditor = ({
+  value: textAreaValue,
+  onChange,
+  name,
+  onBlur,
+  errorMessage,
+}: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
 
-  const switchToFullScreen = () =>
-    setFullScreen((prevFullScreen) => !prevFullScreen)
+  const switchToFullScreen = () => setFullScreen((prevState) => !prevState)
 
   return (
     <Wrapper fullScreen={fullScreen}>
       <FocusScope loop={fullScreen} trapped={fullScreen}>
         <Tabs defaultValue="write">
-          <Pane>
+          <Pane aria-label="Manage text editor menu items.">
             <TabsPane value="write">Write</TabsPane>
             <TabsPane value="preview">Preview</TabsPane>
-            <TabsPaneFullScreen
+            <FullScreenBtn
               value="previewFullScreen"
               onClick={switchToFullScreen}
             >
               <FullScreenIcon />
-            </TabsPaneFullScreen>
+            </FullScreenBtn>
           </Pane>
           <TabContent value="write">
-            <TextArea {...rest} />
+            <TextArea
+              name={name}
+              value={textAreaValue}
+              onChange={onChange}
+              onBlur={onBlur}
+              errorMessage={errorMessage}
+            />
           </TabContent>
           <TabContent value="preview">
-            {value.length === 0 ? (
-              <EmptyPreview />
-            ) : (
-              <Preview articleText={value} />
-            )}
+            <Preview textAreaValue={textAreaValue} />
           </TabContent>
           <TabContent value="previewFullScreen">
-            {value.length === 0 ? (
-              <EmptyPreview />
-            ) : (
-              <Preview articleText={value} />
-            )}
+            <Preview textAreaValue={textAreaValue} />
           </TabContent>
         </Tabs>
       </FocusScope>
