@@ -1,6 +1,7 @@
 import { transparentize } from 'polished'
 import styled, { css } from 'styled-components'
 import { ErrorMessage } from '@/components'
+import React from 'react'
 
 export interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -36,15 +37,17 @@ const TextAreaWrapper = styled.textarea<TextAreaProps>`
   `}
 `
 
-export const TextArea = ({ touched, errorMessage, ...rest }: TextAreaProps) => (
-  <Wrapper>
-    <TextAreaWrapper autoComplete="off" {...rest} />
-    {errorMessage && touched && (
-      <ErrorMessage
-        message={errorMessage}
-        fontWeight="bold"
-        textAlign="start"
-      />
-    )}
-  </Wrapper>
+export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  ({ errorMessage, touched, ...rest }, ref) => (
+    <Wrapper>
+      <TextAreaWrapper autoComplete="off" ref={ref} {...rest} />
+      {errorMessage && touched && (
+        <ErrorMessage
+          message={errorMessage}
+          fontWeight="bold"
+          textAlign="start"
+        />
+      )}
+    </Wrapper>
+  )
 )
