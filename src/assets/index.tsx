@@ -3,6 +3,7 @@ import { ReactComponent as DefaultEmptyIcon } from './empty.svg'
 import { ReactComponent as DefaultErrorStateIcon } from './error-state.svg'
 import { ReactComponent as DefaultFullScreenIcon } from './fullscreen.svg'
 import { ReactComponent as DefaultCheckIcon } from './check.svg'
+import { ReactComponent as DefaultExclamationIcon } from './exclamation.svg'
 import * as AccessibleIcon from '@radix-ui/react-accessible-icon'
 
 export const CloseIcon = () => (
@@ -32,5 +33,11 @@ export const FullScreenIcon = () => (
 export const CheckIcon = () => (
   <AccessibleIcon.Root label="check">
     <DefaultCheckIcon />
+  </AccessibleIcon.Root>
+)
+
+export const ExclamationIcon = () => (
+  <AccessibleIcon.Root label="exclamation error">
+    <DefaultExclamationIcon />
   </AccessibleIcon.Root>
 )
