@@ -1,4 +1,4 @@
-import { CloseIcon } from '@/assets'
+import { CloseIcon } from '@/components'
 import { transparentize } from 'polished'
 import { type ReactNode } from 'react'
 import styled, { css } from 'styled-components'
