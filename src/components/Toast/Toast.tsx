@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { CloseIcon } from '@/assets'
+import { CloseIcon } from '@/components'
 import * as RadixToast from '@radix-ui/react-toast'
 
 export type ToastProps = {

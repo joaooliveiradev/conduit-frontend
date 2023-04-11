@@ -1,4 +1,4 @@
-import { EmptyIcon } from '@/assets'
+import { EmptyIcon } from '@/components'
 import styled, { css } from 'styled-components'
 
 export type EmptyStateProps = {

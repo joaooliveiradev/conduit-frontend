@@ -1,5 +1,4 @@
-import { ErrorStateIcon } from '@/assets'
-import { Button } from '@/components'
+import { Button, ErrorStateIcon } from '@/components'
 import styled, { css } from 'styled-components'
 
 type ButtonProps = {
