@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ErrorMessage } from '@/components/'
+import { ErrorFieldMessage } from '@/components/'
 import React from 'react'
 
 export interface InputProps
@@ -56,7 +56,7 @@ export const Input = ({
         {...rest}
       />
       {errorMessage && touched && (
-        <ErrorMessage message={errorMessage} fontWeight="bold" />
+        <ErrorFieldMessage message={errorMessage} fontWeight="bold" />
       )}
     </Wrapper>
   )
