@@ -4,40 +4,36 @@ import {
   TabsPane,
   TabContent,
   Pane as PaneDefault,
-  TextAreaProps,
+  type TextAreaProps,
+  FullScreenIcon,
 } from '@/components/'
-import { FullScreenIcon } from '@/assets/'
 import { useState } from 'react'
 import { ArticleBody as DefaultArticleBody } from '@/components/ArticleBody/ArticleBody'
 import { FocusScope } from '@radix-ui/react-focus-scope'
-import styled, { css } from 'styled-components'
+import styled, { css, DefaultTheme } from 'styled-components'
 
 type TextEditorWrapperProps = {
   fullScreen: boolean
 }
 
-const Wrapper = styled.div<TextEditorWrapperProps>`
-  ${({ fullScreen, theme }) =>
-    fullScreen &&
-    css`
-      background: #ffffff;
-      position: fixed;
-      inset: 0;
-      margin: ${theme.spacings.xxlarge};
-      transition: all 150ms ease;
-    `}
+const fullScreenModifiers = (theme: DefaultTheme) => css`
+  background: #ffffff;
+  position: fixed;
+  inset: 0;
+  margin: ${theme.spacings.xxlarge};
+  transition: all 150ms ease;
 `
 
+const Wrapper = styled.div<TextEditorWrapperProps>(
+  ({ fullScreen, theme }) => fullScreen && fullScreenModifiers(theme)
+)
+
 const Tabs = styled(TabsDefault)`
-  ${({ theme }) => css`
-    gap: ${theme.spacings.xsmall};
-  `}
+  gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
 const Pane = styled(PaneDefault)`
-  ${({ theme }) => css`
-    gap: ${theme.spacings.xxsmall};
-  `}
+  gap: ${({ theme }) => theme.spacings.xxsmall};
 `
 
 const FullScreenBtn = styled(TabsPane)`
@@ -46,9 +42,7 @@ const FullScreenBtn = styled(TabsPane)`
 `
 
 const ArticleBody = styled(DefaultArticleBody)`
-  ${({ theme }) => css`
-    padding: ${theme.spacings.xsmall};
-  `}
+  padding: ${({ theme }) => theme.spacings.xsmall};
 `
 
 const EmptyPreviewWrapper = styled.section`
