@@ -17,14 +17,14 @@ import {
   none,
   type Some,
 } from 'fp-ts/Option'
-import { Modal, Input, Button, ErrorMessage } from '@/components'
+import { Modal, Input, Button, ErrorFieldMessage } from '@/components'
 import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
 import { AuthenticationError, UnknownError } from '@/libs'
 import { useState } from 'react'
-import styled, { css } from 'styled-components'
 import { Either } from 'fp-ts/Either'
 import * as Yup from 'yup'
+import styled, { css } from 'styled-components'
 
 const Wrapper = styled.form`
   ${({ theme }) => css`
@@ -227,7 +227,7 @@ export const SignInModal = ({
             Sign in
           </Button>
           {isSome(maybeSignInError) && (
-            <ErrorMessage
+            <ErrorFieldMessage
               message={maybeSignInError.value.message}
               fontWeight="medium"
               textAlign="center"
@@ -284,7 +284,7 @@ export const SignInModal = ({
             Sign up
           </Button>
           {isSome(maybeSignUpError) && (
-            <ErrorMessage
+            <ErrorFieldMessage
               message={maybeSignUpError.value.message}
               fontWeight="medium"
               textAlign="center"
