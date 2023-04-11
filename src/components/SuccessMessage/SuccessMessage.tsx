@@ -1,5 +1,5 @@
 import { transparentize } from 'polished'
-import { CheckIcon } from '@/assets'
+import { CheckIcon } from '@/components'
 import { ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 
