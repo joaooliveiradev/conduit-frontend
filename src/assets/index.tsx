@@ -1,6 +1,6 @@
 import { ReactComponent as DefaultCloseIcon } from './close.svg'
 import { ReactComponent as DefaultEmptyIcon } from './empty.svg'
-import { ReactComponent as DefaultErrorIcon } from './error.svg'
+import { ReactComponent as DefaultErrorStateIcon } from './error-state.svg'
 import { ReactComponent as DefaultFullScreenIcon } from './fullscreen.svg'
 import { ReactComponent as DefaultCheckIcon } from './check.svg'
 import * as AccessibleIcon from '@radix-ui/react-accessible-icon'
@@ -17,9 +17,9 @@ export const EmptyIcon = () => (
   </AccessibleIcon.Root>
 )
 
-export const ErrorIcon = () => (
+export const ErrorStateIcon = () => (
   <AccessibleIcon.Root label="error state">
-    <DefaultErrorIcon />
+    <DefaultErrorStateIcon />
   </AccessibleIcon.Root>
 )
 
