@@ -1,4 +1,4 @@
-import { ErrorIcon } from '@/assets'
+import { ErrorStateIcon } from '@/assets'
 import { Button } from '@/components'
 import styled, { css } from 'styled-components'
 
@@ -61,7 +61,7 @@ export const ErrorState = ({
 }: ErrorStateProps) => {
   return (
     <Wrapper>
-      <ErrorIcon />
+      <ErrorStateIcon />
       <TextWrapper>
         <Title>{title}</Title>
         <Message>{message}</Message>
