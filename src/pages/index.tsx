@@ -32,7 +32,7 @@ import {
   type Option,
 } from 'fp-ts/Option'
 import { type Either } from 'fp-ts/Either'
-import { f, DecodeError } from '@/libs'
+import { f, ValidationError } from '@/libs'
 import { type InfiniteData } from '@tanstack/react-query'
 import React from 'react'
 import * as superJSON from 'superjson'
@@ -91,7 +91,7 @@ const Home: NextPage = () => {
   const feedArticlesDataOption = fromNullable(feedArticlesData)
 
   const handleMaybeArticles = (
-    data: Option<InfiniteData<Either<DecodeError, GetArticlesOutput>>>
+    data: Option<InfiniteData<Either<ValidationError, GetArticlesOutput>>>
   ) => {
     const pages = f(() => {
       if (isSome(data)) {

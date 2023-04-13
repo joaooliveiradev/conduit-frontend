@@ -13,7 +13,7 @@ import {
   type Option,
 } from 'fp-ts/Option'
 import styled, { css } from 'styled-components'
-import { AuthorizationError, UnknownError, DecodeError } from '@/libs'
+import { AuthorizationError, UnknownError, ValidationError } from '@/libs'
 
 const Wrapper = styled.form`
   ${({ theme }) => css`
@@ -99,8 +99,9 @@ export const NewArticle = () => {
   const genericErrorOption = fromNullable(error)
   const errorLeftOption = pipe(dataOption, chain(getLeft))
 
-  const maybeError: Option<DecodeError | UnknownError | AuthorizationError> =
-    alt(() => errorLeftOption)(genericErrorOption)
+  const maybeError: Option<
+    ValidationError | UnknownError | AuthorizationError
+  > = alt(() => errorLeftOption)(genericErrorOption)
   const maybeData = pipe(dataOption, chain(getRight))
 
   return (
