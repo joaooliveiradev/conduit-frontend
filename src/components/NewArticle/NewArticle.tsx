@@ -1,14 +1,25 @@
-import { Button, Input, TextEditor } from '@/components'
+import { Alert, Button, Input, TextButton, TextEditor } from '@/components'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
+import { pipe } from 'fp-ts/function'
+import {
+  fromNullable,
+  chain,
+  isSome,
+  getLeft,
+  alt,
+  getRight,
+  type Option,
+} from 'fp-ts/Option'
 import styled, { css } from 'styled-components'
+import { AuthorizationError, UnknownError, DecodeError } from '@/libs'
 
 const Wrapper = styled.form`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
-    row-gap: ${theme.spacings.xxmedium};
+    row-gap: ${theme.spacings.xmedium};
     width: 100%;
     max-width: 700px;
   `}
@@ -31,6 +42,12 @@ const FieldWrapper = styled.div`
 
 const PublishBtn = styled(Button)`
   align-self: flex-end;
+`
+
+const AlertContentWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
 type NewArticleFieldValues = {
@@ -60,7 +77,7 @@ const newArticleSchema = object({
 })
 
 export const NewArticle = () => {
-  const { mutate: createArticle } = useNewArticle()
+  const { mutate: createArticle, data, error, isLoading } = useNewArticle()
 
   const handleSubmit = (values: NewArticleFieldValues) => {
     const newCreateArticleValues: NewArticleRequest = {
@@ -76,6 +93,16 @@ export const NewArticle = () => {
     validateOnBlur: false,
     onSubmit: (values) => handleSubmit(values),
   })
+
+  const dataOption = fromNullable(data)
+
+  const genericErrorOption = fromNullable(error)
+  const errorLeftOption = pipe(dataOption, chain(getLeft))
+
+  const maybeError: Option<DecodeError | UnknownError | AuthorizationError> =
+    alt(() => errorLeftOption)(genericErrorOption)
+  const maybeData = pipe(dataOption, chain(getRight))
+
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
       <Title>New Article</Title>
@@ -107,9 +134,38 @@ export const NewArticle = () => {
           touched={formik.touched.body}
         />
       </FieldWrapper>
-      <PublishBtn type="submit" size="large">
+      <PublishBtn
+        type="submit"
+        size="large"
+        isLoading={isLoading}
+        disabled={isLoading}
+      >
         Publish Article
       </PublishBtn>
+      {isSome(maybeData) && (
+        <Alert status="success">
+          <AlertContentWrapper>
+            <Alert.Icon />
+            <Alert.Text>
+              Congratulations! Your article has been successfully created.
+            </Alert.Text>
+            <TextButton
+              target="_blank"
+              href={`/article/${maybeData.value.article.slug}`}
+            >
+              View
+            </TextButton>
+          </AlertContentWrapper>
+        </Alert>
+      )}
+      {isSome(maybeError) && (
+        <Alert status="error">
+          <AlertContentWrapper>
+            <Alert.Icon />
+            <Alert.Text>{maybeError.value.message}</Alert.Text>
+          </AlertContentWrapper>
+        </Alert>
+      )}
     </Wrapper>
   )
 }
