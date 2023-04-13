@@ -1,12 +1,12 @@
 import { AuthorizationError, DecodeError, fetcher, UnknownError } from '@/libs'
 import { type NewArticleRequest } from './NewArticle'
-import { ArticleCodec } from '@/types'
+import { ArticleBySlugCodec as NewArticleCodec } from '@/types'
 import { type Either } from 'fp-ts/Either'
 import { useMutation } from '@tanstack/react-query'
 import * as t from 'io-ts'
 
 const newArticleResponseCodec = t.type({
-  article: ArticleCodec,
+  article: NewArticleCodec,
 })
 
 type NewArticleResponseCodec = t.TypeOf<typeof newArticleResponseCodec>
