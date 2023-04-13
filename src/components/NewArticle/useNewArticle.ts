@@ -1,4 +1,4 @@
-import { AuthorizationError, DecodeError, fetcher, UnknownError } from '@/libs'
+import { AuthorizationError, ValidationError, fetcher, UnknownError } from '@/libs'
 import { type NewArticleRequest } from './NewArticle'
 import { ArticleBySlugCodec as NewArticleCodec } from '@/types'
 import { type Either } from 'fp-ts/Either'
@@ -34,7 +34,7 @@ const NEW_ARTICLE_KEY = 'new-article'
 
 export const useNewArticle = () =>
   useMutation<
-    Either<DecodeError, NewArticleResponseOutput>,
+    Either<ValidationError, NewArticleResponseOutput>,
     AuthorizationError | UnknownError,
     NewArticleRequest
   >([NEW_ARTICLE_KEY], postArticle)

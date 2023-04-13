@@ -20,11 +20,11 @@ import {
 import { Modal, Input, Button, ErrorFieldMessage } from '@/components'
 import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
-import { AuthenticationError, UnknownError } from '@/libs'
+import { ValidationError, UnknownError } from '@/libs'
 import { useState } from 'react'
-import { Either } from 'fp-ts/Either'
-import * as Yup from 'yup'
+import { type Either } from 'fp-ts/Either'
 import styled, { css } from 'styled-components'
+import * as Yup from 'yup'
 
 const Wrapper = styled.form`
   ${({ theme }) => css`
@@ -116,9 +116,9 @@ export type SignInModalProps = {
 }
 
 type GetMaybeErrorProps = <D>(
-  data: Either<AuthenticationError, D> | undefined,
+  data: Either<ValidationError, D> | undefined,
   genericError: UnknownError | null
-) => None | Some<AuthenticationError> | Some<UnknownError>
+) => None | Some<ValidationError> | Some<UnknownError>
 
 const signInRef = (node: HTMLInputElement | null) =>
   node ? node.focus() : null
