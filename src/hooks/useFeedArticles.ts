@@ -1,5 +1,5 @@
 import { ArticleCodec } from '@/types'
-import { AuthorizationError, DecodeError, fetcher, UnknownError } from '@/libs'
+import { AuthorizationError, ValidationError, fetcher, UnknownError } from '@/libs'
 import {
   type QueryFunctionContext,
   type QueryKey,
@@ -30,7 +30,7 @@ const oneMinute = 60 * 1000
 export const GET_FEED_ARTICLES_KEY = 'get-feed-articles'
 
 type GetFeedArticlesOptions = UseInfiniteQueryOptions<
-  Either<DecodeError, GetFeedArticlesOutput>,
+  Either<ValidationError, GetFeedArticlesOutput>,
   UnknownError | AuthorizationError
 >
 
@@ -52,7 +52,7 @@ export const useFeedArticles = (
   options?: GetFeedArticlesOptions
 ) =>
   useInfiniteQuery<
-    Either<DecodeError, GetFeedArticlesOutput>,
+    Either<ValidationError, GetFeedArticlesOutput>,
     UnknownError | AuthorizationError
   >(
     [GET_FEED_ARTICLES_KEY],

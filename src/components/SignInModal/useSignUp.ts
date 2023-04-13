@@ -1,5 +1,5 @@
 import { UserTypeCodec } from '@/types'
-import { AuthenticationError, fetcher, UnknownError } from '@/libs'
+import { ValidationError, fetcher, UnknownError } from '@/libs'
 import { useMutation } from '@tanstack/react-query'
 import { type Either } from 'fp-ts/Either'
 import { useAuth } from '@/context'
@@ -40,7 +40,7 @@ export const useSignUp = () => {
   const { handleLogin } = useAuth()
 
   return useMutation<
-    Either<AuthenticationError, SignUpResponseOutput>,
+    Either<ValidationError, SignUpResponseOutput>,
     UnknownError,
     SignUpRequest
   >([USE_SIGN_UP_KEY], signUpMutation, {

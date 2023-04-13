@@ -38,24 +38,13 @@ export class UnknownError extends DefaultError {
   }
 }
 
-export class DecodeError extends DefaultError {
-  constructor(decodeErrors: string) {
+export class ValidationError extends DefaultError {
+  constructor(errorMessage: string, decodeErrors?: string) {
     super({
-      message:
-        "Something wen't wrong with our servers, and we're working to fix it. Please try again later.",
-      name: 'DecodeError',
-      status: 422,
-      decodeErrors,
-    })
-  }
-}
-
-export class AuthenticationError extends DefaultError {
-  constructor(errorMessage: string) {
-    super({
-      name: 'AuthenticationError',
+      name: 'ValidationError',
       status: 422,
       message: errorMessage,
+      decodeErrors,
     })
   }
 }
@@ -78,7 +67,7 @@ export const handleFetcherErrors = async (responseErr: Response) => {
     throw new AuthorizationError()
   } else if (responseErr.status === HttpStatus.UnprocessableEntity) {
     const errors = await responseErr.json()
-    return new AuthenticationError(errorsToString(errors))
+    return new ValidationError(errorsToString(errors))
   } else {
     throw new UnknownError()
   }

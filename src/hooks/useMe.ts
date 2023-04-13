@@ -1,6 +1,6 @@
 import { UserTypeCodec } from '@/types'
 import { type Either } from 'fp-ts/Either'
-import { AuthorizationError, DecodeError, fetcher, UnknownError } from '@/libs'
+import { AuthorizationError, ValidationError, fetcher, UnknownError } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import * as t from 'io-ts'
 
@@ -13,7 +13,7 @@ type UseMeResponse = t.TypeOf<typeof UseMeResponseCodec>
 export type UseMeOutput = t.OutputOf<typeof UseMeResponseCodec>
 
 type UseMeOptions = UseQueryOptions<
-  Either<DecodeError, UseMeOutput>,
+  Either<ValidationError, UseMeOutput>,
   UnknownError | AuthorizationError
 >
 
@@ -29,7 +29,7 @@ export const getUseMeKey = (accessToken: string) =>
 
 export const useMe = (options: UseMeOptions) => {
   return useQuery<
-    Either<DecodeError, UseMeOutput>,
+    Either<ValidationError, UseMeOutput>,
     UnknownError | AuthorizationError
   >({
     queryFn: getMe,

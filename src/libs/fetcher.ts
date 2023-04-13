@@ -1,9 +1,8 @@
 import {
   handleFetcherErrors,
   UnknownError,
-  DecodeError,
+  ValidationError,
   AuthorizationError,
-  AuthenticationError,
 } from '@/libs'
 import { parseCookies } from 'nookies'
 import { type Either, left, right, isRight } from 'fp-ts/Either'
@@ -14,28 +13,28 @@ import * as t from 'io-ts'
 
 const validationHandler = <A>(
   dataValidation: t.Validation<A>
-): Either<DecodeError, A> => {
+): Either<ValidationError, A> => {
   if (isRight(dataValidation)) {
     return right(dataValidation.right)
   } else {
     const decodeErrors = PathReporter.report(dataValidation)
-    return left(new DecodeError(decodeErrors.join(', ')))
+    const errorMessage =
+      "Something wen't wrong with our servers, and we're working to fix it. Please try again later."
+    return left(new ValidationError(errorMessage, decodeErrors.join(', ')))
   }
 }
 
 const validateCodec = <A>(
   codec: t.Type<A, unknown, unknown>,
   data: A
-): Either<DecodeError, A> => pipe(data, codec.decode, validationHandler<A>)
-
-type FetcherLeftErrors = AuthenticationError | DecodeError
+): Either<ValidationError, A> => pipe(data, codec.decode, validationHandler<A>)
 
 export const fetcher = async <D, A>(
   path: string,
   codec: t.Type<A, unknown, unknown>,
   data?: D,
   customConfig?: RequestInit
-): Promise<Either<FetcherLeftErrors, A>> => {
+): Promise<Either<ValidationError, A>> => {
   try {
     const url = `${baseApiUrl}${path}`
     const { 'conduit.token': accessToken } = parseCookies()
