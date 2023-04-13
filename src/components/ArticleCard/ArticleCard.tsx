@@ -6,7 +6,7 @@ export type ArticleCardProps = {
   children: React.ReactNode
 }
 
-export const Wrapper = styled.article`
+const Wrapper = styled.article`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
