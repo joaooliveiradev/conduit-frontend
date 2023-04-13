@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components'
 import { Anchor as DefaultAnchor } from '@/components/Anchor/Anchor'
-import { HTMLAttributes } from 'react'
+import { AnchorHTMLAttributes } from 'react'
 
 export type TextButtonProps = {
   href: string
   children: React.ReactNode
-} & HTMLAttributes<HTMLAnchorElement>
+} & AnchorHTMLAttributes<HTMLAnchorElement>
 
 const Anchor = styled(DefaultAnchor)`
   ${({ theme }) => css`
