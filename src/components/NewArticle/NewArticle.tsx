@@ -156,6 +156,7 @@ export const NewArticle = () => {
             >
               View
             </TextButton>
+            <Alert.Close />
           </AlertContentWrapper>
         </Alert>
       )}
@@ -164,6 +165,7 @@ export const NewArticle = () => {
           <AlertContentWrapper>
             <Alert.Icon />
             <Alert.Text>{maybeError.value.message}</Alert.Text>
+            <Alert.Close />
           </AlertContentWrapper>
         </Alert>
       )}
