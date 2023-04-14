@@ -1,6 +1,6 @@
 import { transparentize } from 'polished'
-import { CheckIcon, ExclamationIcon } from '@/components'
-import { createContext, ReactNode, useContext } from 'react'
+import { CheckIcon, ExclamationIcon, CloseIcon } from '@/components'
+import { createContext, ReactNode, useContext, useState } from 'react'
 import styled, { css, DefaultTheme } from 'styled-components'
 
 type Status = 'success' | 'error'
@@ -24,6 +24,7 @@ const Wrapper = styled.div<AlertStatus>`
     background-color: ${transparentize(0.9, theme.colors.black[100])};
     display: flex;
     align-items: center;
+    position: relative;
     padding-inline-start: ${theme.spacings.xxsmall};
     border-style: solid;
     border-radius: 4px;
@@ -39,17 +40,44 @@ const TextContent = styled.p<AlertStatus>`
   `}
 `
 
-const defaultContextValue: AlertStatus = {
+const ButtonWrapper = styled.button`
+  ${({ theme }) => css`
+    display: flex;
+    background: transparent;
+    position: absolute;
+    top: ${theme.spacings.small};
+    right: ${theme.spacings.small};
+    cursor: pointer;
+  `}
+`
+
+type DefaultContextProps = {
+  status: Status
+  onClose: () => void
+}
+
+const defaultContextValue: DefaultContextProps = {
   status: 'success',
+  onClose: () => null,
 }
 
 const AlertContext = createContext(defaultContextValue)
 
-export const Alert = ({ status, children }: AlertProps) => (
-  <Wrapper status={status}>
-    <AlertContext.Provider value={{ status }}>{children}</AlertContext.Provider>
-  </Wrapper>
-)
+export const Alert = ({ status, children }: AlertProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(true)
+  const onClose = () => setIsOpen(false)
+
+  return (
+    <AlertContext.Provider
+      value={{
+        status,
+        onClose,
+      }}
+    >
+      {isOpen && <Wrapper status={status}>{children}</Wrapper>}
+    </AlertContext.Provider>
+  )
+}
 
 const Icon = () => {
   const { status } = useContext(AlertContext)
@@ -68,3 +96,14 @@ const Text = ({ children }: TextProps) => {
 }
 
 Alert.Text = Text
+
+const Close = () => {
+  const { onClose } = useContext(AlertContext)
+  return (
+    <ButtonWrapper type="button" onClick={onClose}>
+      <CloseIcon />
+    </ButtonWrapper>
+  )
+}
+
+Alert.Close = Close
