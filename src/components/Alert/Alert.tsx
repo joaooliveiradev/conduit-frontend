@@ -1,6 +1,7 @@
 import { transparentize } from 'polished'
 import { CheckIcon, ExclamationIcon, CloseIcon } from '@/components'
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext } from 'react'
+import { useControllableState } from '@radix-ui/react-use-controllable-state'
 import styled, { css, DefaultTheme } from 'styled-components'
 
 type Status = 'success' | 'error'
@@ -12,6 +13,8 @@ type AlertStatus = {
 export type AlertProps = {
   status: Status
   children: ReactNode
+  open?: boolean
+  onOpenChange?: (state: boolean) => void
 }
 
 const getStatusColor = (status: Status, theme: DefaultTheme) =>
@@ -63,20 +66,33 @@ const defaultContextValue: DefaultContextProps = {
 
 const AlertContext = createContext(defaultContextValue)
 
-export const Alert = ({ status, children }: AlertProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true)
-  const onClose = () => setIsOpen(false)
+export const Alert = ({
+  status,
+  children,
+  open,
+  onOpenChange,
+}: AlertProps) => {
+  const [isOpen = true, setIsOpen] = useControllableState<boolean>({
+    prop: open,
+    onChange: onOpenChange,
+  })
 
-  return (
-    <AlertContext.Provider
-      value={{
-        status,
-        onClose,
-      }}
-    >
-      {isOpen && <Wrapper status={status}>{children}</Wrapper>}
-    </AlertContext.Provider>
-  )
+  const onClose = () => setIsOpen(!isOpen)
+
+  if (isOpen) {
+    return (
+      <Wrapper status={status}>
+        <AlertContext.Provider
+          value={{
+            status,
+            onClose,
+          }}
+        >
+          {children}
+        </AlertContext.Provider>
+      </Wrapper>
+    )
+  } else return null
 }
 
 const Icon = () => {
