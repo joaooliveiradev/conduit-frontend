@@ -106,7 +106,7 @@ const Icon = () => {
 
 Alert.Icon = Icon
 
-type TextProps = {
+export type TextProps = {
   children: ReactNode
 }
 
