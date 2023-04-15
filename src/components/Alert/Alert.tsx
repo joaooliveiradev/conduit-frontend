@@ -1,6 +1,6 @@
 import { transparentize } from 'polished'
 import { CheckIcon, ExclamationIcon, CloseIcon } from '@/components'
-import { createContext, ReactNode, useContext } from 'react'
+import { createContext, ReactNode, useContext, useId } from 'react'
 import { useControllableState } from '@radix-ui/react-use-controllable-state'
 import styled, { css, DefaultTheme } from 'styled-components'
 
@@ -57,22 +57,24 @@ const ButtonWrapper = styled.button`
 type DefaultContextProps = {
   status: Status
   onClose: () => void
+  open: boolean
+  id: string
 }
 
 const defaultContextValue: DefaultContextProps = {
   status: 'success',
   onClose: () => null,
+  open: false,
+  id: 'alert',
 }
 
 const AlertContext = createContext(defaultContextValue)
 
-export const Alert = ({
-  status,
-  children,
-  open,
-  onOpenChange,
-}: AlertProps) => {
-  const [isOpen = true, setIsOpen] = useControllableState<boolean>({
+const defaultOpenValue = true
+
+export const Alert = ({ status, children, open, onOpenChange }: AlertProps) => {
+  const id = useId()
+  const [isOpen = defaultOpenValue, setIsOpen] = useControllableState<boolean>({
     prop: open,
     onChange: onOpenChange,
   })
@@ -81,11 +83,13 @@ export const Alert = ({
 
   if (isOpen) {
     return (
-      <Wrapper status={status}>
+      <Wrapper role="alert" id={`alert-${id}`} status={status}>
         <AlertContext.Provider
           value={{
             status,
             onClose,
+            open: isOpen,
+            id: `alert-${id}`,
           }}
         >
           {children}
@@ -114,9 +118,15 @@ const Text = ({ children }: TextProps) => {
 Alert.Text = Text
 
 const Close = () => {
-  const { onClose } = useContext(AlertContext)
+  const { onClose, open, id } = useContext(AlertContext)
+
   return (
-    <ButtonWrapper type="button" onClick={onClose}>
+    <ButtonWrapper
+      type="button"
+      onClick={onClose}
+      aria-controls={id}
+      aria-expanded={open}
+    >
       <CloseIcon />
     </ButtonWrapper>
   )
