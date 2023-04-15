@@ -7,13 +7,51 @@ import {
   getRight,
   type Option,
 } from 'fp-ts/Option'
-import { Alert, Button, Input, TextButton, TextEditor } from '@/components'
+import {
+  type AlertProps,
+  type TextProps,
+  Button,
+  Input,
+  TextButton,
+  TextEditor,
+} from '@/components'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
 import { pipe } from 'fp-ts/function'
 import { AuthorizationError, UnknownError, ValidationError } from '@/libs'
 import styled, { css } from 'styled-components'
+import dynamic from 'next/dynamic'
+
+const Alert = {
+  Root: dynamic<AlertProps>(
+    () => import('@/components/Alert/Alert').then((module) => module.Alert),
+    {
+      ssr: false,
+    }
+  ),
+  Text: dynamic<TextProps>(
+    () =>
+      import('@/components/Alert/Alert').then((module) => module.Alert.Text),
+    {
+      ssr: false,
+    }
+  ),
+  Icon: dynamic<unknown>(
+    () =>
+      import('@/components/Alert/Alert').then((module) => module.Alert.Icon),
+    {
+      ssr: false,
+    }
+  ),
+  Close: dynamic<unknown>(
+    () =>
+      import('@/components/Alert/Alert').then((module) => module.Alert.Close),
+    {
+      ssr: false,
+    }
+  ),
+}
 
 const Wrapper = styled.form`
   ${({ theme }) => css`
@@ -144,7 +182,7 @@ export const NewArticle = () => {
         Publish Article
       </PublishBtn>
       {isSome(maybeData) && (
-        <Alert status="success">
+        <Alert.Root status="success">
           <AlertContentWrapper>
             <Alert.Icon />
             <Alert.Text>
@@ -158,16 +196,16 @@ export const NewArticle = () => {
             </TextButton>
             <Alert.Close />
           </AlertContentWrapper>
-        </Alert>
+        </Alert.Root>
       )}
       {isSome(maybeError) && (
-        <Alert status="error">
+        <Alert.Root status="error">
           <AlertContentWrapper>
             <Alert.Icon />
             <Alert.Text>{maybeError.value.message}</Alert.Text>
             <Alert.Close />
           </AlertContentWrapper>
-        </Alert>
+        </Alert.Root>
       )}
     </Wrapper>
   )
