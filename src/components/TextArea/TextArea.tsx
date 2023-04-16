@@ -33,6 +33,7 @@ const TextAreaWrapper = styled.textarea<TextAreaProps>`
     &:focus-visible {
       outline: 1px solid transparent;
       box-shadow: 0 0 0 2px ${theme.colors.black[200]};
+      margin: 0 2px;
     }
   `}
 `
