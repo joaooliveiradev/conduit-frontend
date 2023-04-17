@@ -1,7 +1,7 @@
 import {
   TextArea,
   Tabs as TabsDefault,
-  TabsPane,
+  TabsPane as TabsPaneDefault,
   TabContent,
   Pane as PaneDefault,
   type TextAreaProps,
@@ -39,6 +39,12 @@ const Tabs = styled(TabsDefault)`
 
 const Pane = styled(PaneDefault)`
   gap: ${({ theme }) => theme.spacings.xxsmall};
+`
+
+const TabsPane = styled(TabsPaneDefault)`
+  &[data-state='active']:not(:focus-visible) {
+    box-shadow: none;
+  }
 `
 
 const FullScreenBtn = styled(TabsPane)`
