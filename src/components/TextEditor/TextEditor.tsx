@@ -7,10 +7,10 @@ import {
   type TextAreaProps,
   FullScreenIcon,
 } from '@/components/'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { ArticleBody as DefaultArticleBody } from '@/components/ArticleBody/ArticleBody'
 import { FocusScope } from '@radix-ui/react-focus-scope'
-import styled, { css, DefaultTheme } from 'styled-components'
+import styled, { DefaultTheme, css } from 'styled-components'
 
 type TextEditorWrapperProps = {
   fullScreen: boolean
@@ -19,17 +19,22 @@ type TextEditorWrapperProps = {
 const fullScreenModifiers = (theme: DefaultTheme) => css`
   background: #ffffff;
   position: fixed;
+  z-index: 999;
   inset: 0;
   margin: ${theme.spacings.xxlarge};
   transition: all 150ms ease;
+  border-radius: ${theme.spacings.small};
+  ${Tabs}, ${TabContent} {
+    height: 100%;
+  }
 `
 
-const Wrapper = styled.div<TextEditorWrapperProps>(
-  ({ fullScreen, theme }) => fullScreen && fullScreenModifiers(theme)
-)
+const Wrapper = styled.div<TextEditorWrapperProps>`
+  ${({ fullScreen, theme }) => fullScreen && fullScreenModifiers(theme)}
+`
 
 const Tabs = styled(TabsDefault)`
-  gap: ${({ theme }) => theme.spacings.xsmall};
+  gap: 0px;
 `
 
 const Pane = styled(PaneDefault)`
@@ -86,12 +91,13 @@ export const TextEditor = ({
   touched,
 }: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
-
+  const id = useId()
   const switchToFullScreen = () => setFullScreen((prevState) => !prevState)
 
+  const textEditorId = `text-editor-${id}`
   return (
-    <Wrapper fullScreen={fullScreen}>
-      <FocusScope loop={fullScreen} trapped={fullScreen}>
+    <FocusScope loop={fullScreen} trapped={fullScreen}>
+      <Wrapper id={textEditorId} fullScreen={fullScreen}>
         <Tabs defaultValue="write">
           <Pane aria-label="Manage text editor menu items.">
             <TabsPane value="write">Write</TabsPane>
@@ -99,6 +105,8 @@ export const TextEditor = ({
             <FullScreenBtn
               value="previewFullScreen"
               onClick={switchToFullScreen}
+              aria-expanded={fullScreen}
+              aria-controls={textEditorId}
             >
               <FullScreenIcon />
             </FullScreenBtn>
@@ -120,7 +128,7 @@ export const TextEditor = ({
             <Preview textAreaValue={textAreaValue} />
           </TabContent>
         </Tabs>
-      </FocusScope>
-    </Wrapper>
+      </Wrapper>
+    </FocusScope>
   )
 }
