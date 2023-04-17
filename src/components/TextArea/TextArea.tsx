@@ -7,10 +7,12 @@ export interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   touched?: boolean
   errorMessage?: string
+  className?: string
 }
 
 const Wrapper = styled.div`
   ${({ theme }) => css`
+    height: 100%;
     display: flex;
     flex-direction: column;
     row-gap: ${theme.spacings.xsmall};
