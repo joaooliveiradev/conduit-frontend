@@ -125,6 +125,7 @@ export const TextEditor = ({
               onBlur={onBlur}
               touched={touched}
               errorMessage={errorMessage}
+              placeholder="Type something awesome!"
             />
           </TabContent>
           <TabContent value="preview">
