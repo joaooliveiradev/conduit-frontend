@@ -22,7 +22,7 @@ import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
 import { ValidationError, UnknownError } from '@/libs'
 import { useState } from 'react'
-import { type Either } from 'fp-ts/Either'
+import type { Either } from 'fp-ts/Either'
 import styled, { css } from 'styled-components'
 import * as Yup from 'yup'
 

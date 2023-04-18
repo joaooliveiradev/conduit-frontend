@@ -1,6 +1,6 @@
 import { transparentize } from 'polished'
-import styled, { css } from 'styled-components'
 import { ErrorFieldMessage } from '@/components'
+import styled, { css } from 'styled-components'
 import React from 'react'
 
 export interface TextAreaProps

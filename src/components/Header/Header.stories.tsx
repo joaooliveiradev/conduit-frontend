@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react'
-import { Header } from '@/components'
+import { Header } from './Header'
 
 const stories: Meta = {
   component: Header,

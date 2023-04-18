@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react'
-import { EmptyState, type EmptyStateProps } from '@/components'
+import { EmptyState, type EmptyStateProps } from './EmptyState'
 
 const stories: Meta<EmptyStateProps> = {
   component: EmptyState,
