@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { type Status } from '@/context'
+import type { Status } from '@/context'
 import { SignInModal, Button } from '@/components'
 import React from 'react'
 

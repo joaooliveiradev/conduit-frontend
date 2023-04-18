@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { Header, Footer, type ToastProps } from '@/components'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import {
   Hydrate,
   QueryCache,

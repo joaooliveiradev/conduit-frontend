@@ -1,6 +1,11 @@
 import type { Meta, Story } from '@storybook/react'
-import { Modal, ModalProps, Title, Description } from './Modal'
-import { Button } from '@/components'
+import {
+  Modal,
+  type ModalProps,
+  Title,
+  Description,
+  Button,
+} from '@/components'
 
 const stories: Meta<ModalProps> = {
   component: Modal,

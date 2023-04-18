@@ -1,6 +1,6 @@
 import { transparentize } from 'polished'
 import { CheckIcon, ExclamationIcon, CloseIcon } from '@/components'
-import { createContext, ReactNode, useContext, useId } from 'react'
+import { createContext, type ReactNode, useContext, useId } from 'react'
 import { useControllableState } from '@radix-ui/react-use-controllable-state'
 import styled, { css, DefaultTheme } from 'styled-components'
 
