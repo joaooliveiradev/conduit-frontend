@@ -23,7 +23,6 @@ type CodeProps = {
 const Wrapper = styled.section`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xmedium};
-    word-break: break-all;
     color: ${theme.colors.grey[200]};
     ul,
     ol {
@@ -35,6 +34,7 @@ const Wrapper = styled.section`
     p {
       margin-bottom: ${theme.spacings.xxsmall};
       line-height: ${theme.spacings.xxmedium};
+      white-space: pre-wrap;
     }
 
     strong {
