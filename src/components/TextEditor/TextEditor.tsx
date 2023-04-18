@@ -6,15 +6,26 @@ import {
   Pane as PaneDefault,
   type TextAreaProps,
   FullScreenIcon,
+  type ArticleBodyProps,
 } from '@/components/'
 import { useId, useState } from 'react'
-import { ArticleBody as DefaultArticleBody } from '@/components/ArticleBody/ArticleBody'
 import { FocusScope } from '@radix-ui/react-focus-scope'
 import styled, { DefaultTheme, css } from 'styled-components'
+import dynamic from 'next/dynamic'
 
 type TextEditorWrapperProps = {
   fullScreen: boolean
 }
+
+const DefaultArticleBody = dynamic<ArticleBodyProps>(
+  () =>
+    import('@/components/ArticleBody/ArticleBody').then(
+      (module) => module.ArticleBody
+    ),
+  {
+    ssr: false,
+  }
+)
 
 const fullScreenModifiers = (theme: DefaultTheme) => css`
   background: #ffffff;
