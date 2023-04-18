@@ -20,7 +20,7 @@ import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
 import { pipe } from 'fp-ts/function'
 import { AuthorizationError, UnknownError, ValidationError } from '@/libs'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import dynamic from 'next/dynamic'
 
 const Alert = {
@@ -54,28 +54,22 @@ const Alert = {
 }
 
 const Wrapper = styled.form`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    row-gap: ${theme.spacings.xmedium};
-    width: 100%;
-    max-width: 700px;
-  `}
+  display: flex;
+  flex-direction: column;
+  row-gap: ${({ theme }) => theme.spacings.xmedium};
+  width: 100%;
+  max-width: 700px;
 `
 
 const Title = styled.h1`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.huge};
-    color: ${theme.colors.black[400]};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.huge};
+  color: ${({ theme }) => theme.colors.black[400]};
 `
 
 const FieldWrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    row-gap: ${theme.spacings.xxsmall};
-  `}
+  display: flex;
+  flex-direction: column;
+  row-gap: ${({ theme }) => theme.spacings.xxsmall};
 `
 
 const PublishBtn = styled(Button)`

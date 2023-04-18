@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import {
   ArticleCard,
   ArticleGrid,
@@ -43,22 +43,21 @@ import { transparentize } from 'polished'
 import * as superJSON from 'superjson'
 
 const Wrapper = styled.section`
-  ${({ theme }) => css`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 111.66px;
+  gap: ${({ theme }) => theme.spacings.xhuge};
+  &::before {
+    content: '';
+    height: 1px;
+    position: absolute;
+    background-color: ${({ theme }) =>
+      transparentize(0.7, theme.colors.grey[300])};
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 111.66px;
-    gap: ${theme.spacings.xhuge};
-    &::before {
-      content: '';
-      height: 1px;
-      position: absolute;
-      background-color: ${transparentize(0.7, theme.colors.grey[300])};
-      width: 100%;
-      transform: translateY(50px);
-      left: 0;
-    }
-  `}
+    transform: translateY(50px);
+    left: 0;
+  }
 `
 
 interface ProfileParams extends ParsedUrlQuery {

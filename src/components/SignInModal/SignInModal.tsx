@@ -27,27 +27,21 @@ import styled, { css } from 'styled-components'
 import * as Yup from 'yup'
 
 const Wrapper = styled.form`
-  ${({ theme }) => css`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacings.medium};
-    padding: ${theme.spacings.xxsmall};
-  `}
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacings.medium};
+  padding: ${({ theme }) => theme.spacings.xxsmall};
 `
 
 const Title = styled.h1`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xxlarge};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xxlarge};
 `
 
 const Text = styled.p`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xmedium};
-    text-align: center;
-    color: ${theme.colors.grey[200]};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
+  text-align: center;
+  color: ${({ theme }) => theme.colors.grey[200]};
 `
 
 const ChangeFormBtn = styled.button`

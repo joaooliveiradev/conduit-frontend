@@ -79,9 +79,7 @@ const Wrapper = styled.section`
 `
 
 const CodeHighlighter = styled(SyntaxHighlighter)`
-  ${({ theme }) => css`
-    border-radius: ${theme.spacings.small};
-  `}
+  border-radius: ${({ theme }) => theme.spacings.small};
 `
 
 const Code = ({ children }: CodeProps) => {

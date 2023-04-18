@@ -3,19 +3,16 @@ import { transparentize } from 'polished'
 import { TextButton as TextButtonDefault } from '@/components/TextButton/TextButton'
 
 const Wrapper = styled.footer`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    font-weight: 500;
-    row-gap: ${theme.spacings.medium};
-  `}
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  row-gap: ${({ theme }) => theme.spacings.medium};
 `
 
 const Line = styled.div`
-  ${({ theme }) => css`
-    height: 1px;
-    background-color: ${transparentize(0.8, theme.colors.grey[100])};
-  `}
+  height: 1px;
+  background-color: ${({ theme }) =>
+    transparentize(0.8, theme.colors.grey[100])};
 `
 
 const Content = styled.div`
@@ -33,10 +30,8 @@ const Text = styled.p`
 `
 
 const TextButton = styled(TextButtonDefault)`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xmedium};
-    line-height: 23.44px;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
+  line-height: 23.44px;
 `
 
 const resetFocusToBody = () => {

@@ -12,20 +12,19 @@ export type ModalProps = {
 }
 
 const Overlay = styled(Dialog.Overlay)`
-  ${({ theme }) => css`
-    position: fixed;
-    inset: 0;
-    background-color: ${transparentize(0.6, theme.colors.black[100])};
-    animation: overlayShow 150ms ease-in;
-    @keyframes overlayShow {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+  position: fixed;
+  inset: 0;
+  background-color: ${({ theme }) =>
+    transparentize(0.6, theme.colors.black[100])};
+  animation: overlayShow 150ms ease-in;
+  @keyframes overlayShow {
+    from {
+      opacity: 0;
     }
-  `}
+    to {
+      opacity: 1;
+    }
+  }
 `
 
 const Content = styled(Dialog.Content)`
@@ -69,15 +68,11 @@ const CloseButton = styled(Dialog.Close)`
 `
 
 export const Title = styled(Dialog.Title)`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.large};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.large};
 `
 
 export const Description = styled(Dialog.Description)`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.medium};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.medium};
 `
 
 export const Modal = ({

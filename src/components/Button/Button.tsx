@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css, DefaultTheme } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,14 +11,14 @@ export interface ButtonProps
 }
 
 const sizeModifiers = {
-  medium: (theme: DefaultTheme) => css`
-    height: ${theme.spacings.large};
-    font-size: ${theme.fonts.sizes.medium};
+  medium: () => css`
+    height: ${({ theme }) => theme.spacings.large};
+    font-size: ${({ theme }) => theme.fonts.sizes.medium};
     line-height: 2.1rem;
   `,
-  large: (theme: DefaultTheme) => css`
-    height: ${theme.spacings.xlarge};
-    font-size: ${theme.fonts.sizes.xmedium};
+  large: () => css`
+    height: ${({ theme }) => theme.spacings.xlarge};
+    font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
     line-height: 2.3rem;
   `,
 }
@@ -38,7 +38,7 @@ const Wrapper = styled.button<Omit<ButtonProps, 'children'>>`
     cursor: pointer;
     letter-spacing: -0.055em;
     transition: background-color 250ms ease-in;
-    ${size && sizeModifiers[size](theme)};
+    ${size && sizeModifiers[size]};
     ${disabled &&
     css`
       opacity: 0.3;

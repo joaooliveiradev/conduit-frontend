@@ -75,10 +75,8 @@ const EmptyPreviewWrapper = styled.section`
 `
 
 const EmptyPreviewText = styled.h1`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xlarge};
-    color: ${theme.colors.grey[100]};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xlarge};
+  color: ${({ theme }) => theme.colors.grey[100]};
 `
 
 type PreviewProps = {

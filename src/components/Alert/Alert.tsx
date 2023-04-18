@@ -37,21 +37,17 @@ const Wrapper = styled.div<AlertStatus>`
 `
 
 const TextContent = styled.p<AlertStatus>`
-  ${({ status, theme }) => css`
-    font-size: ${theme.fonts.sizes.xmedium};
-    color: ${getStatusColor(status, theme)};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
+  color: ${({ status, theme }) => getStatusColor(status, theme)};
 `
 
 const ButtonWrapper = styled.button`
-  ${({ theme }) => css`
-    display: flex;
-    background: transparent;
-    position: absolute;
-    top: ${theme.spacings.small};
-    right: ${theme.spacings.small};
-    cursor: pointer;
-  `}
+  display: flex;
+  background: transparent;
+  position: absolute;
+  top: ${({ theme }) => theme.spacings.small};
+  right: ${({ theme }) => theme.spacings.small};
+  cursor: pointer;
 `
 
 type DefaultContextProps = {
