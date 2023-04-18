@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 import { useAuth } from '@/context'
@@ -38,11 +38,9 @@ import React from 'react'
 import * as superJSON from 'superjson'
 
 const ContentSection = styled.section`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    row-gap: ${theme.spacings.xxxhuge};
-  `}
+  display: flex;
+  flex-direction: column;
+  row-gap: ${({ theme }) => theme.spacings.xxxhuge};
 `
 
 const Home: NextPage = () => {

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Avatar, ProfileDescription } from '@/components'
 
 export type ProfileInformationProps = {
@@ -7,12 +7,10 @@ export type ProfileInformationProps = {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => css`
-    gap: ${theme.spacings.xmedium};
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `}
+  gap: ${({ theme }) => theme.spacings.xmedium};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export const ProfileInformation = ({

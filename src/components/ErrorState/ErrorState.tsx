@@ -1,5 +1,5 @@
 import { Button, ErrorStateIcon } from '@/components'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 type ButtonProps = {
   disabled?: boolean
@@ -15,38 +15,30 @@ export type ErrorStateProps = {
 } & ButtonProps
 
 const Wrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    row-gap: ${theme.spacings.xmedium};
-  `}
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: ${({ theme }) => theme.spacings.xmedium};
 `
 
 const TextWrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: ${theme.spacings.xsmall};
-  `}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
 const Title = styled.h1`
-  ${({ theme }) => css`
-    color: ${theme.colors.black};
-    font-size: ${theme.fonts.sizes.xxlarge};
-  `}
+  color: ${({ theme }) => theme.colors.black};
+  font-size: ${({ theme }) => theme.fonts.sizes.xxlarge};
 `
 
 const Message = styled.p`
-  ${({ theme }) => css`
-    color: ${theme.colors.grey[300]};
-    font-size: ${theme.fonts.sizes.xmedium};
-    font-weight: 500;
-  `}
+  color: ${({ theme }) => theme.colors.grey[300]};
+  font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
+  font-weight: 500;
 `
 
 export const ErrorState = ({

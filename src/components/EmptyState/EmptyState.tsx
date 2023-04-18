@@ -1,5 +1,5 @@
 import { EmptyIcon } from '@/components'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 export type EmptyStateProps = {
   message: string
@@ -7,35 +7,27 @@ export type EmptyStateProps = {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: ${theme.spacings.large};
-  `}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: ${({ theme }) => theme.spacings.large};
 `
 
 const TextWrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: ${theme.spacings.xsmall};
-  `}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
 const Title = styled.h1`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xxlarge};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xxlarge};
 `
 
 const Description = styled.p`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xmedium};
-    color: ${theme.colors.grey[300]};
-    font-weight: 500;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
+  color: ${({ theme }) => theme.colors.grey[300]};
+  font-weight: 500;
 `
 
 export const EmptyState = ({ message, title }: EmptyStateProps) => {

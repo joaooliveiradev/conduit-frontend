@@ -11,12 +11,10 @@ export interface TextAreaProps
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => css`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: ${theme.spacings.xsmall};
-  `}
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
 const TextAreaWrapper = styled.textarea<TextAreaProps>`

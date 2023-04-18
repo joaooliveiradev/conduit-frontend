@@ -1,10 +1,8 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const Wrapper = styled.span`
-  ${({ theme }) => css`
-    color: ${theme.colors.grey[300]};
-    font-size: ${theme.fonts.sizes.medium};
-  `}
+  color: ${({ theme }) => theme.colors.grey[300]};
+  font-size: ${({ theme }) => theme.fonts.sizes.medium};
 `
 
 export const Divider = () => <Wrapper>{`//`}</Wrapper>

@@ -7,9 +7,7 @@ export type ProfileNameProps = {
 }
 
 const Name = styled.span`
-  ${({ theme }) => css`
-    color: ${theme.colors.black[400]};
-  `}
+  color: ${({ theme }) => theme.colors.black[400]};
 `
 
 const Wrapper = styled.div<Pick<ProfileNameProps, 'size'>>`

@@ -80,19 +80,15 @@ const Viewport = styled(RadixToast.Viewport)`
 `
 
 const Title = styled(RadixToast.Title)`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xlarge};
-    line-height: 29px;
-    letter-spacing: -0.04em;
-    font-weight: 600;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xlarge};
+  line-height: 29px;
+  letter-spacing: -0.04em;
+  font-weight: 600;
 `
 
 const Description = styled(RadixToast.Description)`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xmedium};
-    text-align: center;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
+  text-align: center;
 `
 
 const Close = styled(RadixToast.Close)`

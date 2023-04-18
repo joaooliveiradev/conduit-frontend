@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Button as DefaultButton } from '@/components/Button/Button'
 import { ProfileInformation, TextButton } from '@/components'
 import Link from 'next/link'
@@ -18,13 +18,11 @@ const Wrapper = styled.header`
 `
 
 const Actions = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    gap: ${theme.spacings.xmedium};
-    align-items: center;
-    position: absolute;
-    right: 0;
-  `}
+  display: flex;
+  gap: ${({ theme }) => theme.spacings.xmedium};
+  align-items: center;
+  position: absolute;
+  right: 0;
 `
 
 const Button = styled(DefaultButton)`

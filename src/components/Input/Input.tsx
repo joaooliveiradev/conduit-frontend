@@ -11,12 +11,10 @@ export interface InputProps
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    row-gap: ${theme.spacings.xsmall};
-    width: 100%;
-  `}
+  display: flex;
+  flex-direction: column;
+  row-gap: ${({ theme }) => theme.spacings.xsmall};
+  width: 100%;
 `
 
 const InputWrapper = styled.input<InputProps>`
