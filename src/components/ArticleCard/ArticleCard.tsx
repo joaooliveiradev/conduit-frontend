@@ -27,33 +27,27 @@ export const ArticleCard = ({ children }: ArticleCardProps) => (
 )
 
 ArticleCard.Main = styled.section`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacings.small};
-  `}
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacings.small};
 `
 
 ArticleCard.Title = styled.h1`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xlarge};
-    line-height: 29px;
-    letter-spacing: -0.04em;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xlarge};
+  line-height: 29px;
+  letter-spacing: -0.04em;
 `
 
 ArticleCard.Text = styled.p`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.medium};
-    line-height: 21px;
-    letter-spacing: -0.01em;
-    color: ${theme.colors.grey[200]};
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.medium};
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  color: ${({ theme }) => theme.colors.grey[200]};
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 ArticleCard.Footer = styled.footer`

@@ -42,20 +42,16 @@ const Wrapper = styled.article`
 `
 
 const HeaderSection = styled.section`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    row-gap: ${theme.spacings.xxsmall};
-  `}
+  display: flex;
+  flex-direction: column;
+  row-gap: ${({ theme }) => theme.spacings.xxsmall};
 `
 
 const Title = styled.h1`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xhuge};
-    color: ${theme.colors.black[100]};
-    line-height: 47px;
-    letter-spacing: -0.04em;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xhuge};
+  color: ${({ theme }) => theme.colors.black[100]};
+  line-height: 47px;
+  letter-spacing: -0.04em;
 `
 
 const Description = styled.h3`

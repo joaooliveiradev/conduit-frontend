@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import type { Status } from '@/context'
 import { SignInModal, Button } from '@/components'
 import React from 'react'
@@ -8,34 +8,28 @@ export type HeroProps = {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: ${theme.spacings.xxsmall};
-  `}
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: ${({ theme }) => theme.spacings.xxsmall};
 `
 
 const Title = styled.h1`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xxhuge};
-    line-height: 55px;
-    letter-spacing: -0.055em;
-    color: ${theme.colors.black[100]};
-    font-weight: 700;
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xxhuge};
+  line-height: 55px;
+  letter-spacing: -0.055em;
+  color: ${({ theme }) => theme.colors.black[100]};
+  font-weight: 700;
 `
 
 const Description = styled.p`
-  ${({ theme }) => css`
-    font-size: ${theme.fonts.sizes.xxlarge};
-    letter-spacing: -0.035em;
-    line-height: 34px;
-    max-width: 508px;
-    text-align: center;
-    color: ${theme.colors.grey[200]};
-  `}
+  font-size: ${({ theme }) => theme.fonts.sizes.xxlarge};
+  letter-spacing: -0.035em;
+  line-height: 34px;
+  max-width: 508px;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.grey[200]};
 `
 
 export const Hero = ({ userStatus }: HeroProps) => {

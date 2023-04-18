@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { ProfileAuthor } from '@/components/'
 
 export type ProfileDescriptionProps = {
@@ -7,22 +7,18 @@ export type ProfileDescriptionProps = {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: ${theme.spacings.xxsmall};
-    max-width: 460px;
-  `}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacings.xxsmall};
+  max-width: 460px;
 `
 
 const Description = styled.p`
-  ${({ theme }) => css`
-    color: ${theme.colors.grey[200]};
-    font-size: ${theme.fonts.sizes.xmedium};
-    line-height: 28px;
-    text-align: center;
-  `}
+  color: ${({ theme }) => theme.colors.grey[200]};
+  font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
+  line-height: 28px;
+  text-align: center;
 `
 
 export const ProfileDescription = ({

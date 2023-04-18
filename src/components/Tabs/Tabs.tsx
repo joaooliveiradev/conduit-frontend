@@ -2,19 +2,15 @@ import styled, { css } from 'styled-components'
 import * as TabsRadix from '@radix-ui/react-tabs'
 
 export const Tabs = styled(TabsRadix.Root)`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacings.huge};
-  `}
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacings.huge};
 `
 
 export const Pane = styled(TabsRadix.List)`
-  ${({ theme }) => css`
-    display: flex;
-    gap: ${theme.spacings.large};
-    box-shadow: 0 1px ${theme.colors.grey[500]};
-  `}
+  display: flex;
+  gap: ${({ theme }) => theme.spacings.large};
+  box-shadow: 0 1px ${({ theme }) => theme.colors.grey[500]};
 `
 
 export const TabsPane = styled(TabsRadix.Trigger)`
@@ -41,10 +37,8 @@ export const TabsPane = styled(TabsRadix.Trigger)`
 `
 
 export const TabContent = styled(TabsRadix.Content)`
-  ${({ theme }) => css`
-    &:focus-visible {
-      outline: 1px solid transparent;
-      box-shadow: 0 0 0 2px ${theme.colors.black[200]};
-    }
-  `}
+  &:focus-visible {
+    outline: 1px solid transparent;
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.black[200]};
+  }
 `

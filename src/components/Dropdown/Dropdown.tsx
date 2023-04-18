@@ -42,23 +42,20 @@ const Content = styled(Popover.Content)`
 `
 
 const List = styled.ul`
-  ${({ theme }) => css`
-    background-color: ${theme.colors.white[100]};
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacings.small};
-    word-break: break-word;
-  `}
+  background-color: ${({ theme }) => theme.colors.white[100]};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacings.small};
+  word-break: break-word;
 `
 
 const Item = styled.li`
-  ${({ theme }) => css`
-    border-radius: 6px;
-    list-style-type: none;
-    &:hover {
-      background-color: ${transparentize(0.88, theme.colors.black[200])};
-    }
-  `}
+  border-radius: 6px;
+  list-style-type: none;
+  &:hover {
+    background-color: ${({ theme }) =>
+      transparentize(0.88, theme.colors.black[200])};
+  }
 `
 
 const Anchor = styled(DefaultAnchor)`
