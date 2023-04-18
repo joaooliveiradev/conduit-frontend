@@ -1,7 +1,6 @@
 import type { Meta, Story } from '@storybook/react'
 import { useState } from 'react'
-import { Button } from '../Button/Button'
-import { Toast, type ToastProps } from './Toast'
+import { Toast, type ToastProps, Button } from '@/components'
 
 const stories: Meta<ToastProps> = {
   component: Toast,

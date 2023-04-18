@@ -1,4 +1,4 @@
-import { Story, type Meta } from '@storybook/react'
+import type { Story, Meta } from '@storybook/react'
 import { TextArea, type TextAreaProps } from './TextArea'
 
 const stories: Meta<TextAreaProps> = {

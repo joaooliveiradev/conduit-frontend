@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react'
-import { type AvatarProps, Avatar } from '@/components'
+import { type AvatarProps, Avatar } from './Avatar'
 
 const stories: Meta = {
   component: Avatar,
