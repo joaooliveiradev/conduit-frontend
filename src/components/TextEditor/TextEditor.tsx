@@ -104,6 +104,7 @@ export const TextEditor = ({
   onBlur,
   errorMessage,
   touched,
+  placeholder,
 }: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
   const id = useId()
@@ -134,7 +135,7 @@ export const TextEditor = ({
               onBlur={onBlur}
               touched={touched}
               errorMessage={errorMessage}
-              placeholder="Type something awesome!"
+              placeholder={placeholder}
             />
           </TabContent>
           <TabContent value="preview">

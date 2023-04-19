@@ -160,6 +160,7 @@ export const NewArticle = () => {
         />
         <TextEditor
           name="body"
+          placeholder="Type something awesome!"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.body}
