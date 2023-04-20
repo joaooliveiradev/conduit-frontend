@@ -6,38 +6,72 @@ import { ReactComponent as DefaultCheckIcon } from './check.svg'
 import { ReactComponent as DefaultExclamationIcon } from './exclamation.svg'
 import * as AccessibleIcon from '@radix-ui/react-accessible-icon'
 
-export const CloseIcon = () => (
-  <AccessibleIcon.Root label="close">
-    <DefaultCloseIcon />
+type SVGProps = {
+  label?: string
+} & React.SVGProps<SVGSVGElement>
+
+export const CloseIcon = ({
+  width = 24,
+  height = 24,
+  label = 'close',
+  ...rest
+}: SVGProps) => (
+  <AccessibleIcon.Root label={label}>
+    <DefaultCloseIcon width={width} height={height} {...rest} />
   </AccessibleIcon.Root>
 )
 
-export const EmptyIcon = () => (
-  <AccessibleIcon.Root label="empty state">
-    <DefaultEmptyIcon />
+export const EmptyIcon = ({
+  width = 136,
+  height = 126,
+  label = 'empty state',
+  ...rest
+}: SVGProps) => (
+  <AccessibleIcon.Root label={label}>
+    <DefaultEmptyIcon width={width} height={height} {...rest} />
   </AccessibleIcon.Root>
 )
 
-export const ErrorStateIcon = () => (
-  <AccessibleIcon.Root label="error state">
-    <DefaultErrorStateIcon />
+export const ErrorStateIcon = ({
+  width = 120,
+  height = 124,
+  label = 'error state',
+  ...rest
+}: SVGProps) => (
+  <AccessibleIcon.Root label={label}>
+    <DefaultErrorStateIcon width={width} height={height} {...rest} />
   </AccessibleIcon.Root>
 )
 
-export const FullScreenIcon = () => (
-  <AccessibleIcon.Root label="fullscreen">
-    <DefaultFullScreenIcon />
+export const FullScreenIcon = ({
+  width = 24,
+  height = 24,
+  label = 'fullscreen',
+  ...rest
+}: SVGProps) => (
+  <AccessibleIcon.Root label={label}>
+    <DefaultFullScreenIcon width={width} height={height} {...rest} />
   </AccessibleIcon.Root>
 )
 
-export const CheckIcon = () => (
-  <AccessibleIcon.Root label="check">
-    <DefaultCheckIcon />
+export const CheckIcon = ({
+  width = 24,
+  height = 24,
+  label = 'check',
+  ...rest
+}: SVGProps) => (
+  <AccessibleIcon.Root label={label}>
+    <DefaultCheckIcon width={width} height={height} {...rest} />
   </AccessibleIcon.Root>
 )
 
-export const ExclamationIcon = () => (
-  <AccessibleIcon.Root label="exclamation error">
-    <DefaultExclamationIcon />
+export const ExclamationIcon = ({
+  width = 24,
+  height = 24,
+  label = 'exclamation error',
+  ...rest
+}: SVGProps) => (
+  <AccessibleIcon.Root label={label}>
+    <DefaultExclamationIcon width={width} height={height} {...rest} />
   </AccessibleIcon.Root>
 )
