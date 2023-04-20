@@ -19,9 +19,11 @@ import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
 import { pipe } from 'fp-ts/function'
-import { AuthorizationError, UnknownError, ValidationError } from '@/libs'
+import { AuthorizationError, UnknownError, ValidationError, f } from '@/libs'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import dynamic from 'next/dynamic'
+import * as superJSON from 'superjson'
 
 const Alert = {
   Root: dynamic<AlertProps>(
@@ -108,8 +110,19 @@ const newArticleSchema = object({
   body: string().required('Body is a required field and cannot be empty!'),
 })
 
+const storageKey = 'new-article-editor'
+
 export const NewArticle = () => {
   const { mutate: createArticle, data, error, isLoading } = useNewArticle()
+
+  const storagedValue: NewArticleFieldValues = f(() => {
+    if (typeof window === 'undefined') return initialValues
+    const cachedStorage = fromNullable(localStorage.getItem(storageKey))
+
+    return isSome(cachedStorage)
+      ? superJSON.parse(cachedStorage.value)
+      : initialValues
+  })
 
   const handleSubmit = (values: NewArticleFieldValues) => {
     const newCreateArticleValues: NewArticleRequest = {
@@ -119,7 +132,7 @@ export const NewArticle = () => {
   }
 
   const formik = useFormik({
-    initialValues,
+    initialValues: storagedValue,
     validationSchema: newArticleSchema,
     validateOnChange: false,
     validateOnBlur: false,
@@ -136,6 +149,15 @@ export const NewArticle = () => {
   > = alt(() => errorLeftOption)(genericErrorOption)
   const maybeData = pipe(dataOption, chain(getRight))
 
+  useEffect(() => {
+    const updatedFieldValues: NewArticleFieldValues = {
+      title: formik.values.title,
+      description: formik.values.description,
+      body: formik.values.body,
+    }
+    localStorage.setItem(storageKey, superJSON.stringify(updatedFieldValues))
+  }, [formik.values])
+
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
       <Title>New Article</Title>
@@ -144,6 +166,7 @@ export const NewArticle = () => {
           type="text"
           placeholder="Title"
           name="title"
+          defaultValue={storagedValue.title}
           onChange={formik.handleChange}
           errorMessage={formik.errors.title}
           touched={formik.touched.title}
@@ -153,6 +176,7 @@ export const NewArticle = () => {
           type="text"
           placeholder="What's this article about?"
           name="description"
+          defaultValue={storagedValue.description}
           onChange={formik.handleChange}
           errorMessage={formik.errors.description}
           touched={formik.touched.description}
@@ -161,6 +185,7 @@ export const NewArticle = () => {
         <TextEditor
           name="body"
           placeholder="Type something awesome!"
+          defaultValue={storagedValue.body}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.body}
