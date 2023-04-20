@@ -45,8 +45,8 @@ const ButtonWrapper = styled.button`
   display: flex;
   background: transparent;
   position: absolute;
-  top: ${({ theme }) => theme.spacings.small};
-  right: ${({ theme }) => theme.spacings.small};
+  top: ${({ theme }) => theme.spacings.xsmall};
+  right: ${({ theme }) => theme.spacings.xsmall};
   cursor: pointer;
 `
 
@@ -123,7 +123,7 @@ const Close = () => {
       aria-controls={id}
       aria-expanded={open}
     >
-      <CloseIcon />
+      <CloseIcon width={16} height={16} />
     </ButtonWrapper>
   )
 }
