@@ -202,7 +202,6 @@ export const SignInModal = ({
             inputRef={signInRef}
             value={signInFormik.values.email}
             errorMessage={signInFormik.errors.email}
-            touched={signInFormik.touched.password}
             onBlur={signInFormik.handleBlur}
             onChange={signInFormik.handleChange}
           />
@@ -212,9 +211,7 @@ export const SignInModal = ({
             name="password"
             value={signInFormik.values.password}
             errorMessage={signInFormik.errors.password}
-            touched={signInFormik.touched.password}
             onChange={signInFormik.handleChange}
-            onBlur={signInFormik.handleBlur}
           />
           <Button
             type="submit"
@@ -249,9 +246,7 @@ export const SignInModal = ({
             inputRef={signUpRef}
             value={signUpFormik.values.username}
             errorMessage={signUpFormik.errors.username}
-            touched={signUpFormik.touched.username}
             onChange={signUpFormik.handleChange}
-            onBlur={signUpFormik.handleBlur}
           />
           <Input
             type="text"
@@ -259,9 +254,7 @@ export const SignInModal = ({
             placeholder="Email"
             value={signUpFormik.values.email}
             errorMessage={signUpFormik.errors.email}
-            touched={signUpFormik.touched.email}
             onChange={signUpFormik.handleChange}
-            onBlur={signUpFormik.handleBlur}
           />
           <Input
             name="password"
@@ -269,9 +262,7 @@ export const SignInModal = ({
             type="password"
             value={signUpFormik.values.password}
             errorMessage={signUpFormik.errors.password}
-            touched={signUpFormik.touched.password}
             onChange={signUpFormik.handleChange}
-            onBlur={signUpFormik.handleBlur}
           />
           <Button
             type="submit"
