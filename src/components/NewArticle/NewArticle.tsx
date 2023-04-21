@@ -169,8 +169,6 @@ export const NewArticle = () => {
           defaultValue={storagedValue.title}
           onChange={formik.handleChange}
           errorMessage={formik.errors.title}
-          touched={formik.touched.title}
-          onBlur={formik.handleBlur}
         />
         <Input
           type="text"
@@ -179,18 +177,14 @@ export const NewArticle = () => {
           defaultValue={storagedValue.description}
           onChange={formik.handleChange}
           errorMessage={formik.errors.description}
-          touched={formik.touched.description}
-          onBlur={formik.handleBlur}
         />
         <TextEditor
           name="body"
           placeholder="Type something awesome!"
           defaultValue={storagedValue.body}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
           value={formik.values.body}
           errorMessage={formik.errors.body}
-          touched={formik.touched.body}
         />
       </FieldWrapper>
       <PublishBtn

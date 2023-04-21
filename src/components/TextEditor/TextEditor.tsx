@@ -101,9 +101,7 @@ export const TextEditor = ({
   value: textAreaValue,
   onChange,
   name,
-  onBlur,
   errorMessage,
-  touched,
   placeholder,
 }: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
@@ -132,8 +130,6 @@ export const TextEditor = ({
               name={name}
               value={textAreaValue}
               onChange={onChange}
-              onBlur={onBlur}
-              touched={touched}
               errorMessage={errorMessage}
               placeholder={placeholder}
             />
