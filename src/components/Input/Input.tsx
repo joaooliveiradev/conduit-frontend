@@ -6,7 +6,6 @@ import React from 'react'
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
-  touched?: boolean
   inputRef?: (node: HTMLInputElement | null) => void
 }
 
@@ -18,16 +17,14 @@ const Wrapper = styled.div`
 `
 
 const InputWrapper = styled.input<InputProps>`
-  ${({ theme, errorMessage, touched }) => css`
+  ${({ theme, errorMessage }) => css`
     height: ${theme.spacings.xlarge};
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
     padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
     font-size: ${theme.fonts.sizes.xmedium};
     font-weight: 600;
-    color: ${errorMessage && touched
-      ? theme.colors.red[100]
-      : theme.colors.black[200]};
+    color: ${errorMessage ? theme.colors.red[100] : theme.colors.black[200]};
     outline: 1px solid transparent;
     &:focus-visible {
       box-shadow: 0 0 0 2px ${theme.colors.black[200]};
@@ -38,22 +35,16 @@ const InputWrapper = styled.input<InputProps>`
   `}
 `
 
-export const Input = ({
-  errorMessage,
-  touched,
-  inputRef,
-  ...rest
-}: InputProps) => {
+export const Input = ({ errorMessage, inputRef, ...rest }: InputProps) => {
   return (
     <Wrapper>
       <InputWrapper
         errorMessage={errorMessage}
-        touched={touched}
-        autoComplete="off"
         ref={inputRef}
+        autoComplete="off"
         {...rest}
       />
-      {errorMessage && touched && (
+      {errorMessage && (
         <ErrorFieldMessage message={errorMessage} fontWeight="bold" />
       )}
     </Wrapper>
