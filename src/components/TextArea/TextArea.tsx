@@ -5,7 +5,6 @@ import React from 'react'
 
 export interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  touched?: boolean
   errorMessage?: string
   className?: string
 }
@@ -39,10 +38,10 @@ const TextAreaWrapper = styled.textarea<TextAreaProps>`
 `
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ errorMessage, touched, ...rest }, ref) => (
+  ({ errorMessage, ...rest }, ref) => (
     <Wrapper>
       <TextAreaWrapper autoComplete="off" ref={ref} {...rest} />
-      {errorMessage && touched && (
+      {errorMessage && (
         <ErrorFieldMessage
           message={errorMessage}
           fontWeight="bold"
