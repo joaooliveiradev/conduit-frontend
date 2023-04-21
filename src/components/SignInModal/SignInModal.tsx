@@ -151,6 +151,8 @@ export const SignInModal = ({
   const signInFormik = useFormik({
     initialValues: initialSignInValues,
     validationSchema: signInSchema,
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: (values: SignInFieldValues) => {
       const newSignInValues: SignInRequest = {
         user: values,
@@ -167,6 +169,8 @@ export const SignInModal = ({
   const signUpFormik = useFormik({
     initialValues: initialSignUpValues,
     validationSchema: signUpSchema,
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: (values: SignUpFieldValues) => {
       const newSignUpValues: SignUpRequest = {
         user: values,
