@@ -3,13 +3,6 @@ import { type InputProps, Input } from '@/components'
 
 const stories: Meta = {
   component: Input,
-  argTypes: {
-    touched: {
-      table: {
-        disable: true,
-      },
-    },
-  },
 }
 
 const Template: Story<InputProps> = (args) => (
@@ -37,7 +30,6 @@ export const Errored = Template.bind({})
 Errored.args = {
   value: 'Some wrong value',
   errorMessage: 'Some error message',
-  touched: true,
 }
 
 export default stories
