@@ -103,6 +103,7 @@ export const TextEditor = ({
   name,
   errorMessage,
   placeholder,
+  ...rest
 }: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
   const id = useId()
@@ -132,6 +133,7 @@ export const TextEditor = ({
               onChange={onChange}
               errorMessage={errorMessage}
               placeholder={placeholder}
+              {...rest}
             />
           </TabContent>
           <TabContent value="preview">
