@@ -7,7 +7,7 @@ export type ErrorFieldMessageProps = {
   message: string
   fontWeight?: fontWeightValues
   textAlign?: textAlignValues
-}
+} & React.HTMLAttributes<HTMLParagraphElement>
 
 const Text = styled.p<Omit<ErrorFieldMessageProps, 'message'>>`
   ${({ theme, fontWeight, textAlign }) => css`
@@ -22,8 +22,9 @@ export const ErrorFieldMessage = ({
   message,
   fontWeight = 'normal',
   textAlign = 'start',
+  ...rest
 }: ErrorFieldMessageProps) => (
-  <Text fontWeight={fontWeight} textAlign={textAlign}>
+  <Text fontWeight={fontWeight} textAlign={textAlign} {...rest}>
     {message}
   </Text>
 )
