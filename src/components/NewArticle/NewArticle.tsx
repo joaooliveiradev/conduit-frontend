@@ -166,6 +166,7 @@ export const NewArticle = () => {
           type="text"
           placeholder="Title"
           name="title"
+          aria-label="Title"
           defaultValue={storagedValue.title}
           onChange={formik.handleChange}
           errorMessage={formik.errors.title}
@@ -174,6 +175,7 @@ export const NewArticle = () => {
           type="text"
           placeholder="What's this article about?"
           name="description"
+          aria-label="Description"
           defaultValue={storagedValue.description}
           onChange={formik.handleChange}
           errorMessage={formik.errors.description}
@@ -181,6 +183,7 @@ export const NewArticle = () => {
         <TextEditor
           name="body"
           placeholder="Type something awesome!"
+          aria-label="Body"
           defaultValue={storagedValue.body}
           onChange={formik.handleChange}
           value={formik.values.body}
