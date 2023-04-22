@@ -37,9 +37,23 @@ const TextAreaWrapper = styled.textarea<TextAreaProps>`
   `}
 `
 
+const Label = styled.label`
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow-wrap: normal;
+`
+
 export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ errorMessage, ...rest }, ref) => (
+  ({ errorMessage, 'aria-label': ariaLabel, ...rest }, ref) => (
     <Wrapper>
+      {ariaLabel && <Label>{ariaLabel}</Label>}
       <TextAreaWrapper autoComplete="off" ref={ref} {...rest} />
       {errorMessage && (
         <ErrorFieldMessage
