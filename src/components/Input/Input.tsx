@@ -35,10 +35,29 @@ const InputWrapper = styled.input<InputProps>`
   `}
 `
 
-export const Input = ({ errorMessage, inputRef, ...rest }: InputProps) => {
+const Label = styled.label`
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow-wrap: normal;
+`
+
+export const Input = ({
+  errorMessage,
+  inputRef,
+  'aria-label': ariaLabel,
+  ...rest
+}: InputProps) => {
   const errorId = React.useId()
   return (
     <Wrapper>
+      {ariaLabel && <Label>{ariaLabel}</Label>}
       <InputWrapper
         ref={inputRef}
         errorMessage={errorMessage}
