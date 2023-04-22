@@ -36,16 +36,23 @@ const InputWrapper = styled.input<InputProps>`
 `
 
 export const Input = ({ errorMessage, inputRef, ...rest }: InputProps) => {
+  const errorId = React.useId()
   return (
     <Wrapper>
       <InputWrapper
-        errorMessage={errorMessage}
         ref={inputRef}
+        errorMessage={errorMessage}
         autoComplete="off"
+        aria-invalid={errorMessage ? true : undefined}
+        aria-describedby={errorMessage ? errorId : undefined}
         {...rest}
       />
       {errorMessage && (
-        <ErrorFieldMessage message={errorMessage} fontWeight="bold" />
+        <ErrorFieldMessage
+          id={errorId}
+          message={errorMessage}
+          fontWeight="bold"
+        />
       )}
     </Wrapper>
   )
