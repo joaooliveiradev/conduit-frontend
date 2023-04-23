@@ -94,17 +94,10 @@ const Preview = ({ textAreaValue }: PreviewProps) => {
 }
 
 type TextEditorProps = {
-  value: string
+  defaultValue: string
 } & TextAreaProps
 
-export const TextEditor = ({
-  value: textAreaValue,
-  onChange,
-  name,
-  errorMessage,
-  placeholder,
-  ...rest
-}: TextEditorProps) => {
+export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
   const [fullScreen, setFullScreen] = useState<boolean>(false)
   const id = useId()
   const switchToFullScreen = () => setFullScreen((prevState) => !prevState)
@@ -127,20 +120,13 @@ export const TextEditor = ({
             </FullScreenBtn>
           </Pane>
           <TabContent value="write" asChild>
-            <TextArea
-              name={name}
-              value={textAreaValue}
-              onChange={onChange}
-              errorMessage={errorMessage}
-              placeholder={placeholder}
-              {...rest}
-            />
+            <TextArea defaultValue={defaultValue} {...rest} />
           </TabContent>
           <TabContent value="preview">
-            <Preview textAreaValue={textAreaValue} />
+            <Preview textAreaValue={defaultValue} />
           </TabContent>
           <TabContent value="previewFullScreen">
-            <Preview textAreaValue={textAreaValue} />
+            <Preview textAreaValue={defaultValue} />
           </TabContent>
         </Tabs>
       </Wrapper>
