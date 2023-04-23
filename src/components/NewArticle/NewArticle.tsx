@@ -19,8 +19,8 @@ import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
 import { pipe } from 'fp-ts/function'
-import { AuthorizationError, UnknownError, ValidationError, f } from '@/libs'
-import { useEffect } from 'react'
+import { AuthorizationError, UnknownError, ValidationError } from '@/libs'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import dynamic from 'next/dynamic'
 import * as superJSON from 'superjson'
@@ -84,22 +84,6 @@ const AlertContentWrapper = styled.div`
   gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
-type NewArticleFieldValues = {
-  title: string
-  description: string
-  body: string
-}
-
-export type NewArticleRequest = {
-  article: NewArticleFieldValues
-}
-
-const initialValues: NewArticleFieldValues = {
-  title: '',
-  description: '',
-  body: '',
-}
-
 const newArticleSchema = object({
   title: string()
     .required('Title is a required field and cannot be empty')
@@ -110,19 +94,45 @@ const newArticleSchema = object({
   body: string().required('Body is a required field and cannot be empty!'),
 })
 
+type NewArticleFieldValues = {
+  title: string
+  description: string
+  body: string
+}
+
+export type NewArticleRequest = {
+  article: NewArticleFieldValues
+}
+
+const initialFieldValues: NewArticleFieldValues = {
+  title: '',
+  description: '',
+  body: '',
+}
+
 const storageKey = 'new-article-editor'
 
-export const NewArticle = () => {
-  const { mutate: createArticle, data, error, isLoading } = useNewArticle()
+const useLocalStorage = () => {
+  const [storage, setStorage] = useState<NewArticleFieldValues>(() => {
+    if (typeof window === 'undefined') return initialFieldValues
 
-  const storagedValue: NewArticleFieldValues = f(() => {
-    if (typeof window === 'undefined') return initialValues
     const cachedStorage = fromNullable(localStorage.getItem(storageKey))
 
     return isSome(cachedStorage)
       ? superJSON.parse(cachedStorage.value)
-      : initialValues
+      : initialFieldValues
   })
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, superJSON.stringify(storage))
+  }, [storage])
+
+  return { storage, setStorage }
+}
+
+export const NewArticle = () => {
+  const { mutate: createArticle, data, error, isLoading } = useNewArticle()
+  const { storage, setStorage } = useLocalStorage()
 
   const handleSubmit = (values: NewArticleFieldValues) => {
     const newCreateArticleValues: NewArticleRequest = {
@@ -131,8 +141,8 @@ export const NewArticle = () => {
     createArticle(newCreateArticleValues)
   }
 
-  const formik = useFormik({
-    initialValues: storagedValue,
+  const formik = useFormik<NewArticleFieldValues>({
+    initialValues: storage,
     validationSchema: newArticleSchema,
     validateOnChange: false,
     validateOnBlur: false,
@@ -155,8 +165,8 @@ export const NewArticle = () => {
       description: formik.values.description,
       body: formik.values.body,
     }
-    localStorage.setItem(storageKey, superJSON.stringify(updatedFieldValues))
-  }, [formik.values])
+    setStorage(updatedFieldValues)
+  }, [formik.values, setStorage])
 
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
@@ -167,27 +177,26 @@ export const NewArticle = () => {
           placeholder="Title"
           name="title"
           aria-label="Title"
-          defaultValue={storagedValue.title}
           onChange={formik.handleChange}
           errorMessage={formik.errors.title}
+          defaultValue={storage.title}
         />
         <Input
           type="text"
           placeholder="What's this article about?"
           name="description"
           aria-label="Description"
-          defaultValue={storagedValue.description}
           onChange={formik.handleChange}
           errorMessage={formik.errors.description}
+          defaultValue={storage.description}
         />
         <TextEditor
-          name="body"
           placeholder="Type something awesome!"
+          name="body"
           aria-label="Body"
-          defaultValue={storagedValue.body}
           onChange={formik.handleChange}
-          value={formik.values.body}
           errorMessage={formik.errors.body}
+          defaultValue={storage.body}
         />
       </FieldWrapper>
       <PublishBtn
