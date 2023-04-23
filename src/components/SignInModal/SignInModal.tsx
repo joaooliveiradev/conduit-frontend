@@ -203,7 +203,6 @@ export const SignInModal = ({
             inputRef={signInRef}
             value={signInFormik.values.email}
             errorMessage={signInFormik.errors.email}
-            onBlur={signInFormik.handleBlur}
             onChange={signInFormik.handleChange}
           />
           <Input
