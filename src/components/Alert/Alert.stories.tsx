@@ -1,5 +1,10 @@
 import type { Story, Meta } from '@storybook/react'
-import { Alert, type AlertProps, TextButton } from '@/components'
+import {
+  Alert,
+  type AlertProps,
+  TextButton,
+  Button as DefaultButton,
+} from '@/components'
 import styled from 'styled-components'
 import { useState } from 'react'
 
@@ -21,17 +26,31 @@ const WrapperContent = styled.div`
   gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
+const Button = styled(DefaultButton)`
+  margin-top: 16px;
+`
+
+const defaultOpenValue = true
+
 export const SuccessAlert: Story<AlertProps> = () => {
-  const [open, setIsOpen] = useState(true)
+  const [open, setIsOpen] = useState(defaultOpenValue)
   return (
-    <Alert status="success" open={open} onOpenChange={setIsOpen}>
-      <WrapperContent>
-        <Alert.Icon />
-        <Alert.Text>Your article has been successfully created.</Alert.Text>
-        <TextButton href="/article/test">View</TextButton>
-        <Alert.Close />
-      </WrapperContent>
-    </Alert>
+    <>
+      <Alert status="success" open={open} onOpenChange={setIsOpen}>
+        <WrapperContent>
+          <Alert.Icon />
+          <Alert.Text>Your article has been successfully created.</Alert.Text>
+          <TextButton href="/article/test">View</TextButton>
+          <Alert.Close />
+        </WrapperContent>
+      </Alert>
+      <Button
+        size="large"
+        onClick={() => setIsOpen(defaultOpenValue)}
+      >
+        Reset
+      </Button>
+    </>
   )
 }
 
