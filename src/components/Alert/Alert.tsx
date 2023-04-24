@@ -1,6 +1,12 @@
 import { transparentize } from 'polished'
 import { CheckIcon, ExclamationIcon, CloseIcon } from '@/components'
-import { createContext, type ReactNode, useContext, useId } from 'react'
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useId,
+  useEffect,
+} from 'react'
 import { useControllableState } from '@radix-ui/react-use-controllable-state'
 import styled, { css, DefaultTheme } from 'styled-components'
 
@@ -15,6 +21,7 @@ export type AlertProps = {
   children: ReactNode
   open?: boolean
   onOpenChange?: (state: boolean) => void
+  duration?: number
 }
 
 const getStatusColor = (status: Status, theme: DefaultTheme) =>
@@ -52,14 +59,14 @@ const ButtonWrapper = styled.button`
 
 type DefaultContextProps = {
   status: Status
-  onClose: () => void
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean | undefined>>
   open: boolean
   id: string
 }
 
 const defaultContextValue: DefaultContextProps = {
   status: 'success',
-  onClose: () => null,
+  setIsOpen: () => null,
   open: false,
   id: 'alert',
 }
@@ -67,15 +74,25 @@ const defaultContextValue: DefaultContextProps = {
 const AlertContext = createContext(defaultContextValue)
 
 const defaultOpenValue = true
+const defaultDurationValue = 5000
 
-export const Alert = ({ status, children, open, onOpenChange }: AlertProps) => {
+export const Alert = ({
+  status,
+  children,
+  open,
+  onOpenChange,
+  duration = defaultDurationValue,
+}: AlertProps) => {
   const id = useId()
   const [isOpen = defaultOpenValue, setIsOpen] = useControllableState<boolean>({
     prop: open,
     onChange: onOpenChange,
   })
 
-  const onClose = () => setIsOpen(!isOpen)
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsOpen(!defaultOpenValue), duration)
+    return () => window.clearTimeout(timer)
+  }, [duration, isOpen, setIsOpen])
 
   if (isOpen) {
     return (
@@ -83,7 +100,7 @@ export const Alert = ({ status, children, open, onOpenChange }: AlertProps) => {
         <AlertContext.Provider
           value={{
             status,
-            onClose,
+            setIsOpen,
             open: isOpen,
             id: `alert-${id}`,
           }}
@@ -114,12 +131,14 @@ const Text = ({ children }: TextProps) => {
 Alert.Text = Text
 
 const Close = () => {
-  const { onClose, open, id } = useContext(AlertContext)
+  const { setIsOpen, open, id } = useContext(AlertContext)
+
+  const handleClose = () => setIsOpen(!open)
 
   return (
     <ButtonWrapper
       type="button"
-      onClick={onClose}
+      onClick={handleClose}
       aria-controls={id}
       aria-expanded={open}
     >
