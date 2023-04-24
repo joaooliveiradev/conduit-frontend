@@ -79,7 +79,7 @@ const defaultDurationValue = 5000
 export const Alert = ({
   status,
   children,
-  open,
+  open = true,
   onOpenChange,
   duration = defaultDurationValue,
 }: AlertProps) => {
