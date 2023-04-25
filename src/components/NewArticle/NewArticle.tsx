@@ -123,9 +123,10 @@ const useLocalStorage = () => {
       : initialFieldValues
   })
 
-  useEffect(() => {
-    localStorage.setItem(storageKey, superJSON.stringify(storage))
-  }, [storage])
+  useEffect(
+    () => localStorage.setItem(storageKey, superJSON.stringify(storage)),
+    [storage]
+  )
 
   return { storage, setStorage }
 }
