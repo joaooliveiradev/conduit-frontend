@@ -13,6 +13,7 @@ export type ToastProps = {
 
 const Root = styled(RadixToast.Root)`
   ${({ theme }) => css`
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: ${theme.spacings.xmedium} ${theme.spacings.xxsmall};
@@ -72,11 +73,15 @@ const Root = styled(RadixToast.Root)`
 `
 
 const Viewport = styled(RadixToast.Viewport)`
-  width: 308px;
-  border-radius: 6px;
-  position: fixed;
-  right: 220px;
-  top: 160px;
+  ${({ theme }) => css`
+    max-width: 100vw;
+    width: 400px;
+    border-radius: 6px;
+    position: fixed;
+    right: ${theme.spacings.xmedium};
+    top: ${theme.spacings.xmedium};
+    padding: ${theme.spacings.xmedium};
+  `}
 `
 
 const Title = styled(RadixToast.Title)`
@@ -96,7 +101,7 @@ const Close = styled(RadixToast.Close)`
     position: absolute;
     top: ${theme.spacings.xsmall};
     right: ${theme.spacings.xsmall};
-    padding: 6px;
+    padding: ${theme.spacings.small};
     display: flex;
     background-color: ${transparentize(0.8, theme.colors.grey[300])};
     border-radius: 9999px;
