@@ -79,7 +79,7 @@ const defaultDurationValue = 5000
 export const Alert = ({
   status,
   children,
-  open = true,
+  open,
   onOpenChange,
   duration = defaultDurationValue,
 }: AlertProps) => {
@@ -90,7 +90,10 @@ export const Alert = ({
   })
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsOpen(!defaultOpenValue), duration)
+    const timer = window.setTimeout(
+      () => setIsOpen(!defaultOpenValue),
+      duration
+    )
     return () => window.clearTimeout(timer)
   }, [duration, isOpen, setIsOpen])
 
