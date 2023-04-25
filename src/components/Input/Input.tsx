@@ -1,7 +1,18 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import { ErrorFieldMessage } from '@/components/'
+import { type ErrorFieldMessageProps } from '@/components/'
 import React from 'react'
+import dynamic from 'next/dynamic'
+
+const ErrorFieldMessage = dynamic<ErrorFieldMessageProps>(
+  () =>
+    import('@/components/ErrorFieldMessage/ErrorFieldMessage').then(
+      (module) => module.ErrorFieldMessage
+    ),
+  {
+    ssr: false,
+  }
+)
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
