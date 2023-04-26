@@ -18,7 +18,6 @@ import {
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
-import { pipe } from 'fp-ts/function'
 import { AuthorizationError, UnknownError, ValidationError } from '@/libs'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -117,13 +116,13 @@ const initialFieldValues: NewArticleFieldValues = {
 
 const storageKey = 'new-article-editor'
 
-const getStorage = (): NewArticleFieldValues => {
+const getStorage = () => {
   if (typeof window === 'undefined') return initialFieldValues
 
   const cachedStorage = fromNullable(localStorage.getItem(storageKey))
 
   return isSome(cachedStorage)
-    ? superJSON.parse(cachedStorage.value)
+    ? superJSON.parse<NewArticleFieldValues>(cachedStorage.value)
     : initialFieldValues
 }
 
@@ -157,16 +156,6 @@ export const NewArticle = () => {
     onSubmit: (values) => handleSubmit(values),
   })
 
-  const dataOption = fromNullable(data)
-
-  const genericErrorOption = fromNullable(error)
-  const errorLeftOption = pipe(dataOption, chain(getLeft))
-
-  const maybeError: Option<
-    ValidationError | UnknownError | AuthorizationError
-  > = alt(() => errorLeftOption)(genericErrorOption)
-  const maybeData = pipe(dataOption, chain(getRight))
-
   useEffect(() => {
     const updatedFieldValues: NewArticleFieldValues = {
       title: formik.values.title,
@@ -175,6 +164,17 @@ export const NewArticle = () => {
     }
     setStorage(updatedFieldValues)
   }, [formik.values, setStorage])
+
+  const dataOption = fromNullable(data)
+
+  const maybeData = chain(getRight)(dataOption)
+
+  const genericErrorOption = fromNullable(error)
+  const errorLeftOption = chain(getLeft)(dataOption)
+
+  const maybeError: Option<
+    ValidationError | UnknownError | AuthorizationError
+  > = alt(() => errorLeftOption)(genericErrorOption)
 
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
