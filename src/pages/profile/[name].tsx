@@ -18,12 +18,11 @@ import {
   GET_ARTICLES_KEY,
   getArticles,
 } from '@/hooks'
-import { dehydrate, QueryClient } from '@tanstack/react-query'
+import { dehydrate, InfiniteData, QueryClient } from '@tanstack/react-query'
 import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
 import { fromNullable, isSome, chain, getRight, map, match } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
-import { f } from '@/libs'
 import { useInView } from 'react-intersection-observer'
 import React from 'react'
 import { transparentize } from 'polished'
@@ -51,6 +50,9 @@ interface ProfileParams extends ParsedUrlQuery {
   name: string
 }
 
+const getLastPage = <T,>(articles: InfiniteData<T>) =>
+  articles.pages[articles.pages.length - 1]
+
 const Profile = ({ name }: ProfileParams) => {
   const { data, refetch, isLoading } = useProfile(name)
 
@@ -76,6 +78,13 @@ const Profile = ({ name }: ProfileParams) => {
     isFetchingNextPage,
   } = useGetArticles({ ...filters })
 
+  const maybeArticles = pipe(
+    articlesData,
+    fromNullable,
+    map(getLastPage),
+    chain(getRight)
+  )
+
   const { ref: refObserver, inView } = useInView({
     skip: !hasNextPage,
     threshold: 1,
@@ -84,21 +93,6 @@ const Profile = ({ name }: ProfileParams) => {
   React.useEffect(() => {
     if (inView && hasNextPage) fetchNextPage()
   }, [fetchNextPage, inView, hasNextPage])
-
-  const maybeArticles = f(() => {
-    const pages = pipe(
-      articlesData,
-      fromNullable,
-      match(
-        () => [],
-        (article) => article.pages
-      )
-    )
-
-    const getLastPage = <T,>(pages: T[]) => pages[pages.length - 1]
-
-    return pipe(pages, getLastPage, getRight)
-  })
 
   return isSome(maybeData) ? (
     <Wrapper>
