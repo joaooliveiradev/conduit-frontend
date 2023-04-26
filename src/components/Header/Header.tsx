@@ -7,15 +7,15 @@ import {
   type ProfileNameProps,
 } from '@/components'
 import { useAuth, useCookies } from '@/context'
-import { fromEither, fromNullable, isSome, none } from 'fp-ts/Option'
+import { fromNullable, isSome, chain } from 'fp-ts/Option'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 import { getUseMeKey, useMe } from '@/hooks'
-import { f } from '@/libs'
-import { isRight } from 'fp-ts/Either'
 import styled from 'styled-components'
 import logo from '@/assets/logo.webp'
 import Image from 'next/image'
+import { getRight } from 'fp-ts/Option'
+import { pipe } from 'fp-ts/function'
 
 const Dropdown = dynamic<DropdownProps>(
   () =>
@@ -61,12 +61,7 @@ export const Header = () => {
     queryKey: getUseMeKey(accessToken),
   })
 
-  const maybeData = f(() => {
-    const dataOption = fromNullable(data)
-    if (isSome(dataOption) && isRight(dataOption.value))
-      return fromEither(dataOption.value)
-    else return none
-  })
+  const maybeData = pipe(data, fromNullable, chain(getRight))
 
   return (
     <Wrapper>
