@@ -9,13 +9,7 @@ import {
   ProfileName,
 } from '@/components'
 import {
-  dehydrate,
-  type InfiniteData,
-  QueryClient,
-} from '@tanstack/react-query'
-import {
   defaultFilters,
-  type GetArticlesOutput,
   getProfile,
   GET_PROFILE_KEY,
   type QueryFiltersProps,
@@ -24,6 +18,7 @@ import {
   GET_ARTICLES_KEY,
   getArticles,
 } from '@/hooks'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
 import {
@@ -32,11 +27,13 @@ import {
   none,
   type Option,
   some,
-  fromEither,
+  chain,
+  getRight,
+  map,
+  match,
 } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
-import { ValidationError, f } from '@/libs'
-import { type Either, isRight } from 'fp-ts/Either'
+import { f } from '@/libs'
 import { useInView } from 'react-intersection-observer'
 import React from 'react'
 import { transparentize } from 'polished'
@@ -67,26 +64,20 @@ interface ProfileParams extends ParsedUrlQuery {
 const Profile = ({ name }: ProfileParams) => {
   const { data, refetch, isLoading } = useProfile(name)
 
-  const maybeProfile = f(() => {
-    const dataOption = fromNullable(data)
-    if (isSome(dataOption) && isRight(dataOption.value)) {
-      return fromEither(dataOption.value)
-    } else return none
-  })
+  const maybeData = pipe(data, fromNullable, chain(getRight))
 
-  const username = f(() =>
-    isSome(maybeProfile) ? some(maybeProfile.value.profile.username) : none
+  const username = pipe(
+    maybeData,
+    map(({ profile }) => profile.username)
   )
 
-  const filters = f(() => {
-    if (isSome(username)) {
-      const filter: QueryFiltersProps = {
-        ...defaultFilters,
-        author: username.value,
-      }
-      return filter
-    } else return undefined
-  })
+  const filters = pipe(
+    username,
+    match(
+      () => undefined,
+      (username): QueryFiltersProps => ({ ...defaultFilters, author: username })
+    )
+  )
 
   const {
     data: articlesData,
@@ -104,32 +95,26 @@ const Profile = ({ name }: ProfileParams) => {
     if (inView && hasNextPage) fetchNextPage()
   }, [fetchNextPage, inView, hasNextPage])
 
-  const articlesDataOption = fromNullable(articlesData)
+  const maybeArticles = f(() => {
+    const pages = pipe(
+      articlesData,
+      fromNullable,
+      match(
+        () => [],
+        (article) => article.pages
+      )
+    )
 
-  const handleMaybeArticles = (
-    data: Option<InfiniteData<Either<ValidationError, GetArticlesOutput>>>
-  ) => {
-    const pages = f(() => {
-      if (isSome(data)) {
-        const pages = data.value.pages
-        return pages
-      }
-      return []
-    })
+    const getLastPage = <T,>(pages: T[]) => pages[pages.length - 1]
 
-    const lastPage = fromNullable(pages[pages.length - 1])
-    if (isSome(lastPage)) {
-      return fromEither(lastPage.value)
-    } else return none
-  }
+    return pipe(pages, getLastPage, getRight)
+  })
 
-  const maybeArticles = handleMaybeArticles(articlesDataOption)
-
-  return isSome(maybeProfile) ? (
+  return isSome(maybeData) ? (
     <Wrapper>
       <ProfileHeader
-        name={maybeProfile.value.profile.username}
-        description={maybeProfile.value.profile.bio}
+        name={maybeData.value.profile.username}
+        description={maybeData.value.profile.bio}
       />
       {isSome(maybeArticles) ? (
         maybeArticles.value.articles.length === 0 ? (
