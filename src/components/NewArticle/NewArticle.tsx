@@ -18,7 +18,7 @@ import {
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
-import { AuthorizationError, UnknownError, ValidationError } from '@/libs'
+import { AuthorizationError, UnknownError, ValidationError, f } from '@/libs'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import dynamic from 'next/dynamic'
@@ -169,12 +169,13 @@ export const NewArticle = () => {
 
   const maybeData = chain(getRight)(dataOption)
 
-  const genericErrorOption = fromNullable(error)
-  const errorLeftOption = chain(getLeft)(dataOption)
-
   const maybeError: Option<
     ValidationError | UnknownError | AuthorizationError
-  > = alt(() => errorLeftOption)(genericErrorOption)
+  > = f(() => {
+    const genericErrorOption = fromNullable(error)
+    const errorLeftOption = chain(getLeft)(dataOption)
+    return alt(() => errorLeftOption)(genericErrorOption)
+  })
 
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
