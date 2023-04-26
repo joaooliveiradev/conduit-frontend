@@ -20,17 +20,7 @@ import {
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
-import {
-  fromNullable,
-  isSome,
-  none,
-  type Option,
-  some,
-  chain,
-  getRight,
-  map,
-  match,
-} from 'fp-ts/Option'
+import { fromNullable, isSome, chain, getRight, map, match } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import { f } from '@/libs'
 import { useInView } from 'react-intersection-observer'
@@ -183,20 +173,21 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext<ProfileParams>) => {
   const queryClient = new QueryClient()
 
-  const getUser = (data: Option<ProfileParams>) =>
-    isSome(data) ? some(data.value.name) : none
+  const username = pipe(
+    params,
+    fromNullable,
+    map((params) => params.name)
+  )
 
-  const userOption = pipe(params, fromNullable, getUser)
-
-  if (isSome(userOption)) {
+  if (isSome(username)) {
     await queryClient.prefetchQuery(
       [GET_PROFILE_KEY],
-      async () => await getProfile(userOption.value)
+      async () => await getProfile(username.value)
     )
 
     const filters: QueryFiltersProps = {
       ...defaultFilters,
-      author: userOption.value,
+      author: username.value,
     }
 
     await queryClient.prefetchInfiniteQuery(
@@ -207,7 +198,7 @@ export const getServerSideProps = async ({
     return {
       props: {
         dehydratedState: superJSON.stringify(dehydrate(queryClient)),
-        name: userOption.value,
+        name: username.value,
       },
     }
   } else {
