@@ -10,17 +10,10 @@ import {
   ArticleBody,
   ArticleSeo,
 } from '@/components'
-import {
-  fromNullable,
-  isSome,
-  none,
-  some,
-  fromEither,
-  type Option,
-} from 'fp-ts/Option'
-import { isRight } from 'fp-ts/Either'
+import { fromNullable, isSome, getRight, map } from 'fp-ts/Option'
 import { f } from '@/libs'
 import { pipe } from 'fp-ts/function'
+import { chain } from 'fp-ts/Option'
 import * as superJSON from 'superjson'
 
 type ArticleNextPageProps = {
@@ -66,12 +59,7 @@ const Description = styled.h3`
 const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
   const { data, refetch, isFetching } = useGetArticle(slug)
 
-  const maybeArticle = f(() => {
-    const dataOption = fromNullable(data)
-    if (isSome(dataOption) && isRight(dataOption.value)) {
-      return fromEither(dataOption.value)
-    } else return none
-  })
+  const maybeArticle = pipe(data, fromNullable, chain(getRight))
 
   return f(() => {
     if (isSome(maybeArticle)) {
@@ -126,10 +114,11 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext<GetServerSidePropsParams>) => {
   const queryClient = new QueryClient()
 
-  const getSlug = (data: Option<GetServerSidePropsParams>) =>
-    isSome(data) ? some(data.value.slug) : none
-
-  const slugOption = pipe(params, fromNullable, getSlug)
+  const slugOption = pipe(
+    params,
+    fromNullable,
+    map((paramsOption) => paramsOption.slug)
+  )
 
   if (isSome(slugOption)) {
     await queryClient.prefetchQuery(
