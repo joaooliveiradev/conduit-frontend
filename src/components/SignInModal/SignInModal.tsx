@@ -1,29 +1,13 @@
-import {
-  type SignInRequest,
-  useSignIn,
-  type SignInResponseOutput,
-} from './useSignIn'
-import {
-  type SignUpResponseOutput,
-  useSignUp,
-  type SignUpRequest,
-} from './useSignUp'
-import {
-  chain,
-  fromNullable,
-  getLeft,
-  isSome,
-  type None,
-  none,
-  type Some,
-} from 'fp-ts/Option'
+import { type SignInRequest, useSignIn } from './useSignIn'
+import { useSignUp, type SignUpRequest } from './useSignUp'
+import { chain, fromNullable, getLeft, isSome } from 'fp-ts/Option'
 import { Modal, Input, Button, ErrorFieldMessage } from '@/components'
 import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
-import { ValidationError, UnknownError } from '@/libs'
+import { f } from '@/libs'
 import { useState } from 'react'
-import type { Either } from 'fp-ts/Either'
 import styled, { css } from 'styled-components'
+import { alt } from 'fp-ts/Option'
 import * as Yup from 'yup'
 
 const Wrapper = styled.form`
@@ -109,11 +93,6 @@ export type SignInModalProps = {
   showSignInFirst: boolean
 }
 
-type GetMaybeErrorProps = <D>(
-  data: Either<ValidationError, D> | undefined,
-  genericError: UnknownError | null
-) => None | Some<ValidationError> | Some<UnknownError>
-
 const signInRef = (node: HTMLInputElement | null) =>
   node ? node.focus() : null
 const signUpRef = (node: HTMLInputElement | null) =>
@@ -140,14 +119,6 @@ export const SignInModal = ({
     isLoading: signUpLoading,
   } = useSignUp()
 
-  const getMaybeError: GetMaybeErrorProps = (data, genericError) => {
-    const dataError = pipe(data, fromNullable, chain(getLeft))
-    const error = fromNullable(genericError)
-    if (isSome(error)) return error
-    else if (isSome(dataError)) return dataError
-    else return none
-  }
-
   const signInFormik = useFormik({
     initialValues: initialSignInValues,
     validationSchema: signInSchema,
@@ -161,10 +132,11 @@ export const SignInModal = ({
     },
   })
 
-  const maybeSignInError = getMaybeError<SignInResponseOutput>(
-    signInData,
-    signInError
-  )
+  const maybeSignInError = f(() => {
+    const errorLeft = pipe(signInData, fromNullable, chain(getLeft))
+    const genericError = fromNullable(signInError)
+    return alt(() => errorLeft)(genericError)
+  })
 
   const signUpFormik = useFormik({
     initialValues: initialSignUpValues,
@@ -179,10 +151,11 @@ export const SignInModal = ({
     },
   })
 
-  const maybeSignUpError = getMaybeError<SignUpResponseOutput>(
-    signUpData,
-    signUpError
-  )
+  const maybeSignUpError = f(() => {
+    const errorLeft = pipe(signUpData, fromNullable, chain(getLeft))
+    const genericError = fromNullable(signUpError)
+    return alt(() => errorLeft)(genericError)
+  })
 
   const switchForm = () => {
     signInFormik.resetForm()
