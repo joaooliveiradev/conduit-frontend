@@ -10,8 +10,8 @@ import {
 import {
   type AlertProps,
   type TextProps,
+  type InputProps,
   Button,
-  Input,
   TextButton,
   TextEditor,
 } from '@/components'
@@ -54,6 +54,11 @@ const Alert = {
     }
   ),
 }
+
+const Input = dynamic<InputProps>(
+  () => import('@/components/Input/Input').then((module) => module.Input),
+  { ssr: false }
+)
 
 const Wrapper = styled.form`
   display: flex;
@@ -112,16 +117,18 @@ const initialFieldValues: NewArticleFieldValues = {
 
 const storageKey = 'new-article-editor'
 
+const getStorage = (): NewArticleFieldValues => {
+  if (typeof window === 'undefined') return initialFieldValues
+
+  const cachedStorage = fromNullable(localStorage.getItem(storageKey))
+
+  return isSome(cachedStorage)
+    ? superJSON.parse(cachedStorage.value)
+    : initialFieldValues
+}
+
 const useLocalStorage = () => {
-  const [storage, setStorage] = useState<NewArticleFieldValues>(() => {
-    if (typeof window === 'undefined') return initialFieldValues
-
-    const cachedStorage = fromNullable(localStorage.getItem(storageKey))
-
-    return isSome(cachedStorage)
-      ? superJSON.parse(cachedStorage.value)
-      : initialFieldValues
-  })
+  const [storage, setStorage] = useState<NewArticleFieldValues>(getStorage)
 
   useEffect(
     () => localStorage.setItem(storageKey, superJSON.stringify(storage)),
@@ -180,7 +187,7 @@ export const NewArticle = () => {
           aria-label="Title"
           onChange={formik.handleChange}
           errorMessage={formik.errors.title}
-          defaultValue={storage.title}
+          defaultValue={formik.values.title}
         />
         <Input
           type="text"
