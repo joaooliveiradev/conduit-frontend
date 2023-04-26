@@ -23,6 +23,7 @@ export type SignInResponseOutput = t.OutputOf<typeof SignInResponseCodec>
 export const signInMutation = async (data: SignInRequest) => {
   const options: RequestInit = {
     method: 'POST',
+    mode: 'no-cors',
   }
 
   const result = await fetcher<SignInRequest, SignInResponseCodecType>(

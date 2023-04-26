@@ -19,7 +19,7 @@ const SignUpResponseCodec = t.type({
 
 type SignUpCodec = t.TypeOf<typeof SignUpResponseCodec>
 
-export type SignUpResponseOutput = t.OutputOf<typeof SignUpResponseCodec>
+type SignUpResponseOutput = t.OutputOf<typeof SignUpResponseCodec>
 
 export const signUpMutation = async (data: SignUpRequest) => {
   const options: RequestInit = {
