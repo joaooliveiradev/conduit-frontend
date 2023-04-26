@@ -4,10 +4,10 @@ import { chain, fromNullable, getLeft, isSome } from 'fp-ts/Option'
 import { Modal, Input, Button, ErrorFieldMessage } from '@/components'
 import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
-import { f } from '@/libs'
+import { type UnknownError, type ValidationError, f } from '@/libs'
 import { useState } from 'react'
 import styled, { css } from 'styled-components'
-import { alt } from 'fp-ts/Option'
+import { alt, type Option } from 'fp-ts/Option'
 import * as Yup from 'yup'
 
 const Wrapper = styled.form`
@@ -151,7 +151,7 @@ export const SignInModal = ({
     },
   })
 
-  const maybeSignUpError = f(() => {
+  const maybeSignUpError: Option<ValidationError | UnknownError> = f(() => {
     const errorLeft = pipe(signUpData, fromNullable, chain(getLeft))
     const genericError = fromNullable(signUpError)
     return alt(() => errorLeft)(genericError)
