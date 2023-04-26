@@ -1,8 +1,3 @@
-import type { NextPage } from 'next'
-import styled from 'styled-components'
-import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { useInView } from 'react-intersection-observer'
-import { useAuth } from '@/context'
 import {
   ErrorState,
   Tabs,
@@ -18,22 +13,20 @@ import {
 } from '@/components'
 import {
   getArticles,
-  type GetArticlesOutput,
   GET_ARTICLES_KEY,
   useGetArticles,
   useFeedArticles,
   defaultFilters,
 } from '@/hooks'
-import {
-  fromEither,
-  fromNullable,
-  isSome,
-  none,
-  type Option,
-} from 'fp-ts/Option'
-import { type Either } from 'fp-ts/Either'
-import { f, ValidationError } from '@/libs'
+import type { NextPage } from 'next'
+import styled from 'styled-components'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
+import { useInView } from 'react-intersection-observer'
+import { useAuth } from '@/context'
+import { chain, fromNullable, getRight, isSome, map } from 'fp-ts/Option'
+import { f } from '@/libs'
 import { type InfiniteData } from '@tanstack/react-query'
+import { pipe } from 'fp-ts/function'
 import React from 'react'
 import * as superJSON from 'superjson'
 
@@ -42,6 +35,9 @@ const ContentSection = styled.section`
   flex-direction: column;
   row-gap: ${({ theme }) => theme.spacings.xxxhuge};
 `
+
+const getLastPage = <T,>(article: InfiniteData<T>) =>
+  article.pages[article.pages.length - 1]
 
 const Home: NextPage = () => {
   const { status } = useAuth()
@@ -52,6 +48,13 @@ const Home: NextPage = () => {
     isFetching: isFetchingGetArticles,
     hasNextPage: hasNextPageGetArticles,
   } = useGetArticles({ queryKey: [GET_ARTICLES_KEY] }, defaultFilters)
+
+  const maybeGetArticles = pipe(
+    getArticlesData,
+    fromNullable,
+    map(getLastPage),
+    chain(getRight)
+  )
 
   const { ref: observerRefGetArticles, inView: inViewGetArticles } = useInView({
     skip: !hasNextPageGetArticles,
@@ -64,8 +67,6 @@ const Home: NextPage = () => {
     }
   }, [inViewGetArticles, fetchNextPageGetArticles, hasNextPageGetArticles])
 
-  const getArticlesDataOption = fromNullable(getArticlesData)
-
   const {
     data: feedArticlesData,
     fetchNextPage: fetchNextPageFeedArticles,
@@ -74,6 +75,13 @@ const Home: NextPage = () => {
   } = useFeedArticles(defaultFilters, {
     enabled: status === 'loggedIn',
   })
+
+  const maybeFeedArticles = pipe(
+    feedArticlesData,
+    fromNullable,
+    map(getLastPage),
+    chain(getRight)
+  )
 
   const { ref: observerRefFeedArticles, inView: inViewFeedArticles } =
     useInView({
@@ -85,30 +93,6 @@ const Home: NextPage = () => {
     if (inViewFeedArticles && hasNextPageFeedArticles)
       fetchNextPageFeedArticles()
   }, [inViewFeedArticles, fetchNextPageFeedArticles, hasNextPageFeedArticles])
-
-  const feedArticlesDataOption = fromNullable(feedArticlesData)
-
-  const handleMaybeArticles = (
-    data: Option<InfiniteData<Either<ValidationError, GetArticlesOutput>>>
-  ) => {
-    const pages = f(() => {
-      if (isSome(data)) {
-        const pages = data.value.pages
-        return pages
-      }
-      return []
-    })
-
-    const lastPage = fromNullable(pages[pages.length - 1])
-
-    if (isSome(lastPage)) {
-      return fromEither(lastPage.value)
-    } else return none
-  }
-
-  const maybeGetArticles = handleMaybeArticles(getArticlesDataOption)
-
-  const maybeFeedArticles = handleMaybeArticles(feedArticlesDataOption)
 
   return f(() => {
     if (status === 'loggedIn') {
