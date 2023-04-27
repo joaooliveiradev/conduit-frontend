@@ -4,7 +4,7 @@ import {
   GetArticlesResponseCodec,
 } from '@/hooks'
 import { type Either, isRight } from 'fp-ts/Either'
-import { fetcher, ValidationError } from '@/libs'
+import { fetcher, type ValidationError } from '@/libs'
 import { type GetServerSideProps } from 'next'
 import { baseWebUrl } from '@/types'
 
@@ -32,9 +32,7 @@ export const generateSiteMap = (
        .join('')}
    </urlset>
  `
-  } else {
-    return ``
-  }
+  } else return ``
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
@@ -57,4 +55,5 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 const SiteMaps = () => {
   //https://nextjs.org/learn/seo/crawling-and-indexing/xml-sitemaps
 }
+
 export default SiteMaps

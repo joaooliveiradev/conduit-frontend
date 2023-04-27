@@ -1,5 +1,5 @@
 import { ProfileCodec } from '@/types/profile'
-import { ValidationError, fetcher, UnknownError } from '@/libs'
+import { fetcher, type ValidationError, type UnknownError } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { type Either } from 'fp-ts/Either'
 import * as t from 'io-ts'

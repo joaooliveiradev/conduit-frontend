@@ -1,8 +1,8 @@
 import {
-  AuthorizationError,
-  ValidationError,
+  type AuthorizationError,
+  type ValidationError,
   fetcher,
-  UnknownError,
+  type UnknownError,
 } from '@/libs'
 import type { NewArticleRequest } from './NewArticle'
 import { ArticleBySlugCodec as NewArticleCodec } from '@/types'
