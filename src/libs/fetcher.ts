@@ -5,29 +5,23 @@ import {
   AuthorizationError,
 } from '@/libs'
 import { parseCookies } from 'nookies'
-import { type Either, left, right, isRight } from 'fp-ts/Either'
+import { type Either, left, right } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
-import { PathReporter } from 'io-ts/PathReporter'
 import { baseApiUrl } from '@/types'
+import { match } from 'fp-ts/Either'
 import * as t from 'io-ts'
 
-const validationHandler = <A>(
-  dataValidation: t.Validation<A>
-): Either<ValidationError, A> => {
-  if (isRight(dataValidation)) {
-    return right(dataValidation.right)
-  } else {
-    const decodeErrors = PathReporter.report(dataValidation)
+const validateCodec = <A>(codec: t.Type<A, unknown, unknown>, data: A) => {
+  const onLeft = (errors: t.Errors) => {
     const errorMessage =
       "Something wen't wrong with our servers, and we're working to fix it. Please try again later."
-    return left(new ValidationError(errorMessage, decodeErrors.join(', ')))
+    return left(new ValidationError(errorMessage, errors.join(', ')))
   }
-}
 
-const validateCodec = <A>(
-  codec: t.Type<A, unknown, unknown>,
-  data: A
-): Either<ValidationError, A> => pipe(data, codec.decode, validationHandler<A>)
+  const onRight = <A>(data: A) => right<ValidationError, A>(data)
+
+  return pipe(data, codec.decode, match(onLeft, onRight))
+}
 
 export const fetcher = async <D, A>(
   path: string,
