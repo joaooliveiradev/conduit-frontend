@@ -1,9 +1,9 @@
 import { ArticleCodec } from '@/types'
 import {
-  AuthorizationError,
-  ValidationError,
+  type AuthorizationError,
+  type ValidationError,
+  type UnknownError,
   fetcher,
-  UnknownError,
 } from '@/libs'
 import {
   type QueryFunctionContext,

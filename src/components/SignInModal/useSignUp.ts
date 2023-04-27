@@ -1,5 +1,5 @@
 import { UserTypeCodec } from '@/types'
-import { ValidationError, fetcher, UnknownError } from '@/libs'
+import { type ValidationError, fetcher, type UnknownError } from '@/libs'
 import { useMutation } from '@tanstack/react-query'
 import type { Either } from 'fp-ts/Either'
 import { useAuth } from '@/context'

@@ -1,10 +1,10 @@
 import { UserTypeCodec } from '@/types'
 import { type Either } from 'fp-ts/Either'
 import {
-  AuthorizationError,
-  ValidationError,
   fetcher,
-  UnknownError,
+  type AuthorizationError,
+  type ValidationError,
+  type UnknownError,
 } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import * as t from 'io-ts'
