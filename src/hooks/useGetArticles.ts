@@ -1,5 +1,5 @@
 import { ArticleCodec } from '@/types'
-import { ValidationError, fetcher, UnknownError } from '@/libs'
+import { fetcher, type ValidationError, type UnknownError } from '@/libs'
 import {
   useInfiniteQuery,
   type QueryFunctionContext,

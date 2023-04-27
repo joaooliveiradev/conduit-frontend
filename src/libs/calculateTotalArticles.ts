@@ -3,8 +3,8 @@ import {
   type GetArticlesOutput,
   defaultArticlesLimit,
 } from '@/hooks'
+import { type ValidationError } from './errors'
 import { type Either, isRight } from 'fp-ts/Either'
-import { ValidationError } from './errors'
 
 export const calculateTotalArticles = (
   lastPage: Either<ValidationError, GetArticlesOutput>

@@ -1,4 +1,4 @@
-import { ValidationError, fetcher, UnknownError } from '@/libs'
+import { fetcher, type ValidationError, type UnknownError } from '@/libs'
 import { ArticleBySlugCodec } from '@/types'
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { Either } from 'fp-ts/Either'

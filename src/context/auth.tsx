@@ -5,7 +5,7 @@ import {
   useContext,
   useEffect,
 } from 'react'
-import { ValidationError } from '@/libs'
+import { type ValidationError } from '@/libs'
 import { type Either, isRight } from 'fp-ts/Either'
 import { type SignInResponseOutput } from '@/components/SignInModal/useSignIn'
 import { CookieSerializeOptions } from 'cookie'
