@@ -4,23 +4,29 @@ import {
   defaultArticlesLimit,
 } from '@/hooks'
 import { type ValidationError } from './errors'
-import { type Either, isRight } from 'fp-ts/Either'
+import { type Either, match } from 'fp-ts/Either'
+import { pipe } from 'fp-ts/lib/function'
 
 export const calculateTotalArticles = (
   lastPage: Either<ValidationError, GetArticlesOutput>
 ) => {
-  if (isRight(lastPage)) {
-    const totalLastFetch = lastPage.right.articles.length
-    const totalArticles = lastPage.right.articlesCount
-    if (totalLastFetch === totalArticles) return null
-    else {
-      const limit = totalLastFetch + defaultArticlesLimit
+  const getLimit = (totalLastFetch: number) =>
+    totalLastFetch + defaultArticlesLimit
 
-      const filters: QueryFiltersProps = {
-        limit: limit.toString(),
-      }
+  const getFilters = (limit: number): QueryFiltersProps => ({
+    limit: limit.toString(),
+  })
 
-      return filters
-    }
-  } else return null
+  const getTotalArticles = (articles: GetArticlesOutput) => {
+    const totalLastFetch = articles.articles.length
+    const total = articles.articlesCount
+    const isEqual = totalLastFetch === total
+    return isEqual ? null : pipe(totalLastFetch, getLimit, getFilters)
+  }
+
+  const onRight = (articles: GetArticlesOutput) => getTotalArticles(articles)
+
+  const onLeft = () => null
+
+  return pipe(lastPage, match(onLeft, onRight))
 }
