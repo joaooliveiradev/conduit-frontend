@@ -142,6 +142,9 @@ const useLocalStorage = () => {
   return { storage, setStorage }
 }
 
+const firstInputRef = (node: HTMLInputElement | null) =>
+  node ? node.focus() : null
+
 export const NewArticle = () => {
   const { mutate: createArticle, data, error, isLoading } = useNewArticle()
   const { storage, setStorage } = useLocalStorage()
@@ -187,6 +190,7 @@ export const NewArticle = () => {
       <Title>New Article</Title>
       <FieldWrapper>
         <Input
+          inputRef={firstInputRef}
           type="text"
           placeholder="Title"
           name="title"
