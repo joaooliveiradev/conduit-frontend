@@ -5,7 +5,7 @@ import {
 } from '@/hooks'
 import { type ValidationError } from './errors'
 import { type Either, match } from 'fp-ts/Either'
-import { pipe } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/function'
 
 export const calculateTotalArticles = (
   lastPage: Either<ValidationError, GetArticlesOutput>
