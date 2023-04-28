@@ -8,14 +8,11 @@ import {
   FullScreenIcon,
   type ArticleBodyProps,
 } from '@/components/'
-import { useId, useState } from 'react'
+import React, { useId, useState } from 'react'
 import { FocusScope } from '@radix-ui/react-focus-scope'
-import styled, { DefaultTheme, css } from 'styled-components'
+import styled from 'styled-components'
 import dynamic from 'next/dynamic'
-
-type TextEditorWrapperProps = {
-  fullScreen: boolean
-}
+import * as RadixPortal from '@radix-ui/react-portal'
 
 const DefaultArticleBody = dynamic<ArticleBodyProps>(
   () =>
@@ -26,23 +23,6 @@ const DefaultArticleBody = dynamic<ArticleBodyProps>(
     ssr: false,
   }
 )
-
-const fullScreenModifiers = (theme: DefaultTheme) => css`
-  background: #ffffff;
-  position: fixed;
-  z-index: 999;
-  inset: 0;
-  margin: ${theme.spacings.xxlarge};
-  transition: all 150ms ease;
-  border-radius: ${theme.spacings.small};
-  ${Tabs}, ${TabContent} {
-    height: 100%;
-  }
-`
-
-const Wrapper = styled.div<TextEditorWrapperProps>`
-  ${({ fullScreen, theme }) => fullScreen && fullScreenModifiers(theme)}
-`
 
 const Tabs = styled(TabsDefault)`
   gap: 0px;
@@ -58,9 +38,13 @@ const TabsPane = styled(TabsPaneDefault)`
   }
 `
 
-const FullScreenBtn = styled(TabsPane)`
+const FullScreenBtn = styled.button`
+  background-color: transparent;
   display: flex;
   margin-left: auto;
+  margin-right: 12px;
+  align-self: center;
+  cursor: pointer;
 `
 
 const ArticleBody = styled(DefaultArticleBody)`
@@ -93,43 +77,85 @@ const Preview = ({ textAreaValue }: PreviewProps) => {
   )
 }
 
+const FullScreenWrapper = styled.div`
+  background: #ffffff;
+  position: fixed;
+  inset: 0;
+  margin: ${({ theme }) => theme.spacings.xxlarge};
+  transition: all 150ms ease;
+  border-radius: ${({ theme }) => theme.spacings.small};
+  ${Tabs}, ${TabContent} {
+    height: 100%;
+  }
+`
+
+type FullScreenProps = {
+  children: React.ReactNode
+}
+
+const FullScreenMode = ({ children }: FullScreenProps) => (
+  <RadixPortal.Root>
+    <FocusScope loop trapped>
+      <FullScreenWrapper>{children}</FullScreenWrapper>
+    </FocusScope>
+  </RadixPortal.Root>
+)
+
+type EditorProps = {
+  onButtonClick: () => void
+} & TextEditorProps
+
+const Editor = ({ defaultValue, onButtonClick, ...rest }: EditorProps) => {
+  const id = useId()
+  const textEditorId = `text-editor-${id}`
+
+  return (
+    <Tabs id={textEditorId} defaultValue="write">
+      <Pane aria-label="Manage text editor menu items.">
+        <TabsPane value="write">Write</TabsPane>
+        <TabsPane value="preview">Preview</TabsPane>
+        <FullScreenBtn
+          type="button"
+          aria-controls={textEditorId}
+          onClick={onButtonClick}
+        >
+          <FullScreenIcon />
+        </FullScreenBtn>
+      </Pane>
+      <TabContent value="write" asChild>
+        <TextArea defaultValue={defaultValue} {...rest} />
+      </TabContent>
+      <TabContent value="preview">
+        <Preview textAreaValue={defaultValue} />
+      </TabContent>
+    </Tabs>
+  )
+}
+
 type TextEditorProps = {
   defaultValue: string
 } & TextAreaProps
 
 export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
-  const [fullScreen, setFullScreen] = useState<boolean>(false)
-  const id = useId()
-  const switchToFullScreen = () => setFullScreen((prevState) => !prevState)
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
 
-  const textEditorId = `text-editor-${id}`
-  return (
-    <FocusScope loop={fullScreen} trapped={fullScreen}>
-      <Wrapper id={textEditorId} fullScreen={fullScreen}>
-        <Tabs defaultValue="write">
-          <Pane aria-label="Manage text editor menu items.">
-            <TabsPane value="write">Write</TabsPane>
-            <TabsPane value="preview">Preview</TabsPane>
-            <FullScreenBtn
-              value="previewFullScreen"
-              onClick={switchToFullScreen}
-              aria-expanded={fullScreen}
-              aria-controls={textEditorId}
-            >
-              <FullScreenIcon />
-            </FullScreenBtn>
-          </Pane>
-          <TabContent value="write" asChild>
-            <TextArea defaultValue={defaultValue} {...rest} />
-          </TabContent>
-          <TabContent value="preview">
-            <Preview textAreaValue={defaultValue} />
-          </TabContent>
-          <TabContent value="previewFullScreen">
-            <Preview textAreaValue={defaultValue} />
-          </TabContent>
-        </Tabs>
-      </Wrapper>
-    </FocusScope>
+  const switchToFullScreen = () => setIsFullScreen((prevState) => !prevState)
+
+  return isFullScreen ? (
+    <FullScreenMode>
+      <Editor
+        aria-expanded={isFullScreen}
+        defaultValue={defaultValue}
+        onButtonClick={switchToFullScreen}
+        {...rest}
+      />
+    </FullScreenMode>
+  ) : (
+    <Editor
+      defaultValue={defaultValue}
+      aria-expanded={isFullScreen}
+      onButtonClick={switchToFullScreen}
+      {...rest}
+    />
   )
 }
