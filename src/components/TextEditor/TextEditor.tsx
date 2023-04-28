@@ -93,7 +93,7 @@ type FullScreenProps = {
   children: React.ReactNode
 }
 
-const FullScreenMode = ({ children }: FullScreenProps) => (
+const FullScreen = ({ children }: FullScreenProps) => (
   <RadixPortal.Root>
     <FocusScope loop trapped>
       <FullScreenWrapper>{children}</FullScreenWrapper>
@@ -101,15 +101,41 @@ const FullScreenMode = ({ children }: FullScreenProps) => (
   </RadixPortal.Root>
 )
 
-type EditorProps = {
-  onButtonClick: () => void
-} & TextEditorProps
+type TextEditorProps = {
+  defaultValue: string
+} & TextAreaProps
 
-const Editor = ({ defaultValue, onButtonClick, ...rest }: EditorProps) => {
+export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
+
+  const switchToFullScreen = () => setIsFullScreen((prevState) => !prevState)
+
   const id = useId()
   const textEditorId = `text-editor-${id}`
 
-  return (
+  return isFullScreen ? (
+    <FullScreen>
+      <Tabs id={textEditorId} defaultValue="write">
+        <Pane aria-label="Manage text editor menu items.">
+          <TabsPane value="write">Write</TabsPane>
+          <TabsPane value="preview">Preview</TabsPane>
+          <FullScreenBtn
+            type="button"
+            aria-controls={textEditorId}
+            onClick={switchToFullScreen}
+          >
+            <FullScreenIcon />
+          </FullScreenBtn>
+        </Pane>
+        <TabContent value="write" asChild>
+          <TextArea defaultValue={defaultValue} {...rest} />
+        </TabContent>
+        <TabContent value="preview">
+          <Preview textAreaValue={defaultValue} />
+        </TabContent>
+      </Tabs>
+    </FullScreen>
+  ) : (
     <Tabs id={textEditorId} defaultValue="write">
       <Pane aria-label="Manage text editor menu items.">
         <TabsPane value="write">Write</TabsPane>
@@ -117,7 +143,7 @@ const Editor = ({ defaultValue, onButtonClick, ...rest }: EditorProps) => {
         <FullScreenBtn
           type="button"
           aria-controls={textEditorId}
-          onClick={onButtonClick}
+          onClick={switchToFullScreen}
         >
           <FullScreenIcon />
         </FullScreenBtn>
@@ -129,33 +155,5 @@ const Editor = ({ defaultValue, onButtonClick, ...rest }: EditorProps) => {
         <Preview textAreaValue={defaultValue} />
       </TabContent>
     </Tabs>
-  )
-}
-
-type TextEditorProps = {
-  defaultValue: string
-} & TextAreaProps
-
-export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
-  const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
-
-  const switchToFullScreen = () => setIsFullScreen((prevState) => !prevState)
-
-  return isFullScreen ? (
-    <FullScreenMode>
-      <Editor
-        aria-expanded={isFullScreen}
-        defaultValue={defaultValue}
-        onButtonClick={switchToFullScreen}
-        {...rest}
-      />
-    </FullScreenMode>
-  ) : (
-    <Editor
-      defaultValue={defaultValue}
-      aria-expanded={isFullScreen}
-      onButtonClick={switchToFullScreen}
-      {...rest}
-    />
   )
 }
