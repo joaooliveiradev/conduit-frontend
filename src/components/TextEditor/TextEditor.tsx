@@ -10,7 +10,7 @@ import {
 } from '@/components/'
 import React, { useId, useState } from 'react'
 import { FocusScope } from '@radix-ui/react-focus-scope'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import dynamic from 'next/dynamic'
 import * as RadixPortal from '@radix-ui/react-portal'
 
@@ -48,7 +48,10 @@ const FullScreenBtn = styled.button`
 `
 
 const ArticleBody = styled(DefaultArticleBody)`
-  padding: ${({ theme }) => theme.spacings.xsmall};
+  ${({ theme }) => css`
+    padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
+    overflow-wrap: anywhere;
+  `}
 `
 
 const EmptyPreviewWrapper = styled.section`
@@ -107,6 +110,7 @@ type TextEditorProps = {
 
 export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
+  const [tabValue, setTabValue] = useState<string>('write')
 
   const switchToFullScreen = () => setIsFullScreen((prevState) => !prevState)
 
@@ -115,13 +119,19 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
 
   return isFullScreen ? (
     <FullScreen>
-      <Tabs id={textEditorId} defaultValue="write">
+      <Tabs
+        id={textEditorId}
+        defaultValue={tabValue}
+        value={tabValue}
+        onValueChange={setTabValue}
+      >
         <Pane aria-label="Manage text editor menu items.">
-          <TabsPane value="write">Write</TabsPane>
+          <TabsPane value="write"> Write</TabsPane>
           <TabsPane value="preview">Preview</TabsPane>
           <FullScreenBtn
             type="button"
             aria-controls={textEditorId}
+            aria-expanded={isFullScreen}
             onClick={switchToFullScreen}
           >
             <FullScreenIcon />
@@ -136,13 +146,19 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
       </Tabs>
     </FullScreen>
   ) : (
-    <Tabs id={textEditorId} defaultValue="write">
+    <Tabs
+      id={textEditorId}
+      defaultValue={tabValue}
+      value={tabValue}
+      onValueChange={setTabValue}
+    >
       <Pane aria-label="Manage text editor menu items.">
         <TabsPane value="write">Write</TabsPane>
         <TabsPane value="preview">Preview</TabsPane>
         <FullScreenBtn
           type="button"
           aria-controls={textEditorId}
+          aria-expanded={isFullScreen}
           onClick={switchToFullScreen}
         >
           <FullScreenIcon />
