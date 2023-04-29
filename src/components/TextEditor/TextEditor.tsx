@@ -1,13 +1,16 @@
 import {
+  type TextAreaProps,
+  type ArticleBodyProps,
   TextArea,
   Tabs as TabsDefault,
   TabsPane as TabsPaneDefault,
   TabContent as TabContentDefault,
   Pane as PaneDefault,
-  type TextAreaProps,
-  FullScreenIcon,
-  type ArticleBodyProps,
 } from '@/components/'
+import {
+  FullScreenIcon as DefaultFullScreenIcon,
+  ExitFullScreenIcon as DefaultExitFullScreenIcon,
+} from '@/assets'
 import React, { useId, useState } from 'react'
 import { FocusScope } from '@radix-ui/react-focus-scope'
 import styled, { css } from 'styled-components'
@@ -48,6 +51,19 @@ const FirstTabsPane = styled(TabsPane)`
 const FullScreenButton = styled(TabsPane)`
   display: flex;
   margin-left: auto;
+  padding: 0;
+`
+
+const FullScreenIcon = styled(DefaultFullScreenIcon)`
+  width: 100%;
+  height: 100%;
+  padding: ${({ theme }) => theme.spacings.xsmall};
+`
+
+const ExitFullScreenIcon = styled(DefaultExitFullScreenIcon)`
+  width: 100%;
+  height: 100%;
+  padding: ${({ theme }) => theme.spacings.xsmall};
 `
 
 const TabContent = styled(TabContentDefault)`
@@ -146,7 +162,7 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
             aria-expanded={isFullScreen}
             disabled
           >
-            <FullScreenIcon onClick={switchToFullScreen} />
+            <ExitFullScreenIcon onClick={switchToFullScreen} />
           </FullScreenButton>
         </Pane>
         <TabContent value="write" asChild>
