@@ -4,6 +4,7 @@ import { ReactComponent as DefaultErrorStateIcon } from './error-state.svg'
 import { ReactComponent as DefaultFullScreenIcon } from './fullscreen.svg'
 import { ReactComponent as DefaultCheckIcon } from './check.svg'
 import { ReactComponent as DefaultExclamationIcon } from './exclamation.svg'
+import { ReactComponent as DefaultExitFullScreenIcon } from './exit-fullscreen.svg'
 import * as AccessibleIcon from '@radix-ui/react-accessible-icon'
 
 type SVGProps = {
@@ -51,6 +52,17 @@ export const FullScreenIcon = ({
 }: SVGProps) => (
   <AccessibleIcon.Root label={label}>
     <DefaultFullScreenIcon width={width} height={height} {...rest} />
+  </AccessibleIcon.Root>
+)
+
+export const ExitFullScreenIcon = ({
+  width = 24,
+  height = 24,
+  label = 'exit fullscreen',
+  ...rest
+}: SVGProps) => (
+  <AccessibleIcon.Root label={label}>
+    <DefaultExitFullScreenIcon width={width} height={height} {...rest} />
   </AccessibleIcon.Root>
 )
 
