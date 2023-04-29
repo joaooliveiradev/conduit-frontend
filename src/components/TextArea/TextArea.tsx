@@ -29,6 +29,7 @@ const Wrapper = styled.div`
 
 const TextAreaWrapper = styled.textarea<TextAreaProps>`
   ${({ theme }) => css`
+    white-space: pre-wrap;
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
     padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
