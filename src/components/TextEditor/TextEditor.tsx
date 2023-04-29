@@ -2,7 +2,7 @@ import {
   TextArea,
   Tabs as TabsDefault,
   TabsPane as TabsPaneDefault,
-  TabContent,
+  TabContent as TabContentDefault,
   Pane as PaneDefault,
   type TextAreaProps,
   FullScreenIcon,
@@ -12,6 +12,7 @@ import React, { useId, useState } from 'react'
 import { FocusScope } from '@radix-ui/react-focus-scope'
 import styled, { css } from 'styled-components'
 import dynamic from 'next/dynamic'
+import { transparentize } from 'polished'
 import * as RadixPortal from '@radix-ui/react-portal'
 
 const DefaultArticleBody = dynamic<ArticleBodyProps>(
@@ -38,13 +39,22 @@ const TabsPane = styled(TabsPaneDefault)`
   }
 `
 
-const FullScreenBtn = styled.button`
-  background-color: transparent;
+const FirstTabsPane = styled(TabsPane)`
+  &:focus-visible:first-child {
+    border-top-left-radius: 8px;
+  }
+`
+
+const FullScreenButton = styled(TabsPane)`
   display: flex;
   margin-left: auto;
-  margin-right: 12px;
-  align-self: center;
-  cursor: pointer;
+`
+
+const TabContent = styled(TabContentDefault)`
+  &:focus-visible {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
 `
 
 const ArticleBody = styled(DefaultArticleBody)`
@@ -87,6 +97,8 @@ const FullScreenWrapper = styled.div`
   margin: ${({ theme }) => theme.spacings.xxlarge};
   transition: all 150ms ease;
   border-radius: ${({ theme }) => theme.spacings.small};
+  box-shadow: 0 0 0 1px
+    ${({ theme }) => transparentize(0.88, theme.colors.black[200])};
   ${Tabs}, ${TabContent} {
     height: 100%;
   }
@@ -126,16 +138,16 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
         onValueChange={setTabValue}
       >
         <Pane aria-label="Manage text editor menu items.">
-          <TabsPane value="write"> Write</TabsPane>
+          <FirstTabsPane value="write">Write</FirstTabsPane>
           <TabsPane value="preview">Preview</TabsPane>
-          <FullScreenBtn
-            type="button"
+          <FullScreenButton
+            value="fullscreen"
             aria-controls={textEditorId}
             aria-expanded={isFullScreen}
-            onClick={switchToFullScreen}
+            disabled
           >
-            <FullScreenIcon />
-          </FullScreenBtn>
+            <FullScreenIcon onClick={switchToFullScreen} />
+          </FullScreenButton>
         </Pane>
         <TabContent value="write" asChild>
           <TextArea defaultValue={defaultValue} {...rest} />
@@ -155,14 +167,14 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
       <Pane aria-label="Manage text editor menu items.">
         <TabsPane value="write">Write</TabsPane>
         <TabsPane value="preview">Preview</TabsPane>
-        <FullScreenBtn
-          type="button"
+        <FullScreenButton
+          value="fullscreen"
           aria-controls={textEditorId}
           aria-expanded={isFullScreen}
-          onClick={switchToFullScreen}
+          disabled
         >
-          <FullScreenIcon />
-        </FullScreenBtn>
+          <FullScreenIcon onClick={switchToFullScreen} />
+        </FullScreenButton>
       </Pane>
       <TabContent value="write" asChild>
         <TextArea defaultValue={defaultValue} {...rest} />
