@@ -5,7 +5,7 @@ import { GlobalStyles, theme } from '@/styles'
 import { AuthProvider } from '@/context'
 import { type DefaultSeoProps, DefaultSeo } from 'next-seo'
 import { baseWebUrl } from '@/types'
-import * as superJSON from 'superjson'
+import { parse as superJsonParse } from 'superjson'
 
 const SEO: DefaultSeoProps = {
   title: 'Conduit - A place to read and share your ideias.',
@@ -43,7 +43,7 @@ const SEO: DefaultSeoProps = {
 
 function MyApp({ Component, pageProps }: AppProps) {
   const hydratedState = pageProps.dehydratedState
-    ? superJSON.parse(pageProps.dehydratedState)
+    ? superJsonParse(pageProps.dehydratedState)
     : null
 
   return (

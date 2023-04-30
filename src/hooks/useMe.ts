@@ -7,15 +7,15 @@ import {
   type UnknownError,
 } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
-import * as t from 'io-ts'
+import { type, type TypeOf, type OutputOf } from 'io-ts'
 
-const UseMeResponseCodec = t.type({
+const UseMeResponseCodec = type({
   user: UserTypeCodec,
 })
 
-type UseMeResponse = t.TypeOf<typeof UseMeResponseCodec>
+type UseMeResponse = TypeOf<typeof UseMeResponseCodec>
 
-export type UseMeOutput = t.OutputOf<typeof UseMeResponseCodec>
+export type UseMeOutput = OutputOf<typeof UseMeResponseCodec>
 
 type UseMeOptions = UseQueryOptions<
   Either<ValidationError, UseMeOutput>,

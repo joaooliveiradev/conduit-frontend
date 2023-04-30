@@ -1,17 +1,25 @@
 import { CloseIcon } from '@/components'
-import { transparentize } from 'polished'
-import { type ReactNode } from 'react'
+import { transparentize } from 'polished/'
 import styled, { css } from 'styled-components'
-import * as Dialog from '@radix-ui/react-dialog'
+import {
+  Overlay as DialogOverlay,
+  Content as DialogContent,
+  Close as DialogClose,
+  Title as DialogTitle,
+  Description as DialogDescription,
+  Portal,
+  Root,
+  Trigger,
+} from '@radix-ui/react-dialog'
 
 export type ModalProps = {
-  trigger?: ReactNode
-  children: ReactNode
+  trigger?: React.ReactNode
+  children: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }
 
-const Overlay = styled(Dialog.Overlay)`
+const Overlay = styled(DialogOverlay)`
   position: fixed;
   inset: 0;
   background-color: ${({ theme }) =>
@@ -27,7 +35,7 @@ const Overlay = styled(Dialog.Overlay)`
   }
 `
 
-const Content = styled(Dialog.Content)`
+const Content = styled(DialogContent)`
   ${({ theme }) => css`
     border-radius: 4px;
     max-width: 400px;
@@ -54,7 +62,7 @@ const Content = styled(Dialog.Content)`
   `}
 `
 
-const CloseButton = styled(Dialog.Close)`
+const CloseButton = styled(DialogClose)`
   ${({ theme }) => css`
     position: absolute;
     top: ${theme.spacings.xxsmall};
@@ -67,11 +75,11 @@ const CloseButton = styled(Dialog.Close)`
   `}
 `
 
-export const Title = styled(Dialog.Title)`
+export const Title = styled(DialogTitle)`
   font-size: ${({ theme }) => theme.fonts.sizes.large};
 `
 
-export const Description = styled(Dialog.Description)`
+export const Description = styled(DialogDescription)`
   font-size: ${({ theme }) => theme.fonts.sizes.medium};
 `
 
@@ -82,9 +90,9 @@ export const Modal = ({
   onOpenChange,
 }: ModalProps) => {
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
-      <Dialog.Portal>
+    <Root open={open} onOpenChange={onOpenChange}>
+      {trigger && <Trigger asChild>{trigger}</Trigger>}
+      <Portal>
         <Overlay />
         <Content>
           {children}
@@ -92,7 +100,7 @@ export const Modal = ({
             <CloseIcon />
           </CloseButton>
         </Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+      </Portal>
+    </Root>
   )
 }

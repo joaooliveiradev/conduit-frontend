@@ -3,7 +3,7 @@ import { type ValidationError, fetcher, type UnknownError } from '@/libs'
 import { useMutation } from '@tanstack/react-query'
 import type { Either } from 'fp-ts/Either'
 import { useAuth } from '@/context'
-import * as t from 'io-ts'
+import { type, type TypeOf, type OutputOf } from 'io-ts'
 
 export type SignUpRequest = {
   user: {
@@ -13,13 +13,13 @@ export type SignUpRequest = {
   }
 }
 
-const SignUpResponseCodec = t.type({
+const SignUpResponseCodec = type({
   user: UserTypeCodec,
 })
 
-type SignUpCodec = t.TypeOf<typeof SignUpResponseCodec>
+type SignUpCodec = TypeOf<typeof SignUpResponseCodec>
 
-type SignUpResponseOutput = t.OutputOf<typeof SignUpResponseCodec>
+type SignUpResponseOutput = OutputOf<typeof SignUpResponseCodec>
 
 export const signUpMutation = async (data: SignUpRequest) => {
   const options: RequestInit = {

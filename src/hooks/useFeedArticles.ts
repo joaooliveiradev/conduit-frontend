@@ -16,19 +16,16 @@ import { type Either } from 'fp-ts/Either'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 import { fromNullable, isSome } from 'fp-ts/Option'
 import { defaultFilters, type QueryFiltersProps } from '@/hooks'
-import * as t from 'io-ts'
+import { type, array, number, type TypeOf, type OutputOf } from 'io-ts'
 
-const GetFeedArticlesResponseCodec = t.type({
-  articles: t.array(ArticleCodec),
-  articlesCount: withMessage(
-    t.number,
-    () => 'articlesCount should be a number'
-  ),
+const GetFeedArticlesResponseCodec = type({
+  articles: array(ArticleCodec),
+  articlesCount: withMessage(number, () => 'articlesCount should be a number'),
 })
 
-type GetFeedArticlesResponse = t.TypeOf<typeof GetFeedArticlesResponseCodec>
+type GetFeedArticlesResponse = TypeOf<typeof GetFeedArticlesResponseCodec>
 
-type GetFeedArticlesOutput = t.OutputOf<typeof GetFeedArticlesResponseCodec>
+type GetFeedArticlesOutput = OutputOf<typeof GetFeedArticlesResponseCodec>
 
 const oneMinute = 60 * 1000
 

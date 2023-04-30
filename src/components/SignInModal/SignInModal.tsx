@@ -8,7 +8,7 @@ import { type UnknownError, type ValidationError, f } from '@/libs'
 import { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { alt, type Option } from 'fp-ts/Option'
-import * as Yup from 'yup'
+import { object as YupObject, string as YupString } from 'yup'
 
 const Wrapper = styled.form`
   width: 100%;
@@ -42,12 +42,12 @@ const ChangeFormBtn = styled.button`
   `}
 `
 
-const signInSchema = Yup.object({
-  email: Yup.string()
+const signInSchema = YupObject({
+  email: YupString()
     .email('E-mail is not valid')
     .required('Email field is required')
     .lowercase(),
-  password: Yup.string()
+  password: YupString()
     .required('Password field is required')
     .min(8, 'Minimum 8 characters required!')
     .max(64, 'Maximum 64 characters required!'),
@@ -63,13 +63,13 @@ const initialSignInValues: SignInFieldValues = {
   password: '',
 }
 
-const signUpSchema = Yup.object({
-  username: Yup.string().required('Username field is required').lowercase(),
-  email: Yup.string()
+const signUpSchema = YupObject({
+  username: YupString().required('Username field is required').lowercase(),
+  email: YupString()
     .email('E-mail is not valid')
     .required('Email field is required')
     .lowercase(),
-  password: Yup.string()
+  password: YupString()
     .required('Password field is required')
     .min(8, 'Minimum 8 characters required!')
     .max(64, 'Maximum 64 characters required!'),

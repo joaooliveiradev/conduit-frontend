@@ -1,4 +1,3 @@
-import React from 'react'
 import type { GetServerSidePropsContext, NextPage } from 'next'
 import styled, { css } from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
@@ -14,7 +13,7 @@ import { fromNullable, isSome, getRight, map } from 'fp-ts/Option'
 import { f } from '@/libs'
 import { pipe } from 'fp-ts/function'
 import { chain } from 'fp-ts/Option'
-import * as superJSON from 'superjson'
+import { stringify as superJsonStringify } from 'superjson'
 
 type ArticleNextPageProps = {
   slug: string
@@ -127,7 +126,7 @@ export const getServerSideProps = async ({
     )
     return {
       props: {
-        dehydratedState: superJSON.stringify(dehydrate(queryClient)),
+        dehydratedState: superJsonStringify(dehydrate(queryClient)),
         slug: slugOption.value,
       },
     }

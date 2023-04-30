@@ -1,7 +1,15 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { CloseIcon } from '@/components'
-import * as RadixToast from '@radix-ui/react-toast'
+import {
+  type ToastProps as RadixToastProps,
+  Root as ToastRoot,
+  Viewport as ToastViewport,
+  Title as ToastTitle,
+  Description as ToastDescription,
+  Close as ToastClose,
+  Provider,
+} from '@radix-ui/react-toast'
 
 export type ToastProps = {
   title: string
@@ -9,9 +17,9 @@ export type ToastProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
   label?: string
-} & RadixToast.ToastProps
+} & RadixToastProps
 
-const Root = styled(RadixToast.Root)`
+const Root = styled(ToastRoot)`
   ${({ theme }) => css`
     position: relative;
     display: flex;
@@ -72,7 +80,7 @@ const Root = styled(RadixToast.Root)`
   }
 `
 
-const Viewport = styled(RadixToast.Viewport)`
+const Viewport = styled(ToastViewport)`
   ${({ theme }) => css`
     max-width: 100vw;
     width: 400px;
@@ -84,19 +92,19 @@ const Viewport = styled(RadixToast.Viewport)`
   `}
 `
 
-const Title = styled(RadixToast.Title)`
+const Title = styled(ToastTitle)`
   font-size: ${({ theme }) => theme.fonts.sizes.xlarge};
   line-height: 29px;
   letter-spacing: -0.04em;
   font-weight: 600;
 `
 
-const Description = styled(RadixToast.Description)`
+const Description = styled(ToastDescription)`
   font-size: ${({ theme }) => theme.fonts.sizes.xmedium};
   text-align: center;
 `
 
-const Close = styled(RadixToast.Close)`
+const Close = styled(ToastClose)`
   ${({ theme }) => css`
     position: absolute;
     top: ${theme.spacings.xsmall};
@@ -118,7 +126,7 @@ export const Toast = ({
   type,
   label,
 }: ToastProps) => (
-  <RadixToast.Provider label={label}>
+  <Provider label={label}>
     <Root
       open={open}
       onOpenChange={onOpenChange}
@@ -132,5 +140,5 @@ export const Toast = ({
       </Close>
     </Root>
     <Viewport />
-  </RadixToast.Provider>
+  </Provider>
 )

@@ -9,10 +9,10 @@ import { type Either, left, right } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
 import { baseApiUrl } from '@/types'
 import { match } from 'fp-ts/Either'
-import * as t from 'io-ts'
+import { type Type, type Errors } from 'io-ts'
 
-const validateCodec = <A>(codec: t.Type<A, unknown, unknown>, data: A) => {
-  const onLeft = (errors: t.Errors) => {
+const validateCodec = <A>(codec: Type<A, unknown, unknown>, data: A) => {
+  const onLeft = (errors: Errors) => {
     const errorMessage =
       "Something wen't wrong with our servers, and we're working to fix it. Please try again later."
     return left(new ValidationError(errorMessage, errors.join(', ')))
@@ -25,7 +25,7 @@ const validateCodec = <A>(codec: t.Type<A, unknown, unknown>, data: A) => {
 
 export const fetcher = async <D, A>(
   path: string,
-  codec: t.Type<A, unknown, unknown>,
+  codec: Type<A, unknown, unknown>,
   data?: D,
   customConfig?: RequestInit
 ): Promise<Either<ValidationError, A>> => {
