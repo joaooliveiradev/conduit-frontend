@@ -2,15 +2,15 @@ import { fetcher, type ValidationError, type UnknownError } from '@/libs'
 import { ArticleBySlugCodec } from '@/types'
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 import { Either } from 'fp-ts/Either'
-import * as t from 'io-ts'
+import { type, type TypeOf, type OutputOf } from 'io-ts'
 
-const GetArticleCodec = t.type({
+const GetArticleCodec = type({
   article: ArticleBySlugCodec,
 })
 
-type GetArticleOutput = t.OutputOf<typeof GetArticleCodec>
+type GetArticleOutput = OutputOf<typeof GetArticleCodec>
 
-type GetArticleResponse = t.TypeOf<typeof GetArticleCodec>
+type GetArticleResponse = TypeOf<typeof GetArticleCodec>
 
 type GetArticlesOptions = UseQueryOptions<
   Either<ValidationError, GetArticleOutput>,

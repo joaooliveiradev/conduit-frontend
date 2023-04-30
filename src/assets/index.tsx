@@ -5,7 +5,7 @@ import { ReactComponent as DefaultFullScreenIcon } from './fullscreen.svg'
 import { ReactComponent as DefaultCheckIcon } from './check.svg'
 import { ReactComponent as DefaultExclamationIcon } from './exclamation.svg'
 import { ReactComponent as DefaultExitFullScreenIcon } from './exit-fullscreen.svg'
-import * as AccessibleIcon from '@radix-ui/react-accessible-icon'
+import { Root as AccessibleIconRoot } from '@radix-ui/react-accessible-icon'
 
 type SVGProps = {
   label?: string
@@ -17,9 +17,9 @@ export const CloseIcon = ({
   label = 'close',
   ...rest
 }: SVGProps) => (
-  <AccessibleIcon.Root label={label}>
+  <AccessibleIconRoot label={label}>
     <DefaultCloseIcon width={width} height={height} {...rest} />
-  </AccessibleIcon.Root>
+  </AccessibleIconRoot>
 )
 
 export const EmptyIcon = ({
@@ -28,9 +28,9 @@ export const EmptyIcon = ({
   label = 'empty state',
   ...rest
 }: SVGProps) => (
-  <AccessibleIcon.Root label={label}>
+  <AccessibleIconRoot label={label}>
     <DefaultEmptyIcon width={width} height={height} {...rest} />
-  </AccessibleIcon.Root>
+  </AccessibleIconRoot>
 )
 
 export const ErrorStateIcon = ({
@@ -39,9 +39,9 @@ export const ErrorStateIcon = ({
   label = 'error state',
   ...rest
 }: SVGProps) => (
-  <AccessibleIcon.Root label={label}>
+  <AccessibleIconRoot label={label}>
     <DefaultErrorStateIcon width={width} height={height} {...rest} />
-  </AccessibleIcon.Root>
+  </AccessibleIconRoot>
 )
 
 export const FullScreenIcon = ({
@@ -50,9 +50,9 @@ export const FullScreenIcon = ({
   label = 'fullscreen',
   ...rest
 }: SVGProps) => (
-  <AccessibleIcon.Root label={label}>
+  <AccessibleIconRoot label={label}>
     <DefaultFullScreenIcon width={width} height={height} {...rest} />
-  </AccessibleIcon.Root>
+  </AccessibleIconRoot>
 )
 
 export const ExitFullScreenIcon = ({
@@ -61,9 +61,9 @@ export const ExitFullScreenIcon = ({
   label = 'exit fullscreen',
   ...rest
 }: SVGProps) => (
-  <AccessibleIcon.Root label={label}>
+  <AccessibleIconRoot label={label}>
     <DefaultExitFullScreenIcon width={width} height={height} {...rest} />
-  </AccessibleIcon.Root>
+  </AccessibleIconRoot>
 )
 
 export const CheckIcon = ({
@@ -72,9 +72,9 @@ export const CheckIcon = ({
   label = 'check',
   ...rest
 }: SVGProps) => (
-  <AccessibleIcon.Root label={label}>
+  <AccessibleIconRoot label={label}>
     <DefaultCheckIcon width={width} height={height} {...rest} />
-  </AccessibleIcon.Root>
+  </AccessibleIconRoot>
 )
 
 export const ExclamationIcon = ({
@@ -83,7 +83,7 @@ export const ExclamationIcon = ({
   label = 'exclamation error',
   ...rest
 }: SVGProps) => (
-  <AccessibleIcon.Root label={label}>
+  <AccessibleIconRoot label={label}>
     <DefaultExclamationIcon width={width} height={height} {...rest} />
-  </AccessibleIcon.Root>
+  </AccessibleIconRoot>
 )

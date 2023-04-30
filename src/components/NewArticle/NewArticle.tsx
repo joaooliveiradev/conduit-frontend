@@ -27,7 +27,10 @@ import {
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import dynamic from 'next/dynamic'
-import * as superJSON from 'superjson'
+import {
+  parse as superJsonParse,
+  stringify as superJsonStringify,
+} from 'superjson'
 
 const Alert = {
   Root: dynamic<AlertProps>(
@@ -127,7 +130,7 @@ const getStorage = () => {
   const cachedStorage = fromNullable(localStorage.getItem(storageKey))
 
   return isSome(cachedStorage)
-    ? superJSON.parse<NewArticleFieldValues>(cachedStorage.value)
+    ? superJsonParse<NewArticleFieldValues>(cachedStorage.value)
     : initialFieldValues
 }
 
@@ -135,7 +138,7 @@ const useLocalStorage = () => {
   const [storage, setStorage] = useState<NewArticleFieldValues>(getStorage)
 
   useEffect(
-    () => localStorage.setItem(storageKey, superJSON.stringify(storage)),
+    () => localStorage.setItem(storageKey, superJsonStringify(storage)),
     [storage]
   )
 

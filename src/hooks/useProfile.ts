@@ -2,15 +2,15 @@ import { ProfileCodec } from '@/types/profile'
 import { fetcher, type ValidationError, type UnknownError } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { type Either } from 'fp-ts/Either'
-import * as t from 'io-ts'
+import { type, type TypeOf, type OutputOf } from 'io-ts'
 
-const UseProfileResponseCodec = t.type({
+const UseProfileResponseCodec = type({
   profile: ProfileCodec,
 })
 
-type UseProfileResponse = t.TypeOf<typeof UseProfileResponseCodec>
+type UseProfileResponse = TypeOf<typeof UseProfileResponseCodec>
 
-type UseProfileOutput = t.OutputOf<typeof UseProfileResponseCodec>
+type UseProfileOutput = OutputOf<typeof UseProfileResponseCodec>
 
 export const GET_PROFILE_KEY = 'get-profile'
 
