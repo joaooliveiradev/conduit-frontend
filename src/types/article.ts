@@ -1,20 +1,20 @@
-import * as t from 'io-ts'
+import { type, string, boolean, array, number } from 'io-ts'
 import { withMessage, NonEmptyString } from 'io-ts-types'
 
-const AuthorCodec = t.type({
+const AuthorCodec = type({
   username: withMessage(
     NonEmptyString,
     () => 'username response should be a string and should not be empty'
   ),
-  bio: withMessage(t.string, () => 'bio response should be a string'),
-  image: withMessage(t.string, () => 'image response should be a string'),
+  bio: withMessage(string, () => 'bio response should be a string'),
+  image: withMessage(string, () => 'image response should be a string'),
   following: withMessage(
-    t.boolean,
+    boolean,
     () => 'following response should be a boolean'
   ),
 })
 
-export const ArticleCodec = t.type({
+export const ArticleCodec = type({
   id: withMessage(
     NonEmptyString,
     () => 'id response should be a string and should be not empty'
@@ -49,20 +49,20 @@ export const ArticleCodec = t.type({
   ),
   author: AuthorCodec,
   tagList: withMessage(
-    t.array(t.string),
+    array(string),
     () => 'tagList response should be an array of strings or an emtpy array'
   ),
   favorited: withMessage(
-    t.boolean,
+    boolean,
     () => 'favorited response should be a boolean'
   ),
   favoritesCount: withMessage(
-    t.number,
+    number,
     () => 'favoritesCount response should be an number'
   ),
 })
 
-export const ArticleBySlugCodec = t.type({
+export const ArticleBySlugCodec = type({
   id: withMessage(
     NonEmptyString,
     () => 'id response should be a string and should be not empty'
@@ -92,16 +92,16 @@ export const ArticleBySlugCodec = t.type({
     () => 'updatedAt response should be a string and should be not empty'
   ),
   tagList: withMessage(
-    t.array(t.string),
+    array(string),
     () => 'tagList response should be an array of strings or an emtpy array'
   ),
   author: AuthorCodec,
   favorited: withMessage(
-    t.boolean,
+    boolean,
     () => 'favorited response should be a boolean'
   ),
   favoritesCount: withMessage(
-    t.number,
+    number,
     () => 'favoritesCount response should be an number'
   ),
 })

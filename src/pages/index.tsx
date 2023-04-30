@@ -28,7 +28,7 @@ import { f } from '@/libs'
 import { type InfiniteData } from '@tanstack/react-query'
 import { pipe } from 'fp-ts/function'
 import React from 'react'
-import * as superJSON from 'superjson'
+import { stringify as superJsonStringify } from 'superjson'
 
 const ContentSection = styled.section`
   display: flex;
@@ -288,7 +288,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      dehydratedState: superJSON.stringify(dehydrate(queryClient)),
+      dehydratedState: superJsonStringify(dehydrate(queryClient)),
     },
   }
 }

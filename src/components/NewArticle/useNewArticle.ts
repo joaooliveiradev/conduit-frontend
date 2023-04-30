@@ -8,17 +8,15 @@ import type { NewArticleRequest } from './NewArticle'
 import { ArticleBySlugCodec as NewArticleCodec } from '@/types'
 import type { Either } from 'fp-ts/Either'
 import { useMutation } from '@tanstack/react-query'
-import * as t from 'io-ts'
+import { type, type TypeOf, type OutputOf } from 'io-ts'
 
-const newArticleResponseCodec = t.type({
+const newArticleResponseCodec = type({
   article: NewArticleCodec,
 })
 
-type NewArticleResponseCodec = t.TypeOf<typeof newArticleResponseCodec>
+type NewArticleResponseCodec = TypeOf<typeof newArticleResponseCodec>
 
-export type NewArticleResponseOutput = t.OutputOf<
-  typeof newArticleResponseCodec
->
+export type NewArticleResponseOutput = OutputOf<typeof newArticleResponseCodec>
 
 export const postArticle = async (data: NewArticleRequest) => {
   const options: RequestInit = {

@@ -1,7 +1,12 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { Anchor as DefaultAnchor } from '@/components/Anchor/Anchor'
-import * as Popover from '@radix-ui/react-popover'
+import {
+  Root,
+  Portal,
+  Content as PopoverContent,
+  Trigger as PopoverTrigger,
+} from '@radix-ui/react-popover'
 
 export type DropdownProps = {
   children: React.ReactNode
@@ -14,7 +19,7 @@ export type DropdownItemProps = {
   onEventClick?: () => void
 }
 
-const Trigger = styled(Popover.Trigger)`
+const Trigger = styled(PopoverTrigger)`
   ${({ theme }) => css`
     appearance: none;
     all: unset;
@@ -31,7 +36,7 @@ const Trigger = styled(Popover.Trigger)`
   `}
 `
 
-const Content = styled(Popover.Content)`
+const Content = styled(PopoverContent)`
   ${({ theme }) => css`
     border: 1px solid ${transparentize(0.88, theme.colors.black[200])};
     background-color: ${theme.colors.white[100]};
@@ -94,14 +99,14 @@ const DropdownButton = styled.button`
 
 export const Dropdown = ({ children, trigger }: DropdownProps) => {
   return (
-    <Popover.Root>
+    <Root>
       <Trigger>{trigger}</Trigger>
-      <Popover.Portal>
+      <Portal>
         <Content sideOffset={16} collisionPadding={16}>
           <List>{children}</List>
         </Content>
-      </Popover.Portal>
-    </Popover.Root>
+      </Portal>
+    </Root>
   )
 }
 

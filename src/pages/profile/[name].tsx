@@ -23,9 +23,9 @@ import { type ParsedUrlQuery } from 'querystring'
 import { fromNullable, isSome, chain, getRight, map, match } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import { useInView } from 'react-intersection-observer'
-import React from 'react'
+import { useEffect } from 'react'
 import { transparentize } from 'polished'
-import * as superJSON from 'superjson'
+import { stringify as superJsonStringify } from 'superjson'
 
 const Wrapper = styled.section`
   width: 100%;
@@ -89,7 +89,7 @@ const Profile = ({ name }: ProfileParams) => {
     threshold: 1,
   })
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inView && hasNextPage) fetchNextPage()
   }, [fetchNextPage, inView, hasNextPage])
 
@@ -191,7 +191,7 @@ export const getServerSideProps = async ({
 
     return {
       props: {
-        dehydratedState: superJSON.stringify(dehydrate(queryClient)),
+        dehydratedState: superJsonStringify(dehydrate(queryClient)),
         name: username.value,
       },
     }

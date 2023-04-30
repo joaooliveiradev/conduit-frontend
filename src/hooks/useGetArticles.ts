@@ -10,7 +10,7 @@ import { type Either } from 'fp-ts/Either'
 import { withMessage } from 'io-ts-types'
 import { isSome, fromNullable } from 'fp-ts/Option'
 import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
-import * as t from 'io-ts'
+import { type, array, number, type TypeOf, type OutputOf } from 'io-ts'
 
 export type QueryFiltersProps = {
   limit?: string
@@ -20,17 +20,14 @@ export type QueryFiltersProps = {
   tag?: string
 }
 
-export const GetArticlesResponseCodec = t.type({
-  articles: t.array(ArticleCodec),
-  articlesCount: withMessage(
-    t.number,
-    () => 'articlesCount should be a number'
-  ),
+export const GetArticlesResponseCodec = type({
+  articles: array(ArticleCodec),
+  articlesCount: withMessage(number, () => 'articlesCount should be a number'),
 })
 
-export type GetArticlesResponse = t.TypeOf<typeof GetArticlesResponseCodec>
+export type GetArticlesResponse = TypeOf<typeof GetArticlesResponseCodec>
 
-export type GetArticlesOutput = t.OutputOf<typeof GetArticlesResponseCodec>
+export type GetArticlesOutput = OutputOf<typeof GetArticlesResponseCodec>
 
 export const GET_ARTICLES_KEY = 'get-articles'
 
