@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { TextButton as TextButtonDefault } from '@/components/TextButton/TextButton'
+import styled, { css } from 'styled-components'
 
 const Wrapper = styled.footer`
   display: flex;
@@ -36,8 +36,8 @@ const TextButton = styled(TextButtonDefault)`
 
 const resetFocusToBody = () => {
   const bodyElement = document.body
-  const noFocusOnUsingKeyboard = '-1'
-  bodyElement.setAttribute('tabindex', noFocusOnUsingKeyboard)
+  const noFocusUsingKeyboard = '-1'
+  bodyElement.setAttribute('tabindex', noFocusUsingKeyboard)
   bodyElement.focus()
   bodyElement.removeAttribute('tabindex')
 }
