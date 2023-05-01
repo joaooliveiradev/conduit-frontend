@@ -30,7 +30,7 @@ const Button = styled(DefaultButton)`
 `
 
 const NewArticleBtn = () => (
-  <Link href="/editor">
+  <Link href="/editor" prefetch={false}>
     <Button size="medium">New Article</Button>
   </Link>
 )
