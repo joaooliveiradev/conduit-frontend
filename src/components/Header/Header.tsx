@@ -1,21 +1,31 @@
 import {
   Button,
-  SignInModal,
   Anchor,
+  type SignInModalProps,
   type DropdownProps,
   type DropdownItemProps,
   type ProfileNameProps,
 } from '@/components'
 import { useAuth, useCookies } from '@/context'
 import { fromNullable, isSome, chain } from 'fp-ts/Option'
-import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 import { getUseMeKey, useMe } from '@/hooks'
 import styled from 'styled-components'
 import logo from '@/assets/logo.webp'
-import Image from 'next/image'
 import { getRight } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
+import Image from 'next/image'
+import dynamic from 'next/dynamic'
+
+const SignInModal = dynamic<SignInModalProps>(
+  () =>
+    import('@/components/SignInModal/SignInModal').then(
+      (module) => module.SignInModal
+    ),
+  {
+    ssr: false,
+  }
+)
 
 const Dropdown = dynamic<DropdownProps>(
   () =>
@@ -66,7 +76,7 @@ export const Header = () => {
   return (
     <Wrapper>
       <Anchor href="/">
-        <Image src={logo} alt="Conduit Logo" width={172} height={42} />
+        <Image src={logo} priority alt="Conduit Logo" width={172} height={42} />
       </Anchor>
       {isSome(maybeData) && status === 'loggedIn' ? (
         <Dropdown

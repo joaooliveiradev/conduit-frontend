@@ -1,7 +1,18 @@
-import styled from 'styled-components'
 import type { Status } from '@/context'
-import { SignInModal, Button } from '@/components'
+import { Button, type SignInModalProps } from '@/components'
+import styled from 'styled-components'
 import React from 'react'
+import dynamic from 'next/dynamic'
+
+const SignInModal = dynamic<SignInModalProps>(
+  () =>
+    import('@/components/SignInModal/SignInModal').then(
+      (module) => module.SignInModal
+    ),
+  {
+    ssr: false,
+  }
+)
 
 export type HeroProps = {
   userStatus: Status
