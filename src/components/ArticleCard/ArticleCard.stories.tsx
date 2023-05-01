@@ -1,5 +1,10 @@
 import type { Meta, Story } from '@storybook/react'
-import { ProfileName, ArticleStats, ArticleCard, type ArticleCardProps } from '@/components'
+import {
+  ProfileName,
+  ArticleStats,
+  ArticleCard,
+  type ArticleCardProps,
+} from '@/components'
 
 const stories: Meta<ArticleCardProps> = {
   component: ArticleCard,
