@@ -1,6 +1,7 @@
 import { Divider } from '@/components'
 import styled from 'styled-components'
-import format from 'date-fns/format'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 //eslint-disable-next-line @typescript-eslint/no-var-requires
 const readingTime = require('reading-time/lib/reading-time')
 
@@ -34,8 +35,9 @@ export const ArticleStats = ({ readTime, date }: ArticleStatsProps) => {
   }
 
   const getDate = (articleDate: string) => {
-    const formatMethod = 'PP'
-    const date = format(new Date(articleDate), formatMethod)
+    dayjs.extend(utc)
+    const englishFormat = 'MMM D, YYYY'
+    const date = dayjs.utc(articleDate).format(englishFormat)
     return date
   }
 
