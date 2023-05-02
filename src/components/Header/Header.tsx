@@ -7,13 +7,12 @@ import {
   type ProfileNameProps,
 } from '@/components'
 import { useAuth, useCookies } from '@/context'
-import { fromNullable, isSome, chain } from 'fp-ts/Option'
 import { useState, useEffect } from 'react'
-import { getUseMeKey, useMe } from '@/hooks'
-import styled from 'styled-components'
-import logo from '@/assets/logo.webp'
-import { getRight } from 'fp-ts/Option'
+import { fromNullable, isSome, chain, getRight } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
+import { getUseMeKey, useMe } from '@/hooks'
+import logo from '@/assets/logo.webp'
+import styled from 'styled-components'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
@@ -76,7 +75,7 @@ export const Header = () => {
   return (
     <Wrapper>
       <Anchor href="/">
-        <Image src={logo} priority alt="Conduit Logo" width={172} height={42} />
+        <Image src={logo} alt="Conduit Logo" width={172} height={42} />
       </Anchor>
       {isSome(maybeData) && status === 'loggedIn' ? (
         <Dropdown
