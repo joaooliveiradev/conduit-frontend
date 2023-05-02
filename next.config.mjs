@@ -8,11 +8,17 @@ const nextConfig = {
     styledComponents: true,
   },
   webpack: (config) => {
-    config.module.rules.push({
+    const svgrConfig = {
       test: /\.svg$/,
       use: ['@svgr/webpack', 'file-loader'],
       issuer: /\.(ts|tsx|js|jsx|md|mdx)$/,
-    })
+    }
+    const treeshakingConfig = {
+      test: /index\.(js|mjs|jsx|ts|tsx)$/,
+      sideEffects: false,
+    }
+
+    config.module.rules.push(svgrConfig, treeshakingConfig)
     return config
   },
 }
