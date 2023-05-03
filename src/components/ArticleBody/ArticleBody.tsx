@@ -66,6 +66,10 @@ const Wrapper = styled.section`
       font-size: ${theme.fonts.sizes.xmedium};
       margin-bottom: ${theme.spacings.small};
     }
+
+    .hljs {
+      border-radius: ${theme.spacings.small};
+    }
   `}
 `
 
