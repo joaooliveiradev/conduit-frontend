@@ -2,14 +2,15 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const ContentSecurityPolicy = `
-    default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline';
-    child-src 'none';
-    style-src 'self' 'unsafe-inline';
-    img-src * blob: data:;
-    media-src 'none';
-    font-src 'self';
-    connect-src *;
+    default-src 'self' https://*.fly.dev;
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data:;
+    form-action 'none';
+    frame-ancestors 'none'
+    child-src 'none'
+    media-src 'none'
 `
 
 const securityHeaders = [
