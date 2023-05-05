@@ -1,16 +1,19 @@
 /** @type {import('next').NextConfig} */
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const ContentSecurityPolicy = `
-    default-src 'self' https://*.fly.dev;
-    script-src 'self' 'unsafe-inline';
+    default-src 'self';
+    script-src 'self' ${isProduction ? '' : "'unsafe-eval'"};
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     font-src 'self' https://fonts.gstatic.com;
     img-src 'self' data:;
     form-action 'none';
-    frame-ancestors 'none'
-    child-src 'none'
-    media-src 'none'
+    frame-ancestors 'none';
+    child-src 'none';
+    media-src 'none';
+    connect-src 'self' https://conduit-api.fly.dev;
 `
 
 const securityHeaders = [
