@@ -23,10 +23,6 @@ const ContentSecurityPolicy = `
 
 const securityHeaders = [
   {
-    key: 'X-DNS-Prefetch-Controls',
-    value: 'on',
-  },
-  {
     key: 'Strict-Transport-Security',
     value: 'max-age=31536000; includeSubDomains; preload',
   },
@@ -37,6 +33,14 @@ const securityHeaders = [
   {
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
+  },
+  {
+    key: 'X-DNS-Prefetch-Controls',
+    value: 'on',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
   },
 ]
 
