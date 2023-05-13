@@ -3,6 +3,8 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+// TODO: Add report-onlyy and report-uri when have some monitoring software.
+
 const ContentSecurityPolicy = `
   base-uri 'self';
   frame-ancestors 'none';
@@ -45,6 +47,10 @@ const securityHeaders = [
   {
     key: 'Referrer-Policy',
     value: 'same-origin',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY',
   },
 ]
 
