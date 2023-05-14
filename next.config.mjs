@@ -21,6 +21,7 @@ const ContentSecurityPolicy = `
   media-src 'none';
   manifest-src 'none';
   default-src 'none';
+  upgrade-insecure-requests;
 `
 
 const securityHeaders = [
@@ -57,6 +58,7 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  poweredByHeader: false,
   compiler: {
     styledComponents: true,
   },
