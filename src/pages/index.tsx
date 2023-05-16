@@ -18,7 +18,7 @@ import {
   useFeedArticles,
   defaultFilters,
 } from '@/hooks'
-import type { NextPage } from 'next'
+import type { GetServerSidePropsContext, NextPage } from 'next'
 import styled from 'styled-components'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
@@ -279,9 +279,14 @@ const Home: NextPage = () => {
   })
 }
 
-export async function getServerSideProps() {
-  const queryClient = new QueryClient()
+const oneHour = 3600
 
+export async function getServerSideProps({ res }: GetServerSidePropsContext) {
+  const queryClient = new QueryClient()
+  res.setHeader(
+    'Cache-Control',
+    `public, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
+  )
   await queryClient.prefetchInfiniteQuery([GET_ARTICLES_KEY], () =>
     getArticles(defaultFilters)
   )
