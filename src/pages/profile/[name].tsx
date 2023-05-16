@@ -163,9 +163,17 @@ const Profile = ({ name }: ProfileParams) => {
   )
 }
 
+const oneHour = 3600
+
 export const getServerSideProps = async ({
   params,
+  res,
 }: GetServerSidePropsContext<ProfileParams>) => {
+  res.setHeader(
+    'Cache-Control',
+    `private, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
+  )
+
   const queryClient = new QueryClient()
 
   const username = pipe(
