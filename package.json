@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@radix-ui/react-accessible-icon": "1.0.2",
@@ -47,15 +47,12 @@
   "devDependencies": {
     "@babel/core": "7.18.10",
     "@next/bundle-analyzer": "^13.3.2",
-    "@storybook/addon-actions": "6.5.10",
-    "@storybook/addon-essentials": "6.5.10",
-    "@storybook/addon-interactions": "6.5.10",
-    "@storybook/addon-links": "6.5.10",
-    "@storybook/builder-webpack5": "6.5.10",
-    "@storybook/cli": "6.5.10",
-    "@storybook/manager-webpack5": "6.5.10",
-    "@storybook/react": "6.5.10",
-    "@storybook/testing-library": "0.0.13",
+    "@storybook/addon-essentials": "7.0.12",
+    "@storybook/addon-interactions": "7.0.12",
+    "@storybook/addon-links": "7.0.12",
+    "@storybook/nextjs": "7.0.12",
+    "@storybook/react": "7.0.12",
+    "@storybook/testing-library": "0.1.0",
     "@svgr/webpack": "6.3.1",
     "@tanstack/eslint-plugin-query": "4.27.0",
     "@types/cookie": "0.5.1",
@@ -70,13 +67,12 @@
     "eslint-config-next": "12.2.5",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-storybook": "0.6.4",
+    "eslint-plugin-storybook": "0.6.12",
     "eslint-plugin-styled-components-a11y": "0.1.0",
     "husky": "8.0.1",
     "nookies": "2.5.2",
     "polished": "4.2.2",
     "prettier": "2.7.1",
-    "storybook-addon-next": "1.6.9",
-    "tsconfig-paths-webpack-plugin": "4.0.0"
+    "storybook": "7.0.12"
   }
 }
