@@ -73,15 +73,25 @@ const nextConfig = {
   webpack: (config) => {
     const svgrConfig = {
       test: /\.svg$/,
-      use: ['@svgr/webpack', 'file-loader'],
-      issuer: /\.(ts|tsx|js|jsx|md|mdx)$/,
+      issuer: /\.[jt]sx?$/,
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            namedExport: 'ReactComponent',
+            exportType: 'named',
+          },
+        },
+      ],
     }
+
     const treeshakingConfig = {
       test: /index\.(js|mjs|jsx|ts|tsx)$/,
       sideEffects: false,
     }
 
     config.module.rules.push(svgrConfig, treeshakingConfig)
+
     return config
   },
 }
