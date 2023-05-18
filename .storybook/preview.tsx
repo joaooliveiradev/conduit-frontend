@@ -15,6 +15,7 @@ const withThemeProvider = (Story, context) => {
     </QueryClientProvider>
   )
 }
+
 export const decorators = [withThemeProvider]
 
 export const parameters = {
