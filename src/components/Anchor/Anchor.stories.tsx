@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import styled from 'styled-components'
 import { Anchor, type AnchorProps } from './Anchor'
 
@@ -7,20 +7,25 @@ const Wrapper = styled.div`
   font-size: 16px;
 `
 
-const stories: Meta<AnchorProps> = {
+const meta: Meta<AnchorProps> = {
   component: Anchor,
   argTypes: {
     children: {
       table: {
-        disable: true
-      }
-    }
-  }
+        disable: true,
+      },
+    },
+    prefetch: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 }
 
-export default stories
+export default meta
 
-const Template: Story<AnchorProps> = (args) => (
+const Template = (args: AnchorProps) => (
   <Anchor href={args.href}>{args.children}</Anchor>
 )
 
@@ -30,9 +35,10 @@ const MockComponent = () => (
   </Wrapper>
 )
 
-export const Default = Template.bind({})
-
-Default.args = {
-  href: '/profile',
-  children: <MockComponent />,
+export const Default: StoryObj<AnchorProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    href: '/profile',
+    children: <MockComponent />,
+  },
 }

@@ -1,20 +1,27 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import {
-  type ErrorFieldMessageProps,
   ErrorFieldMessage,
+  type ErrorFieldMessageProps,
 } from './ErrorFieldMessage'
 
-const stories: Meta<ErrorFieldMessageProps> = {
+const meta: Meta<ErrorFieldMessageProps> = {
   component: ErrorFieldMessage,
+}
+
+export default meta
+
+export const Default: StoryObj<ErrorFieldMessageProps> = {
+  render: (args) => <ErrorFieldMessage {...args} />,
+  args: {
+    message: "Something wen't wrong, please try again.",
+    fontWeight: 'medium',
+    textAlign: 'center',
+  },
   argTypes: {
-    message: {
-      defaultValue: "Something wen't wrong, please try again.",
+    id: {
+      table: {
+        disable: true,
+      },
     },
   },
 }
-
-export default stories
-
-export const Default: Story<ErrorFieldMessageProps> = (args) => (
-  <ErrorFieldMessage {...args} />
-)

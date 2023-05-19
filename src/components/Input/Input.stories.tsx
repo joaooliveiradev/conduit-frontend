@@ -1,35 +1,58 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { type InputProps, Input } from '@/components'
 
-const stories: Meta = {
+const meta: Meta<InputProps> = {
   component: Input,
-}
-
-const Template: Story<InputProps> = (args) => (
-  <Input {...args} placeholder="Email" />
-)
-
-export const Empty = Template.bind({})
-Empty.argTypes = {
-  errorMessage: {
-    control: false,
+  argTypes: {
+    inputRef: {
+      table: {
+        disable: true,
+      },
+    },
+    errorMessage: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
-export const Filled = Template.bind({})
-Filled.args = {
-  value: 'Email',
-}
-Filled.argTypes = {
-  errorMessage: {
-    control: false,
+export default meta
+
+const Template = (args: InputProps) => <Input {...args} placeholder="Email" />
+
+export const Empty: StoryObj<InputProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    value: '',
+  },
+  argTypes: {
+    value: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
-export const Errored = Template.bind({})
-Errored.args = {
-  value: 'Some wrong value',
-  errorMessage: 'Some error message',
+export const Filled: StoryObj<InputProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    value: 'Email',
+  },
 }
 
-export default stories
+export const Errored: StoryObj<InputProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    value: 'Some wrong value',
+    errorMessage: 'Some error message ',
+  },
+  argTypes: {
+    errorMessage: {
+      table: {
+        disable: false,
+      },
+    },
+  },
+}

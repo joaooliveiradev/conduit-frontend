@@ -1,14 +1,16 @@
-import type { Meta, Story } from '@storybook/react'
-import styled from 'styled-components'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ArticleBody, type ArticleBodyProps } from './ArticleBody'
+import styled from 'styled-components'
 
 const Wrapper = styled.div`
   padding: 32px 64px;
 `
 
-const stories: Meta<ArticleBodyProps> = {
+const meta: Meta<ArticleBodyProps> = {
   component: ArticleBody,
 }
+
+export default meta
 
 const articleMarkdown = `
   ##  Batched Consistency
@@ -36,15 +38,15 @@ const articleMarkdown = `
   In the company of the others, Svelte's execution might not seem that desirable. It isn't consistent. And does not attempt to appear to be. It also is sort of perfect for Svelte.
 `
 
-const Template: Story<ArticleBodyProps> = (args) => (
+const Template = (args: ArticleBodyProps) => (
   <Wrapper>
     <ArticleBody {...args} />
   </Wrapper>
 )
 
-export const Default = Template.bind({})
-Default.args = {
-  articleText: articleMarkdown,
+export const Default: StoryObj<ArticleBodyProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    articleText: articleMarkdown,
+  },
 }
-
-export default stories

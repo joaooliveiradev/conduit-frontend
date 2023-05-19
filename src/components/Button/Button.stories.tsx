@@ -1,15 +1,8 @@
 import { type ButtonProps, Button } from './Button'
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 
-const stories: Meta = {
+const meta: Meta<ButtonProps> = {
   component: Button,
-  args: {
-    children: 'Sign in',
-    isLoading: false,
-    disabled: false,
-    block: false,
-    size: 'large',
-  },
   argTypes: {
     size: {
       control: { type: 'inline-radio' },
@@ -17,8 +10,15 @@ const stories: Meta = {
   },
 }
 
-const Template: Story<ButtonProps> = (args) => <Button {...args} />
+export default meta
 
-export const Default = Template.bind({})
-
-export default stories
+export const Default: StoryObj<ButtonProps> = {
+  render: (args) => <Button {...args} />,
+  args: {
+    children: 'Sign in',
+    isLoading: false,
+    disabled: false,
+    block: false,
+    size: 'large',
+  },
+}
