@@ -1,15 +1,15 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { Hero, type HeroProps } from './Hero'
 
-const stories: Meta<HeroProps> = {
+const meta: Meta<HeroProps> = {
   component: Hero,
 }
 
-export default stories
+export default meta
 
-const Template: Story<HeroProps> = (args) => <Hero {...args} />
-
-export const Default = Template.bind({})
-Default.args = {
-  userStatus: 'idle',
+export const Default: StoryObj<HeroProps> = {
+  render: (args) => <Hero {...args} />,
+  args: {
+    userStatus: 'idle',
+  },
 }

@@ -1,13 +1,13 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { Button, SignInModal, type SignInModalProps } from '@/components'
 import styled from 'styled-components'
 
-const stories: Meta<SignInModalProps> = {
+const meta: Meta<SignInModalProps> = {
   component: SignInModal,
 }
 
-export default stories
+export default meta
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   row-gap: 12px;
 `
 
-export const Default: Story<SignInModalProps> = () => {
+const Template = () => {
   const [open, setOnOpenChange] = useState(false)
   return (
     <Wrapper>
@@ -25,4 +25,8 @@ export const Default: Story<SignInModalProps> = () => {
       <SignInModal open={open} onOpenChange={setOnOpenChange} showSignInFirst />
     </Wrapper>
   )
+}
+
+export const Default: StoryObj<SignInModalProps> = {
+  render: () => <Template />,
 }

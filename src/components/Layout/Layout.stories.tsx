@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { Layout, type LayoutProps } from '@/components'
 
-const stories: Meta<LayoutProps> = {
+const meta: Meta<LayoutProps> = {
   component: Layout,
   argTypes: {
     children: {
@@ -17,13 +17,19 @@ const stories: Meta<LayoutProps> = {
   },
 }
 
-const Template: Story<LayoutProps> = (args) => <Layout {...args} />
+export default meta
 
-export const Empty = Template.bind({})
+const Template = (args: LayoutProps) => <Layout {...args} />
 
-export const WithContent = Template.bind({})
-WithContent.args = {
-  children: <h1 style={{ textAlign: 'center', fontSize: '24px'}}>Content</h1>,
+export const Empty: StoryObj<LayoutProps> = {
+  render: (args) => <Template {...args} />,
 }
 
-export default stories
+export const WithContent: StoryObj<LayoutProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    children: (
+      <h1 style={{ textAlign: 'center', fontSize: '24px' }}>Content</h1>
+    ),
+  },
+}

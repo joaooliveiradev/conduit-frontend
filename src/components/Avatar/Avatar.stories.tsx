@@ -1,24 +1,23 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { type AvatarProps, Avatar } from './Avatar'
 
-const stories: Meta = {
+const meta: Meta<AvatarProps> = {
   component: Avatar,
   argTypes: {
     size: {
-      defaultValue: 1,
       control: {
         type: 'range',
       },
     },
-    name: {
-      defaultValue: 'João Oliveira',
-      type: 'string',
-    },
   },
 }
 
-const Template: Story<AvatarProps> = (args) => <Avatar {...args} />
+export default meta
 
-export const Default = Template.bind({})
-
-export default stories
+export const Default: StoryObj<AvatarProps> = {
+  render: (args) => <Avatar {...args} />,
+  args: {
+    name: 'Joao Oliveira',
+    size: 4,
+  },
+}

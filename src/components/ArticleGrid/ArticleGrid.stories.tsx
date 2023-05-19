@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   ArticleCard,
   ArticleGrid,
@@ -7,11 +7,11 @@ import {
   type ArticleGridProps,
 } from '@/components'
 
-const stories: Meta<ArticleGridProps> = {
+const meta: Meta<ArticleGridProps> = {
   component: ArticleGrid,
 }
 
-export default stories
+export default meta
 
 const articles = [
   {
@@ -61,27 +61,29 @@ const articles = [
   },
 ]
 
-export const Default: Story<ArticleGridProps> = () => (
-  <ArticleGrid>
-    {articles.map((article) => (
-      <ArticleCard key={article.slug}>
-        <ArticleCard.Anchor href={`/article/${article.slug}`}>
-          <ArticleCard.Main>
-            <header>
-              <ArticleCard.Title>{article.title}</ArticleCard.Title>
-            </header>
-            <section>
-              <ArticleCard.Text>{article.description}</ArticleCard.Text>
-            </section>
-          </ArticleCard.Main>
-        </ArticleCard.Anchor>
-        <ArticleCard.Footer>
-          <ArticleCard.Anchor href={`/profile/${article.author}`}>
-            <ProfileName name={article.author} size={2} />
+export const Default: StoryObj<ArticleGridProps> = {
+  render: () => (
+    <ArticleGrid>
+      {articles.map((article) => (
+        <ArticleCard key={article.slug}>
+          <ArticleCard.Anchor href={`/article/${article.slug}`}>
+            <ArticleCard.Main>
+              <header>
+                <ArticleCard.Title>{article.title}</ArticleCard.Title>
+              </header>
+              <section>
+                <ArticleCard.Text>{article.description}</ArticleCard.Text>
+              </section>
+            </ArticleCard.Main>
           </ArticleCard.Anchor>
-          <ArticleStats date={article.date} readTime={article.readTime} />
-        </ArticleCard.Footer>
-      </ArticleCard>
-    ))}
-  </ArticleGrid>
-)
+          <ArticleCard.Footer>
+            <ArticleCard.Anchor href={`/profile/${article.author}`}>
+              <ProfileName name={article.author} size={2} />
+            </ArticleCard.Anchor>
+            <ArticleStats date={article.date} readTime={article.readTime} />
+          </ArticleCard.Footer>
+        </ArticleCard>
+      ))}
+    </ArticleGrid>
+  ),
+}
