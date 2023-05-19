@@ -1,12 +1,12 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ProfileAuthor, type ProfileAuthorProps } from './ProfileAuthor'
 
-const stories: Meta<ProfileAuthorProps> = {
+const meta: Meta<ProfileAuthorProps> = {
   component: ProfileAuthor,
 }
 
-export const Default: Story<ProfileAuthorProps> = () => (
-  <ProfileAuthor author="João" />
-)
+export default meta
 
-export default stories
+export const Default: StoryObj<ProfileAuthorProps> = {
+  render: () => <ProfileAuthor author="João" />,
+}

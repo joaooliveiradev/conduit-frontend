@@ -1,19 +1,19 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ArticleHeader, type ArticleHeaderProps } from './ArticleHeader'
 
-const stories: Meta<ArticleHeaderProps> = {
+const meta: Meta<ArticleHeaderProps> = {
   component: ArticleHeader,
 }
 
-const Template: Story<ArticleHeaderProps> = (args) => (
-  <ArticleHeader {...args} />
-)
+export default meta
 
-export const Default = Template.bind({})
-Default.args = {
-  date: 'May 26, 2022',
-  readTime: '3min',
-  name: 'Dasilk Tchernes',
+const Template = (args: ArticleHeaderProps) => <ArticleHeader {...args} />
+
+export const Default: StoryObj<ArticleHeaderProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    date: 'May 26, 2022',
+    readTime: '3min',
+    name: 'Dasilk',
+  },
 }
-
-export default stories

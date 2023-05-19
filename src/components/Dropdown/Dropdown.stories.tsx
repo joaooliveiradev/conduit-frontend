@@ -1,15 +1,12 @@
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   ProfileName,
   Dropdown,
   DropdownItem,
   type DropdownProps,
-  type DropdownItemProps,
 } from '@/components'
-import type { Meta, Story } from '@storybook/react'
 
-type DropdownStoriesProp = Omit<DropdownProps, 'children'> & DropdownItemProps
-
-const stories: Meta<DropdownStoriesProp> = {
+const meta: Meta<DropdownProps> = {
   component: Dropdown,
   argTypes: {
     trigger: {
@@ -17,21 +14,18 @@ const stories: Meta<DropdownStoriesProp> = {
         disable: true,
       },
     },
-    onEventClick: {
-      table: {
-        disable: true,
-      },
-    },
   },
 }
 
-export default stories
+export default meta
 
-export const Template: Story = () => {
-  return (
-    <Dropdown trigger={<ProfileName size={4} name="João" />}>
-      <DropdownItem href="/profile" label="Profiles" />
-      <DropdownItem href="/signout" label="Sign out" />
-    </Dropdown>
-  )
+export const Default: StoryObj<DropdownProps> = {
+  render: () => {
+    return (
+      <Dropdown trigger={<ProfileName size={4} name="João" />}>
+        <DropdownItem href="/profile" label="Profiles" />
+        <DropdownItem href="/signout" label="Sign out" />
+      </Dropdown>
+    )
+  },
 }

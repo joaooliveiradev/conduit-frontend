@@ -1,16 +1,16 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ArticleStats, type ArticleStatsProps } from './ArticleStats'
 
-const stories: Meta<ArticleStatsProps> = {
+const meta: Meta<ArticleStatsProps> = {
   component: ArticleStats,
 }
 
-export default stories
+export default meta
 
-const Template: Story<ArticleStatsProps> = (args) => <ArticleStats {...args} />
-
-export const Default = Template.bind({})
-Default.args = {
-  date: 'May 26, 2022',
-  readTime: '3min',
+export const Default: StoryObj<ArticleStatsProps> = {
+  render: (args) => <ArticleStats {...args} />,
+  args: {
+    date: 'May 26, 2022',
+    readTime: '3min',
+  },
 }

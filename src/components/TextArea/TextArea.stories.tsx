@@ -1,7 +1,7 @@
-import type { Story, Meta } from '@storybook/react'
+import type { StoryObj, Meta } from '@storybook/react'
 import { TextArea, type TextAreaProps } from './TextArea'
 
-const stories: Meta<TextAreaProps> = {
+const meta: Meta<TextAreaProps> = {
   component: TextArea,
   argTypes: {
     errorMessage: {
@@ -14,25 +14,43 @@ const stories: Meta<TextAreaProps> = {
         disable: true,
       },
     },
+    defaultValue: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
-export default stories
+export default meta
 
-const Template: Story<TextAreaProps> = (args) => <TextArea {...args} />
+const Template = (args: TextAreaProps) => <TextArea {...args} />
 
-export const Empty = Template.bind({})
-Empty.args = {
-  placeholder: 'Type something awesome!',
+export const Empty: StoryObj<TextAreaProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    placeholder: 'Type something awesome!',
+  },
+  argTypes: {
+    placeholder: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 }
 
-export const Filled = Template.bind({})
-Filled.args = {
-  children: 'Content',
+export const Filled: StoryObj<TextAreaProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    defaultValue: 'Content',
+  },
 }
 
-export const Errored = Template.bind({})
-Errored.args = {
-  errorMessage: 'Some error message.',
-  defaultValue: 'Some value.',
+export const Errored: StoryObj<TextAreaProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    errorMessage: 'Some error message.',
+    defaultValue: 'Some value.',
+  },
 }

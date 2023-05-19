@@ -1,9 +1,12 @@
+import type { Meta, StoryObj } from '@storybook/react'
 import { Divider } from './Divider'
 
-const stories = {
-  component: <Divider />,
+const meta: Meta = {
+  component: Divider,
 }
 
-export default stories
+export default meta
 
-export const Default = () => <Divider />
+export const Default: StoryObj = {
+  render: () => <Divider />,
+}

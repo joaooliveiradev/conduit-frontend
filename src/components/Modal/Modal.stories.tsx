@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   Modal,
   type ModalProps,
@@ -7,7 +7,7 @@ import {
   Button,
 } from '@/components'
 
-const stories: Meta<ModalProps> = {
+const meta: Meta<ModalProps> = {
   component: Modal,
   argTypes: {
     trigger: {
@@ -18,15 +18,15 @@ const stories: Meta<ModalProps> = {
   },
 }
 
-const Template: Story<ModalProps> = () => (
-  <Modal trigger={<Button size="large">Sign in</Button>}>
-    <div>
-      <Title>Title</Title>
-      <Description>Description</Description>
-    </div>
-  </Modal>
-)
+export default meta
 
-export const Default = Template.bind({})
-
-export default stories
+export const Default: StoryObj<ModalProps> = {
+  render: () => (
+    <Modal trigger={<Button size="large">Sign in</Button>}>
+      <div>
+        <Title>Title</Title>
+        <Description>Description</Description>
+      </div>
+    </Modal>
+  ),
+}

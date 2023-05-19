@@ -1,17 +1,13 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Toast, type ToastProps, Button } from '@/components'
+import { Button, Toast, type ToastProps } from '@/components'
 
-const stories: Meta<ToastProps> = {
+const meta: Meta<ToastProps> = {
   component: Toast,
   argTypes: {
     open: {
       control: false,
     },
-    description: {
-      defaultValue: 'Toast Description',
-    },
-    title: { defaultValue: 'Toast Title' },
     label: {
       table: {
         disable: true,
@@ -25,9 +21,9 @@ const stories: Meta<ToastProps> = {
   },
 }
 
-export default stories
+export default meta
 
-export const Default: Story<ToastProps> = (args) => {
+const Template = (args: ToastProps) => {
   const [open, setOnOpenChange] = useState(true)
   return (
     <>
@@ -37,4 +33,11 @@ export const Default: Story<ToastProps> = (args) => {
       </Button>
     </>
   )
+}
+export const Default: StoryObj<ToastProps> = {
+  render: (args) => <Template {...args} />,
+  args: {
+    title: 'Toast Title',
+    description: 'Toast Description',
+  },
 }

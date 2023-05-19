@@ -1,15 +1,17 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ProfileHeader, type ProfileHeaderProps } from './ProfileHeader'
 
-const stories: Meta<ProfileHeaderProps> = {
+const meta: Meta<ProfileHeaderProps> = {
   component: ProfileHeader,
 }
 
-export default stories
+export default meta
 
-export const Default: Story<ProfileHeaderProps> = () => (
-  <ProfileHeader
-    name="João Oliveira"
-    description="Frontend performance enthusiast and Fine-Grained Reactivity super fan. Author of the SolidJS UI library and MarkoJS Core Team Memberr"
-  />
-)
+export const Default: StoryObj<ProfileHeaderProps> = {
+  render: () => (
+    <ProfileHeader
+      name="João Oliveira"
+      description="Frontend performance enthusiast and Fine-Grained Reactivity super fan. Author of the SolidJS UI library and MarkoJS Core Team Memberr"
+    />
+  ),
+}

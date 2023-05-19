@@ -1,14 +1,14 @@
-import type { Story, Meta } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
+import styled from 'styled-components'
+import { useState } from 'react'
 import {
-  Alert,
   type AlertProps,
+  Alert,
   TextButton,
   Button as DefaultButton,
 } from '@/components'
-import styled from 'styled-components'
-import { useState } from 'react'
 
-const stories: Meta<AlertProps> = {
+const meta: Meta<AlertProps> = {
   component: Alert,
   argTypes: {
     status: {
@@ -19,7 +19,7 @@ const stories: Meta<AlertProps> = {
   },
 }
 
-export default stories
+export default meta
 
 const WrapperContent = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const Button = styled(DefaultButton)`
 
 const defaultOpenValue = true
 
-export const SuccessAlert: Story<AlertProps> = () => {
+const SuccessAlert = () => {
   const [open, setIsOpen] = useState(defaultOpenValue)
   return (
     <>
@@ -44,24 +44,27 @@ export const SuccessAlert: Story<AlertProps> = () => {
           <Alert.Close />
         </WrapperContent>
       </Alert>
-      <Button
-        size="large"
-        onClick={() => setIsOpen(defaultOpenValue)}
-      >
+      <Button size="large" onClick={() => setIsOpen(defaultOpenValue)}>
         Reset
       </Button>
     </>
   )
 }
 
-export const ErrorAlert: Story<AlertProps> = () => (
-  <Alert status="error">
-    <WrapperContent>
-      <Alert.Icon />
-      <Alert.Text>
-        Something unexpected happened. Please try again later.
-      </Alert.Text>
-      <Alert.Close />
-    </WrapperContent>
-  </Alert>
-)
+export const SuccessControlledAlert: StoryObj<AlertProps> = {
+  render: () => <SuccessAlert />,
+}
+
+export const ErrorUncontrolledAlert: StoryObj<AlertProps> = {
+  render: () => (
+    <Alert status="error">
+      <WrapperContent>
+        <Alert.Icon />
+        <Alert.Text>
+          Something unexpected happened. Please try again later.
+        </Alert.Text>
+        <Alert.Close />
+      </WrapperContent>
+    </Alert>
+  ),
+}

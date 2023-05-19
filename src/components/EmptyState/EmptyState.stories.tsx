@@ -1,16 +1,16 @@
-import type { Meta, Story } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { EmptyState, type EmptyStateProps } from './EmptyState'
 
-const stories: Meta<EmptyStateProps> = {
+const meta: Meta<EmptyStateProps> = {
   component: EmptyState,
 }
 
-export default stories
+export default meta
 
-const Template: Story<EmptyStateProps> = (args) => <EmptyState {...args} />
-
-export const Default = Template.bind({})
-Default.args = {
-  title: 'No articles are here... yet.',
-  message: "This user hasn't written any articles yet.",
+export const Default: StoryObj<EmptyStateProps> = {
+  render: (args) => <EmptyState {...args} />,
+  args: {
+    title: 'No articles are here... yet.',
+    message: "This user hasn't written any articles yet.",
+  },
 }
