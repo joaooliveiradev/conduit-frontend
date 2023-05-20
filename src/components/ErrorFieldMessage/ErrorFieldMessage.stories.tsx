@@ -14,11 +14,16 @@ export const Default: StoryObj<ErrorFieldMessageProps> = {
   render: (args) => <ErrorFieldMessage {...args} />,
   args: {
     message: "Something wen't wrong, please try again.",
-    fontWeight: 'medium',
+    fontWeight: 'bold',
     textAlign: 'center',
   },
   argTypes: {
     id: {
+      table: {
+        disable: true,
+      },
+    },
+    role: {
       table: {
         disable: true,
       },
