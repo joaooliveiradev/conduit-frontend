@@ -1,7 +1,7 @@
 import { transparentize } from 'polished'
 import styled, { css } from 'styled-components'
 import { type ErrorFieldMessageProps } from '@/components'
-import React from 'react'
+import React, { useId } from 'react'
 import dynamic from 'next/dynamic'
 
 const ErrorFieldMessage = dynamic<ErrorFieldMessageProps>(
@@ -63,17 +63,27 @@ const Label = styled.label`
 `
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ errorMessage, 'aria-label': ariaLabel, ...rest }, ref) => (
-    <Wrapper>
-      {ariaLabel && <Label>{ariaLabel}</Label>}
-      <TextAreaWrapper autoComplete="off" ref={ref} {...rest} />
-      {errorMessage && (
-        <ErrorFieldMessage
-          message={errorMessage}
-          fontWeight="bold"
-          textAlign="start"
+  ({ errorMessage, 'aria-label': ariaLabel, ...rest }, ref) => {
+    const errorId = useId()
+    return (
+      <Wrapper>
+        {ariaLabel && <Label>{ariaLabel}</Label>}
+        <TextAreaWrapper
+          autoComplete="off"
+          ref={ref}
+          {...rest}
+          aria-invalid={errorMessage ? true : undefined}
+          aria-describedby={errorMessage ? errorId : undefined}
         />
-      )}
-    </Wrapper>
-  )
+        {errorMessage && (
+          <ErrorFieldMessage
+            id={errorId}
+            message={errorMessage}
+            fontWeight="bold"
+            textAlign="start"
+          />
+        )}
+      </Wrapper>
+    )
+  }
 )
