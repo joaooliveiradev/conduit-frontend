@@ -198,8 +198,9 @@ export const SignInModal = ({
           {isSome(maybeSignInError) && (
             <ErrorFieldMessage
               message={maybeSignInError.value.message}
-              fontWeight="medium"
+              fontWeight="bold"
               textAlign="center"
+              role="alert"
             />
           )}
           <Text>
@@ -252,8 +253,9 @@ export const SignInModal = ({
           {isSome(maybeSignUpError) && (
             <ErrorFieldMessage
               message={maybeSignUpError.value.message}
-              fontWeight="medium"
+              fontWeight="bold"
               textAlign="center"
+              role="alert"
             />
           )}
           <Text>
