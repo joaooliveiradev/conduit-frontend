@@ -283,10 +283,12 @@ const oneHour = 3600
 
 export async function getServerSideProps({ res }: GetServerSidePropsContext) {
   const queryClient = new QueryClient()
+
   res.setHeader(
     'Cache-Control',
     `public, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
   )
+
   await queryClient.prefetchInfiniteQuery([GET_ARTICLES_KEY], () =>
     getArticles(defaultFilters)
   )
