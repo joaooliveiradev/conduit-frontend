@@ -108,10 +108,18 @@ interface GetServerSidePropsParams extends ParsedUrlQuery {
   slug: string
 }
 
+const oneHour = 3600
+
 export const getServerSideProps = async ({
   params,
+  res,
 }: GetServerSidePropsContext<GetServerSidePropsParams>) => {
   const queryClient = new QueryClient()
+
+  res.setHeader(
+    'Cache-Control',
+    `public, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
+  )
 
   const slugOption = pipe(
     params,
