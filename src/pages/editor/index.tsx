@@ -26,7 +26,9 @@ export const getServerSideProps = async ({
     'Cache-Control',
     `private, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
   )
-  return {}
+  return {
+    props: {},
+  }
 }
 
 export default Editor
