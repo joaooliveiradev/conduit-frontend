@@ -1,5 +1,7 @@
-import { NewArticle } from '@/components'
 import type { GetServerSidePropsContext } from 'next'
+import { NewArticle } from '@/components'
+import { NextSeo } from 'next-seo'
+import { defaultSEO } from '@/pages/_app'
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
@@ -11,9 +13,12 @@ const Wrapper = styled.section`
 
 const Editor = () => {
   return (
-    <Wrapper>
-      <NewArticle />
-    </Wrapper>
+    <>
+      <NextSeo {...defaultSEO} title="Conduit - New Article" />
+      <Wrapper>
+        <NewArticle />
+      </Wrapper>
+    </>
   )
 }
 
@@ -26,6 +31,7 @@ export const getServerSideProps = async ({
     'Cache-Control',
     `private, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
   )
+
   return {
     props: {},
   }
