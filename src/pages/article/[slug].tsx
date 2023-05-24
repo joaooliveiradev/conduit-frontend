@@ -1,19 +1,16 @@
+import { ErrorState, ArticleHeader, ArticleBody } from '@/components'
 import type { GetServerSidePropsContext, NextPage } from 'next'
-import styled, { css } from 'styled-components'
 import type { ParsedUrlQuery } from 'querystring'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { getArticle, GET_ARTICLE_KEY, useGetArticle } from '@/hooks'
-import {
-  ErrorState,
-  ArticleHeader,
-  ArticleBody,
-  ArticleSeo,
-} from '@/components'
 import { fromNullable, isSome, getRight, map } from 'fp-ts/Option'
 import { f } from '@/libs'
 import { pipe } from 'fp-ts/function'
 import { chain } from 'fp-ts/Option'
 import { stringify as superJsonStringify } from 'superjson'
+import { ArticleJsonLd, NextSeo } from 'next-seo'
+import { baseWebUrl } from '@/types'
+import styled, { css } from 'styled-components'
 
 type ArticleNextPageProps = {
   slug: string
@@ -64,14 +61,40 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
     if (isSome(maybeArticle)) {
       return (
         <>
-          <ArticleSeo
-            author={maybeArticle.value.article.author.username}
-            description={maybeArticle.value.article.description}
-            modifiedTime={maybeArticle.value.article.updatedAt}
-            publishedTime={maybeArticle.value.article.createdAt}
-            slug={maybeArticle.value.article.slug}
+          <NextSeo
             title={maybeArticle.value.article.title}
-            tags={maybeArticle.value.article.tagList}
+            description={maybeArticle.value.article.description}
+            openGraph={{
+              description: maybeArticle.value.article.description,
+              title: maybeArticle.value.article.title,
+              url: `${baseWebUrl}/article/${maybeArticle.value.article.slug}`,
+              type: 'article',
+              article: {
+                authors: [
+                  `${baseWebUrl}/profile/${maybeArticle.value.article.author.username}`,
+                ],
+                publishedTime: maybeArticle.value.article.createdAt,
+                modifiedTime: maybeArticle.value.article.updatedAt,
+                tags: maybeArticle.value.article.tagList,
+              },
+            }}
+            additionalMetaTags={[
+              {
+                property: 'dc:creator',
+                content: maybeArticle.value.article.author.username,
+              },
+            ]}
+          />
+          <ArticleJsonLd
+            url={`${baseWebUrl}/article/${maybeArticle.value.article.slug}`}
+            authorName={maybeArticle.value.article.author.username}
+            description={maybeArticle.value.article.description}
+            title={maybeArticle.value.article.title}
+            datePublished={maybeArticle.value.article.createdAt}
+            dateModified={maybeArticle.value.article.updatedAt}
+            images={[`${baseWebUrl}/cover.png`]}
+            publisherName={maybeArticle.value.article.author.username}
+            isAccessibleForFree={true}
           />
           <Wrapper>
             <HeaderSection>
@@ -132,6 +155,7 @@ export const getServerSideProps = async ({
       [GET_ARTICLE_KEY],
       async () => await getArticle(slugOption.value)
     )
+
     return {
       props: {
         dehydratedState: superJsonStringify(dehydrate(queryClient)),
