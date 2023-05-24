@@ -3,11 +3,11 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '@/styles'
 import { AuthProvider } from '@/context'
-import { type DefaultSeoProps, DefaultSeo } from 'next-seo'
-import { baseWebUrl } from '@/types'
 import { parse as superJsonParse } from 'superjson'
+import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
+import { baseWebUrl } from '@/types'
 
-const SEO: DefaultSeoProps = {
+export const defaultSEO: DefaultSeoProps = {
   title: 'Conduit - A place to read and share your ideias.',
   description:
     "Conduit is a platform where readers and writers can discover, create and share ideas, topics they're passionate about.",
@@ -31,17 +31,13 @@ const SEO: DefaultSeoProps = {
   },
   additionalMetaTags: [
     {
-      property: 'dc:creator',
-      content: 'João Oliveira',
-    },
-    {
       property: 'application-name',
       content: 'Conduit',
     },
   ],
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   const hydratedState = pageProps.dehydratedState
     ? superJsonParse(pageProps.dehydratedState)
     : null
@@ -51,7 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <GlobalStyles />
         <Layout hydratedState={hydratedState}>
-          <DefaultSeo {...SEO} />
+          <DefaultSeo {...defaultSEO} />
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>
