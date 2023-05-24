@@ -43,7 +43,7 @@ const Title = styled.h1`
   letter-spacing: -0.04em;
 `
 
-const Description = styled.h3`
+const Description = styled.h2`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xmedium};
     color: ${theme.colors.grey[200]};
