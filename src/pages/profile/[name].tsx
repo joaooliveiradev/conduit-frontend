@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import {
   ArticleCard,
   ArticleGrid,
@@ -26,6 +25,10 @@ import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
 import { transparentize } from 'polished'
 import { stringify as superJsonStringify } from 'superjson'
+import { NextSeo } from 'next-seo'
+import { defaultSEO } from '@/pages/_app'
+import { baseWebUrl } from '@/types'
+import styled from 'styled-components'
 
 const Wrapper = styled.section`
   width: 100%;
@@ -95,6 +98,18 @@ const Profile = ({ name }: ProfileParams) => {
 
   return isSome(maybeData) ? (
     <Wrapper>
+      <NextSeo
+        {...defaultSEO}
+        title={`Profile - ${maybeData.value.profile.username}`}
+        description={maybeData.value.profile.bio}
+        openGraph={{
+          type: 'profile',
+          url: `${baseWebUrl}/profile/${maybeData.value.profile.username}`,
+          profile: {
+            username: maybeData.value.profile.username,
+          },
+        }}
+      />
       <ProfileHeader
         name={maybeData.value.profile.username}
         description={maybeData.value.profile.bio}
@@ -170,7 +185,7 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext<ProfileParams>) => {
   res.setHeader(
     'Cache-Control',
-    `private, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
+    `public, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
   )
 
   const queryClient = new QueryClient()
