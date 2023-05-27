@@ -3,7 +3,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-// TODO: Add report-onlyy and report-uri when have some monitoring software.
+// TODO: Add report-only and report-uri when have some monitoring software.
 
 const ContentSecurityPolicy = `
   base-uri 'self';
