@@ -1,4 +1,3 @@
-import { ArticleCodec } from '@/types'
 import {
   type AuthorizationError,
   type ValidationError,
@@ -11,11 +10,11 @@ import {
   type UseInfiniteQueryOptions,
   useInfiniteQuery,
 } from '@tanstack/react-query'
+import { ArticleCodec } from '@/types'
 import { withMessage } from 'io-ts-types'
 import { type Either } from 'fp-ts/Either'
-import { calculateTotalArticles } from '@/libs/calculateTotalArticles'
 import { fromNullable, isSome } from 'fp-ts/Option'
-import { defaultFilters, type QueryFiltersProps } from '@/hooks'
+import { defaultFilters, type QueryFiltersProps, calculateTotalArticles } from '@/hooks'
 import { type, array, number, type TypeOf, type OutputOf } from 'io-ts'
 
 const GetFeedArticlesResponseCodec = type({
