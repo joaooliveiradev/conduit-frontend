@@ -71,9 +71,9 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         <TextAreaWrapper
           autoComplete="off"
           ref={ref}
-          {...rest}
           aria-invalid={errorMessage ? true : undefined}
           aria-describedby={errorMessage ? errorId : undefined}
+          {...rest}
         />
         {errorMessage && (
           <ErrorFieldMessage
