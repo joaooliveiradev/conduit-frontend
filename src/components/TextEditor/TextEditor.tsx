@@ -147,9 +147,9 @@ const FullScreen = ({ children }: FullScreenProps) => (
   </Portal>
 )
 
-type TextEditorProps = {
+export interface TextEditorProps extends TextAreaProps {
   defaultValue: string
-} & TextAreaProps
+}
 
 export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
