@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
     * {
+      font-family: 'DM Sans', sans-serif;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -21,7 +22,6 @@ export const GlobalStyles = createGlobalStyle`
     html,
     body {
       font-size: 62.5%;
-      font-family: 'DM Sans', sans-serif;
       a {
         text-decoration: none;
         color: inherit;
