@@ -2,11 +2,13 @@ import {
   type TextAreaProps,
   type ArticleBodyProps,
   TextArea,
+} from '@/components/'
+import {
   Tabs as TabsDefault,
   TabsPane as TabsPaneDefault,
   TabContent as TabContentDefault,
   Pane as PaneDefault,
-} from '@/components/'
+} from '@/components/Tabs/Tabs'
 import {
   FullScreenIcon as DefaultFullScreenIcon,
   ExitFullScreenIcon as DefaultExitFullScreenIcon,
@@ -162,7 +164,7 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
 
   return isFullScreen ? (
     <FullScreen>
-      <Tabs
+      <TabsDefault
         id={textEditorId}
         defaultValue={tabValue}
         value={tabValue}
@@ -186,10 +188,10 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
         <TabContent value="preview">
           <Preview textAreaValue={defaultValue} />
         </TabContent>
-      </Tabs>
+      </TabsDefault>
     </FullScreen>
   ) : (
-    <Tabs
+    <TabsDefault
       id={textEditorId}
       defaultValue={tabValue}
       value={tabValue}
@@ -213,6 +215,6 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
       <TabContent value="preview">
         <Preview textAreaValue={defaultValue} />
       </TabContent>
-    </Tabs>
+    </TabsDefault>
   )
 }
