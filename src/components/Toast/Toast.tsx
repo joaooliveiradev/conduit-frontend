@@ -31,7 +31,7 @@ const Root = styled(ToastRoot)`
     border-radius: ${theme.spacings.small};
   `}
 
-  &[data-state="open"] {
+  &[data-state='open'] {
     animation: slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -88,7 +88,7 @@ const Viewport = styled(ToastViewport)`
     position: fixed;
     right: ${theme.spacings.xmedium};
     top: ${theme.spacings.xmedium};
-    padding: ${theme.spacings.xmedium};
+    margin: ${theme.spacings.xmedium};
   `}
 `
 
