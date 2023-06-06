@@ -5,6 +5,7 @@ import { defaultSEO } from '@/pages/_app'
 import { useEffect } from 'react'
 import { useAuth } from '@/context'
 import { useRouter } from 'next/router'
+import { parseCookies } from 'nookies'
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
@@ -34,13 +35,22 @@ const Editor = () => {
 
 const oneHour = 3600
 
-export const getServerSideProps = async ({
-  res,
-}: GetServerSidePropsContext) => {
-  res.setHeader(
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const { 'conduit.token': accessToken } = parseCookies(ctx)
+
+  ctx.res.setHeader(
     'Cache-Control',
     `private, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
   )
+
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: '/unauthorized',
+        permanent: false,
+      },
+    }
+  }
 
   return {
     props: {},
