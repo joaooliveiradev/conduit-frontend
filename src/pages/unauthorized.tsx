@@ -1,8 +1,8 @@
 import { Button, ErrorStateIcon, SignInModal } from '@/components'
 import { useAuth } from '@/context'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
@@ -52,10 +52,7 @@ const Unauthorized = () => {
   const router = useRouter()
 
   useEffect(() => {
-    if (status === 'loggedIn') {
-      router.replace('/editor')
-      setIsModalOpen(false)
-    }
+    if (status === 'loggedIn') router.replace('/editor')
   }, [status, router])
 
   return (
