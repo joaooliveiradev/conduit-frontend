@@ -98,7 +98,7 @@ const Home: NextPage = () => {
     if (status === 'loggedIn') {
       return (
         <ContentSection>
-          <Hero userStatus={status} />
+          <Hero />
           <Tabs defaultValue="global">
             <Pane>
               <TabsPane value="global">Global</TabsPane>
@@ -224,7 +224,7 @@ const Home: NextPage = () => {
     } else {
       return isSome(maybeGetArticles) ? (
         <ContentSection>
-          <Hero userStatus={status} />
+          <Hero />
           {maybeGetArticles.value.articlesCount === 0 ? (
             <EmptyState
               title="No articles are here... yet."
