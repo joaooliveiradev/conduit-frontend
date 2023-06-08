@@ -72,6 +72,7 @@ export const Header = () => {
 
   const maybeData = pipe(data, fromNullable, chain(getRight))
 
+  const showModal = () => setIsModalOpen(true)
   return (
     <Wrapper>
       <Anchor href="/">
@@ -91,7 +92,7 @@ export const Header = () => {
         </Dropdown>
       ) : (
         <>
-          <Button size="large" onClick={() => setIsModalOpen(true)}>
+          <Button size="large" onClick={showModal}>
             Sign in
           </Button>
           <SignInModal

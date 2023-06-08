@@ -164,7 +164,7 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
 
   return isFullScreen ? (
     <FullScreen>
-      <TabsDefault
+      <Tabs
         id={textEditorId}
         defaultValue={tabValue}
         value={tabValue}
@@ -188,10 +188,10 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
         <TabContent value="preview">
           <Preview textAreaValue={defaultValue} />
         </TabContent>
-      </TabsDefault>
+      </Tabs>
     </FullScreen>
   ) : (
-    <TabsDefault
+    <Tabs
       id={textEditorId}
       defaultValue={tabValue}
       value={tabValue}
@@ -215,6 +215,6 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
       <TabContent value="preview">
         <Preview textAreaValue={defaultValue} />
       </TabContent>
-    </TabsDefault>
+    </Tabs>
   )
 }
