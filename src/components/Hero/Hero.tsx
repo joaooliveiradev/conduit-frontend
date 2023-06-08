@@ -1,4 +1,4 @@
-import type { Status } from '@/context'
+import { useAuth } from '@/context'
 import { Button, type SignInModalProps } from '@/components'
 import styled from 'styled-components'
 import React from 'react'
@@ -13,10 +13,6 @@ const SignInModal = dynamic<SignInModalProps>(
     ssr: false,
   }
 )
-
-export type HeroProps = {
-  userStatus: Status
-}
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,18 +39,20 @@ const Description = styled.p`
   color: ${({ theme }) => theme.colors.grey[200]};
 `
 
-export const Hero = ({ userStatus }: HeroProps) => {
+export const Hero = () => {
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false)
+  const { status } = useAuth()
 
+  const showModal = () => setIsModalOpen(true)
   return (
     <Wrapper>
       <Title>Stay curious.</Title>
       <Description>
         Discover stories, thinking, and expertise from writers on any topic.
       </Description>
-      {(userStatus === 'loggedOut' || userStatus === 'idle') && (
+      {status !== 'loggedIn' && (
         <>
-          <Button size="large" onClick={() => setIsModalOpen(true)}>
+          <Button size="large" onClick={showModal}>
             Create account
           </Button>
           <SignInModal
