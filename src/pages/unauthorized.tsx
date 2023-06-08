@@ -55,6 +55,7 @@ const Unauthorized = () => {
     if (status === 'loggedIn') router.replace('/editor')
   }, [status, router])
 
+  const showModal = () => setIsModalOpen(true)
   return (
     <Wrapper>
       <ErrorStateIcon />
@@ -72,7 +73,7 @@ const Unauthorized = () => {
         <Link href="/" replace prefetch={false}>
           <Button size="large">Back to home</Button>
         </Link>
-        <Button size="large" onClick={() => setIsModalOpen(true)}>
+        <Button size="large" onClick={showModal}>
           Sign in
         </Button>
         <SignInModal
