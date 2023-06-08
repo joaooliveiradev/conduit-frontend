@@ -13,8 +13,10 @@ import { setCookie, destroyCookie, parseCookies } from 'nookies'
 
 const useCookies = () => {
   const { 'conduit.token': accessToken } = parseCookies()
+
   const context = null
   const oneHour = 60 * 60
+
   const options: CookieSerializeOptions = {
     secure: true,
     sameSite: 'strict',
@@ -24,12 +26,12 @@ const useCookies = () => {
 
   const destroyCookies = () => destroyCookie(context, 'conduit.token', options)
 
-  const setCoookies = (accessToken: string) =>
+  const setCookies = (accessToken: string) =>
     setCookie(context, 'conduit.token', accessToken, options)
 
   return {
     accessToken,
-    setCoookies,
+    setCookies,
     destroyCookies,
   }
 }
@@ -56,7 +58,8 @@ const AuthContext = createContext(defaultValueContext)
 
 const AuthProvider = ({ children }: AuthContextProps) => {
   const [status, setStatus] = useState<Status>('idle')
-  const { setCoookies, destroyCookies, accessToken } = useCookies()
+
+  const { setCookies, destroyCookies, accessToken } = useCookies()
 
   useEffect(() => {
     if (accessToken) setStatus('loggedIn')
@@ -67,7 +70,7 @@ const AuthProvider = ({ children }: AuthContextProps) => {
   ) => {
     if (isRight(response)) {
       const { token } = response.right.user
-      setCoookies(token)
+      setCookies(token)
       setStatus('loggedIn')
     }
   }
