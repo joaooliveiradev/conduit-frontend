@@ -56,6 +56,7 @@ const Unauthorized = () => {
   }, [status, router])
 
   const showModal = () => setIsModalOpen(true)
+
   return (
     <Wrapper>
       <ErrorStateIcon />
