@@ -44,6 +44,7 @@ export const Hero = () => {
   const { status } = useAuth()
 
   const showModal = () => setIsModalOpen(true)
+
   return (
     <Wrapper>
       <Title>Stay curious.</Title>

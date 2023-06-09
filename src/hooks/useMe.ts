@@ -8,6 +8,7 @@ import {
 } from '@/libs'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { type, type TypeOf, type OutputOf } from 'io-ts'
+import { useAuth, useCookies } from '@/context'
 
 const UseMeResponseCodec = type({
   user: UserTypeCodec,
@@ -29,14 +30,19 @@ const getMe = async () =>
 
 const USE_ME_KEY = 'use-me'
 
-export const getUseMeKey = (accessToken: string) =>
+const getUseMeKey = (accessToken: string) =>
   accessToken ? [USE_ME_KEY, accessToken] : [USE_ME_KEY]
 
-export const useMe = (options: UseMeOptions) => {
+export const useMe = (options?: UseMeOptions) => {
+  const { status } = useAuth()
+  const { accessToken } = useCookies()
+
   return useQuery<
     Either<ValidationError, UseMeOutput>,
     UnknownError | AuthorizationError
   >({
+    enabled: status === 'loggedIn',
+    queryKey: getUseMeKey(accessToken),
     queryFn: getMe,
     retry: false,
     refetchOnReconnect: false,
