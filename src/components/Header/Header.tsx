@@ -6,11 +6,11 @@ import {
   type DropdownItemProps,
   type ProfileNameProps,
 } from '@/components'
-import { useAuth, useCookies } from '@/context'
+import { useAuth } from '@/context'
 import { useState, useEffect } from 'react'
 import { fromNullable, isSome, chain, getRight } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
-import { getUseMeKey, useMe } from '@/hooks'
+import { useMe } from '@/hooks'
 import logo from '@/assets/logo.webp'
 import styled from 'styled-components'
 import Image from 'next/image'
@@ -59,20 +59,16 @@ const Wrapper = styled.header`
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { signOut, status } = useAuth()
-  const { accessToken } = useCookies()
+  const { data } = useMe()
 
   useEffect(() => {
     if (status === 'loggedIn') return setIsModalOpen(false)
   }, [status])
 
-  const { data } = useMe({
-    enabled: status === 'loggedIn',
-    queryKey: getUseMeKey(accessToken),
-  })
-
   const maybeData = pipe(data, fromNullable, chain(getRight))
 
   const showModal = () => setIsModalOpen(true)
+
   return (
     <Wrapper>
       <Anchor href="/">
