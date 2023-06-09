@@ -1,8 +1,12 @@
-import styled from 'styled-components'
 import { Button as DefaultButton } from '@/components/Button/Button'
 import { ProfileInformation, TextButton } from '@/components'
-import Link from 'next/link'
+import { useMe } from '@/hooks'
+import { pipe } from 'fp-ts/function'
+import { fromNullable, chain, getRight } from 'fp-ts/Option'
 import { useAuth } from '@/context'
+import { exists } from 'fp-ts/Option'
+import styled from 'styled-components'
+import Link from 'next/link'
 
 export type ProfileHeaderProps = {
   name: string
@@ -37,12 +41,20 @@ const NewArticleBtn = () => (
 )
 
 export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => {
+  const { data } = useMe()
   const { status } = useAuth()
+
+  const isYourProfile = pipe(
+    data,
+    fromNullable,
+    chain(getRight),
+    exists(({ user }) => user.username === name)
+  )
 
   return (
     <Wrapper>
       <ProfileInformation name={name} description={description} />
-      {status === 'loggedIn' && (
+      {status === 'loggedIn' && isYourProfile && (
         <Actions>
           <NewArticleBtn />
           {/* TODO: Modal */}
