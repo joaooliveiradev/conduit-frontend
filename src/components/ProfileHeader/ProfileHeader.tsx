@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Button as DefaultButton } from '@/components/Button/Button'
 import { ProfileInformation, TextButton } from '@/components'
 import Link from 'next/link'
+import { useAuth } from '@/context'
 
 export type ProfileHeaderProps = {
   name: string
@@ -35,13 +36,19 @@ const NewArticleBtn = () => (
   </Link>
 )
 
-export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => (
-  <Wrapper>
-    <ProfileInformation name={name} description={description} />
-    <Actions>
-      <NewArticleBtn />
-      {/* TODO: Modal */}
-      <TextButton href="/edit-profile">Edit profile</TextButton>
-    </Actions>
-  </Wrapper>
-)
+export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => {
+  const { status } = useAuth()
+
+  return (
+    <Wrapper>
+      <ProfileInformation name={name} description={description} />
+      {status === 'loggedIn' && (
+        <Actions>
+          <NewArticleBtn />
+          {/* TODO: Modal */}
+          <TextButton href="/edit-profile">Edit profile</TextButton>
+        </Actions>
+      )}
+    </Wrapper>
+  )
+}
