@@ -1,19 +1,20 @@
-<h1 align="center">
-  <img src="./src/assets/brand.png" alt="Logo Conduit"/>
+<p align="center">
+  <img src="./src/assets/brand.png" alt="Logo Conduit" />
   <br>
-  Conduit App
-  <h3 align="center"><a href="https://conduit-front.netlify.app/">Project Demo</a></h3>
-  <h3 align="center"><a href="https://conduit-storybook.netlify.app/">Storybook Demo</a></h3>
-</h1>
+  <a href="https://conduit-front.netlify.app/">Project Demo</a>
+  //
+  <a href="https://conduit-storybook.netlify.app/">Storybook Demo</a>
+</p>
 
 ## 📝 About the project
-Conduit is a "Medium" clone based on [Real World App](https://github.com/gothinkster/realworld) spec.<br>
+Conduit is a "Medium" clone based on the [Real World App](https://github.com/gothinkster/realworld) spec.<br>
 The real world app is a spec that provides an excellent experience in building real world applications.<br>
-One of the reasons that Real World App repository is born is because most of to-do apps that developers do, they don't convey the knowledge required to build "real" web applications with it.
+One of the reasons that Real World App repository was born is because most of to-do apps that developers do, they don't convey the knowledge required to build "real" web applications with it.
 
 ## 🎨 Layout
 You can view the project layout via [this link.](https://www.figma.com/file/VloJgT0X4tC3qlnHJTMXsa/Conduit?node-id=655%3A29)<br>
-This design was develop by [Marcos Oliveira](https://github.com/vmarcosp) ❤️
+>Design by [Marcos Oliveira](https://github.com/vmarcosp) ❤️
+
 ## 🚀 Technologies 
 - React
 - Typescript 
@@ -51,7 +52,7 @@ To start Storybook, run the command below.
   yarn storybook
   ```
 Open [localhost:6006](http://localhost:6006) to view Storybook in browser.
-## 🦸 Autor
+## 🦸 Author
 [João Oliveira](https://github.com/joaooliveiradev)
 
 ## 📢 License
