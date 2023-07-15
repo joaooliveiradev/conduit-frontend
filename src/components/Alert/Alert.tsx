@@ -117,7 +117,13 @@ export const Alert = ({
 
 const Icon = () => {
   const { status } = useContext(AlertContext)
-  return status === 'error' ? <ExclamationIcon /> : <CheckIcon />
+
+  switch (status) {
+    case 'success':
+      return <CheckIcon />
+    case 'error':
+      return <ExclamationIcon />
+  }
 }
 
 Alert.Icon = Icon
