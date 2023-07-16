@@ -1,7 +1,6 @@
-import { Divider } from '@/components'
+import { Divider, ArticleDate } from '@/components'
 import styled from 'styled-components'
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
+
 //eslint-disable-next-line @typescript-eslint/no-var-requires
 const readingTime = require('reading-time/lib/reading-time')
 
@@ -21,12 +20,6 @@ const Text = styled.p`
   font-weight: 600;
 `
 
-const DateTime = styled.time`
-  color: ${({ theme }) => theme.colors.black[100]};
-  font-size: ${({ theme }) => theme.fonts.sizes.medium};
-  font-weight: 600;
-`
-
 export const ArticleStats = ({ readTime, date }: ArticleStatsProps) => {
   const getReadingTime = (articleBody: string) => {
     const stats = readingTime(articleBody)
@@ -34,18 +27,11 @@ export const ArticleStats = ({ readTime, date }: ArticleStatsProps) => {
     return `${minute}min`
   }
 
-  const getDate = (articleDate: string) => {
-    dayjs.extend(utc)
-    const englishFormat = 'MMM D, YYYY'
-    const date = dayjs.utc(articleDate).format(englishFormat)
-    return date
-  }
-
   return (
     <Wrapper>
       <Text>{getReadingTime(readTime)}</Text>
       <Divider />
-      <DateTime>{getDate(date)}</DateTime>
+      <ArticleDate date={date} />
     </Wrapper>
   )
 }
