@@ -2,9 +2,9 @@ import rehypeSanitize, {
   defaultSchema,
   type Options as RehypeSanitizeOptions,
 } from 'rehype-sanitize'
-import styled, { css } from 'styled-components'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { default as rehypeHighlight } from 'rehype-highlight/lib/index'
+import styled, { css } from 'styled-components'
 import 'highlight.js/styles/night-owl.css'
 
 export type ArticleBodyProps = {
@@ -73,15 +73,20 @@ const Wrapper = styled.section`
   `}
 `
 
+const rehypeSanitizeDefaultCodeSettings =
+  (defaultSchema.attributes && defaultSchema.attributes.code) || []
+
+const rehypeSanitizeAttributesSettings: RehypeSanitizeOptions['attributes'] = {
+  ...defaultSchema.attributes,
+  code: [
+    ...rehypeSanitizeDefaultCodeSettings,
+    ['className', 'language-js', 'hljs-js', 'language-md'],
+  ],
+}
+
 const rehypeSanitizeSettings: RehypeSanitizeOptions = {
   ...defaultSchema,
-  attributes: {
-    ...defaultSchema.attributes,
-    code: [
-      ...((defaultSchema.attributes && defaultSchema.attributes.code) || []),
-      ['className', 'language-js', 'hljs-js', 'language-md'],
-    ],
-  },
+  attributes: rehypeSanitizeAttributesSettings,
 }
 
 export const ArticleBody = ({ articleText, ...rest }: ArticleBodyProps) => {
