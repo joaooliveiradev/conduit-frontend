@@ -1,11 +1,8 @@
-import { Divider, ArticleDate } from '@/components'
+import { ArticleReadingTime, Divider, ArticleDate } from '@/components'
 import styled from 'styled-components'
 
-//eslint-disable-next-line @typescript-eslint/no-var-requires
-const readingTime = require('reading-time/lib/reading-time')
-
 export type ArticleStatsProps = {
-  readTime: string
+  articleBody: string
   date: string
 }
 
@@ -14,24 +11,10 @@ const Wrapper = styled.div`
   column-gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
-const Text = styled.p`
-  color: ${({ theme }) => theme.colors.black[100]};
-  font-size: ${({ theme }) => theme.fonts.sizes.medium};
-  font-weight: 600;
-`
-
-export const ArticleStats = ({ readTime, date }: ArticleStatsProps) => {
-  const getReadingTime = (articleBody: string) => {
-    const stats = readingTime(articleBody)
-    const minute = stats.text.charAt(0)
-    return `${minute}min`
-  }
-
-  return (
-    <Wrapper>
-      <Text>{getReadingTime(readTime)}</Text>
-      <Divider />
-      <ArticleDate date={date} />
-    </Wrapper>
-  )
-}
+export const ArticleStats = ({ articleBody, date }: ArticleStatsProps) => (
+  <Wrapper>
+    <ArticleReadingTime articleBody={articleBody} />
+    <Divider />
+    <ArticleDate date={date} />
+  </Wrapper>
+)

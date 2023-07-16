@@ -19,6 +19,6 @@ export const ArticleHeader = ({ name, readTime, date }: ArticleHeaderProps) => (
       <ProfileName name={name} size={2} />
     </Anchor>
     <Divider />
-    <ArticleStats date={date} readTime={readTime} />
+    <ArticleStats date={date} articleBody={readTime} />
   </Wrapper>
 )

@@ -22,6 +22,7 @@ const articles = [
     readTime: '3min',
     description:
       'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.',
+    body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
   },
   {
     slug: 'bla-foo-2',
@@ -31,6 +32,7 @@ const articles = [
     readTime: '3min',
     description:
       'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.',
+    body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
   },
   {
     slug: 'bla-foo-3',
@@ -40,6 +42,7 @@ const articles = [
     readTime: '3min',
     description:
       'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.',
+    body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
   },
   {
     slug: 'bla-foo-4',
@@ -49,15 +52,16 @@ const articles = [
     readTime: '3min',
     description:
       'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.',
+    body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
   },
   {
     slug: 'bla-foo-5',
     title: 'Bla Foo 5',
     author: 'Jeff Jarvis',
     date: 'May 26, 2022',
-    readTime: '3min',
     description:
       'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.',
+    body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
   },
 ]
 
@@ -80,7 +84,7 @@ export const Default: StoryObj<ArticleGridProps> = {
             <ArticleCard.Anchor href={`/profile/${article.author}`}>
               <ProfileName name={article.author} size={2} />
             </ArticleCard.Anchor>
-            <ArticleStats date={article.date} readTime={article.readTime} />
+            <ArticleStats date={article.date} articleBody={article.body} />
           </ArticleCard.Footer>
         </ArticleCard>
       ))}

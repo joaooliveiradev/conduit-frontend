@@ -11,6 +11,7 @@ export const Default: StoryObj<ArticleStatsProps> = {
   render: (args) => <ArticleStats {...args} />,
   args: {
     date: 'May 26, 2022',
-    readTime: '3min',
+    articleBody:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
   },
 }
