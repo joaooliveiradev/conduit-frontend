@@ -141,7 +141,7 @@ const Home: NextPage = () => {
                             </ArticleCard.Anchor>
                             <ArticleStats
                               date={article.updatedAt}
-                              readTime={article.body}
+                              articleBody={article.body}
                             />
                           </ArticleCard.Footer>
                         </ArticleCard>
@@ -198,7 +198,7 @@ const Home: NextPage = () => {
                             </ArticleCard.Anchor>
                             <ArticleStats
                               date={article.updatedAt}
-                              readTime={article.body}
+                              articleBody={article.body}
                             />
                           </ArticleCard.Footer>
                         </ArticleCard>
@@ -255,7 +255,7 @@ const Home: NextPage = () => {
                       </ArticleCard.Anchor>
                       <ArticleStats
                         date={article.updatedAt}
-                        readTime={article.body}
+                        articleBody={article.body}
                       />
                     </ArticleCard.Footer>
                   </ArticleCard>

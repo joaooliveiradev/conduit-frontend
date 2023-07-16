@@ -145,7 +145,7 @@ const Profile = ({ name }: ProfileParams) => {
                     </ArticleCard.Anchor>
                     <ArticleStats
                       date={article.updatedAt}
-                      readTime={article.body}
+                      articleBody={article.body}
                     />
                   </ArticleCard.Footer>
                 </ArticleCard>
