@@ -17,9 +17,9 @@ const mock = {
   title: 'Toward a Journalistic Ethic of Citation',
   author: 'Jeff Jarvis',
   date: 'May 26, 2022',
-  readTime: '3min',
   description:
     'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.',
+  body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
 }
 
 export const Default: StoryObj<ArticleCardProps> = {
@@ -39,7 +39,7 @@ export const Default: StoryObj<ArticleCardProps> = {
         <ArticleCard.Anchor href={`/profile/${mock.author}`}>
           <ProfileName name={mock.author} size={2} />
         </ArticleCard.Anchor>
-        <ArticleStats date={mock.date} readTime={mock.readTime} />
+        <ArticleStats date={mock.date} articleBody={mock.body} />
       </ArticleCard.Footer>
     </ArticleCard>
   ),

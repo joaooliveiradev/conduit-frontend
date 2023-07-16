@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { type ArticleDateProps, ArticleDate } from './ArticleDate'
+import { ArticleDate, type ArticleDateProps } from './ArticleDate'
 
-const meta: Meta = {
+const meta: Meta<ArticleDateProps> = {
   component: ArticleDate,
 }
 
