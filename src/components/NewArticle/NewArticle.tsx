@@ -1,11 +1,11 @@
 import {
+  type Option,
   fromNullable,
   chain,
   isSome,
   getLeft,
   alt,
   getRight,
-  type Option,
 } from 'fp-ts/Option'
 import {
   type AlertProps,
@@ -15,22 +15,22 @@ import {
   TextButton,
   TextEditor,
 } from '@/components'
-import { useFormik } from 'formik'
-import { object, string } from 'yup'
-import { useNewArticle } from './useNewArticle'
 import {
   type AuthorizationError,
   type UnknownError,
   type ValidationError,
   f,
 } from '@/libs'
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import dynamic from 'next/dynamic'
 import {
   parse as superJsonParse,
   stringify as superJsonStringify,
 } from 'superjson'
+import { useFormik } from 'formik'
+import { object, string } from 'yup'
+import { useNewArticle } from './useNewArticle'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import dynamic from 'next/dynamic'
 
 const Alert = {
   Root: dynamic<AlertProps>(
