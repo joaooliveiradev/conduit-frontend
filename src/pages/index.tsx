@@ -10,6 +10,9 @@ import {
   ProfileName,
   ArticleStats,
   EmptyState,
+  ArticleReadingTime,
+  Divider,
+  ArticleDate,
 } from '@/components'
 import {
   getArticles,
@@ -139,10 +142,11 @@ const Home: NextPage = () => {
                                 size={2}
                               />
                             </ArticleCard.Anchor>
-                            <ArticleStats
-                              date={article.updatedAt}
-                              articleBody={article.body}
-                            />
+                            <ArticleStats>
+                              <ArticleReadingTime articleBody={article.body} />
+                              <Divider />
+                              <ArticleDate date={article.updatedAt} />
+                            </ArticleStats>
                           </ArticleCard.Footer>
                         </ArticleCard>
                       ))}
@@ -196,10 +200,11 @@ const Home: NextPage = () => {
                                 size={2}
                               />
                             </ArticleCard.Anchor>
-                            <ArticleStats
-                              date={article.updatedAt}
-                              articleBody={article.body}
-                            />
+                            <ArticleStats>
+                              <ArticleReadingTime articleBody={article.body} />
+                              <Divider />
+                              <ArticleDate date={article.updatedAt} />
+                            </ArticleStats>
                           </ArticleCard.Footer>
                         </ArticleCard>
                       ))}
@@ -253,10 +258,11 @@ const Home: NextPage = () => {
                       >
                         <ProfileName name={article.author.username} size={2} />
                       </ArticleCard.Anchor>
-                      <ArticleStats
-                        date={article.updatedAt}
-                        articleBody={article.body}
-                      />
+                      <ArticleStats>
+                        <ArticleReadingTime articleBody={article.body} />
+                        <Divider />
+                        <ArticleDate date={article.updatedAt} />
+                      </ArticleStats>
                     </ArticleCard.Footer>
                   </ArticleCard>
                 ))}

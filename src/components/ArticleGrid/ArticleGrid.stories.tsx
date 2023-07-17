@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import {
-  ArticleCard,
+  type ArticleGridProps,
   ArticleGrid,
+  ArticleCard,
   ArticleStats,
   ProfileName,
-  type ArticleGridProps,
+  ArticleReadingTime,
+  Divider,
+  ArticleDate,
 } from '@/components'
 
 const meta: Meta<ArticleGridProps> = {
@@ -84,7 +87,11 @@ export const Default: StoryObj<ArticleGridProps> = {
             <ArticleCard.Anchor href={`/profile/${article.author}`}>
               <ProfileName name={article.author} size={2} />
             </ArticleCard.Anchor>
-            <ArticleStats date={article.date} articleBody={article.body} />
+            <ArticleStats>
+              <ArticleReadingTime articleBody={article.body} />
+              <Divider />
+              <ArticleDate date={article.date} />
+            </ArticleStats>
           </ArticleCard.Footer>
         </ArticleCard>
       ))}

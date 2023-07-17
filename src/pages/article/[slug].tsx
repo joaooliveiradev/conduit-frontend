@@ -1,4 +1,13 @@
-import { ErrorState, ArticleHeader, ArticleBody } from '@/components'
+import {
+  ErrorState,
+  ArticleBody,
+  ArticleReadingTime,
+  ArticleStats,
+  Divider,
+  ArticleDate,
+  ProfileName,
+  Anchor,
+} from '@/components'
 import type { GetServerSidePropsContext, NextPage } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
@@ -34,6 +43,12 @@ const HeaderSection = styled.section`
   display: flex;
   flex-direction: column;
   row-gap: ${({ theme }) => theme.spacings.xxsmall};
+`
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  column-gap: ${({ theme }) => theme.spacings.xsmall};
 `
 
 const Title = styled.h1`
@@ -98,11 +113,24 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
           />
           <Wrapper>
             <HeaderSection>
-              <ArticleHeader
-                date={maybeArticle.value.article.createdAt}
-                name={maybeArticle.value.article.author.username}
-                readTime={maybeArticle.value.article.updatedAt}
-              />
+              <Header>
+                <Anchor
+                  href={`/profile/${maybeArticle.value.article.author.username}`}
+                >
+                  <ProfileName
+                    name={maybeArticle.value.article.author.username}
+                    size={2}
+                  />
+                </Anchor>
+                <Divider />
+                <ArticleStats>
+                  <ArticleReadingTime
+                    articleBody={maybeArticle.value.article.body}
+                  />
+                  <Divider />
+                  <ArticleDate date={maybeArticle.value.article.updatedAt} />
+                </ArticleStats>
+              </Header>
               <Title>{maybeArticle.value.article.title}</Title>
               <Description>
                 {maybeArticle.value.article.description}

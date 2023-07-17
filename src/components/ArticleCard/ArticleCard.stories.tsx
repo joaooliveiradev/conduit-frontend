@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import {
+  type ArticleCardProps,
   ProfileName,
   ArticleStats,
   ArticleCard,
-  type ArticleCardProps,
+  ArticleReadingTime,
+  Divider,
+  ArticleDate,
 } from '@/components'
 
 const meta: Meta<ArticleCardProps> = {
@@ -19,7 +22,7 @@ const mock = {
   date: 'May 26, 2022',
   description:
     'After The New York Times published its extensive report on the history of Haiti’s impoverishment at the hands.',
-  body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
+  body: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
 }
 
 export const Default: StoryObj<ArticleCardProps> = {
@@ -39,7 +42,11 @@ export const Default: StoryObj<ArticleCardProps> = {
         <ArticleCard.Anchor href={`/profile/${mock.author}`}>
           <ProfileName name={mock.author} size={2} />
         </ArticleCard.Anchor>
-        <ArticleStats date={mock.date} articleBody={mock.body} />
+        <ArticleStats>
+          <ArticleReadingTime articleBody={mock.body} />
+          <Divider />
+          <ArticleDate date={mock.date} />
+        </ArticleStats>
       </ArticleCard.Footer>
     </ArticleCard>
   ),
