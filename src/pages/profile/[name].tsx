@@ -1,7 +1,10 @@
 import {
   ArticleCard,
+  ArticleDate,
   ArticleGrid,
+  ArticleReadingTime,
   ArticleStats,
+  Divider,
   EmptyState,
   ErrorState,
   ProfileHeader,
@@ -144,10 +147,11 @@ const Profile = ({ name }: ProfileParams) => {
                     >
                       <ProfileName name={article.author.username} size={2} />
                     </ArticleCard.Anchor>
-                    <ArticleStats
-                      date={article.updatedAt}
-                      articleBody={article.body}
-                    />
+                    <ArticleStats>
+                      <ArticleReadingTime articleBody={article.body} />
+                      <Divider />
+                      <ArticleDate date={article.updatedAt} />
+                    </ArticleStats>
                   </ArticleCard.Footer>
                 </ArticleCard>
               ))}
