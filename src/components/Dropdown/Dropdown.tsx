@@ -10,7 +10,18 @@ import {
 
 export type DropdownProps = {
   children: React.ReactNode
-  trigger: React.ReactNode
+}
+
+export type DropdownTriggerProps = {
+  children: React.ReactNode
+}
+
+export type DropdownContentProps = {
+  children: React.ReactNode
+}
+
+export type DropdownListProps = {
+  children: React.ReactNode
 }
 
 export type DropdownItemProps = {
@@ -19,7 +30,7 @@ export type DropdownItemProps = {
   onEventClick?: () => void
 }
 
-const Trigger = styled(PopoverTrigger)`
+export const DropdownTrigger = styled(PopoverTrigger)`
   ${({ theme }) => css`
     appearance: none;
     all: unset;
@@ -46,7 +57,7 @@ const Content = styled(PopoverContent)`
   `}
 `
 
-const List = styled.ul`
+export const DropdownList = styled.ul`
   background-color: ${({ theme }) => theme.colors.white[100]};
   display: flex;
   flex-direction: column;
@@ -79,7 +90,7 @@ const Anchor = styled(DefaultAnchor)`
   `}
 `
 
-const DropdownButton = styled.button`
+const Button = styled.button`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xlarge};
     color: ${theme.colors.black[100]};
@@ -97,18 +108,15 @@ const DropdownButton = styled.button`
   `}
 `
 
-export const Dropdown = ({ children, trigger }: DropdownProps) => {
-  return (
-    <Root>
-      <Trigger>{trigger}</Trigger>
-      <Portal>
-        <Content sideOffset={16} collisionPadding={16}>
-          <List>{children}</List>
-        </Content>
-      </Portal>
-    </Root>
-  )
-}
+export const Dropdown = ({ children }: DropdownProps) => <Root>{children}</Root>
+
+export const DropdownContent = ({ children }: DropdownProps) => (
+  <Portal>
+    <Content sideOffset={16} collisionPadding={16}>
+      {children}
+    </Content>
+  </Portal>
+)
 
 export const DropdownItem = ({
   label,
@@ -120,7 +128,7 @@ export const DropdownItem = ({
       {href ? (
         <Anchor href={href}>{label}</Anchor>
       ) : (
-        <DropdownButton onClick={onEventClick}>{label}</DropdownButton>
+        <Button onClick={onEventClick}>{label}</Button>
       )}
     </Item>
   )

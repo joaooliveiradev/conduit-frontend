@@ -5,6 +5,9 @@ import {
   type DropdownProps,
   type DropdownItemProps,
   type ProfileNameProps,
+  type DropdownTriggerProps,
+  type DropdownContentProps,
+  type DropdownListProps,
 } from '@/components'
 import { useAuth } from '@/context'
 import { useState, useEffect } from 'react'
@@ -30,6 +33,36 @@ const Dropdown = dynamic<DropdownProps>(
   () =>
     import('@/components/Dropdown/Dropdown').then((module) => module.Dropdown),
   { ssr: false }
+)
+
+const DropdownTrigger = dynamic<DropdownTriggerProps>(
+  () =>
+    import('@/components/Dropdown/Dropdown').then(
+      (module) => module.DropdownTrigger
+    ),
+  {
+    ssr: false,
+  }
+)
+
+const DropdownContent = dynamic<DropdownContentProps>(
+  () =>
+    import('@/components/Dropdown/Dropdown').then(
+      (module) => module.DropdownContent
+    ),
+  {
+    ssr: false,
+  }
+)
+
+const DropdownList = dynamic<DropdownListProps>(
+  () =>
+    import('@/components/Dropdown/Dropdown').then(
+      (module) => module.DropdownList
+    ),
+  {
+    ssr: false,
+  }
 )
 
 const DropdownItem = dynamic<DropdownItemProps>(
@@ -75,16 +108,19 @@ export const Header = () => {
         <Image src={logo} alt="Conduit Logo" width={172} height={42} />
       </Anchor>
       {isSome(maybeData) && status === 'loggedIn' ? (
-        <Dropdown
-          trigger={
+        <Dropdown>
+          <DropdownTrigger>
             <ProfileName size={2} name={maybeData.value.user.username} />
-          }
-        >
-          <DropdownItem
-            href={`/profile/${maybeData.value.user.username}`}
-            label="Profile"
-          />
-          <DropdownItem label="Sign Out" onEventClick={signOut} />
+          </DropdownTrigger>
+          <DropdownContent>
+            <DropdownList>
+              <DropdownItem
+                label="Profile"
+                href={`/profile/${maybeData.value.user.username}`}
+              />
+              <DropdownItem label="Sign Out" onEventClick={signOut} />
+            </DropdownList>
+          </DropdownContent>
         </Dropdown>
       ) : (
         <>
