@@ -13,6 +13,10 @@ import {
   ArticleReadingTime,
   Divider,
   ArticleDate,
+  EmptyStateContent,
+  EmptyIcon,
+  EmptyStateTitle,
+  EmptyStateDescription,
 } from '@/components'
 import {
   getArticles,
@@ -110,10 +114,18 @@ const Home: NextPage = () => {
             <TabContent value="global">
               {isSome(maybeGetArticles) ? (
                 maybeGetArticles.value.articlesCount === 0 ? (
-                  <EmptyState
-                    title="No articles are here... yet."
-                    message="We don't have any articles yet, but you can be the first! Access your profile and click in New Article."
-                  />
+                  <EmptyState>
+                    <EmptyIcon />
+                    <EmptyStateContent>
+                      <EmptyStateTitle>
+                        No articles are here... yet.
+                      </EmptyStateTitle>
+                      <EmptyStateDescription>
+                        We don&apos;t have any articles yet, but you can be the
+                        first! Access your profile and click in New Article.
+                      </EmptyStateDescription>
+                    </EmptyStateContent>
+                  </EmptyState>
                 ) : (
                   <>
                     <ArticleGrid>
@@ -168,10 +180,18 @@ const Home: NextPage = () => {
             <TabContent value="foryou">
               {isSome(maybeFeedArticles) ? (
                 maybeFeedArticles.value.articlesCount === 0 ? (
-                  <EmptyState
-                    title="No articles are here... yet."
-                    message="You need to follow some user to receive their articles."
-                  />
+                  <EmptyState>
+                    <EmptyIcon />
+                    <EmptyStateContent>
+                      <EmptyStateTitle>
+                        No articles are here... yet.
+                      </EmptyStateTitle>
+                      <EmptyStateDescription>
+                        We don&apos;t have any articles yet, but you can be the
+                        first! Access your profile and click in New Article.
+                      </EmptyStateDescription>
+                    </EmptyStateContent>
+                  </EmptyState>
                 ) : (
                   <>
                     <ArticleGrid>
@@ -231,10 +251,16 @@ const Home: NextPage = () => {
         <ContentSection>
           <Hero />
           {maybeGetArticles.value.articlesCount === 0 ? (
-            <EmptyState
-              title="No articles are here... yet."
-              message="We don't have any articles yet, but you can be the first! Create an account and write one!"
-            />
+            <EmptyState>
+              <EmptyIcon />
+              <EmptyStateContent>
+                <EmptyStateTitle>No articles are here... yet.</EmptyStateTitle>
+                <EmptyStateDescription>
+                  We don&apos;t have any articles yet, but you can be the first!
+                  Access your profile and click in New Article.
+                </EmptyStateDescription>
+              </EmptyStateContent>
+            </EmptyState>
           ) : (
             <>
               <ArticleGrid>

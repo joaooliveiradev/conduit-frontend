@@ -6,6 +6,10 @@ import {
   ArticleStats,
   Divider,
   EmptyState,
+  EmptyIcon,
+  EmptyStateContent,
+  EmptyStateDescription,
+  EmptyStateTitle,
   ErrorState,
   ProfileHeader,
   ProfileName,
@@ -119,10 +123,16 @@ const Profile = ({ name }: ProfileParams) => {
       />
       {isSome(maybeArticles) ? (
         maybeArticles.value.articles.length === 0 ? (
-          <EmptyState
-            title="No articles are here... yet."
-            message="This user hasn't written any articles yet."
-          />
+          <EmptyState>
+            <EmptyIcon />
+            <EmptyStateContent>
+              <EmptyStateTitle>No articles are here... yet.</EmptyStateTitle>
+              <EmptyStateDescription>
+                We don&apos;t have any articles yet, but you can be the first!
+                Access your profile and click in New Article.
+              </EmptyStateDescription>
+            </EmptyStateContent>
+          </EmptyState>
         ) : (
           <>
             <ArticleGrid>
