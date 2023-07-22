@@ -17,6 +17,11 @@ import {
   EmptyIcon,
   EmptyStateTitle,
   EmptyStateDescription,
+  ErrorStateIcon,
+  ErrorStateTextContent,
+  ErrorStateTitle,
+  ErrorStateMessage,
+  Button,
 } from '@/components'
 import {
   getArticles,
@@ -167,14 +172,24 @@ const Home: NextPage = () => {
                   </>
                 )
               ) : (
-                <ErrorState
-                  title="Something went wrong."
-                  message="Something went wrong while trying to requesting the articles."
-                  buttonLabel="Try again"
-                  onButtonClick={fetchNextPageGetArticles}
-                  disabled={isFetchingGetArticles}
-                  isButtonLoading={isFetchingGetArticles}
-                />
+                <ErrorState>
+                  <ErrorStateIcon />
+                  <ErrorStateTextContent>
+                    <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+                    <ErrorStateMessage>
+                      Something went wrong while trying to requesting the
+                      articles.
+                    </ErrorStateMessage>
+                  </ErrorStateTextContent>
+                  <Button
+                    size="large"
+                    isLoading={isFetchingGetArticles}
+                    disabled={isFetchingGetArticles}
+                    onClick={() => fetchNextPageGetArticles()}
+                  >
+                    Try again
+                  </Button>
+                </ErrorState>
               )}
             </TabContent>
             <TabContent value="foryou">
@@ -233,14 +248,24 @@ const Home: NextPage = () => {
                   </>
                 )
               ) : (
-                <ErrorState
-                  title="Something went wrong."
-                  message="Something went wrong while trying to requesting the articles."
-                  buttonLabel="Try again"
-                  onButtonClick={fetchNextPageFeedArticles}
-                  disabled={isFetchingFeedArticles}
-                  isButtonLoading={isFetchingFeedArticles}
-                />
+                <ErrorState>
+                  <ErrorStateIcon />
+                  <ErrorStateTextContent>
+                    <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+                    <ErrorStateMessage>
+                      Something went wrong while trying to requesting the
+                      articles.
+                    </ErrorStateMessage>
+                  </ErrorStateTextContent>
+                  <Button
+                    size="large"
+                    isLoading={isFetchingFeedArticles}
+                    disabled={isFetchingFeedArticles}
+                    onClick={() => fetchNextPageFeedArticles()}
+                  >
+                    Try again
+                  </Button>
+                </ErrorState>
               )}
             </TabContent>
           </Tabs>
@@ -298,14 +323,23 @@ const Home: NextPage = () => {
           )}
         </ContentSection>
       ) : (
-        <ErrorState
-          title="Something went wrong."
-          message="Something went wrong while trying to requesting the articles."
-          buttonLabel="Try again"
-          onButtonClick={fetchNextPageGetArticles}
-          disabled={isFetchingGetArticles}
-          isButtonLoading={isFetchingGetArticles}
-        />
+        <ErrorState>
+          <ErrorStateIcon />
+          <ErrorStateTextContent>
+            <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+            <ErrorStateMessage>
+              Something went wrong while trying to requesting the articles.
+            </ErrorStateMessage>
+          </ErrorStateTextContent>
+          <Button
+            size="large"
+            isLoading={isFetchingGetArticles}
+            disabled={isFetchingGetArticles}
+            onClick={() => fetchNextPageGetArticles()}
+          >
+            Try again
+          </Button>
+        </ErrorState>
       )
     }
   })

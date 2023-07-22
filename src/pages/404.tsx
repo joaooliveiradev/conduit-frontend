@@ -1,4 +1,11 @@
-import { ErrorState } from '@/components'
+import {
+  Button,
+  ErrorState,
+  ErrorStateIcon,
+  ErrorStateMessage,
+  ErrorStateTextContent,
+  ErrorStateTitle,
+} from '@/components'
 import { useRouter } from 'next/router'
 
 const Custom404 = () => {
@@ -7,12 +14,18 @@ const Custom404 = () => {
   const redirectToHome = () => router.push('/')
 
   return (
-    <ErrorState
-      title="Oh no! Error 404"
-      message="This page doesn't exist or was removed."
-      buttonLabel="Back to home"
-      onButtonClick={redirectToHome}
-    />
+    <ErrorState>
+      <ErrorStateIcon />
+      <ErrorStateTextContent>
+        <ErrorStateTitle>Oh no! Error 404</ErrorStateTitle>
+        <ErrorStateMessage>
+          This page doesn&apos;t exist or was removed.
+        </ErrorStateMessage>
+      </ErrorStateTextContent>
+      <Button size="large" onClick={redirectToHome}>
+        Back to home
+      </Button>
+    </ErrorState>
   )
 }
 
