@@ -13,6 +13,11 @@ import {
   ErrorState,
   ProfileHeader,
   ProfileName,
+  Button,
+  ErrorStateIcon,
+  ErrorStateTextContent,
+  ErrorStateMessage,
+  ErrorStateTitle,
 } from '@/components'
 import {
   defaultFilters,
@@ -64,7 +69,11 @@ const getLastPage = <T,>(articles: InfiniteData<T>) =>
   articles.pages[articles.pages.length - 1]
 
 const Profile = ({ name }: ProfileParams) => {
-  const { data, refetch, isLoading } = useProfile(name)
+  const {
+    data,
+    refetch: refetchProfile,
+    isLoading: isLoadingProfile,
+  } = useProfile(name)
 
   const maybeData = pipe(data, fromNullable, chain(getRight))
 
@@ -170,25 +179,43 @@ const Profile = ({ name }: ProfileParams) => {
           </>
         )
       ) : (
-        <ErrorState
-          message="Something went wrong while trying to requesting the articles."
-          title="Something went wrong"
-          buttonLabel="Try again"
-          disabled={isFetchingNextPage}
-          isButtonLoading={isFetchingNextPage}
-          onButtonClick={fetchNextPage}
-        />
+        <ErrorState>
+          <ErrorStateIcon />
+          <ErrorStateTextContent>
+            <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+            <ErrorStateMessage>
+              Something went wrong while trying to requesting the articles.
+            </ErrorStateMessage>
+          </ErrorStateTextContent>
+          <Button
+            size="large"
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+            isLoading={isFetchingNextPage}
+          >
+            Try again
+          </Button>
+        </ErrorState>
       )}
     </Wrapper>
   ) : (
-    <ErrorState
-      message="Something went wrong while trying to requesting the user informations."
-      title="Something went wrong"
-      buttonLabel="Try again"
-      onButtonClick={refetch}
-      disabled={isLoading}
-      isButtonLoading={isLoading}
-    />
+    <ErrorState>
+      <ErrorStateIcon />
+      <ErrorStateTextContent>
+        <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+        <ErrorStateMessage>
+          Something went wrong while trying to requesting the user informations.
+        </ErrorStateMessage>
+      </ErrorStateTextContent>
+      <Button
+        size="large"
+        onClick={() => refetchProfile()}
+        disabled={isLoadingProfile}
+        isLoading={isLoadingProfile}
+      >
+        Try again
+      </Button>
+    </ErrorState>
   )
 }
 
