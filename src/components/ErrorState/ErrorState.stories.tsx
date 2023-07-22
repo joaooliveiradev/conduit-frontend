@@ -1,5 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { ErrorState, type ErrorStateProps } from './ErrorState'
+import {
+  type ErrorStateProps,
+  ErrorStateIcon,
+  ErrorState,
+  ErrorStateTextContent,
+  ErrorStateTitle,
+  ErrorStateMessage,
+  Button,
+} from '@/components'
 
 const meta: Meta<ErrorStateProps> = {
   component: ErrorState,
@@ -8,14 +16,16 @@ const meta: Meta<ErrorStateProps> = {
 export default meta
 
 export const Default: StoryObj<ErrorStateProps> = {
-  render: (args) => <ErrorState {...args} />,
-  args: {
-    title: 'Something went wrong.',
-    message: "This user hasn't written any articles yet.",
-    buttonLabel: 'Try again',
-    disabled: false,
-    block: false,
-    isButtonLoading: false,
-    onButtonClick: () => null,
-  },
+  render: () => (
+    <ErrorState>
+      <ErrorStateIcon />
+      <ErrorStateTextContent>
+        <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+        <ErrorStateMessage>
+          This user hasn&apos;t written any articles yet.
+        </ErrorStateMessage>
+      </ErrorStateTextContent>
+      <Button size="large">Try again</Button>
+    </ErrorState>
+  ),
 }

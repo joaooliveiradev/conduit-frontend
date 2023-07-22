@@ -7,6 +7,11 @@ import {
   ArticleDate,
   ProfileName,
   Anchor,
+  Button,
+  ErrorStateIcon,
+  ErrorStateTextContent,
+  ErrorStateTitle,
+  ErrorStateMessage,
 } from '@/components'
 import type { GetServerSidePropsContext, NextPage } from 'next'
 import type { ParsedUrlQuery } from 'querystring'
@@ -142,14 +147,23 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
       )
     } else {
       return (
-        <ErrorState
-          message="Something went wrong while trying to requesting the articles."
-          title="Something went wrong"
-          buttonLabel="Try again"
-          onButtonClick={refetch}
-          isButtonLoading={isFetching}
-          disabled={isFetching}
-        />
+        <ErrorState>
+          <ErrorStateIcon />
+          <ErrorStateTextContent>
+            <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+            <ErrorStateMessage>
+              Something went wrong while trying to requesting the articles.
+            </ErrorStateMessage>
+          </ErrorStateTextContent>
+          <Button
+            size="large"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            isLoading={isFetching}
+          >
+            Try again
+          </Button>
+        </ErrorState>
       )
     }
   })
