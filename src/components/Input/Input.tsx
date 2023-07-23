@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { type ErrorFieldMessageProps } from '@/components/'
+import styled, { css } from 'styled-components'
 import React from 'react'
 import dynamic from 'next/dynamic'
 
@@ -14,11 +14,10 @@ const ErrorFieldMessage = dynamic<ErrorFieldMessageProps>(
   }
 )
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export type InputProps = {
   errorMessage?: string
   inputRef?: (node: HTMLInputElement | null) => void
-}
+} & React.InputHTMLAttributes<HTMLInputElement>
 
 const Wrapper = styled.div`
   display: flex;
