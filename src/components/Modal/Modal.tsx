@@ -1,25 +1,19 @@
-import { CloseIcon } from '@/components'
-import { transparentize } from 'polished/'
-import styled, { css } from 'styled-components'
 import {
   Overlay as DialogOverlay,
   Content as DialogContent,
   Close as DialogClose,
-  Title as DialogTitle,
-  Description as DialogDescription,
-  Portal,
-  Root,
-  Trigger,
+  Trigger as DialogTrigger,
+  Portal as DialogPortal,
+  Root as DialogRoot,
 } from '@radix-ui/react-dialog'
+import { transparentize } from 'polished/'
+import styled, { css } from 'styled-components'
 
 export type ModalProps = {
-  trigger?: React.ReactNode
   children: React.ReactNode
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
 }
 
-const Overlay = styled(DialogOverlay)`
+export const ModalOverlay = styled(DialogOverlay)`
   position: fixed;
   inset: 0;
   background-color: ${({ theme }) =>
@@ -35,7 +29,7 @@ const Overlay = styled(DialogOverlay)`
   }
 `
 
-const Content = styled(DialogContent)`
+export const ModalContent = styled(DialogContent)`
   ${({ theme }) => css`
     border-radius: 4px;
     max-width: 400px;
@@ -62,7 +56,7 @@ const Content = styled(DialogContent)`
   `}
 `
 
-const CloseButton = styled(DialogClose)`
+export const ModalCloseButton = styled(DialogClose)`
   ${({ theme }) => css`
     position: absolute;
     top: ${theme.spacings.xxsmall};
@@ -75,32 +69,8 @@ const CloseButton = styled(DialogClose)`
   `}
 `
 
-export const Title = styled(DialogTitle)`
-  font-size: ${({ theme }) => theme.fonts.sizes.large};
-`
+export { DialogRoot as ModalRoot }
 
-export const Description = styled(DialogDescription)`
-  font-size: ${({ theme }) => theme.fonts.sizes.medium};
-`
+export { DialogTrigger as ModalTrigger }
 
-export const Modal = ({
-  trigger,
-  children,
-  open,
-  onOpenChange,
-}: ModalProps) => {
-  return (
-    <Root open={open} onOpenChange={onOpenChange}>
-      {trigger && <Trigger asChild>{trigger}</Trigger>}
-      <Portal>
-        <Overlay />
-        <Content>
-          {children}
-          <CloseButton>
-            <CloseIcon />
-          </CloseButton>
-        </Content>
-      </Portal>
-    </Root>
-  )
-}
+export { DialogPortal as ModalPortal }
