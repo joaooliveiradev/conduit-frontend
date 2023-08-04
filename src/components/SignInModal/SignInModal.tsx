@@ -1,7 +1,17 @@
 import { type SignInRequest, useSignIn } from './useSignIn'
 import { useSignUp, type SignUpRequest } from './useSignUp'
 import { chain, fromNullable, getLeft, isSome } from 'fp-ts/Option'
-import { Modal, Input, Button, ErrorFieldMessage } from '@/components'
+import {
+  Input,
+  Button,
+  ErrorFieldMessage,
+  ModalRoot,
+  ModalPortal,
+  ModalContent,
+  ModalOverlay,
+  ModalCloseButton,
+  CloseIcon,
+} from '@/components'
 import { useFormik } from 'formik'
 import { pipe } from 'fp-ts/function'
 import { type UnknownError, type ValidationError, f } from '@/libs'
@@ -164,109 +174,117 @@ export const SignInModal = ({
   }
 
   return (
-    <Modal open={open} onOpenChange={onOpenChange}>
-      {showSignIn ? (
-        <Wrapper onSubmit={signInFormik.handleSubmit}>
-          <Title>Sign in</Title>
-          <Input
-            type="text"
-            placeholder="Email"
-            name="email"
-            aria-label="Email"
-            inputRef={signInRef}
-            value={signInFormik.values.email}
-            errorMessage={signInFormik.errors.email}
-            onChange={signInFormik.handleChange}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            name="password"
-            aria-label="Password"
-            value={signInFormik.values.password}
-            errorMessage={signInFormik.errors.password}
-            onChange={signInFormik.handleChange}
-          />
-          <Button
-            type="submit"
-            size="large"
-            isLoading={signInLoading}
-            disabled={signInLoading}
-          >
-            Sign in
-          </Button>
-          {isSome(maybeSignInError) && (
-            <ErrorFieldMessage
-              message={maybeSignInError.value.message}
-              fontWeight="bold"
-              textAlign="center"
-              role="alert"
-            />
+    <ModalRoot open={open} onOpenChange={onOpenChange}>
+      <ModalPortal>
+        <ModalOverlay />
+        <ModalContent>
+          {showSignIn ? (
+            <Wrapper onSubmit={signInFormik.handleSubmit}>
+              <Title>Sign in</Title>
+              <Input
+                type="text"
+                placeholder="Email"
+                name="email"
+                aria-label="Email"
+                inputRef={signInRef}
+                value={signInFormik.values.email}
+                errorMessage={signInFormik.errors.email}
+                onChange={signInFormik.handleChange}
+              />
+              <Input
+                placeholder="Password"
+                type="password"
+                name="password"
+                aria-label="Password"
+                value={signInFormik.values.password}
+                errorMessage={signInFormik.errors.password}
+                onChange={signInFormik.handleChange}
+              />
+              <Button
+                type="submit"
+                size="large"
+                isLoading={signInLoading}
+                disabled={signInLoading}
+              >
+                Sign in
+              </Button>
+              {isSome(maybeSignInError) && (
+                <ErrorFieldMessage
+                  message={maybeSignInError.value.message}
+                  fontWeight="bold"
+                  textAlign="center"
+                  role="alert"
+                />
+              )}
+              <Text>
+                Don&apos;t have an account?{' '}
+                <ChangeFormBtn type="button" onClick={switchForm}>
+                  Sign up
+                </ChangeFormBtn>{' '}
+                now.
+              </Text>
+            </Wrapper>
+          ) : (
+            <Wrapper onSubmit={signUpFormik.handleSubmit}>
+              <Title>Sign up</Title>
+              <Input
+                type="text"
+                name="username"
+                placeholder="Username"
+                aria-label="Username"
+                inputRef={signUpRef}
+                value={signUpFormik.values.username}
+                errorMessage={signUpFormik.errors.username}
+                onChange={signUpFormik.handleChange}
+              />
+              <Input
+                type="text"
+                name="email"
+                placeholder="Email"
+                aria-label="Email"
+                value={signUpFormik.values.email}
+                errorMessage={signUpFormik.errors.email}
+                onChange={signUpFormik.handleChange}
+              />
+              <Input
+                name="password"
+                placeholder="Password"
+                type="password"
+                aria-label="Password"
+                value={signUpFormik.values.password}
+                errorMessage={signUpFormik.errors.password}
+                onChange={signUpFormik.handleChange}
+              />
+              <Button
+                type="submit"
+                size="large"
+                disabled={signUpLoading}
+                isLoading={signUpLoading}
+              >
+                Sign up
+              </Button>
+              {isSome(maybeSignUpError) && (
+                <ErrorFieldMessage
+                  message={maybeSignUpError.value.message}
+                  fontWeight="bold"
+                  textAlign="center"
+                  role="alert"
+                />
+              )}
+              <Text>
+                Already have an account?{' '}
+                <ChangeFormBtn type="button" onClick={switchForm}>
+                  Sign in
+                </ChangeFormBtn>{' '}
+                now.
+              </Text>
+            </Wrapper>
           )}
-          <Text>
-            Don&apos;t have an account?{' '}
-            <ChangeFormBtn type="button" onClick={switchForm}>
-              Sign up
-            </ChangeFormBtn>{' '}
-            now.
-          </Text>
-        </Wrapper>
-      ) : (
-        <Wrapper onSubmit={signUpFormik.handleSubmit}>
-          <Title>Sign up</Title>
-          <Input
-            type="text"
-            name="username"
-            placeholder="Username"
-            aria-label="Username"
-            inputRef={signUpRef}
-            value={signUpFormik.values.username}
-            errorMessage={signUpFormik.errors.username}
-            onChange={signUpFormik.handleChange}
-          />
-          <Input
-            type="text"
-            name="email"
-            placeholder="Email"
-            aria-label="Email"
-            value={signUpFormik.values.email}
-            errorMessage={signUpFormik.errors.email}
-            onChange={signUpFormik.handleChange}
-          />
-          <Input
-            name="password"
-            placeholder="Password"
-            type="password"
-            aria-label="Password"
-            value={signUpFormik.values.password}
-            errorMessage={signUpFormik.errors.password}
-            onChange={signUpFormik.handleChange}
-          />
-          <Button
-            type="submit"
-            size="large"
-            disabled={signUpLoading}
-            isLoading={signUpLoading}
-          >
-            Sign up
-          </Button>
-          {isSome(maybeSignUpError) && (
-            <ErrorFieldMessage
-              message={maybeSignUpError.value.message}
-              fontWeight="bold"
-              textAlign="center"
-              role="alert"
-            />
-          )}
-          <Text>
-            Already have an account?{' '}
-            <ChangeFormBtn type="button" onClick={switchForm}>
-              Sign in
-            </ChangeFormBtn>{' '}
-            now.
-          </Text>
-        </Wrapper>
-      )}
-    </Modal>
+          <ModalCloseButton>
+            <CloseIcon />
+          </ModalCloseButton>
+        </ModalContent>
+      </ModalPortal>
+    </ModalRoot>
   )
 }
