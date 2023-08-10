@@ -29,6 +29,8 @@ import { useFormik } from 'formik'
 import { object, string } from 'yup'
 import { useNewArticle } from './useNewArticle'
 import { useEffect, useState } from 'react'
+import { NewArticleCodec } from '@/types'
+import { isRight } from 'fp-ts/Either'
 import styled from 'styled-components'
 import dynamic from 'next/dynamic'
 
@@ -122,25 +124,64 @@ const initialFieldValues: NewArticleFieldValues = {
   body: '',
 }
 
+const isLocalStorageAvailable = () => {
+  try {
+    if (!localStorage) return false
+    localStorage.setItem('localStorageTest', 'localStorageTest')
+    localStorage.removeItem('localStorageTest')
+    return true
+  } catch (e: unknown) {
+    return false
+  }
+}
+
 const storageKey = 'new-article-editor'
 
-const getStorage = () => {
-  if (typeof window === 'undefined') return initialFieldValues
+const defaultQuotaExceeded = 'QuotaExceededError'
 
-  const cachedStorage = fromNullable(localStorage.getItem(storageKey))
+const firefoxQuotaExceeded = 'NS_ERROR_DOM_QUOTA_REACHED'
 
-  return isSome(cachedStorage)
-    ? superJsonParse<NewArticleFieldValues>(cachedStorage.value)
-    : initialFieldValues
+const isQuotaExceededError = (err: unknown, storage: Storage) =>
+  err instanceof DOMException &&
+  (err.name === defaultQuotaExceeded || err.name === firefoxQuotaExceeded) &&
+  storage &&
+  storage.length !== 0
+
+const setStorageData = (storageData: NewArticleFieldValues) => {
+  try {
+    if (isLocalStorageAvailable()) {
+      localStorage.setItem(storageKey, superJsonStringify(storageData))
+    } else throw new Error('localStorage is not available')
+  } catch (e: unknown) {
+    if (isQuotaExceededError(e, localStorage)) {
+      localStorage.clear()
+    }
+  }
+}
+
+const getStorageData = () => {
+  try {
+    const maybeCachedData = fromNullable(localStorage.getItem(storageKey))
+
+    const cachedData =
+      isSome(maybeCachedData) && superJsonParse(maybeCachedData.value)
+
+    const cacheDecodedData = NewArticleCodec.decode(cachedData)
+
+    const storageData = isRight(cacheDecodedData)
+      ? cacheDecodedData.right
+      : initialFieldValues
+
+    return storageData
+  } catch (e: unknown) {
+    return initialFieldValues
+  }
 }
 
 const useLocalStorage = () => {
-  const [storage, setStorage] = useState<NewArticleFieldValues>(getStorage)
+  const [storage, setStorage] = useState<NewArticleFieldValues>(getStorageData)
 
-  useEffect(
-    () => localStorage.setItem(storageKey, superJsonStringify(storage)),
-    [storage]
-  )
+  useEffect(() => setStorageData(storage), [storage])
 
   return { storage, setStorage }
 }
