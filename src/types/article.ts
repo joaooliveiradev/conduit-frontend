@@ -105,3 +105,9 @@ export const ArticleBySlugCodec = type({
     () => 'favoritesCount response should be an number'
   ),
 })
+
+export const NewArticleCodec = type({
+  title: withMessage(string, () => 'title should be a string'),
+  description: withMessage(string, () => 'description should be a string'),
+  body: withMessage(string, () => 'body should be a string'),
+})
