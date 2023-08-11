@@ -208,14 +208,7 @@ export const NewArticle = () => {
     onSubmit: (values) => handleSubmit(values),
   })
 
-  useEffect(() => {
-    const updatedFieldValues: NewArticleFieldValues = {
-      title: formik.values.title,
-      description: formik.values.description,
-      body: formik.values.body,
-    }
-    setStorage(updatedFieldValues)
-  }, [formik.values, setStorage])
+  useEffect(() => setStorage(formik.values), [formik.values, setStorage])
 
   const dataOption = fromNullable(data)
 
