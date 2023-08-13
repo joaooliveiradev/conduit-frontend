@@ -150,10 +150,10 @@ const FullScreen = ({ children }: FullScreenProps) => (
 )
 
 export interface TextEditorProps extends TextAreaProps {
-  defaultValue: string
+  value: string
 }
 
-export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
+export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('write')
 
@@ -183,10 +183,10 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
           </FullScreenTabsPane>
         </Pane>
         <TabContent value="write" asChild>
-          <TextArea defaultValue={defaultValue} {...rest} />
+          <TextArea value={value} {...rest} />
         </TabContent>
         <TabContent value="preview">
-          <Preview textAreaValue={defaultValue} />
+          <Preview textAreaValue={value} />
         </TabContent>
       </Tabs>
     </FullScreen>
@@ -210,10 +210,10 @@ export const TextEditor = ({ defaultValue, ...rest }: TextEditorProps) => {
         </FullScreenTabsPane>
       </Pane>
       <TabContent value="write" asChild>
-        <TextArea defaultValue={defaultValue} {...rest} />
+        <TextArea value={value} {...rest} />
       </TabContent>
       <TabContent value="preview">
-        <Preview textAreaValue={defaultValue} />
+        <Preview textAreaValue={value} />
       </TabContent>
     </Tabs>
   )

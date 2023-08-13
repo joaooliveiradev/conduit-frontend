@@ -222,6 +222,14 @@ export const NewArticle = () => {
     return alt(() => errorLeftOption)(genericErrorOption)
   })
 
+  const isCreateArticleSuccessful = isSome(maybeData)
+
+  const { resetForm } = formik
+
+  useEffect(() => {
+    isCreateArticleSuccessful && resetForm({ values: initialFieldValues })
+  }, [isCreateArticleSuccessful, resetForm])
+
   return (
     <Wrapper onSubmit={formik.handleSubmit}>
       <Title>New Article</Title>
@@ -234,7 +242,7 @@ export const NewArticle = () => {
           aria-label="Title"
           onChange={formik.handleChange}
           errorMessage={formik.errors.title}
-          defaultValue={formik.values.title}
+          value={storage.title}
         />
         <Input
           type="text"
@@ -243,7 +251,7 @@ export const NewArticle = () => {
           aria-label="Description"
           onChange={formik.handleChange}
           errorMessage={formik.errors.description}
-          defaultValue={storage.description}
+          value={storage.description}
         />
         <TextEditor
           placeholder="Type something awesome!"
@@ -251,7 +259,7 @@ export const NewArticle = () => {
           aria-label="Body"
           onChange={formik.handleChange}
           errorMessage={formik.errors.body}
-          defaultValue={storage.body}
+          value={storage.body}
         />
       </FieldWrapper>
       <PublishBtn
