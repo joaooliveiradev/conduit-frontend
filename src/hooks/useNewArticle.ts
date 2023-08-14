@@ -4,7 +4,7 @@ import {
   fetcher,
   type UnknownError,
 } from '@/libs'
-import type { NewArticleRequest } from './NewArticle'
+import type { NewArticleRequest } from '@/pages/editor'
 import { ArticleBySlugCodec as NewArticleCodec } from '@/types'
 import type { Either } from 'fp-ts/Either'
 import { useMutation } from '@tanstack/react-query'
