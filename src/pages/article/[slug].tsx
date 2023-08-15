@@ -18,7 +18,6 @@ import type { ParsedUrlQuery } from 'querystring'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { getArticle, GET_ARTICLE_KEY, useGetArticle } from '@/hooks'
 import { fromNullable, isSome, getRight, map } from 'fp-ts/Option'
-import { f } from '@/libs'
 import { pipe } from 'fp-ts/function'
 import { chain } from 'fp-ts/Option'
 import { stringify as superJsonStringify } from 'superjson'
@@ -77,96 +76,92 @@ const Article: NextPage<ArticleNextPageProps> = ({ slug }) => {
 
   const maybeArticle = pipe(data, fromNullable, chain(getRight))
 
-  return f(() => {
-    if (isSome(maybeArticle)) {
-      return (
-        <>
-          <NextSeo
-            title={maybeArticle.value.article.title}
-            description={maybeArticle.value.article.description}
-            openGraph={{
-              description: maybeArticle.value.article.description,
-              title: maybeArticle.value.article.title,
-              url: `${baseWebUrl}/article/${maybeArticle.value.article.slug}`,
-              type: 'article',
-              article: {
-                authors: [
-                  `${baseWebUrl}/profile/${maybeArticle.value.article.author.username}`,
-                ],
-                publishedTime: maybeArticle.value.article.createdAt,
-                modifiedTime: maybeArticle.value.article.updatedAt,
-                tags: maybeArticle.value.article.tagList,
-              },
-            }}
-            additionalMetaTags={[
-              {
-                property: 'dc:creator',
-                content: maybeArticle.value.article.author.username,
-              },
-            ]}
-          />
-          <ArticleJsonLd
-            url={`${baseWebUrl}/article/${maybeArticle.value.article.slug}`}
-            authorName={maybeArticle.value.article.author.username}
-            description={maybeArticle.value.article.description}
-            title={maybeArticle.value.article.title}
-            datePublished={maybeArticle.value.article.createdAt}
-            dateModified={maybeArticle.value.article.updatedAt}
-            images={[`${baseWebUrl}/cover.png`]}
-            publisherName={maybeArticle.value.article.author.username}
-            isAccessibleForFree={true}
-          />
-          <Wrapper>
-            <HeaderSection>
-              <Header>
-                <Anchor
-                  href={`/profile/${maybeArticle.value.article.author.username}`}
-                >
-                  <ProfileName
-                    name={maybeArticle.value.article.author.username}
-                    size={2}
-                  />
-                </Anchor>
+  if (isSome(maybeArticle)) {
+    return (
+      <>
+        <NextSeo
+          title={maybeArticle.value.article.title}
+          description={maybeArticle.value.article.description}
+          openGraph={{
+            description: maybeArticle.value.article.description,
+            title: maybeArticle.value.article.title,
+            url: `${baseWebUrl}/article/${maybeArticle.value.article.slug}`,
+            type: 'article',
+            article: {
+              authors: [
+                `${baseWebUrl}/profile/${maybeArticle.value.article.author.username}`,
+              ],
+              publishedTime: maybeArticle.value.article.createdAt,
+              modifiedTime: maybeArticle.value.article.updatedAt,
+              tags: maybeArticle.value.article.tagList,
+            },
+          }}
+          additionalMetaTags={[
+            {
+              property: 'dc:creator',
+              content: maybeArticle.value.article.author.username,
+            },
+          ]}
+        />
+        <ArticleJsonLd
+          url={`${baseWebUrl}/article/${maybeArticle.value.article.slug}`}
+          authorName={maybeArticle.value.article.author.username}
+          description={maybeArticle.value.article.description}
+          title={maybeArticle.value.article.title}
+          datePublished={maybeArticle.value.article.createdAt}
+          dateModified={maybeArticle.value.article.updatedAt}
+          images={[`${baseWebUrl}/cover.png`]}
+          publisherName={maybeArticle.value.article.author.username}
+          isAccessibleForFree={true}
+        />
+        <Wrapper>
+          <HeaderSection>
+            <Header>
+              <Anchor
+                href={`/profile/${maybeArticle.value.article.author.username}`}
+              >
+                <ProfileName
+                  name={maybeArticle.value.article.author.username}
+                  size={2}
+                />
+              </Anchor>
+              <Divider />
+              <ArticleStats>
+                <ArticleReadingTime
+                  articleBody={maybeArticle.value.article.body}
+                />
                 <Divider />
-                <ArticleStats>
-                  <ArticleReadingTime
-                    articleBody={maybeArticle.value.article.body}
-                  />
-                  <Divider />
-                  <ArticleDate date={maybeArticle.value.article.updatedAt} />
-                </ArticleStats>
-              </Header>
-              <Title>{maybeArticle.value.article.title}</Title>
-              <Description>
-                {maybeArticle.value.article.description}
-              </Description>
-            </HeaderSection>
-            <ArticleBody articleText={maybeArticle.value.article.body} />
-          </Wrapper>
-        </>
-      )
-    } else {
-      return (
-        <ErrorState>
-          <ErrorStateIcon />
-          <ErrorStateTextContent>
-            <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
-            <ErrorStateMessage>
-              Something went wrong while trying to requesting the articles.
-            </ErrorStateMessage>
-          </ErrorStateTextContent>
-          <Button
-            size="large"
-            onClick={() => refetch()}
-            disabled={isFetching}
-            isLoading={isFetching}
-          >
-            Try again
-          </Button>
-        </ErrorState>
-      )
-    }
-  })
+                <ArticleDate date={maybeArticle.value.article.updatedAt} />
+              </ArticleStats>
+            </Header>
+            <Title>{maybeArticle.value.article.title}</Title>
+            <Description>{maybeArticle.value.article.description}</Description>
+          </HeaderSection>
+          <ArticleBody articleText={maybeArticle.value.article.body} />
+        </Wrapper>
+      </>
+    )
+  } else {
+    return (
+      <ErrorState>
+        <ErrorStateIcon />
+        <ErrorStateTextContent>
+          <ErrorStateTitle>Something went wrong.</ErrorStateTitle>
+          <ErrorStateMessage>
+            Something went wrong while trying to requesting the articles.
+          </ErrorStateMessage>
+        </ErrorStateTextContent>
+        <Button
+          size="large"
+          onClick={() => refetch()}
+          disabled={isFetching}
+          isLoading={isFetching}
+        >
+          Try again
+        </Button>
+      </ErrorState>
+    )
+  }
 }
 
 interface GetServerSidePropsParams extends ParsedUrlQuery {
