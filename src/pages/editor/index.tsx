@@ -70,7 +70,14 @@ const Alert = {
   ),
 }
 
-const Wrapper = styled.form`
+const Wrapper = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`
+
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   row-gap: ${({ theme }) => theme.spacings.xmedium};
@@ -240,71 +247,73 @@ const Editor = () => {
   return (
     <>
       <NextSeo {...defaultSEO} title="Conduit - New Article" />
-      <Wrapper onSubmit={formik.handleSubmit}>
-        <Title>New Article</Title>
-        <FieldWrapper>
-          <Input
-            inputRef={firstInputRef}
-            type="text"
-            placeholder="Title"
-            name="title"
-            aria-label="Title"
-            onChange={formik.handleChange}
-            errorMessage={formik.errors.title}
-            value={storage.title}
-          />
-          <Input
-            type="text"
-            placeholder="What's this article about?"
-            name="description"
-            aria-label="Description"
-            onChange={formik.handleChange}
-            errorMessage={formik.errors.description}
-            value={storage.description}
-          />
-          <TextEditor
-            placeholder="Type something awesome!"
-            name="body"
-            aria-label="Body"
-            onChange={formik.handleChange}
-            errorMessage={formik.errors.body}
-            value={storage.body}
-          />
-        </FieldWrapper>
-        <PublishBtn
-          type="submit"
-          size="large"
-          isLoading={isLoading}
-          disabled={isLoading}
-        >
-          Publish Article
-        </PublishBtn>
-        {isSome(maybeData) && (
-          <Alert.Root status="success">
-            <AlertContentWrapper>
-              <Alert.Icon />
-              <Alert.Text>
-                Congratulations! Your article has been successfully created.
-              </Alert.Text>
-              <TextButton
-                target="_blank"
-                href={`/article/${maybeData.value.article.slug}`}
-              >
-                View
-              </TextButton>
-              <Alert.Close />
-            </AlertContentWrapper>
-          </Alert.Root>
-        )}
-        {isSome(maybeError) && (
-          <Alert.Root status="error">
-            <AlertContentWrapper>
-              <Alert.Icon />
-              <Alert.Text>{maybeError.value.message}</Alert.Text>
-              <Alert.Close />
-            </AlertContentWrapper>
-          </Alert.Root>
-        )}
+      <Wrapper>
+        <Form onSubmit={formik.handleSubmit}>
+          <Title>New Article</Title>
+          <FieldWrapper>
+            <Input
+              inputRef={firstInputRef}
+              type="text"
+              placeholder="Title"
+              name="title"
+              aria-label="Title"
+              onChange={formik.handleChange}
+              errorMessage={formik.errors.title}
+              value={storage.title}
+            />
+            <Input
+              type="text"
+              placeholder="What's this article about?"
+              name="description"
+              aria-label="Description"
+              onChange={formik.handleChange}
+              errorMessage={formik.errors.description}
+              value={storage.description}
+            />
+            <TextEditor
+              placeholder="Type something awesome!"
+              name="body"
+              aria-label="Body"
+              onChange={formik.handleChange}
+              errorMessage={formik.errors.body}
+              value={storage.body}
+            />
+          </FieldWrapper>
+          <PublishBtn
+            type="submit"
+            size="large"
+            isLoading={isLoading}
+            disabled={isLoading}
+          >
+            Publish Article
+          </PublishBtn>
+          {isSome(maybeData) && (
+            <Alert.Root status="success">
+              <AlertContentWrapper>
+                <Alert.Icon />
+                <Alert.Text>
+                  Congratulations! Your article has been successfully created.
+                </Alert.Text>
+                <TextButton
+                  target="_blank"
+                  href={`/article/${maybeData.value.article.slug}`}
+                >
+                  View
+                </TextButton>
+                <Alert.Close />
+              </AlertContentWrapper>
+            </Alert.Root>
+          )}
+          {isSome(maybeError) && (
+            <Alert.Root status="error">
+              <AlertContentWrapper>
+                <Alert.Icon />
+                <Alert.Text>{maybeError.value.message}</Alert.Text>
+                <Alert.Close />
+              </AlertContentWrapper>
+            </Alert.Root>
+          )}
+        </Form>
       </Wrapper>
     </>
   )
