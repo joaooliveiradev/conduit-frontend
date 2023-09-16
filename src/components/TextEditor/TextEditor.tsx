@@ -65,10 +65,12 @@ const FirstTabsPane = styled(TabsPane)`
   }
 `
 
-const FullScreenTabsPane = styled(TabsPane)`
+const FullScreenTabsPane = styled.button`
   display: flex;
   margin-left: auto;
   padding: 0;
+  background: transparent;
+  cursor: pointer;
 `
 
 const FullScreenIcon = styled(DefaultFullScreenIcon)`
@@ -153,6 +155,8 @@ export interface TextEditorProps extends TextAreaProps {
   value: string
 }
 
+const notFocusabled = -1
+
 export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('write')
@@ -174,10 +178,10 @@ export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
           <FirstTabsPane value="write">Write</FirstTabsPane>
           <TabsPane value="preview">Preview</TabsPane>
           <FullScreenTabsPane
-            value="fullscreen"
             aria-controls={textEditorId}
             aria-expanded={isFullScreen}
-            disabled
+            tabIndex={notFocusabled}
+            aria-hidden
           >
             <ExitFullScreenIcon onClick={switchToFullScreen} />
           </FullScreenTabsPane>
@@ -201,10 +205,10 @@ export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
         <TabsPane value="write">Write</TabsPane>
         <TabsPane value="preview">Preview</TabsPane>
         <FullScreenTabsPane
-          value="fullscreen"
           aria-controls={textEditorId}
           aria-expanded={isFullScreen}
-          disabled
+          tabIndex={notFocusabled}
+          aria-hidden
         >
           <FullScreenIcon onClick={switchToFullScreen} />
         </FullScreenTabsPane>
