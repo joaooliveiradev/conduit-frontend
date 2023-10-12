@@ -41,13 +41,9 @@ export const useMe = (options?: UseMeOptions) => {
     Either<ValidationError, UseMeOutput>,
     UnknownError | AuthorizationError
   >({
-    enabled: status === 'loggedIn',
     queryKey: getUseMeKey(accessToken),
     queryFn: getMe,
-    retry: false,
-    refetchOnReconnect: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    enabled: status === 'loggedIn',
     staleTime: oneHour,
     cacheTime: oneHour,
     ...options,

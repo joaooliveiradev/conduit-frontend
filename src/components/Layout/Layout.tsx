@@ -64,6 +64,14 @@ export const Layout = ({ children, hydratedState }: LayoutProps) => {
     queryCache: new QueryCache({
       onError: (errors) => handleQueryErrors(errors),
     }),
+    defaultOptions: {
+      queries: {
+        retry: false,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+    },
   }
 
   const [queryClient] = useState(() => new QueryClient(queryClientConfig))
