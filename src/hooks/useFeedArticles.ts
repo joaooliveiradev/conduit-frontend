@@ -14,7 +14,11 @@ import { ArticleCodec } from '@/types'
 import { withMessage } from 'io-ts-types'
 import { type Either } from 'fp-ts/Either'
 import { fromNullable, isSome } from 'fp-ts/Option'
-import { defaultFilters, type QueryFiltersProps, calculateTotalArticles } from '@/hooks'
+import {
+  defaultFilters,
+  type QueryFiltersProps,
+  calculateTotalArticles,
+} from '@/hooks'
 import { type, array, number, type TypeOf, type OutputOf } from 'io-ts'
 
 const GetFeedArticlesResponseCodec = type({
@@ -49,15 +53,14 @@ export const getFeedArticles = async (filters: QueryFiltersProps) => {
 type PageParamProps = QueryFunctionContext<QueryKey, QueryFiltersProps | null>
 
 export const useFeedArticles = (
+  options: GetFeedArticlesOptions,
   filters?: QueryFiltersProps,
-  options?: GetFeedArticlesOptions
 ) =>
   useInfiniteQuery<
     Either<ValidationError, GetFeedArticlesOutput>,
     UnknownError | AuthorizationError
-  >(
-    [GET_FEED_ARTICLES_KEY],
-    async ({ pageParam = defaultFilters }: PageParamProps) => {
+  >({
+    queryFn: async ({ pageParam = defaultFilters }: PageParamProps) => {
       const pageParamOption = fromNullable(pageParam)
       const filtersOption = fromNullable(filters)
 
@@ -68,15 +71,9 @@ export const useFeedArticles = (
 
       return await getFeedArticles(queryFilters)
     },
-    {
-      getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
-      retry: 3,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      staleTime: oneMinute,
-      cacheTime: oneMinute,
-      refetchInterval: oneMinute,
-      ...options,
-    }
-  )
+    getNextPageParam: (lastPage) => calculateTotalArticles(lastPage),
+    staleTime: oneMinute,
+    cacheTime: oneMinute,
+    refetchInterval: oneMinute,
+    ...options,
+  })

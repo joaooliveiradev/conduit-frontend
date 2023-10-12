@@ -14,6 +14,8 @@ type UseProfileOutput = OutputOf<typeof UseProfileResponseCodec>
 
 export const GET_PROFILE_KEY = 'get-profile'
 
+const oneDay = 1000 * 60 * 60 * 24
+
 export const getProfile = async (username: string) =>
   await fetcher<undefined, UseProfileResponse>(
     `/profiles/${username}`,
@@ -26,14 +28,11 @@ type UseProfileOptions = UseQueryOptions<
 >
 
 export const useProfile = (username: string, options?: UseProfileOptions) =>
-  useQuery<Either<ValidationError, UseProfileOutput>, UnknownError>(
-    [GET_PROFILE_KEY, username],
-    async () => await getProfile(username),
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      ...options,
-    }
-  )
+  useQuery<Either<ValidationError, UseProfileOutput>, UnknownError>({
+    queryKey: [GET_PROFILE_KEY, username],
+    queryFn: async () => await getProfile(username),
+    cacheTime: oneDay,
+    staleTime: oneDay,
+    refetchInterval: oneDay,
+    ...options,
+  })

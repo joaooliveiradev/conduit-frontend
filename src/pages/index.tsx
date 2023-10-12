@@ -29,6 +29,7 @@ import {
   useGetArticles,
   useFeedArticles,
   defaultFilters,
+  GET_FEED_ARTICLES_KEY,
 } from '@/hooks'
 import type { GetServerSidePropsContext, NextPage } from 'next'
 import styled from 'styled-components'
@@ -84,9 +85,13 @@ const Home: NextPage = () => {
     fetchNextPage: fetchNextPageFeedArticles,
     isFetching: isFetchingFeedArticles,
     hasNextPage: hasNextPageFeedArticles,
-  } = useFeedArticles(defaultFilters, {
-    enabled: status === 'loggedIn',
-  })
+  } = useFeedArticles(
+    {
+      queryKey: [GET_FEED_ARTICLES_KEY],
+      enabled: status === 'loggedIn',
+    },
+    defaultFilters
+  )
 
   const maybeFeedArticles = pipe(
     feedArticlesData,

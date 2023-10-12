@@ -7,7 +7,7 @@ import {
 import type { NewArticleRequest } from '@/pages/editor'
 import { ArticleBySlugCodec as NewArticleCodec } from '@/types'
 import type { Either } from 'fp-ts/Either'
-import { useMutation } from '@tanstack/react-query'
+import { type UseMutationOptions, useMutation } from '@tanstack/react-query'
 import { type, type TypeOf, type OutputOf } from 'io-ts'
 
 const newArticleResponseCodec = type({
@@ -35,9 +35,15 @@ export const postArticle = async (data: NewArticleRequest) => {
 
 const NEW_ARTICLE_KEY = 'new-article'
 
-export const useNewArticle = () =>
+type NewArticleOptions = UseMutationOptions<
+  Either<ValidationError, NewArticleResponseOutput>,
+  AuthorizationError | UnknownError,
+  NewArticleRequest
+>
+
+export const useNewArticle = (options?: NewArticleOptions) =>
   useMutation<
     Either<ValidationError, NewArticleResponseOutput>,
     AuthorizationError | UnknownError,
     NewArticleRequest
-  >([NEW_ARTICLE_KEY], postArticle)
+  >({ mutationKey: [NEW_ARTICLE_KEY], mutationFn: postArticle, ...options })
