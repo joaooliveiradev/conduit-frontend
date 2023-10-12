@@ -19,6 +19,8 @@ type GetArticlesOptions = UseQueryOptions<
 
 export const GET_ARTICLE_KEY = 'get-article-by-slug'
 
+const oneDay = 1000 * 60 * 60 * 24;
+
 export const getArticle = async (slug: string) =>
   await fetcher<undefined, GetArticleResponse>(
     `/articles/${slug}`,
@@ -26,14 +28,11 @@ export const getArticle = async (slug: string) =>
   )
 
 export const useGetArticle = (slug: string, options?: GetArticlesOptions) =>
-  useQuery<Either<ValidationError, GetArticleOutput>, UnknownError>(
-    [GET_ARTICLE_KEY],
-    async () => await getArticle(slug),
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      ...options,
-    }
-  )
+  useQuery<Either<ValidationError, GetArticleOutput>, UnknownError>({
+    queryKey: [GET_ARTICLE_KEY, slug],
+    queryFn: async () => await getArticle(slug),
+    cacheTime: oneDay,
+    staleTime: oneDay,
+    refetchInterval: oneDay,
+    ...options,
+  })
