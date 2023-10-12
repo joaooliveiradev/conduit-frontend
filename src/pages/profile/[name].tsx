@@ -240,7 +240,7 @@ export const getServerSideProps = async ({
 
   if (isSome(username)) {
     await queryClient.prefetchQuery(
-      [GET_PROFILE_KEY],
+      [GET_PROFILE_KEY, username.value],
       async () => await getProfile(username.value)
     )
 
