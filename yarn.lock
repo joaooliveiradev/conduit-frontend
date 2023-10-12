@@ -1768,7 +1768,7 @@
     pump "^3.0.0"
     tar-fs "^2.1.1"
 
-"@next/bundle-analyzer@^13.3.2":
+"@next/bundle-analyzer@13.3.2":
   version "13.3.2"
   resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-13.3.2.tgz#ee732a5cd3e61606b54cf615ccf843874a634201"
   integrity sha512-ttg/Tk9y+3nUI4p5+aSfh2pg9PMCj2LRGvmxt2mTXWtUQ/JTZze8FNZYyERmpkCC7BPnKXOpGxxH/reLRr2MRg==
