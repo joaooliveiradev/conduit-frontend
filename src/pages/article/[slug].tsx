@@ -189,7 +189,7 @@ export const getServerSideProps = async ({
 
   if (isSome(slugOption)) {
     await queryClient.prefetchQuery(
-      [GET_ARTICLE_KEY],
+      [GET_ARTICLE_KEY, slugOption.value],
       async () => await getArticle(slugOption.value)
     )
 
