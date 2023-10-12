@@ -26,7 +26,7 @@ import {
   type QueryFiltersProps,
   useGetArticles,
   useProfile,
-  GET_ARTICLES_KEY,
+  GET_ARTICLES_PROFILE_KEY,
   getArticles,
 } from '@/hooks'
 import { dehydrate, InfiniteData, QueryClient } from '@tanstack/react-query'
@@ -95,7 +95,7 @@ const Profile = ({ name }: ProfileParams) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetArticles({ ...filters })
+  } = useGetArticles({ queryKey: [GET_ARTICLES_PROFILE_KEY] }, filters)
 
   const maybeArticles = pipe(
     articlesData,
@@ -250,7 +250,7 @@ export const getServerSideProps = async ({
     }
 
     await queryClient.prefetchInfiniteQuery(
-      [GET_ARTICLES_KEY],
+      [GET_ARTICLES_PROFILE_KEY],
       async () => await getArticles(filters)
     )
 

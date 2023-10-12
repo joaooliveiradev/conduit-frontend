@@ -59,7 +59,7 @@ const Home: NextPage = () => {
     fetchNextPage: fetchNextPageGetArticles,
     isFetching: isFetchingGetArticles,
     hasNextPage: hasNextPageGetArticles,
-  } = useGetArticles(defaultFilters)
+  } = useGetArticles({ queryKey: [GET_ARTICLES_KEY] }, defaultFilters)
 
   const maybeGetArticles = pipe(
     getArticlesData,
