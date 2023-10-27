@@ -34,6 +34,7 @@ import { type GetServerSidePropsContext } from 'next'
 import { type ParsedUrlQuery } from 'querystring'
 import { fromNullable, isSome, chain, getRight, map, match } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
+import { startsWith } from 'fp-ts/string'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
 import { transparentize } from 'polished'
@@ -223,14 +224,13 @@ const oneHour = 3600
 
 export const getServerSideProps = async ({
   params,
+  req,
   res,
 }: GetServerSidePropsContext<ProfileParams>) => {
   res.setHeader(
     'Cache-Control',
-    `public, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
+    `public, max-age=${oneHour}, s-maxage=${oneHour}, stale-while-revalidate=${oneHour}`
   )
-
-  const queryClient = new QueryClient()
 
   const username = pipe(
     params,
@@ -239,6 +239,27 @@ export const getServerSideProps = async ({
   )
 
   if (isSome(username)) {
+    const onNone = () => ''
+
+    const onSome = (username: string) => username
+
+    const clientRequestedFolder = '/_next/data/'
+
+    const isClientRequest = pipe(
+      req.url,
+      fromNullable,
+      match(onNone, onSome),
+      startsWith(clientRequestedFolder)
+    )
+
+    if (isClientRequest) {
+      return {
+        props: { name: username.value },
+      }
+    }
+
+    const queryClient = new QueryClient()
+
     await queryClient.prefetchQuery(
       [GET_PROFILE_KEY, username.value],
       async () => await getProfile(username.value)

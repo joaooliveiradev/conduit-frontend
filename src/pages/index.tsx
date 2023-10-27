@@ -36,12 +36,13 @@ import styled from 'styled-components'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 import { useAuth } from '@/context'
-import { chain, fromNullable, getRight, isSome, map } from 'fp-ts/Option'
+import { chain, fromNullable, getRight, isSome, map, match } from 'fp-ts/Option'
 import { f } from '@/libs'
 import { type InfiniteData } from '@tanstack/react-query'
 import { pipe } from 'fp-ts/function'
 import React from 'react'
 import { stringify as superJsonStringify } from 'superjson'
+import { startsWith } from 'fp-ts/lib/string'
 
 const ContentSection = styled.section`
   display: flex;
@@ -352,13 +353,35 @@ const Home: NextPage = () => {
 
 const oneHour = 3600
 
-export async function getServerSideProps({ res }: GetServerSidePropsContext) {
-  const queryClient = new QueryClient()
-
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
   res.setHeader(
     'Cache-Control',
-    `public, max-age=${oneHour}, stale-while-revalidate=${oneHour}`
+    `public, max-age=${oneHour}, s-maxage=${oneHour}, stale-while-revalidate=${oneHour}`
   )
+
+  const onNone = () => ''
+
+  const onSome = (username: string) => username
+
+  const clientRequestedFolder = '/_next/data/'
+
+  const isClientRequest = pipe(
+    req.url,
+    fromNullable,
+    match(onNone, onSome),
+    startsWith(clientRequestedFolder)
+  )
+
+  if (isClientRequest) {
+    return {
+      props: {},
+    }
+  }
+
+  const queryClient = new QueryClient()
 
   await queryClient.prefetchInfiniteQuery([GET_ARTICLES_KEY], () =>
     getArticles(defaultFilters)
