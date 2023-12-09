@@ -211,7 +211,8 @@ const Editor = () => {
     const newCreateArticleValues: NewArticleRequest = {
       article: values,
     }
-    createArticle(newCreateArticleValues)
+
+    return createArticle(newCreateArticleValues)
   }
 
   const formik = useFormik<NewArticleFieldValues>({
@@ -241,7 +242,9 @@ const Editor = () => {
   const { resetForm } = formik
 
   useEffect(() => {
-    isCreateArticleSuccessful && resetForm({ values: initialFieldValues })
+    if (isCreateArticleSuccessful) {
+      return resetForm({ values: initialFieldValues })
+    }
   }, [isCreateArticleSuccessful, resetForm])
 
   return (
@@ -259,7 +262,7 @@ const Editor = () => {
               aria-label="Title"
               onChange={formik.handleChange}
               errorMessage={formik.errors.title}
-              value={storage.title}
+              value={formik.values.title}
             />
             <Input
               type="text"
@@ -268,7 +271,7 @@ const Editor = () => {
               aria-label="Description"
               onChange={formik.handleChange}
               errorMessage={formik.errors.description}
-              value={storage.description}
+              value={formik.values.description}
             />
             <TextEditor
               placeholder="Type something awesome!"
@@ -276,7 +279,7 @@ const Editor = () => {
               aria-label="Body"
               onChange={formik.handleChange}
               errorMessage={formik.errors.body}
-              value={storage.body}
+              value={formik.values.body}
             />
           </FieldWrapper>
           <PublishBtn
