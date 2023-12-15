@@ -28,23 +28,17 @@ export type LayoutProps = {
 const Wrapper = styled.div`
   ${({ theme }) => css`
     width: 100%;
-    max-width: ${theme.breakpoints.desktop};
     display: flex;
     flex-direction: column;
-    margin: 0px auto;
-    padding: ${theme.spacings.xxhuge} 0px;
-    @media (max-width: ${theme.breakpoints.desktop}) {
-      padding: ${theme.spacings.xxhuge} ${theme.spacings.xxxxhuge};
-    }
+    padding: ${theme.spacings.xxhuge} ${theme.spacings.xxxxhuge};
   `}
 `
 
 const Main = styled.main`
-  ${({ theme }) => css`
-    width: 100%;
-    height: 100%;
-    padding: ${theme.spacings.xxxxhuge} ${theme.spacings.xxxhuge};
-  `}
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: ${({ theme }) => theme.spacings.xxxhuge};
 `
 
 const threeSeconds = 3000

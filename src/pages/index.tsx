@@ -43,6 +43,7 @@ import React from 'react'
 import { stringify as superJsonStringify } from 'superjson'
 
 const ContentSection = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: ${({ theme }) => theme.spacings.xxxhuge};
