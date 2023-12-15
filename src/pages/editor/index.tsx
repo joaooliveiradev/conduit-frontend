@@ -71,10 +71,11 @@ const Alert = {
 }
 
 const Wrapper = styled.section`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
 `
 
 const Form = styled.form`
