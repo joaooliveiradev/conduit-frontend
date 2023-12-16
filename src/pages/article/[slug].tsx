@@ -36,10 +36,6 @@ const Wrapper = styled.article`
   width: 100%;
   height: 100%;
   row-gap: ${({ theme }) => theme.spacings.xhuge};
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 const HeaderSection = styled.section`
