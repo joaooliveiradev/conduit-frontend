@@ -29,14 +29,14 @@ const Wrapper = styled.div`
 
 const TextAreaWrapper = styled.textarea<TextAreaProps>`
   ${({ theme }) => css`
+    min-height: 230px;
+    height: 100%;
     white-space: pre-wrap;
     border-radius: 4px;
     background-color: ${transparentize(0.88, theme.colors.black[200])};
     padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
     font-size: ${theme.fonts.sizes.xmedium};
-    font-weight: 600;
     resize: none;
-    min-height: 230px;
     color: ${theme.colors.black[200]};
     &::placeholder {
       color: ${theme.colors.grey[200]};

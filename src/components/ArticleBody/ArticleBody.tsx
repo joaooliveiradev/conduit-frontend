@@ -15,6 +15,11 @@ const Wrapper = styled.section`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xmedium};
     color: ${theme.colors.grey[200]};
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+
     ul,
     ol {
       list-style-position: inside;
@@ -24,8 +29,8 @@ const Wrapper = styled.section`
 
     p {
       margin-bottom: ${theme.spacings.xxsmall};
-      line-height: ${theme.spacings.xxmedium};
       white-space: pre-wrap;
+      word-break: break-word;
     }
 
     strong {
@@ -70,6 +75,7 @@ const Wrapper = styled.section`
     .hljs {
       border-radius: ${theme.spacings.small};
     }
+
   `}
 `
 

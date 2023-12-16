@@ -14,7 +14,7 @@ import {
   ExitFullScreenIcon as DefaultExitFullScreenIcon,
 } from '@/assets'
 import { useId, useState, type ReactNode } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { transparentize } from 'polished'
 import { type PortalProps } from '@radix-ui/react-portal'
 import { type FocusScopeProps } from '@radix-ui/react-popover'
@@ -93,10 +93,8 @@ const TabContent = styled(TabContentDefault)`
 `
 
 const ArticleBody = styled(DefaultArticleBody)`
-  ${({ theme }) => css`
-    padding: ${theme.spacings.xsmall} ${theme.spacings.xxsmall};
-    overflow-wrap: anywhere;
-  `}
+  padding: ${({ theme }) =>
+    `${theme.spacings.xsmall} ${theme.spacings.xxsmall}`};
 `
 
 const EmptyPreviewWrapper = styled.section`
@@ -126,16 +124,19 @@ const Preview = ({ textAreaValue }: PreviewProps) => {
 }
 
 const FullScreenWrapper = styled.div`
-  background: #ffffff;
+  display: flex;
   position: fixed;
-  inset: 0;
-  margin: ${({ theme }) => theme.spacings.xxlarge};
-  transition: all 150ms ease;
+  inset: ${({ theme }) => theme.spacings.xxlarge};
+  background: ${({ theme }) => theme.colors.white[200]};
   border-radius: ${({ theme }) => theme.spacings.small};
+  transition: all 150ms ease;
   box-shadow: 0 0 0 1px
     ${({ theme }) => transparentize(0.88, theme.colors.black[200])};
-  ${Tabs}, ${TabContent} {
-    height: 100%;
+  ${Tabs}, ${TabContent}, ${ArticleBody} {
+    flex-grow: 1;
+  }
+  ${TabContent} {
+    overflow-y: auto;
   }
 `
 
@@ -186,7 +187,7 @@ export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
             <ExitFullScreenIcon onClick={switchToFullScreen} />
           </FullScreenTabsPane>
         </Pane>
-        <TabContent value="write" asChild>
+        <TabContent value="write">
           <TextArea value={value} {...rest} />
         </TabContent>
         <TabContent value="preview">
