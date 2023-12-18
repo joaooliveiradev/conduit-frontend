@@ -2,8 +2,8 @@ import rehypeSanitize, {
   defaultSchema,
   type Options as RehypeSanitizeOptions,
 } from 'rehype-sanitize'
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import { default as rehypeHighlight } from 'rehype-highlight/lib/index'
+import { default as ReactMarkdown } from 'react-markdown'
+import { default as rehypeHighlight } from 'rehype-highlight'
 import styled, { css } from 'styled-components'
 import 'highlight.js/styles/night-owl.css'
 
@@ -75,7 +75,6 @@ const Wrapper = styled.section`
     .hljs {
       border-radius: ${theme.spacings.small};
     }
-
   `}
 `
 
@@ -95,17 +94,15 @@ const rehypeSanitizeSettings: RehypeSanitizeOptions = {
   attributes: rehypeSanitizeAttributesSettings,
 }
 
-export const ArticleBody = ({ articleText, ...rest }: ArticleBodyProps) => {
-  return (
-    <Wrapper {...rest}>
-      <ReactMarkdown
-        rehypePlugins={[
-          [rehypeSanitize, rehypeSanitizeSettings],
-          [rehypeHighlight],
-        ]}
-      >
-        {articleText}
-      </ReactMarkdown>
-    </Wrapper>
-  )
-}
+export const ArticleBody = ({ articleText, ...rest }: ArticleBodyProps) => (
+  <Wrapper {...rest}>
+    <ReactMarkdown
+      rehypePlugins={[
+        [rehypeSanitize, rehypeSanitizeSettings],
+        [rehypeHighlight],
+      ]}
+    >
+      {articleText}
+    </ReactMarkdown>
+  </Wrapper>
+)
