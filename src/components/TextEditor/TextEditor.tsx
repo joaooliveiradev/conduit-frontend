@@ -113,15 +113,14 @@ type PreviewProps = {
   textAreaValue: string
 }
 
-const Preview = ({ textAreaValue }: PreviewProps) => {
-  return textAreaValue.length === 0 ? (
+const Preview = ({ textAreaValue }: PreviewProps) =>
+  textAreaValue.length === 0 ? (
     <EmptyPreviewWrapper>
       <EmptyPreviewText>Nothing to preview.</EmptyPreviewText>
     </EmptyPreviewWrapper>
   ) : (
     <ArticleBody articleText={textAreaValue} />
   )
-}
 
 const FullScreenWrapper = styled.div`
   display: flex;
@@ -135,8 +134,8 @@ const FullScreenWrapper = styled.div`
   ${Tabs}, ${TabContent}, ${ArticleBody} {
     flex-grow: 1;
   }
-  ${TabContent} {
-    overflow-y: auto;
+  ${TabContent}[data-value="preview"] {
+    overflow-y: scroll;
   }
 `
 
@@ -190,7 +189,7 @@ export const TextEditor = ({ value, ...rest }: TextEditorProps) => {
         <TabContent value="write">
           <TextArea value={value} {...rest} />
         </TabContent>
-        <TabContent value="preview">
+        <TabContent value="preview" data-value="preview">
           <Preview textAreaValue={value} />
         </TabContent>
       </Tabs>
