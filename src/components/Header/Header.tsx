@@ -1,5 +1,4 @@
 import {
-  Button,
   Anchor,
   type SignInModalProps,
   type DropdownProps,
@@ -8,9 +7,10 @@ import {
   type DropdownTriggerProps,
   type DropdownContentProps,
   type DropdownListProps,
+  type ButtonProps,
 } from '@/components'
 import { useAuth } from '@/context'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactNode } from 'react'
 import { fromNullable, isSome, chain, getRight } from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import { useMe } from '@/hooks'
@@ -18,6 +18,7 @@ import logo from '@/assets/logo.webp'
 import styled from 'styled-components'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { type LinkProps as DefaultLinkProps } from 'next/link'
 
 const SignInModal = dynamic<SignInModalProps>(
   () =>
@@ -83,11 +84,39 @@ const ProfileName = dynamic<ProfileNameProps>(
   }
 )
 
+type LinkProps = DefaultLinkProps & { children: ReactNode }
+
+const Link = dynamic<LinkProps>(
+  () => import('next/link').then((module) => module.default),
+  {
+    ssr: false,
+  }
+)
+
+const Button = dynamic<ButtonProps>(
+  () => import('@/components/Button/Button').then((module) => module.Button),
+  {
+    ssr: false,
+  }
+)
+
 const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `
+
+const RightMenu = styled.div`
+  gap: ${({ theme }) => theme.spacings.xxsmall};
+  display: flex;
+  align-items: center;
+`
+
+const NewArticleBtn = () => (
+  <Link href="/editor" prefetch={false}>
+    <Button size="medium">New Article</Button>
+  </Link>
+)
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -108,20 +137,23 @@ export const Header = () => {
         <Image src={logo} alt="Conduit Logo" width={172} height={42} />
       </Anchor>
       {isSome(maybeData) && status === 'loggedIn' ? (
-        <Dropdown>
-          <DropdownTrigger>
-            <ProfileName size={2} name={maybeData.value.user.username} />
-          </DropdownTrigger>
-          <DropdownContent>
-            <DropdownList>
-              <DropdownItem
-                label="Profile"
-                href={`/profile/${maybeData.value.user.username}`}
-              />
-              <DropdownItem label="Sign Out" onEventClick={signOut} />
-            </DropdownList>
-          </DropdownContent>
-        </Dropdown>
+        <RightMenu>
+          <NewArticleBtn />
+          <Dropdown>
+            <DropdownTrigger>
+              <ProfileName size={2} name={maybeData.value.user.username} />
+            </DropdownTrigger>
+            <DropdownContent>
+              <DropdownList>
+                <DropdownItem
+                  label="Profile"
+                  href={`/profile/${maybeData.value.user.username}`}
+                />
+                <DropdownItem label="Sign Out" onEventClick={signOut} />
+              </DropdownList>
+            </DropdownContent>
+          </Dropdown>
+        </RightMenu>
       ) : (
         <>
           <Button size="large" onClick={showModal}>

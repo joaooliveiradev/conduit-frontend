@@ -45,6 +45,7 @@ import { stringify as superJsonStringify } from 'superjson'
 import { startsWith } from 'fp-ts/lib/string'
 
 const ContentSection = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: ${({ theme }) => theme.spacings.xxxhuge};

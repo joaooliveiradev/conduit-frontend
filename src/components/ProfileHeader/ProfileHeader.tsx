@@ -1,12 +1,11 @@
-import { Button as DefaultButton } from '@/components/Button/Button'
-import { ProfileInformation, TextButton } from '@/components'
+import { ProfileInformation, type TextButtonProps } from '@/components'
 import { useMe } from '@/hooks'
 import { pipe } from 'fp-ts/function'
 import { fromNullable, chain, getRight } from 'fp-ts/Option'
 import { useAuth } from '@/context'
 import { exists } from 'fp-ts/Option'
 import styled from 'styled-components'
-import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
 export type ProfileHeaderProps = {
   name: string
@@ -22,23 +21,18 @@ const Wrapper = styled.header`
   user-select: none;
 `
 
-const Actions = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacings.xmedium};
-  align-items: center;
+const TextButtonDefault = dynamic<TextButtonProps>(
+  () =>
+    import('@/components/TextButton/TextButton').then(
+      (module) => module.TextButton
+    ),
+  { ssr: false }
+)
+
+const TextButton = styled(TextButtonDefault)`
   position: absolute;
   right: 0;
 `
-
-const Button = styled(DefaultButton)`
-  min-width: 100px;
-`
-
-const NewArticleBtn = () => (
-  <Link href="/editor" prefetch={false}>
-    <Button size="medium">New Article</Button>
-  </Link>
-)
 
 export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => {
   const { data } = useMe()
@@ -55,11 +49,8 @@ export const ProfileHeader = ({ name, description }: ProfileHeaderProps) => {
     <Wrapper>
       <ProfileInformation name={name} description={description} />
       {status === 'loggedIn' && isYourProfile && (
-        <Actions>
-          <NewArticleBtn />
-          {/* TODO: Modal */}
-          <TextButton href="/edit-profile">Edit profile</TextButton>
-        </Actions>
+        // TODO: MODAL
+        <TextButton href="/edit-profile">Edit profile</TextButton>
       )}
     </Wrapper>
   )

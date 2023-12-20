@@ -50,9 +50,7 @@ export const theme = {
     },
     white: {
       100: '#FAFAFA',
+      200: '#FFFFFF'
     },
-  },
-  breakpoints: {
-    desktop: '1440px',
   },
 }

@@ -2,8 +2,8 @@ import rehypeSanitize, {
   defaultSchema,
   type Options as RehypeSanitizeOptions,
 } from 'rehype-sanitize'
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import { default as rehypeHighlight } from 'rehype-highlight/lib/index'
+import { default as ReactMarkdown } from 'react-markdown'
+import { default as rehypeHighlight } from 'rehype-highlight'
 import styled, { css } from 'styled-components'
 import 'highlight.js/styles/night-owl.css'
 
@@ -15,6 +15,11 @@ const Wrapper = styled.section`
   ${({ theme }) => css`
     font-size: ${theme.fonts.sizes.xmedium};
     color: ${theme.colors.grey[200]};
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+
     ul,
     ol {
       list-style-position: inside;
@@ -24,8 +29,8 @@ const Wrapper = styled.section`
 
     p {
       margin-bottom: ${theme.spacings.xxsmall};
-      line-height: ${theme.spacings.xxmedium};
       white-space: pre-wrap;
+      word-break: break-word;
     }
 
     strong {
@@ -89,17 +94,15 @@ const rehypeSanitizeSettings: RehypeSanitizeOptions = {
   attributes: rehypeSanitizeAttributesSettings,
 }
 
-export const ArticleBody = ({ articleText, ...rest }: ArticleBodyProps) => {
-  return (
-    <Wrapper {...rest}>
-      <ReactMarkdown
-        rehypePlugins={[
-          [rehypeSanitize, rehypeSanitizeSettings],
-          [rehypeHighlight],
-        ]}
-      >
-        {articleText}
-      </ReactMarkdown>
-    </Wrapper>
-  )
-}
+export const ArticleBody = ({ articleText, ...rest }: ArticleBodyProps) => (
+  <Wrapper {...rest}>
+    <ReactMarkdown
+      rehypePlugins={[
+        [rehypeSanitize, rehypeSanitizeSettings],
+        [rehypeHighlight],
+      ]}
+    >
+      {articleText}
+    </ReactMarkdown>
+  </Wrapper>
+)
